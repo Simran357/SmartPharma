@@ -71,72 +71,7 @@ const Retailer = () => {
 
 
   return (
- <>
- <div>
-<section className="mt-6 bg-slate-50 rounded-2xl mx-6">
-          <div className="grid gap-4  grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 p-6">
-            {stats.map((item, i) => (
-              <div
-                key={i}
- className={`rounded-xl bg-white p-4 min-w-20 min-h-[100] 
-  flex flex-col justify-between 
-  border border-transparent 
- 
-  ${item.border}
-  hover:scale-[1.02] transition-all duration-200`}              >
-                <div className="flex justify-between items-center ">
-                   <span className={ `text-black  ${item.iconBg} uppercase text-lg font-semibold`}>
-                    {item.title}
-                  </span>
-                  <span className={` rounded-lg text-green-600  ${item.iconBg} p-2`}>
-                    {item.icon}</span>
-                  
-                </div>
-
-                <div className={`flex items-end ${item.iconBg} justify-between mt-2`}>
-                   <h1 className='font-bold   text-3xl'>
-                    {item.value}
-                  </h1>
-                 <span className={`text-sm   ${item.iconBg}   text-green-700  px-2 py-1 rounded-full`}>
-  {item.change}
-</span>
-
-                </div>
-                   <span className={`text-xs mt-2 whitespace-nowrap  ${item.iconBg} font-50% text-gray-600 `}>
-                    {item.disc}
-                  </span>
-              </div>
-            ))}
-          </div>
-        </section>
-<section className="mx-6 mt-6 bg-amber-100 rounded-2xl">
-<div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-4 gap-4 bg-white p-6 rounded-2xl shadow">
- <button className="bg-green-600 text-white p-4 rounded-xl flex items-center justify-center font-semibold hover:bg-green-700">
-  NEW BILL (F1)
-</button>
-
-<button className="bg-green-600 text-white p-4 rounded-xl flex items-center justify-center font-semibold hover:bg-green-700">
-  CREATE ORDER
-</button>
-
-<button className="bg-green-600 text-white p-4 rounded-xl flex items-center justify-center font-semibold hover:bg-green-700">
-  UPLOAD PURCHASE
-</button>
-
-<button className="bg-green-600 text-white p-4 rounded-xl flex items-center justify-center font-semibold hover:bg-green-700">
-  REPORT HUB
-</button>
-
-</div>
-
-</section>
-<section></section>
-
-
- </div>
- 
- 
- </>
+    <div>Retailer</div>
   )
 }
 
