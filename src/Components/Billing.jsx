@@ -1,91 +1,61 @@
-import React from 'react'
+import React from "react";
 
 const Billing = () => {
   return (
-    <>
-      
-    <div className="flex gap-4">
+    <div className="flex gap-6 p-6 bg-gray-100 min-h-screen">
 
-      {/* LEFT : TABLE */}
-      <div className="w-2 /3 bg-white p-4 rounded-lg shadow">
-        <h2 className="font-semibold mb-3">Items</h2>
+      {/* LEFT : ITEMS TABLE */}
+      <div className="w-2/3 bg-white p-5 rounded-xl shadow-sm">
+        <h2 className="text-lg font-semibold mb-4">Items</h2>
 
         <table className="w-full text-sm">
-          <thead className="border-b">
+          <thead className="border-b text-gray-600">
             <tr>
               <th className="text-left py-2">Name</th>
-              <th>Qty</th>
-              <th>Price</th>
+              <th className="text-center">Qty</th>
+              <th className="text-right">Price</th>
             </tr>
           </thead>
+
           <tbody>
-            <tr className="border-b">
-              <td>Paracetamol</td>
-              <td className="text-center">2</td>
-              <td className="text-right">₹200</td>
-            </tr>
-          </tbody>
-           <tbody>
-            <tr className="border-b">
-              <td>Paracetamol</td>
-              <td className="text-center">2</td>
-              <td className="text-right">₹200</td>
-            </tr>
-          </tbody>
-           <tbody>
-            <tr className="border-b">
-              <td>Paracetamol</td>
-              <td className="text-center">2</td>
-              <td className="text-right">₹200</td>
-            </tr>
-          </tbody>
-           <tbody>
-            <tr className="border-b">
-              <td>Paracetamol</td>
-              <td className="text-center">2</td>
-              <td className="text-right">₹200</td>
-            </tr>
-          </tbody>
-           <tbody>
-            <tr className="border-b">
-              <td>Paracetamol</td>
-              <td className="text-center">2</td>
-              <td className="text-right">₹200</td>
-            </tr>
+            {[1, 2, 3, 4, 5].map((item, index) => (
+              <tr key={index} className="border-b last:border-none">
+                <td className="py-2">Paracetamol</td>
+                <td className="text-center">2</td>
+                <td className="text-right font-medium">₹200</td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
 
-      {/* RIGHT : SUMMARY + 2 BOXES */}
+      {/* RIGHT : SUMMARY */}
       <div className="w-1/3 space-y-4">
 
         {/* Summary */}
-        <div className="bg-white p-4 rounded-lg shadow">
-          <h2 className="font-semibold mb-3">Summary</h2>
-          <div className="flex justify-between text-sm">
+        <div className="bg-white p-5 rounded-xl shadow-sm">
+          <h2 className="text-lg font-semibold mb-3">Summary</h2>
+          <div className="flex justify-between text-sm text-gray-700">
             <span>Total</span>
-            <span>₹200</span>
+            <span className="font-semibold">₹1000</span>
           </div>
         </div>
 
-        {/* Box 1 */}
-        <div className="bg-white p-4 rounded-lg shadow">
-          <h3 className="font-semibold">Payment</h3>
-          <p className="text-sm text-gray-600">Cash / UPI</p>
+        {/* Payment */}
+        <div className="bg-white p-5 rounded-xl shadow-sm">
+          <h3 className="font-semibold mb-1">Payment</h3>
+          <p className="text-sm text-gray-500">Cash / UPI</p>
         </div>
 
-        {/* Box 2 */}
-        <div className="bg-white p-4 rounded-lg shadow">
-          <h3 className="font-semibold">Notes</h3>
-          <p className="text-sm text-gray-600">No discount</p>
+        {/* Notes */}
+        <div className="bg-white p-5 rounded-xl shadow-sm">
+          <h3 className="font-semibold mb-1">Notes</h3>
+          <p className="text-sm text-gray-500">No discount</p>
         </div>
 
       </div>
-
     </div>
-  
-    </>
-  )
-}
+  );
+};
 
 export default Billing;
