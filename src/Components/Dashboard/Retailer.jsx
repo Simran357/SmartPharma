@@ -130,7 +130,10 @@ const Retailer = () => {
 </div>
 
 </section>
-<section></section>
+<section>
+  <div>
+  <h1>hello</h1></div>
+</section>
 
 
  </div>
