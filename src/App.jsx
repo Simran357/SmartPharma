@@ -4,7 +4,7 @@ import Layout from './Components/Layout'
 import Cart from './Components/Cart'
 import Billing from './Components/Billing'
 import Inventory from './Components/Inventory'
-import Retailer from './Components/Dashboard/Retailer'
+import Retailer from './Components/Dashboard/Retailar/Retailer'
 import WholeSaler from './Components/Dashboard/WholeSaler'
 
 const App = () => {
