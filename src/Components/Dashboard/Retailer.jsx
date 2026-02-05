@@ -132,7 +132,8 @@ const Retailer = () => {
 </section>
 <section>
   <div>
-  <h1>hello</h1></div>
+ 
+ </div>
 </section>
 
 
