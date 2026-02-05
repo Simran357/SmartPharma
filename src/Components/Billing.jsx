@@ -52,6 +52,18 @@ const Billing = () => {
           <h3 className="font-semibold mb-1">Notes</h3>
           <p className="text-sm text-gray-500">No discount</p>
         </div>
+          <div className="bg-white p-5 rounded-xl shadow-sm">
+          <h3 className="font-semibold mb-1">Task</h3>
+          <p className="text-sm text-gray-500">GIT PROBLEM</p>
+        </div>
+         <div className="bg-white p-5 rounded-xl shadow-sm">
+          <h3 className="font-semibold mb-1">Task</h3>
+          <p className="text-sm text-gray-500">GIT PROBLEM</p>
+        </div>
+         <div className="bg-white p-5 rounded-xl shadow-sm">
+          <h3 className="font-semibold mb-1">Task</h3>
+          <p className="text-sm text-gray-500">GIT PROBLEM</p>
+        </div>
 
       </div>
     </div>
