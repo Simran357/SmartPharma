@@ -31,6 +31,8 @@ const Header = () => {
     { text: 'WholeSaler', path: '/' },
     { text: 'Billing', path: '/Billing' },
     { text: 'Cart', path: '/Cart' },
+    {text:"Login", path:"/Login"},
+    {text:"Register",path:"/Register"}
   ]
 
   const isActive = (path) => location.pathname === path

@@ -6,6 +6,8 @@ import Billing from './Components/Billing'
 import Inventory from './Components/Inventory'
 import Retailer from './Components/Dashboard/Retailar/Retailer'
 import WholeSaler from './Components/Dashboard/WholeSaler'
+import Login from './Components/Dashboard/Form/Login'
+import Register from './Components/Dashboard/Form/Registration'
 
 const App = () => {
   return (
@@ -19,6 +21,8 @@ const App = () => {
         <Route path="Inventory" element={<Inventory />} />
         <Route path="Billing" element={<Billing />} />
         <Route path="Cart" element={<Cart/>} />
+        <Route path="Login" element={<Login/>}/>
+        <Route path="Register" element={<Register/>}/>
       
       </Route>
     </Routes>
