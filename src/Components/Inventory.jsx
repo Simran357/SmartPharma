@@ -1,8 +1,10 @@
 import React from 'react'
 
-const Inventory = () => {
+function Inventory() {
   return (
-    <div>Inventory</div>
+    <div>
+      hj
+    </div>
   )
 }
 
