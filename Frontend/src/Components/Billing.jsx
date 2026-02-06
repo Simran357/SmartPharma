@@ -134,6 +134,10 @@ const ProductBox = () => {
       🖨 Print Quotation Only
     </button>
   </div>
+  
+    <button className="w-full mt-2 text-sm text-gray-500 hover:underline">
+      🖨 Print Quotation Only
+    </button>
 </div>
         </div>
   );
