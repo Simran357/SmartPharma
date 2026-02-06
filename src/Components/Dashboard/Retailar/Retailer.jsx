@@ -83,10 +83,10 @@ const Retailer = () => {
           <div className="grid gap-4  grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 p-6">
             {stats.map((item, i) => (
               <div
-                key={i}
+                key={i}  
                 className={`rounded-xl bg-white p-2 flex flex-col justify-between border border-gray-200
  
-  ${item.border}
+  ${item.border} 
   hover:scale-[1.02] transition-all duration-200`}              >
                 <div className="flex justify-between items-center ">
                   <span className={`text-black  ${item.iconBg} uppercase text-xs font-semibold`}>

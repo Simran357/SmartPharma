@@ -24,7 +24,7 @@ const Header = () => {
   const [open, setOpen] = useState(false)
   const navigate = useNavigate()
   const location = useLocation()
-
+ 
   const menuItems = [
     { text: 'Inventory', path: '/Inventory' },
     { text: 'Retailer', path: '/Retailer' },
