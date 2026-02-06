@@ -7,7 +7,7 @@ const onFinish = values => {
   console.log('Success:', values);
   try{
       const res = axios.post("http://localhost:5001/api/registerroute/registercontroller",values)
-      console.log("resgister success",res)
+      console.log("Login success",res)
 
   }catch{(err)=>{
     console.log("api is failed connection",err)

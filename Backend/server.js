@@ -13,7 +13,7 @@ chief.use(cors({
 
 chief.use(routes)
 
-mongoose.connect("mongodb+srv://simran26788_db_user:BiwGwUbGnJoXPcAQ@smartpharmacluster0.8tvj8as.mongodb.net/")
+mongoose.connect("mongodb+srv://simran26788_db_user:De4LHTTcgawaBa9G@smartpharmacluster0.8tvj8as.mongodb.net/")
 .then(()=>{
     const PORT = 5001;
     chief.listen(PORT)

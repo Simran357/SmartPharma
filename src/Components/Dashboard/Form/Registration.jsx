@@ -6,7 +6,7 @@ const Register = () => {
 const onFinish = values => {
   console.log('Success:', values);
   try{
-      const res = axios.post("http://localhost:5001/api/registerrouter/registecontroller",values)
+      const res = axios.post("http://localhost:5001/api/registerroute/registercontroller",values)
       console.log("resgister success",res)
 
   }catch{(err)=>{
