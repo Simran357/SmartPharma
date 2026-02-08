@@ -8,6 +8,11 @@ const onFinish = values => {
   try{
       const res = axios.post("http://localhost:5001/api/registerroute/registercontroller",values)
       console.log("code commit by b",res)
+      .then((res)=>{
+        console.log(res.jwtToken)
+      }).catch((err)=>{
+        console.log(" jwt res failed ", err)
+      })
 
   }catch{(err)=>{
     console.log("api is failed connection",err)
