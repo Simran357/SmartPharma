@@ -12,6 +12,10 @@ password:{
 confirmpassword:{
     type:String,
     required:true
+},
+token:{
+    type:String,
+    required:true
 }
 },{timestamps:true})
 

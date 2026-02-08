@@ -113,36 +113,36 @@ const Retailer = () => {
             ))}
           </div>
         </section>
-  
-        <section className='grid grid-cols-1 sm:grid-cols-3'>
 
-        <section className="rounded-2xl bg-white p-4 border border-gray-200 m-6">
-          <div className='flex flex-row justify-between'>
-            <div className='flex gap-2'>
-              <span className='text-green-500'>
-                <TrendingUpIcon />
-              </span>
-              <h1 className='text-xl font-medium'>SALES TREND</h1>
+        <section className='grid grid-cols-1 md:grid-cols-3 gap-5 m-6 lg:grid-cols-3 sm:grid-cols-2'>
+          <section className="rounded-2xl bg-white p-4 border border-gray-200 gap-2">
+            <div className='flex flex-row justify-between'>
+              <div className='flex gap-2'>
+                <span className='text-green-500'>
+                  <TrendingUpIcon />
+                </span>
+                <h1 className='text-xl font-medium'>SALES TREND</h1>
+              </div>
+              <div className='flex '>
+                <button className='rounded-xl px-2 bg-green-200 text-green-600 font-medium text-xs  hover:border-green-600 hover:shadow-md hover:bg-green-800 transition-all'> Sales</button>
+                <button className='rounded-xl px-2 bg-gray-200 text-gray-600 text-xs font-medium   hover:border-gray-600 hover:shadow-md hover:bg-gray-300 transition-all'>Profit</button>
+              </div>
             </div>
-            <div className='flex  gap-2'>
-              <button className='rounded-xl px-2 bg-green-400 text-green-200 text-xs font-light   hover:border-green-600 hover:shadow-md hover:bg-green-800 transition-all'> Sales</button>
-              <button className='rounded-xl px-2 bg-gray-400 text-gray-600 text-xs font-light   hover:border-gray-600 hover:shadow-md hover:bg-gray-300 transition-all'>Profit</button>
+          <div className="">
+   <MedicineSalesChart />
+</div>
+
+            <hr className='text-gray-300' />
+            <div className='mt-4 flex justify-between'>
+              <span className='flex flex-row gap-2 items-center'>
+                <h1 className='text-gray-600 text-xs'>Avg Margin</h1>
+                <p className='text-green-600 text-xs font-medium'>22.4%</p></span>
+              <span className=''><button className='bg-green-500 p-2 rounded-xl text-xs text-green-200 font-medium'>Best: Dolo 650</button></span>
             </div>
-          </div>
-          <div className='w-full max-w-lg'>
-            <MedicineSalesChart />
-          </div>
-          <hr className='text-gray-300' />
-          <div className='mt-4 flex justify-between'>
-            <span className='flex flex-row gap-2 items-center'>
-              <h1 className='text-gray-600 text-xs'>Avg Margin</h1>
-              <p className='text-green-600 text-xs font-medium'>22.4%</p></span>
-            <span className=''><button className='bg-green-500 p-2 rounded-xl text-xs text-green-200 font-medium'>Best: Dolo 650</button></span>
-          </div>
 
-        </section>
+          </section>
 
-          <section className='bg-white border border-gray-200 rounded-xl p-4 m-6'>
+          <section className='bg-white border border-gray-200 rounded-xl p-4 gap-2'>
             <div className='flex flex-row justify-between  mb-6 items-center'>
               <span className='flex flex-row gap-2'>
                 <AssignmentTurnedInIcon className='text-amber-600' />
@@ -206,8 +206,8 @@ const Retailer = () => {
 
             </div>
           </section>
- <section className="rounded-2xl bg-white p-4 m-6 border border-gray-200">
-                <span className='text-xs font-bold text-gray-400'>COMMAND CENTER  ACTIONS</span>
+          <section className="rounded-2xl bg-white p-4  border border-gray-200">
+            <span className='text-xs font-bold text-gray-400'>COMMAND CENTER  ACTIONS</span>
 
             <div className="grid grid-cols-2 gap-6 mt-2">
               {/* NEW BILL */}
@@ -257,51 +257,65 @@ const Retailer = () => {
 
             </div>
           </section>
-     
-  </section>
-  <section className='grid grid-cols '>
-       <section className='bg-green-50 border border-green-200 rounded-xl p-4 m-6'>
-        <div className='flex flex-row gap-2 items-center justify-between'>
-          <span className='flex gap-2  items-center text-green-400'>
-            <AutoAwesomeIcon/>
-            <h4 className='text-md font-semibold'>SMART ORDER SUGGESTIONS</h4>
-          </span>
-                 <div className='flex gap-2'>
-          <button className='rounded-lg bg-green-400 p-2 text-green-50'>OPTIMIZED</button>
-          <button className='text-green-500 underline text-sm font-semibold cursor-pointer'>View Comparison</button>
-          </div>
-        </div>
-        <div className=''>       
-          
-          <section className='bg-white rounded-lg p-4 m-6'>
 
-          <div>
-           <div >
-            <h1 className='text-lg font-normal'>Paracetamol 500mg (Strip of 10)</h1>
-            <div className='flex sm:flex-row flex-col justify-between  gap-2'>
-             <div className='flex flex-row sm:flex-col gap-2'>
-              <span className='text-xs font-medium text-gray-400'>Order :
-           <span className='text-gray-600 font-bold text-[12px]'> 12 Strips</span> </span>
-            <span className='text-gray-400 font-medium text-[12px]'>Best Wholesaler :
-           <span className='text-green-400 text-xs rounded-full whitespace-nowrap'> ABC Pharma</span></span>
-         </div> 
-           <div className='flex gap-2'>
-            <span className='text-xs flex flex-col text-green-400 font-medium'>
-              <span>25% Margin</span>
-            <span className='text-gray-500 text-xs'>Avg Sale 4/day</span></span>
-            <div className='bg-green-600 px-0.5  text-green-100 rounded-lg'><AddShoppingCartIcon/></div>
-           </div>
-  </div>
-           </div>
-          </div>
-          <div></div>
-         
+        </section>
+        <section className='grid grid-cols '>
+          <section className='bg-green-50 border border-green-200 rounded-xl p-4 m-6'>
+            <div className='flex flex-row gap-2 items-center justify-between'>
+              <span className='flex gap-2  items-center text-green-400'>
+                <AutoAwesomeIcon />
+                <h4 className='text-md font-semibold'>SMART ORDER SUGGESTIONS</h4>
+              </span>
+              <div className='flex gap-2'>
+                <button className='rounded-lg bg-green-400 p-2 text-green-50'>OPTIMIZED</button>
+                <button className='text-green-500 underline text-sm font-semibold cursor-pointer'>View Comparison</button>
+              </div>
+            </div>
+            <div className=''>
+
+              <section className='flex flex-col p-6'>
+                  <div className='bg-gray-100 rounded-xl p-4'>
+                    <h1 className='text-md font-sans font-medium'>Paracetamol 500mg (Strip of 10)</h1>
+                    <div className='flex sm:flex-row flex-col justify-between  gap-2'>
+                      <div className='flex flex-row sm:flex-col gap-2'>
+                        <span className='text-xs font-medium text-gray-400'>Order :
+                          <span className='text-gray-600 font-bold text-[12px]'> 12 Strips</span> </span>
+                        <span className='text-gray-400 font-medium text-[12px]'>Best Wholesaler :
+                          <span className='text-green-400 text-md font-medium rounded-full whitespace-nowrap'> ABC Pharma</span></span>
+                      </div>
+                      <div className='flex gap-2 items-center'>
+                        <span className='text-xs flex flex-col text-green-400 font-medium'>
+                          <span>25% Margin</span>
+                          <span className='text-gray-500 text-xs'>Avg Sale 4/day</span></span>
+                        <div className='bg-green-600 px-1  text-green-100 rounded-lg'><AddShoppingCartIcon /></div>
+                      </div>
+                    </div>
+                     </div>
+                   <div className=' flex flex-col mt-6 bg-gray-200 p-4 rounded-xl' >
+                    <h1 className='text-md font-sans font-medium'>Amoxicilin 200mg (Capsules)</h1>
+                    <div className='flex flex-row gap-2 mt-4'>
+                      <span className='text-xs bg-orange-200 w-fit px-2 font-medium rounded text-orange-600'>FASTER DELIVERY : 4HRS </span>
+                   <span className='text-xs bg-blue-200 text-blue-600 w-fit px-2 rounded font-medium'>ATL BRAND AVAILABLE</span>
+                    </div>
+                  </div>
+             
+                 <div className=' flex flex-col mt-6 bg-gray-200 p-4 rounded-xl' >
+                    <h1 className='text-md font-sans font-medium'>Cetirizine 10mg </h1>
+                    <div className='flex sm:flex-row flex-col justify-between  gap-2'>
+                      <div className='flex flex-row gap-2 mt-4'>
+                        <span className='text-xs font-medium text-gray-400'>Order :
+                          <span className='text-gray-600 font-bold text-[12px]'> 5 Strips</span> </span>
+                        <span className='text-gray-400 font-medium text-[12px]'>Supplier:
+                          <span className='text-gray-600 font-medium text-xs rounded-full whitespace-nowrap'> City Distribution</span></span>
+                      </div>
+                     
+                    </div>
+                  </div>
+              </section>
+            </div>
           </section>
-        </div>
 
-       </section>
-       
-       </section>
+        </section>
       </div>
 
 
