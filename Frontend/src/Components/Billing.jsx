@@ -4,7 +4,7 @@ const Billing = () => {
   // const [open,setOpen] = useState(true);
 
   return (
-    <div className="flex gap-6 items-start">
+    <div className="flex   gap-6 items-start m-8 pr-4">
 
       {/* LEFT COLUMN: SIDEBAR */}
       <div className="w-[20%] flex flex-col gap-4 sticky top-0">
@@ -51,7 +51,7 @@ const Billing = () => {
 
           {/* HEADER */}
           <div className="flex justify-between items-center px-5 py-3 border-b">
-            <h2 className="font-semibold text-lg">simran ghhhh</h2>
+            <h2 className="font-semibold text-lg">Current Order</h2>
 
               <div className="flex items-center gap-3 text-sm">
                 <div className="px-4 py-1.5 border rounded-full text-gray-600
