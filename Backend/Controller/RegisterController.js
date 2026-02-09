@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt")
 const RegisterModel = require("../model/Register.model")
 const RegisterController = async (req,res,next)=>{
     console.log("registercontroller hit")
-    const registerData = req.body
+    const registerData = RegisterValidation.validateAsync(req.body)
 
     //extract data
     const {username,password,confirmpassword} = registerData
@@ -17,16 +17,18 @@ const RegisterController = async (req,res,next)=>{
     }
 
     const hashedPassword = await bcrypt.hash(password,10)
+    const jwtToken = jwt.sign(password, "simran", { expiresIn: "1h" });
+
     const NewData = new RegisterModel({
         username:username,
         password:hashedPassword,
+        tokern:jwtToken
     })
 
-const jwtToken = jwt.sign({ id: NewData._id, username: username }, "simran", { expiresIn: "1h" });
     await NewData.save()
 
 return res.status(200).json({
-  token: jwtToken
+message:"registration successfull"
 });
 
 
