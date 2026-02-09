@@ -1,23 +1,30 @@
-import React from 'react';
-import { Button, Checkbox, Form, Input } from 'antd';
+import React, { useState } from 'react';
+import { Button, Form, Input } from 'antd';
 import axios from 'axios';
 
 const Register = () => {
-const onFinish = values => {
-  console.log('Success:', values);
-  try{
-      const res = axios.post("http://localhost:5001/api/registerroute/registercontroller",values)
-      console.log("code commit by b",res)
-      .then((res)=>{
-        console.log(res.jwtToken)
-      }).catch((err)=>{
-        console.log(" jwt res failed ", err)
-      })
+  const [state,setState] = useState()
+const onFinish = async (values) => {
+  console.log("Success:", values);
 
-  }catch{(err)=>{
-    console.log("api is failed connection",err)
-  }}
+  try {
+    const res = await axios.post(
+      "http://localhost:5001/api/registerroute/registercontroller",
+      values
+    );
+
+    console.log("successful registration", res.data);
+    setState(res.data.message);
+
+  } catch (err) {
+
+    console.log("ERROR MESSAGE:", err.response?.data?.message);
+
+    setState(err?.response?.data?.message);
+  }
 };
+
+
 const onFinishFailed = errorInfo => {
   console.log('Failed:', errorInfo);
 };
@@ -54,9 +61,6 @@ const onFinishFailed = errorInfo => {
           <Input.Password />
         </Form.Item>
 
-    <Form.Item name="remember" valuePropName="checked">
-      <Checkbox>Remember me</Checkbox>
-    </Form.Item>
 
     <Form.Item>
       <Button type="primary" htmlType="submit">
@@ -65,6 +69,7 @@ const onFinishFailed = errorInfo => {
     </Form.Item>
   </Form>
   </div>
+  <h1 className='text-black'>{state}</h1>
   </section>
 </>)}
 export default Register;

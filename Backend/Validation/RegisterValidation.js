@@ -1,4 +1,4 @@
-const Joi = require("Joi")
+const Joi = require("joi")
 const RegisterValidation =  Joi.object({
   username: Joi.string()
     .min(3)
