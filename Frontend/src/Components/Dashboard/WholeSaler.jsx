@@ -8,6 +8,9 @@ const WholeSaler = () => {
         <div className="flex gap-6 w-full max-w-6xl mx-auto items-start">
 
           <h1> hiiiii</h1>
+
+
+          <h1>kirnn</h1>
           </div>
     </div>
     
