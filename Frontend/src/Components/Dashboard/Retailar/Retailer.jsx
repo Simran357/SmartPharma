@@ -1,6 +1,6 @@
-import React, {useNavigate} from 'react'
-
-import { Upload, ReceiptLong,AddShoppingCart, EventBusy, TrendingUp,Assessment,AutoAwesome,AssignmentTurnedIn, CurrencyRupee, Inventory, WarningAmber} from '@mui/icons-material';
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { Upload, ReceiptLong, Verified, CloudOutlined, Error, LocalFireDepartment, AddShoppingCart, EventBusy, TrendingUp, Assessment, AutoAwesome, AssignmentTurnedIn, CurrencyRupee, Inventory, WarningAmber } from '@mui/icons-material';
 import MedicineSalesChart from './SubComponent/MedicineSalesChart';
 export const stats = [
   {
@@ -35,7 +35,7 @@ export const stats = [
   {
     id: 4,
     title: "Low Stock",
-    icon: <WarningAmber/>,
+    icon: <WarningAmber />,
     value: "24 Items",
     disc: "Items below safety threshold",
     iconBg: "text-yellow-400",
@@ -65,16 +65,16 @@ export const stats = [
   },
 ];
 const Retailer = () => {
-const navigate =  useNavigate()
+  const navigate = useNavigate()
   return (
     <>
       <div className=''>
-        <section className="mt-6">
-          <div className="grid gap-4  md:grid-cols-3  sm:grid-cols-3 lg:grid-cols-6  p-6">
+        <section className="mt-4">
+          <div className="grid gap-4  md:grid-cols-3  sm:grid-cols-3 lg:grid-cols-5  p-6">
             {stats.map((item, i) => (
               <div
                 key={i}
-                className={`rounded-xl bg-white p-2 flex flex-col justify-between border border-gray-200
+                className={`rounded-xl bg-gray p-2 flex flex-col justify-between border border-gray-200 shadow-lg
  
   ${item.border}
   hover:scale-[1.02] transition-all duration-200`}              >
@@ -105,7 +105,7 @@ const navigate =  useNavigate()
         </section>
 
         <section className='grid grid-row md:grid-cols-2 gap-2 m-6 lg:grid-cols-3 sm:grid-cols-2'>
-          <section className="rounded-2xl bg-white p-4 border max-h-3xl border-gray-200 gap-2">
+          <section className="rounded-2xl bg-gray-50 shadow-xl p-4 border max-h-3xl border-gray-200 gap-2">
             <div className='flex flex-row justify-between'>
               <div className='flex gap-2'>
                 <span className='text-green-500'>
@@ -127,12 +127,13 @@ const navigate =  useNavigate()
               <span className='flex flex-row gap-2 items-center'>
                 <h1 className='text-gray-600 text-xs'>Avg Margin</h1>
                 <p className='text-green-600 text-xs font-medium'>22.4%</p></span>
-              <span className=''><button className='bg-green-500 p-2 rounded-xl text-xs text-green-200 font-medium'>Best: Dolo 650</button></span>
+              <span className=''>
+                <button className='bg-green-500 p-2 rounded-xl text-xs text-green-200 font-medium'>Best: Dolo 650</button></span>
             </div>
 
           </section>
 
-          <section className='bg-white border border-gray-200 rounded-xl p-6 max-w-full max-h-full'>
+          <section className='bg-gray-50 shadow-xl border border-gray-200 rounded-xl p-6 max-w-full max-h-full'>
             <div className='flex flex-row justify-between gap-2 items-center'>
               <span className='flex flex-row  gap-4 '>
                 <AssignmentTurnedIn className='text-amber-600' />
@@ -196,7 +197,8 @@ const navigate =  useNavigate()
 
             </div>
           </section>
-          <section className="rounded-2xl bg-white p-8 max-h-full max-w-full border border-gray-200">
+          <section className="rounded-xl bg-gray-50 shadow-xl  p-8 max-h-full max-w-full border border-gray-200">
+
             <span className='text-xs font-bold text-gray-400'>COMMAND CENTER  ACTIONS</span>
 
             <div className="grid grid-cols-2 gap-4 mt-4">
@@ -215,9 +217,12 @@ const navigate =  useNavigate()
               {/* CREATE ORDER */}
               <button className="group rounded-2xl border border-green-200 bg-grey-50  p-4
       flex flex-col items-center justify-center 
-      hover:border-green-600 hover:shadow-lg hover:bg-green-50 transition-all">
+      hover:border-green-600 hover:shadow-lg hover:bg-green-50 transition-all"
+                onClick={() => {
+                  navigate("/order")
+                }}>
                 <div className="w-14 h-14 rounded-full  text-green-700
-        flex items-center justify-center text-xl">
+        flex items-center justify-center text-xl" >
                   <AddShoppingCart />
                 </div>
                 <span className="font-semibold text-green-700">CREATE ORDER</span>
@@ -236,8 +241,7 @@ const navigate =  useNavigate()
               <button className="group rounded-2xl border border-green-200 bg-grey-50 p-4
       flex flex-col items-center justify-center
       hover:border-green-600 hover:shadow-lg hover:bg-green-50 transition-all"
-      onClick={()=>navigate("/order")}
-      >
+              >
 
                 <div className="w-14 h-14 rounded-full  text-green-700
         flex items-center justify-center text-xl">
@@ -251,6 +255,8 @@ const navigate =  useNavigate()
           </section>
 
         </section>
+
+
         <section className='grid grid-cols max-w-5xl '>
           <section className='bg-green-50 border border-green-200 rounded-xl p-4 m-6'>
             <div className='flex flex-row gap-2 items-center justify-between'>
@@ -264,8 +270,8 @@ const navigate =  useNavigate()
               </div>
             </div>
 
-            <section className='flex flex-col p-6'>
-              <div className='bg-gray-100 rounded-xl p-4'>
+            <section className='flex flex-col p-6 gap-4'>
+              <div className='bg-gray-50 shadow-xl border border-gray-300 rounded-xl  p-6'>
                 <h1 className='text-md font-sans font-medium'>Paracetamol 500mg (Strip of 10)</h1>
                 <div className='flex sm:flex-row flex-col justify-between  gap-2'>
                   <div className='flex flex-row sm:flex-col gap-2'>
@@ -282,15 +288,14 @@ const navigate =  useNavigate()
                   </div>
                 </div>
               </div>
-              <div className=' flex flex-col mt-6 bg-gray-200 p-4 rounded-xl' >
+              <div className='bg-gray-50 shadow-xl border border-gray-300 rounded-xl  p-6'>
                 <h1 className='text-md font-sans font-medium'>Amoxicilin 200mg (Capsules)</h1>
                 <div className='flex flex-row gap-2 mt-4'>
                   <span className='text-xs bg-orange-200 w-fit px-2 font-medium rounded text-orange-600'>FASTER DELIVERY : 4HRS </span>
                   <span className='text-xs bg-blue-200 text-blue-600 w-fit px-2 rounded font-medium'>ATL BRAND AVAILABLE</span>
                 </div>
               </div>
-
-              <div className=' flex flex-col mt-6 bg-gray-200 p-4 rounded-xl' >
+              <div className='bg-gray-50 shadow-xl border border-gray-300 rounded-xl  p-6'>
                 <h1 className='text-md font-sans font-medium'>Cetirizine 10mg </h1>
                 <div className='flex sm:flex-row flex-col justify-between  gap-2'>
                   <div className='flex flex-row gap-2 mt-4'>
@@ -299,17 +304,113 @@ const navigate =  useNavigate()
                     <span className='text-gray-400 font-medium text-[12px]'>Supplier:
                       <span className='text-gray-600 font-medium text-xs rounded-full whitespace-nowrap'> City Distribution</span></span>
                   </div>
-
                 </div>
               </div>
-            </section>
-            <section>
-
-
             </section>
           </section>
 
         </section>
+        <section className=' p-6 '>
+          <div className='bg-gray-50 shadow-xl border border-gray-300 rounded-xl  p-6'>
+            <h1 className="text-xs text-[#d5d3d3] font-medium">STOCK VELOCITY</h1>
+            <div className="flex flex-row  mt-4 gap-2 justify-between">
+              <div className="flex flex-col w-full">
+                <span className="text-red-500 flex items-center gap-2 text-xs ">
+                  <LocalFireDepartment />
+                  <p>FAST MOVING</p>
+                </span>
+                <div className="flex flex-col gap-2 justify-between mt-2 ">
+                  <span className=" bg-[#f7eba8] p-2 gap-4 flex justify-between  border-2 border-amber-300 rounded-xl">
+                    <h1 className="text-sm text-black ">Dolo 650</h1>
+                    <h1 className="text-sm text-red-700">12/d</h1>
+                  </span>
+                  <span className=" bg-[#f7eba8] p-2 rounded-xl gap-4 border-2 border-amber-300  flex justify-between ">
+                    <h1 className="text-sm text-black ">Pan-D</h1>
+                    <h1 className="text-sm text-red-700">8/d</h1>
+                  </span>
+
+                </div>
+              </div>
+              <div className="flex flex-col w-full">
+                <span className="text-red-500 flex items-center gap-2 text-xs">
+                  <CloudOutlined />
+                  <p>DEAD STOCK</p>
+                </span>
+                <div className="flex flex-col gap-2 justify-between mt-2 ">
+
+                  <span className=" bg-red-100 p-2 flex justify-between  gap-2 border-2 border-red-300 rounded-xl">
+                    <h1 className="text-sm text-black ">Zyrtec Syr</h1>
+                    <h1 className="text-sm text-red-700">60d +</h1>
+                  </span>
+                  <span className="bg-red-300 p-2 flex justify-between  border border-red-500 rounded-xl">
+                    <button className="text-sm text-red-700 font-medium" >Clearance Sale</button>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        <section className=' p-6 mt-2'>
+          <div className='bg-gray-50 shadow-xl border border-gray-200 rounded-xl  p-6'>
+            <h1 className="text-sm text-[#6e6e6e]  font-medium">OUTSTANDING & COMPLIANCE</h1>
+            <div className="flex flex-col gap-2 mt-2 justify-between">
+              <h1 className="text-[14px] text-[#6e6e6e]  font-medium">SUPPLIER DUES</h1>
+              <div className="">
+                <span className=" flex flex-row justify-between   items-center gap-2 text-xs ">
+                  <h1 className="text-[14px] font-sans font-medium text-black">Wellness Medico</h1>
+                  <span className="flex flex-row">
+                    <span className="text-red-500 flex items-center">
+                      <CurrencyRupee fontSize="" /></span>
+                    <h2 className="text-sm text-red-500 font-medium">24.500</h2>
+                  </span>
+                </span>
+                <span className="text-black mt-2 flex flex-row justify-between   items-center gap-2 text-xs ">
+                  <h1 className="text-[14px] font-sans font-medium">City Distribution</h1>
+                  <span className="flex flex-row">
+                    <span className="text-black flex items-center">
+                      <CurrencyRupee fontSize="" /></span>
+                    <h2 className="text-sm font-medium">12.800</h2>
+                  </span>
+                </span>
+                <hr className="mt-4 text-gray-300" />
+                <div>
+                </div>
+              </div>
+              <div className="flex  p-2 rounded-xl border-2 border-[#36a11533] bg-[#36a11533]">
+                <span className="text-green-800 flex items-center gap-2">
+                  <Verified />
+
+                  <span className="">
+                    <h1 className="text-green-800 font-medium">GST Ready</h1>
+                    <span className="text-green-600 font-medium">Quarter fillings done</span>
+                  </span>
+                </span>
+
+              </div>
+              <div className="flex  rounded-xl border-2 gap-2 border-[#efd5132f] p-2 bg-[#efd5132f]">
+                <span className="text-yellow-600 flex items-center gap-2">
+                  <Error />
+                  <span className="">
+                    <h1 className="text-yellow-700 text-sm font-medium">License Alert</h1>
+                    <span className="text-yellow-600 text-sm font-medium">Renew Narcotic in 12d</span>
+                  </span>
+                </span>
+              </div>
+
+              <hr className="mt-2 text-gray-300" />
+              <span className="flex gap-2 justify-between">
+                <h1 className="text-sm text-gray-500 font-medium">TOTAL PAYABLE</h1>
+                <span className="flex items-center">
+                  <CurrencyRupee fontSize="" />
+                  37,300
+                </span>
+              </span>
+            </div>
+          </div>
+        </section>
+
       </div>
 
 
