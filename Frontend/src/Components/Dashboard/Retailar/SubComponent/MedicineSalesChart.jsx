@@ -67,7 +67,13 @@ const MedicineSalesChart = () => {
     },
   };
 
-  return <Bar data={data} options={options} />;
+  return <Bar
+  data={data}
+  options={options}
+  height={200}
+  width={300}
+/>
+;
 };
 
 export default MedicineSalesChart;

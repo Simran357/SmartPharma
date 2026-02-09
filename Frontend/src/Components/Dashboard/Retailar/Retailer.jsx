@@ -80,7 +80,7 @@ const Retailer = () => {
     <>
       <div className=''>
         <section className="mt-6">
-          <div className="grid gap-4  grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 p-6">
+          <div className="grid gap-4  md:grid-cols-3  sm:grid-cols-3 lg:grid-cols-6 p-6">
             {stats.map((item, i) => (
               <div
                 key={i}
@@ -114,8 +114,8 @@ const Retailer = () => {
           </div>
         </section>
 
-        <section className='grid grid-cols-1 md:grid-cols-3 gap-5 m-6 lg:grid-cols-3 sm:grid-cols-2'>
-          <section className="rounded-2xl bg-white p-4 border border-gray-200 gap-2">
+        <section className='grid grid-row md:grid-cols-2 gap-2 m-6 lg:grid-cols-3 sm:grid-cols-2'>
+          <section className="rounded-2xl bg-white p-4 border max-h-3xl border-gray-200 gap-2">
             <div className='flex flex-row justify-between'>
               <div className='flex gap-2'>
                 <span className='text-green-500'>
@@ -123,12 +123,12 @@ const Retailer = () => {
                 </span>
                 <h1 className='text-xl font-medium'>SALES TREND</h1>
               </div>
-              <div className='flex '>
+              <div className='flex gap-2'>
                 <button className='rounded-xl px-2 bg-green-200 text-green-600 font-medium text-xs  hover:border-green-600 hover:shadow-md hover:bg-green-800 transition-all'> Sales</button>
                 <button className='rounded-xl px-2 bg-gray-200 text-gray-600 text-xs font-medium   hover:border-gray-600 hover:shadow-md hover:bg-gray-300 transition-all'>Profit</button>
               </div>
             </div>
-          <div className="">
+          <div className='mt-8 lg:mt-20'>
    <MedicineSalesChart />
 </div>
 
@@ -142,16 +142,16 @@ const Retailer = () => {
 
           </section>
 
-          <section className='bg-white border border-gray-200 rounded-xl p-4 gap-2'>
-            <div className='flex flex-row justify-between  mb-6 items-center'>
-              <span className='flex flex-row gap-2'>
+          <section className='bg-white border border-gray-200 rounded-xl p-6 max-w-full max-h-full'>
+            <div className='flex flex-row justify-between gap-2 items-center'>
+              <span className='flex flex-row  gap-4 '>
                 <AssignmentTurnedInIcon className='text-amber-600' />
                 <h1 className='text-lg font-medium  text-gray-800'>INVENTORY PULSE</h1>
               </span>
               <button className='text-green-500 underline text-sm font-semibold cursor-pointer'>Auto-Reorder</button>
 
             </div>
-            <div className='grid grid-cols-2 gap-6 relative'>
+            <div className='grid grid-cols-2 gap-6 relative mt-20 md:mt-30'>
               <div className="absolute left-1/2 top-0 h-full w-px bg-gray-200">
               </div>
               <div className="flex flex-col justify-between text-sm mb-2">
@@ -206,13 +206,13 @@ const Retailer = () => {
 
             </div>
           </section>
-          <section className="rounded-2xl bg-white p-4  border border-gray-200">
+          <section className="rounded-2xl bg-white p-8 max-h-full max-w-full border border-gray-200">
             <span className='text-xs font-bold text-gray-400'>COMMAND CENTER  ACTIONS</span>
 
-            <div className="grid grid-cols-2 gap-6 mt-2">
+            <div className="grid grid-cols-2 gap-4 mt-4">
               {/* NEW BILL */}
-              <button className="group rounded-2xl border border-green-200 bg-grey-50 p-6
-      flex flex-col items-center justify-center gap-2
+              <button className="group rounded-2xl border border-green-200 bg-grey-50 p-4
+      flex flex-col items-center justify-center 
       hover:border-green-600 hover:shadow-lg hover:bg-green-50 transition-all">
                 <div className="w-14 h-14 rounded-full  text-green-700
         flex items-center justify-center text-xl">
@@ -223,8 +223,8 @@ const Retailer = () => {
               </button>
 
               {/* CREATE ORDER */}
-              <button className="group rounded-2xl border border-green-200 bg-grey-50  p-6
-      flex flex-col items-center justify-center gap-2
+              <button className="group rounded-2xl border border-green-200 bg-grey-50  p-4
+      flex flex-col items-center justify-center 
       hover:border-green-600 hover:shadow-lg hover:bg-green-50 transition-all">
                 <div className="w-14 h-14 rounded-full  text-green-700
         flex items-center justify-center text-xl">
@@ -232,8 +232,8 @@ const Retailer = () => {
                 </div>
                 <span className="font-semibold text-green-700">CREATE ORDER</span>
               </button>
-              <button className="group rounded-2xl border border-green-200 bg-grey-50 p-6
-      flex flex-col items-center justify-center gap-2
+              <button className="group rounded-2xl border border-green-200 bg-grey-50 p-4
+      flex flex-col items-center justify-center 
       hover:border-green-600 hover:shadow-lg  hover:bg-green-50 transition-all">
                 <div className="w-14 h-14 rounded-full  text-green-700
         flex items-center justify-center text-xl">
@@ -243,8 +243,8 @@ const Retailer = () => {
               </button>
 
               {/* REPORT HUB */}
-              <button className="group rounded-2xl border border-green-200 bg-grey-50 p-6
-      flex flex-col items-center justify-center gap-2
+              <button className="group rounded-2xl border border-green-200 bg-grey-50 p-4
+      flex flex-col items-center justify-center
       hover:border-green-600 hover:shadow-lg hover:bg-green-50 transition-all">
 
                 <div className="w-14 h-14 rounded-full  text-green-700
@@ -259,7 +259,7 @@ const Retailer = () => {
           </section>
 
         </section>
-        <section className='grid grid-cols '>
+        <section className='grid grid-cols max-w-5xl '>
           <section className='bg-green-50 border border-green-200 rounded-xl p-4 m-6'>
             <div className='flex flex-row gap-2 items-center justify-between'>
               <span className='flex gap-2  items-center text-green-400'>
@@ -271,7 +271,6 @@ const Retailer = () => {
                 <button className='text-green-500 underline text-sm font-semibold cursor-pointer'>View Comparison</button>
               </div>
             </div>
-            <div className=''>
 
               <section className='flex flex-col p-6'>
                   <div className='bg-gray-100 rounded-xl p-4'>
@@ -312,7 +311,10 @@ const Retailer = () => {
                     </div>
                   </div>
               </section>
-            </div>
+          <section>
+            
+
+          </section>
           </section>
 
         </section>
