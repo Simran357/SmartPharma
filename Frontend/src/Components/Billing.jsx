@@ -4,7 +4,7 @@ const Billing = () => {
   // const [open,setOpen] = useState(true);
 
   return (
-    <div className="flex w-full  gap-6 items-start m-8">
+    <div className="flex gap-6 items-start">
 
       {/* LEFT COLUMN: SIDEBAR */}
       <div className="w-[20%] flex flex-col gap-4 sticky top-0">
