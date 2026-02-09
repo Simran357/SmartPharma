@@ -1,5 +1,5 @@
 // import { useState } from "react";
-
+import {CurrencyRupeeIcon,} from '@mui/icons-material';
 const Billing = () => {
   // const [open,setOpen] = useState(true);
 
@@ -21,7 +21,7 @@ const Billing = () => {
             </div>
 
             <button className="bg-green-100 text-green-700 px-3 py-2 rounded-md font-medium flex items-center gap-2">
-              💰 New Billing
+              <CurrencyRupeeIcon/> New Billing
             </button>
 
             <button className="px-3 py-2 rounded-md hover:bg-gray-100 flex items-center gap-2">
