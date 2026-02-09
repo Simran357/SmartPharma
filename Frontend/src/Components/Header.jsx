@@ -32,7 +32,8 @@ const Header = () => {
     { text: 'Billing', path: '/Billing' },
     { text: 'Cart', path: '/Cart' },
     {text:"Login", path:"/Login"},
-    {text:"Register",path:"/Register"}
+    {text:"Register",path:"/Register"},
+    {text:"Order",path:"/Order"}
   ]
 
   const isActive = (path) => location.pathname === path

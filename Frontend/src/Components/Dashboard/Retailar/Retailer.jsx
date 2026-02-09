@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useNavigate} from 'react'
 
 import { Upload, ReceiptLong,AddShoppingCart, EventBusy, TrendingUp,Assessment,AutoAwesome,AssignmentTurnedIn, CurrencyRupee, Inventory, WarningAmber} from '@mui/icons-material';
 import MedicineSalesChart from './SubComponent/MedicineSalesChart';
@@ -65,8 +65,7 @@ export const stats = [
   },
 ];
 const Retailer = () => {
-
-
+const navigate =  useNavigate()
   return (
     <>
       <div className=''>
@@ -236,7 +235,9 @@ const Retailer = () => {
               {/* REPORT HUB */}
               <button className="group rounded-2xl border border-green-200 bg-grey-50 p-4
       flex flex-col items-center justify-center
-      hover:border-green-600 hover:shadow-lg hover:bg-green-50 transition-all">
+      hover:border-green-600 hover:shadow-lg hover:bg-green-50 transition-all"
+      onClick={()=>navigate("/order")}
+      >
 
                 <div className="w-14 h-14 rounded-full  text-green-700
         flex items-center justify-center text-xl">
