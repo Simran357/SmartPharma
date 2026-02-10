@@ -1,20 +1,20 @@
 import React from "react";
 import LocalShippingOutlined from '@mui/icons-material/LocalShippingOutlined';
-import AddShoppingCart from '@mui/icons-material/AddShoppingCart'; 
+import AddShoppingCart from '@mui/icons-material/AddShoppingCart';
 const Cart = () => {
   return (
-    <div className="min-h-screen bg-[#f6f9f6] p-6">
+    <div className="min-h-screen  p-6">
       <div className="max-w-7xl mx-auto">
 
         {/* HEADER */}
-       
+
         <h1 className="text-2xl font-bold mb-1">Review Your Order</h1>
         <p className="text-sm text-green-600 mb-6">
           GSTIN: 29AABCC1234F1Z5 • Verified Retailer
         </p>
 
         {/* STEPS */}
-        <div className="flex items-center gap-6 mb-8 text-sm">
+        <div className="flex items-center bg-gray-50 rounded shadow gap-6 mb-8 text-sm">
           <span className="flex items-center gap-2 text-green-600 font-medium">
             <span className="w-7 h-7 rounded-full bg-green-600 text-white flex items-center justify-center">
               1
@@ -33,7 +33,7 @@ const Cart = () => {
 
             {/* CART */}
             <div className="bg-white rounded-xl shadow-sm p-5">
-              <h2 className="font-semibold mb-4"><AddShoppingCart/> Items in Cart (3)</h2>
+              <h2 className="font-semibold mb-4"><AddShoppingCart /> Items in Cart (3)</h2>
 
               <div className="grid grid-cols-7 text-l text-gray-500 border-b pb-2">
                 <span>Medicine</span>
@@ -102,7 +102,7 @@ const Cart = () => {
 
               <div className="bg-white rounded-xl shadow-sm p-5">
                 <h3 className="font-bold text-black text-2xl mb-4">
-                  <LocalShippingOutlined/> Courier Selection</h3>
+                  <LocalShippingOutlined /> Courier Selection</h3>
 
                 <div className="border border-green-500 rounded-lg p-4 flex justify-between items-center mb-3">
                   <div>
@@ -121,21 +121,21 @@ const Cart = () => {
                 </div>
               </div>
 
-             <div className="bg-white rounded-xl shadow-sm p-5 flex flex-col space-y-4">
-  <h3 className="font-semibold">Warehouse Pickup</h3>
-  <p className="text-xs text-gray-500">
-    Pick up from Bengaluru Central Hub to save shipping.
-  </p>
+              <div className="bg-white rounded-xl shadow-sm p-5 flex flex-col space-y-4">
+                <h3 className="font-semibold">Warehouse Pickup</h3>
+                <p className="text-xs text-gray-500">
+                  Pick up from Bengaluru Central Hub to save shipping.
+                </p>
 
-  <select className="w-full border rounded-lg px-3 py-2 text-sm">
-    <option>Tomorrow, 10:00 AM - 12:00 PM</option>
-    <option>Tomorrow, 12:00 PM - 02:00 PM</option>
-  </select>
+                <select className="w-full border rounded-lg px-3 py-2 text-sm">
+                  <option>Tomorrow, 10:00 AM - 12:00 PM</option>
+                  <option>Tomorrow, 12:00 PM - 02:00 PM</option>
+                </select>
 
-  <button className="w-full bg-green-600 text-white py-2 rounded-lg font-medium">
-    Schedule Pickup
-  </button>
-</div>
+                <button className="w-full bg-green-600 text-white py-2 rounded-lg font-medium">
+                  Schedule Pickup
+                </button>
+              </div>
 
 
             </div>
@@ -162,10 +162,10 @@ const Cart = () => {
                   <span>₹150.00</span>
                 </div>
 
-               
+
                 <div className="flex justify-between text-gray-500">
                   <span>TAX BREAKDOWN</span>
-                  </div>
+                </div>
                 <div className="flex justify-between text-gray-500">
                   <span>CGST (9%)</span>
                   <span>₹68.85</span>
@@ -174,7 +174,7 @@ const Cart = () => {
                   <span>SGST (9%)</span>
                   <span>₹68.85</span>
                 </div>
-                
+
                 <div className="flex justify-between text-gray-500">
                   <span>IGST (0%)</span>
                   <span>₹0.00</span>
@@ -183,14 +183,14 @@ const Cart = () => {
                 <div className="bg-green-50 text-green-700 text-xs p-3  rounded-lg">
                   <b>Total Savings:</b> ₹185.00
                   <p className="mt-1 text-[11px] text-gray-600">
-                  You’ve unlocked 6 free units via active schemes.
-                   </p>
+                    You’ve unlocked 6 free units via active schemes.
+                  </p>
                 </div>
 
                 <div className="flex flex-col text-sm">
-                 <span className="text-gray-500">GRAND TOTAL</span>
-             <span className="font-bold text-4xl">₹1,052.70</span>
-                   </div>
+                  <span className="text-gray-500">GRAND TOTAL</span>
+                  <span className="font-bold text-4xl">₹1,052.70</span>
+                </div>
 
 
                 <button className="w-full bg-green-500 text-white py-3 rounded-lg font-semibold">
@@ -198,7 +198,18 @@ const Cart = () => {
                 </button>
               </div>
             </div>
+
+            {/* Dispatch Info Below Button */}
+            <div className="flex  text-gray-600 text-sm  mt-3 bg-white p-2 rounded shadow">
+              <span className="w-2 h-2 bg-green-600 rounded-full mr-2 inline-block"></span>
+              <span>Dispatch from: Hub BLR-04 (In Stock)</span>
+            </div>
+
+
           </div>
+
+
+
 
         </div>
       </div>
