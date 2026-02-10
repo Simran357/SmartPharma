@@ -1,5 +1,4 @@
 import React from 'react'
-import WarningIcon from '@mui/icons-material/Warning'
 
 export default function StatCard({ title, value, subtitle }) {
   return (
