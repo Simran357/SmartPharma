@@ -16,7 +16,6 @@
     "@mui/material": "^7.3.7",
     "@tailwindcss/vite": "^4.1.18",
     "antd": "^6.2.3",
-
     "axios": "^1.13.4",
     "chart.js": "^4.5.1",
     "chartjs": "^0.3.24",
