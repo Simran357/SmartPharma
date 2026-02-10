@@ -4,6 +4,8 @@ import axios from 'axios';
 
 const Register = () => {
   const [state,setState] = useState()
+  const [getData,setGetData] = useState([])
+// console.log(getData)
 const onFinish = async (values) => {
   console.log("Success:", values);
 
@@ -13,6 +15,13 @@ const onFinish = async (values) => {
       values
     );
 
+    if(res?.data){
+      const data = await axios.get("http://localhost:5001/api/registerroute/GetRegisterdata")
+         console.log(data?.data)
+         if(data){
+          setGetData(data?.data?.data)
+         }
+    }
     console.log("successful registration", res.data);
     setState(res.data.message);
 
@@ -70,6 +79,12 @@ const onFinishFailed = errorInfo => {
   </Form>
   </div>
   <h1 className='text-black'>{state}</h1>
+<h1  className='text-black'>{getData.map((item) => (
+  <div key={item._id}>
+    <p>{item.username}</p>
+  </div>
+))}
+</h1>
   </section>
 </>)}
 export default Register;
