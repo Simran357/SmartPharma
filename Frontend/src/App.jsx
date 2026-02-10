@@ -8,6 +8,7 @@ import Retailer from './Components/Dashboard/Retailar/Retailer'
 import WholeSaler from './Components/Dashboard/WholeSaler'
 import Login from './Components/Dashboard/Form/Login'
 import Register from './Components/Dashboard/Form/Registration'
+import OrderWholesaler from './Components/Dashboard/Retailar/Order/OrderWholesaler'
 
 const App = () => {
   return (
@@ -23,6 +24,8 @@ const App = () => {
         <Route path="Cart" element={<Cart/>} />
         <Route path="Login" element={<Login/>}/>
         <Route path="Register" element={<Register/>}/>
+        <Route path="Order" element={<OrderWholesaler/>}/>
+
       
       </Route>
     </Routes>
