@@ -1,18 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Checkbox, Form, Input } from 'antd';
 import axios from 'axios';
 
 const Login = () => {
-const onFinish = values => {
-  console.log('Success:', values);
-  try{
-      const res = axios.post("http://localhost:5001/api/registerroute/registercontroller",values)
-      console.log("this is a branch code",res)
 
-  }catch{(err)=>{
-    console.log("api is failed connection",err)
-  }}
+  const [state,setState] = useState()
+const onFinish = async (values) => {
+  console.log("Success:", values);
+
+  try {
+    const res = await axios.post(
+      "http://localhost:5001/api/registerroute/registercontroller",
+      values
+    );
+
+    console.log("successful registration", res.data);
+    setState(res.data.message);
+
+  } catch (err) {
+
+   
+    console.log("ERROR MESSAGE:", err.response?.data?.message);
+
+    setState(err?.response?.data?.message);
+  }
 };
+
 const onFinishFailed = errorInfo => {
   console.log('Failed:', errorInfo);
 };
@@ -57,5 +70,6 @@ const onFinishFailed = errorInfo => {
       </Button>
     </Form.Item>
   </Form>
+<div><h1>{state}</h1></div>
 </>)}
 export default Login;
