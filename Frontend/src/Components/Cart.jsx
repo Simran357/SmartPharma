@@ -1,29 +1,51 @@
 import React from "react";
 import LocalShippingOutlined from '@mui/icons-material/LocalShippingOutlined';
 import AddShoppingCart from '@mui/icons-material/AddShoppingCart';
+import EditCalendarRounded from '@mui/icons-material/EditCalendarRounded';
+import SupportAgentRounded from '@mui/icons-material/SupportAgentRounded';
+import Download from '@mui/icons-material/Download';
 const Cart = () => {
   return (
     <div className="min-h-screen  p-6">
       <div className="max-w-7xl mx-auto">
 
-        {/* HEADER */}
+            <div className="mb-6">
+                {/* Heading */}
+              <h1 className="text-2xl font-bold mb-2">
+               Review Your Order
+                </h1>
 
-        <h1 className="text-2xl font-bold mb-1">Review Your Order</h1>
-        <p className="text-sm text-green-600 mb-6">
-          GSTIN: 29AABCC1234F1Z5 • Verified Retailer
-        </p>
+           {/* GST + Button row */}
+         <div className="flex items-center justify-between">
+          <p className="text-sm text-gray-500">
+           GSTIN: 29AABCC1234F1Z5 •<span className="text-green-600"> Verified Retailer</span>
+          </p>
+          <button className="text-sm px-4 py-1.5 border border-gray-500
+           text-black font-medium rounded-md hover:bg-gray-100 transition">
+           <Download/> Download Quote
+           </button>
+            </div>
+            </div>
 
-        {/* STEPS */}
-        <div className="flex items-center bg-gray-50 rounded shadow gap-6 mb-8 text-sm">
-          <span className="flex items-center gap-2 text-green-600 font-medium">
-            <span className="w-7 h-7 rounded-full bg-green-600 text-white flex items-center justify-center">
-              1
-            </span>
-            Review Cart
-          </span>
-          <span className="text-gray-400">2 Logistics</span>
-          <span className="text-gray-400">3 Payment</span>
-        </div>
+          
+     <div className="flex items-center justify-between bg-gray-50 rounded shadow mb-8 text-sm px-4 py-2 w-[450px]">
+        {/* Left */}
+       <span className="flex items-center gap-2 text-green-600 font-medium">
+      <span className="w-7 h-7 rounded-full bg-green-600 text-white flex items-center justify-center">
+            1
+      </span> Review Cart </span>
+
+         {/* Center */}
+         
+         <span className=" text-gray-400 ">
+         2 Logistics
+         </span>
+
+           {/* Right */}
+          <span className="text-gray-400">
+             3 Payment
+           </span>
+           </div>
 
         {/* MAIN GRID */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -33,7 +55,7 @@ const Cart = () => {
 
             {/* CART */}
             <div className="bg-white rounded-xl shadow-sm p-5">
-              <h2 className="font-semibold mb-4"><AddShoppingCart /> Items in Cart (3)</h2>
+              <h2 className="font-semibold mb-4"><AddShoppingCart style={{ color: "green" }} /> Items in Cart (3)</h2>
 
               <div className="grid grid-cols-7 text-l text-gray-500 border-b pb-2">
                 <span>Medicine</span>
@@ -83,7 +105,7 @@ const Cart = () => {
               {/* ITEM 3 */}
               <div className="grid grid-cols-7 items-center py-4 text-sm">
                 <div>
-                  <p className="font-medium">Cetirizine 10mg</p>
+                  <p className="font-medium">Paracetamol 650mg </p>
                   <p className="text-xs text-gray-500">Antihistamine</p>
                 </div>
                 <span>#B11029 <br /> Exp: 08/26</span>
@@ -102,7 +124,7 @@ const Cart = () => {
 
               <div className="bg-white rounded-xl shadow-sm p-5">
                 <h3 className="font-bold text-black text-2xl mb-4">
-                  <LocalShippingOutlined /> Courier Selection</h3>
+                  <LocalShippingOutlined style={{ color: "green" }} /> Courier Selection</h3>
 
                 <div className="border border-green-500 rounded-lg p-4 flex justify-between items-center mb-3">
                   <div>
@@ -122,7 +144,7 @@ const Cart = () => {
               </div>
 
               <div className="bg-white rounded-xl shadow-sm p-5 flex flex-col space-y-4">
-                <h3 className="font-semibold">Warehouse Pickup</h3>
+                <h3 className="font-bold text-black text-2xl">< EditCalendarRounded style={{ color: "green" }}/>  Warehouse Pickup</h3>
                 <p className="text-xs text-gray-500">
                   Pick up from Bengaluru Central Hub to save shipping.
                 </p>
@@ -200,9 +222,14 @@ const Cart = () => {
             </div>
 
             {/* Dispatch Info Below Button */}
-            <div className="flex  text-gray-600 text-sm  mt-3 bg-white p-2 rounded shadow">
-              <span className="w-2 h-2 bg-green-600 rounded-full mr-2 inline-block"></span>
-              <span>Dispatch from: Hub BLR-04 (In Stock)</span>
+            <div className="flex flex-col text-black font-bold text-sm  mt-3 bg-white p-5 rounded shadow">
+              <span className="w-2 h-2  rounded-full mr-2 inline-block"></span>
+              <span><SupportAgentRounded style={{ color: "gray" }} />
+                  Need assistance?</span>
+              
+           <p className="mt- text-gray-600 font-normal">
+             Call our procurement desk +91 80-2234-XXXX
+              </p>
             </div>
 
 
