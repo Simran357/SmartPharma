@@ -12,7 +12,7 @@ export default function Topbar() {
 
         {/* CENTER */}
         <div className="flex-1 flex justify-center">
-          <div className="relative w-[420px]">
+          <div className="relative w-[420]">
             <Search
               size={18}
               className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
