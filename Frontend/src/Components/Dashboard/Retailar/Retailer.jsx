@@ -68,9 +68,10 @@ const Retailer = () => {
   const navigate = useNavigate()
   return (
     <>
-      <div className=''>
-        <section className="mt-4">
-          <div className="grid gap-4  md:grid-cols-3  sm:grid-cols-3 lg:grid-cols-5  p-6">
+    <section className="grid grid-cols-1 lg:grid-cols-3 ms:grid-cols-2 sm:grid-cols-1 gap-6 p-6">
+        <div className="lg:col-span-2  flex flex-col gap-6">
+        <section className="mt-2">
+          <div className="grid gap-4  md:grid-cols-3  sm:grid-cols-3 lg:grid-cols-4  p-6">
             {stats.map((item, i) => (
               <div
                 key={i}
@@ -96,7 +97,7 @@ const Retailer = () => {
                   </span>
 
                 </div>
-                <span className={`text-xs mt-2 lg:whitespace-nowrap  ${item.iconBg} font-50% text-gray-600 `}>
+                <span className={`text-xs mt-2 lg:whitespace  ${item.iconBg} font-50% text-gray-600 `}>
                   {item.disc}
                 </span>
               </div>
@@ -104,7 +105,9 @@ const Retailer = () => {
           </div>
         </section>
 
-        <section className='grid grid-row md:grid-cols-2 gap-2 m-6 lg:grid-cols-3 sm:grid-cols-2'>
+        
+<div className=" flex flex-col gap-6">
+        <section className='grid grid-row md:grid-cols-2 gap-2 m-6 lg:grid-cols-2 sm:grid-cols-2'>
           <section className="rounded-2xl bg-gray-50 shadow-xl p-4 border max-h-3xl border-gray-200 gap-2">
             <div className='flex flex-row justify-between'>
               <div className='flex gap-2'>
@@ -142,7 +145,7 @@ const Retailer = () => {
               <button className='text-green-500 underline text-sm font-semibold cursor-pointer'>Auto-Reorder</button>
 
             </div>
-            <div className='grid grid-cols-2 gap-6 relative mt-20 md:mt-30'>
+            <div className='grid grid-cols-2 gap-6 relative mt-20 '>
               <div className="absolute left-1/2 top-0 h-full w-px bg-gray-200">
               </div>
               <div className="flex flex-col justify-between text-sm mb-2">
@@ -256,7 +259,6 @@ const Retailer = () => {
 
         </section>
 
-
         <section className='grid grid-cols max-w-5xl '>
           <section className='bg-green-50 border border-green-200 rounded-xl p-4 m-6'>
             <div className='flex flex-row gap-2 items-center justify-between'>
@@ -308,8 +310,11 @@ const Retailer = () => {
               </div>
             </section>
           </section>
-
         </section>
+        </div>
+        </div>
+        
+  <div className="flex flex-col gap-6">
         <section className=' p-6 '>
           <div className='bg-gray-50 shadow-xl border border-gray-300 rounded-xl  p-6'>
             <h1 className="text-xs text-[#d5d3d3] font-medium">STOCK VELOCITY</h1>
@@ -410,9 +415,8 @@ const Retailer = () => {
             </div>
           </div>
         </section>
-
-      </div>
-
+</div>
+</section>
 
     </>
   )
