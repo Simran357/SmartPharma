@@ -39,7 +39,7 @@ const onFinishFailed = errorInfo => {
 };
     return(<>
     <section className='m-8 '>
-    <div className='rounded-xl bg-white p-20 flex flex-col justify-between border border-gray-200'>
+    <div className='rounded-xl items-center bg-white p-20 flex flex-col border border-gray-200'>
   <Form
     name="basic"
     labelCol={{ span: 8 }}
@@ -77,14 +77,18 @@ const onFinishFailed = errorInfo => {
       </Button>
     </Form.Item>
   </Form>
-  </div>
+</div>
   <h1 className='text-black'>{state}</h1>
-<h1  className='text-black'>{getData.map((item) => (
+<div className='text-black'>{getData.map((item) => (
   <div key={item._id}>
     <p>{item.username}</p>
   </div>
 ))}
-</h1>
+</div>
+
   </section>
+
+
+
 </>)}
 export default Register;
