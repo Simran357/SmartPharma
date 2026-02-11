@@ -6,6 +6,9 @@ import SupportAgentRounded from '@mui/icons-material/SupportAgentRounded';
 import Download from '@mui/icons-material/Download';
 const Cart = () => {
   return (
+
+  
+
     <div className="min-h-screen  p-6">
       <div className="max-w-7xl mx-auto">
 
@@ -244,4 +247,4 @@ const Cart = () => {
   );
 };
 
-export default Cart;
+export default Cart
