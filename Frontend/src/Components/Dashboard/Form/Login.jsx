@@ -30,6 +30,9 @@ const onFinishFailed = errorInfo => {
   console.log('Failed:', errorInfo);
 };
     return(<>
+        <section className='m-8 '>
+    <div className='rounded-xl items-center bg-white p-20 flex flex-col border border-gray-200'>
+
   <Form
     name="basic"
     labelCol={{ span: 8 }}
@@ -70,6 +73,11 @@ const onFinishFailed = errorInfo => {
       </Button>
     </Form.Item>
   </Form>
-<div><h1>{state}</h1></div>
+<div>
+  <h1>{state}</h1>
+  </div>
+
+</div>
+</section>
 </>)}
 export default Login;
