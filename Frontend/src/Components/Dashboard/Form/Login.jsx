@@ -5,22 +5,25 @@ import axios from 'axios';
 const Login = () => {
 
   const [state,setState] = useState()
+
 const onFinish = async (values) => {
   console.log("Success:", values);
 
   try {
-    const res = await axios.post(
-      "http://localhost:5001/api/registerroute/registercontroller",
-      values
-    );
+    const res = await axios.post("http://localhost:5001/api/registerroute/LoginController",values);
 
-    console.log("successful registration", res.data);
-    setState(res.data.message);
+    console.log(res)
+
+   if (res?.data?.success) {
+        alert("Login Successful");
+        setState(res?.data?.message)
+
+      }
+
 
   } catch (err) {
 
-   
-    console.log("ERROR MESSAGE:", err.response?.data?.message);
+    console.log("ERROR MESSAGE:", err);
 
     setState(err?.response?.data?.message);
   }
@@ -56,12 +59,7 @@ const onFinishFailed = errorInfo => {
     >
       <Input.Password />
     </Form.Item>
-     <Form.Item
-      label="Confirm Password"
-      name="confirmpassword"
-    >
-      <Input.Password />
-    </Form.Item>
+  
 
     <Form.Item name="remember" valuePropName="checked" label={null}>
       <Checkbox>Remember me</Checkbox>
