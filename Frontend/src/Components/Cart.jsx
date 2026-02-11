@@ -31,7 +31,7 @@ const Cart = () => {
             </div>
 
           
-     <div className="flex items-center justify-between bg-gray-50 rounded shadow mb-8 text-sm px-4 py-2 w-[450px]">
+     <div className="flex items-center justify-between bg-gray-50 rounded shadow mb-8 text-sm px-4 py-2 w-[450]">
         {/* Left */}
        <span className="flex items-center gap-2 text-green-600 font-medium">
       <span className="w-7 h-7 rounded-full bg-green-600 text-white flex items-center justify-center">
