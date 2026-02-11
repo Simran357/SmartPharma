@@ -6,6 +6,9 @@ import SupportAgentRounded from '@mui/icons-material/SupportAgentRounded';
 import Download from '@mui/icons-material/Download';
 const Cart = () => {
   return (
+
+  
+
     <div className="min-h-screen  p-6">
       <div className="max-w-7xl mx-auto">
 
@@ -28,7 +31,7 @@ const Cart = () => {
             </div>
 
           
-     <div className="flex items-center justify-between bg-gray-50 rounded shadow mb-8 text-sm px-4 py-2 w-[450px]">
+     <div className="flex items-center justify-between bg-gray-50 rounded shadow mb-8 text-sm px-4 py-2 w-[450]">
         {/* Left */}
        <span className="flex items-center gap-2 text-green-600 font-medium">
       <span className="w-7 h-7 rounded-full bg-green-600 text-white flex items-center justify-center">
@@ -244,4 +247,4 @@ const Cart = () => {
   );
 };
 
-export default Cart;
+export default Cart
