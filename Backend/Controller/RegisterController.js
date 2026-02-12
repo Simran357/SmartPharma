@@ -1,5 +1,4 @@
 const bcrypt = require("bcrypt")
-const jwt =  require("jsonwebtoken") 
 const RegisterModel = require("../model/Register.model")
 const RegisterValidation = require("../Validation/RegisterValidation")
 const RegisterController = async (req,res,next)=>{
@@ -7,10 +6,10 @@ const RegisterController = async (req,res,next)=>{
     const registerData = await RegisterValidation.validateAsync(req.body)
 
     //extract data
-    const {username,password,confirmpassword} = registerData
+    const {username,password,email} = registerData
 //validation
     const registerDataCheck =  await RegisterModel.findOne({
-        username:username
+        email:email
     })
 
     if(registerDataCheck){
@@ -20,13 +19,11 @@ const RegisterController = async (req,res,next)=>{
     }
 
     const hashedPassword = await bcrypt.hash(password,10)
-    const jwtToken = jwt.sign({ username: username },"simran", { expiresIn: "1h" });
 
     const NewData = new RegisterModel({
         username:username,
+        email:email,
         password:hashedPassword,
-        confirmpassword:hashedPassword,
-        token:jwtToken
     })
 
     await NewData.save()

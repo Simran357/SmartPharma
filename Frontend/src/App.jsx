@@ -9,6 +9,7 @@ import WholeSaler from './Components/Dashboard/WholeSaler'
 import Login from './Components/Dashboard/Form/Login'
 import Register from './Components/Dashboard/Form/Registration'
 import OrderWholesaler from './Components/Dashboard/Retailar/Order/OrderWholesaler'
+import Users from './Components/Dashboard/Form/Users'
 
 const App = () => {
   return (
@@ -25,7 +26,7 @@ const App = () => {
         <Route path="Login" element={<Login/>}/>
         <Route path="Register" element={<Register/>}/>
         <Route path="Order" element={<OrderWholesaler/>}/>
-
+<Route path="Users" element={<Users/>}/>
       
       </Route>
     </Routes>

@@ -1,12 +1,16 @@
 const jwt= require("jsonwebtoken")
 const bcrypt = require("bcrypt")
+const RegisterModel = require("../model/Register.model")
+const LoginValidation = require("../Validation/LoginValidation")
 
 const LoginController = async (req,res,next)=>{
-    const loginData = req.body
-    const {username , password} = loginData
+    console.log("login controller hit")
+    const loginData = await LoginValidation.validateAsync(req.body)
+    const {email , password} = loginData
+      console.log("email:", email);
 
     const user = await RegisterModel.findOne({
-        username:username
+       email
     })
 
     if(!user){
@@ -15,7 +19,7 @@ const LoginController = async (req,res,next)=>{
             message:"user does not exist"
         })
     }
-const isMatch = await bcrypt.compare(password, user.password)
+const isMatch = await bcrypt.compare(password, user?.password)
 
    if (!isMatch) {
       return res.status(400).json({
@@ -25,7 +29,7 @@ const isMatch = await bcrypt.compare(password, user.password)
     }
 
      const token = jwt.sign(
-      { username: user.username },
+      { password: user.password },
       "simran",
       { expiresIn: "1h" }
     );
