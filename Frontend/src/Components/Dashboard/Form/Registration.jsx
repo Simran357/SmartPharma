@@ -1,34 +1,28 @@
 import React, { useState } from 'react';
 import { Button, Form, Input } from 'antd';
-import axios from 'axios';
+import axiosInstance from './Utils/AxiosInstance';
 
 const Register = () => {
   const [state,setState] = useState()
   const [getData,setGetData] = useState([])
-// console.log(getData)
+console.log(getData)
 const onFinish = async (values) => {
   console.log("Success:", values);
 
   try {
-    const res = await axios.post(
-      "http://localhost:5001/api/registerroute/registercontroller",
-      values
-    );
+    const res = await axiosInstance.post("/registerroute/registercontroller", values);
 
-    if(res?.data){
-      const data = await axios.get("http://localhost:5001/api/registerroute/GetRegisterdata")
+    if(res?.data?.success){
+      const data = await axiosInstance.get("/registerroute/GetRegisterdata")
          console.log(data?.data)
          if(data){
           setGetData(data?.data?.data)
          }
     }
-    console.log("successful registration", res.data);
+    console.log("successful registration", res?.data);
     setState(res.data.message);
-
   } catch (err) {
-
-    console.log("ERROR MESSAGE:", err.response?.data?.message);
-
+    console.log("ERROR MESSAGE:", err?.response?.data?.message);
     setState(err?.response?.data?.message);
   }
 };
@@ -53,6 +47,13 @@ const onFinishFailed = errorInfo => {
     <Form.Item
       label="Username"
       name="username"
+    >
+      <Input />
+    </Form.Item>
+
+<Form.Item
+      label="Email"
+      name="email"
     >
       <Input />
     </Form.Item>

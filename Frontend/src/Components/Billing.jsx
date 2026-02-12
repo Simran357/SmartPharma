@@ -1,13 +1,13 @@
-// import { useState } from "react";
-import {CurrencyRupee} from '@mui/icons-material';
+import { CurrencyRupee } from "@mui/icons-material";
+
 const Billing = () => {
-  // const [open,setOpen] = useState(true);
+  const open = true;
 
   return (
-    <div className="flex   gap-6 items-start m-8 pr-4">
+    <div className="flex flex-col lg:flex-row gap-6 items-start m-4 lg:m-8">
 
-      {/* LEFT COLUMN: SIDEBAR */}
-      <div className="w-[20%] flex flex-col gap-4 sticky top-0">
+      {/* LEFT SIDEBAR */}
+      <div className="w-full lg:w-[20%] flex flex-col gap-4 lg:sticky lg:top-4">
         <div className="bg-gray-50 rounded-xl shadow-sm p-4 flex flex-col gap-4 border">
           <h2 className="font-semibold text-lg flex items-center gap-2">
             <span className="text-green-600 text-xl">💊</span>
@@ -21,7 +21,7 @@ const Billing = () => {
             </div>
 
             <button className="bg-green-100 text-green-700 px-3 py-2 rounded-md font-medium flex items-center gap-2">
-              <CurrencyRupee/> New Billing
+              <CurrencyRupee /> New Billing
             </button>
 
             <button className="px-3 py-2 rounded-md hover:bg-gray-100 flex items-center gap-2">
@@ -44,33 +44,29 @@ const Billing = () => {
         </div>
       </div>
 
-      {/* MIDDLE COLUMN: CURRENT ORDER */}
-      <div className="w-[40%]">
+      {/* MIDDLE COLUMN */}
+      <div className="w-full lg:w-[40%]">
         {open && (
           <div className="bg-white rounded-xl shadow-sm border">
 
-          {/* HEADER */}
-          <div className="flex justify-between items-center px-5 py-3 border-b">
-            <h2 className="font-semibold text-lg">Current Order</h2>
+            {/* HEADER */}
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center px-5 py-3 border-b gap-3">
+              <h2 className="font-semibold text-lg">Current Order</h2>
 
               <div className="flex items-center gap-3 text-sm">
-                <div className="px-4 py-1.5 border rounded-full text-gray-600
-                                hover:text-green-600 hover:border-green-500 hover:bg-green-50
-                                transition cursor-pointer">
+                <div className="px-4 py-1.5 border rounded-full text-gray-600 hover:text-green-600 hover:border-green-500 hover:bg-green-50 transition cursor-pointer">
                   Recent
                 </div>
 
-                <div className="px-4 py-1.5 border rounded-full text-gray-600
-                                hover:text-red-600 hover:border-red-500 hover:bg-red-50
-                                transition cursor-pointer">
+                <div className="px-4 py-1.5 border rounded-full text-gray-600 hover:text-red-600 hover:border-red-500 hover:bg-red-50 transition cursor-pointer">
                   Delete
                 </div>
               </div>
             </div>
 
             {/* TABLE */}
-            <div className="p-5 max-h-500px overflow-y-auto">
-              <table className="w-full text-sm">
+            <div className="p-5 overflow-x-auto">
+              <table className="w-full text-sm min-w-[600px]">
                 <thead className="border-b text-green-600">
                   <tr>
                     <th className="text-left py-2">Product</th>
@@ -96,17 +92,17 @@ const Billing = () => {
                 </tbody>
               </table>
             </div>
+
           </div>
         )}
       </div>
 
-      {/* RIGHT COLUMN: SUMMARY + PAYMENT */}
-      <div className="w-[40%] flex flex-col gap-4">
+      {/* RIGHT COLUMN */}
+      <div className="w-full lg:w-[40%] flex flex-col gap-4">
 
-        {/* COMBINED BOX */}
         <div className="bg-white rounded-2xl shadow p-5 flex flex-col gap-5">
 
-          {/* SUMMARY BOX */}
+          {/* SUMMARY */}
           <div className="text-sm space-y-2">
             <h2 className="font-semibold text-lg mb-2">Summary</h2>
 
@@ -138,12 +134,12 @@ const Billing = () => {
             </div>
           </div>
 
-          {/* PAYMENT METHOD BOX */}
+          {/* PAYMENT */}
           <div className="text-sm space-y-3">
             <hr className="border-gray-300" />
-            <h3 className="font-semibold text-sm mb-10">SELECT PAYMENT METHOD</h3>
+            <h3 className="font-semibold text-sm">SELECT PAYMENT METHOD</h3>
 
-            <div className="grid grid-cols-3 gap-3 mb-30">
+            <div className="grid grid-cols-1 mt-2 sm:grid-cols-3 gap-3">
               {[
                 { icon: "📱", label: "UPI" },
                 { icon: "💳", label: "Card" },
@@ -151,11 +147,7 @@ const Billing = () => {
               ].map((item, i) => (
                 <div
                   key={i}
-                  className="border rounded-xl py-4 text-center font-medium shadow-sm
-                             flex flex-col items-center gap-1
-                             transition-all duration-200
-                             hover:border-green-500 hover:bg-green-50 hover:shadow-md
-                             cursor-pointer"
+                  className="border rounded-xl py-4 text-center font-medium shadow-sm flex flex-col items-center gap-1 transition-all duration-200 hover:border-green-500 hover:bg-green-50 hover:shadow-md cursor-pointer"
                 >
                   <span className="text-2xl">{item.icon}</span>
                   <span>{item.label}</span>
@@ -163,16 +155,19 @@ const Billing = () => {
               ))}
             </div>
 
-            <button className="w-full bg-green-500 text-white py-4 rounded-xl font-semibold hover:bg-green-600 transition">
+            <button className="w-full bg-green-500 text-white py-4 mb-6 rounded-xl 
+            font-semibold hover:bg-green-600 transition">
               ✔ Complete Checkout
             </button>
 
-            <button className="w-full mt-20 text-sm text-gray-500 hover:underline">
+            <button className="w-full text-sm text-gray-500 hover:underline">
               🖨 Print Quotation Only
             </button>
           </div>
+
         </div>
       </div>
+
     </div>
   );
 };
