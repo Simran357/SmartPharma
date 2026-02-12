@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Upload, ReceiptLong, Verified, CloudOutlined, Error, LocalFireDepartment, AddShoppingCart, EventBusy, TrendingUp, Assessment, AutoAwesome, AssignmentTurnedIn, CurrencyRupee, Inventory, WarningAmber } from '@mui/icons-material';
 import MedicineSalesChart from './SubComponent/MedicineSalesChart';
-export const stats = [
+const stats = [
   {
     id: 1,
     title: "Today's Sales",
@@ -194,7 +194,7 @@ const Retailer = () => {
                 </section>
 
 
-                <section className="rounded-xl bg-gray-50 shadow-sm  p-6 max-h-full max-w-full border border-gray-200">
+                <section className="rounded-xl bg-gray-50 shadow-sm  p-4 max-h-fit max-w-full border border-gray-200">
                   <span className='text-xs font-bold text-gray-400'>COMMAND CENTER  ACTIONS</span>
                   <div className="grid grid-cols-2 gap-4 mt-4">
                     {/* NEW BILL */}
@@ -244,8 +244,8 @@ const Retailer = () => {
                   </div>
                 </section>
 
-                <section className='grid grid-cols max-w-5xl '>
-                  <section className='bg-green-50 border border-green-200 rounded-xl p-4 '>
+                <section className=''>
+                  <section className='bg-green-50 border border-green-200 rounded-xl p-2 max-h-fit'>
                     <div className='flex flex-row gap-2 items-center justify-between'>
                       <span className='flex gap-2  items-center text-green-400'>
                         <AutoAwesome />
@@ -257,7 +257,7 @@ const Retailer = () => {
                       </div>
                     </div>
                     <section className='flex flex-col p-6 gap-4'>
-                      <div className='bg-gray-50 shadow-xl border border-gray-300 rounded-xl  p-6'>
+                      <div className='bg-gray-50 shadow-xl border border-gray-300 rounded-xl  p-4'>
                         <h1 className='text-md font-sans font-medium'>Paracetamol 500mg (Strip of 10)</h1>
                         <div className='flex sm:flex-row flex-col justify-between  gap-2'>
                           <div className='flex flex-row sm:flex-col gap-2'>
