@@ -9,12 +9,10 @@ import WholeSaler from './Components/Dashboard/WholeSaler'
 import Login from './Components/Dashboard/Form/Login'
 import Register from './Components/Dashboard/Form/Registration'
 import OrderWholesaler from './Components/Dashboard/Retailar/Order/OrderWholesaler'
-<<<<<<< HEAD
+
 import Courier from './Components/Billing/Courier'
 import Connectcourier from './Components/Billing/Connectcourier'
-=======
 import Users from './Components/Dashboard/Form/Users'
->>>>>>> 987c5e919be56e0db8b75df8971f213de981ba32
 
 const App = () => {
   return (
@@ -31,13 +29,10 @@ const App = () => {
         <Route path="Login" element={<Login/>}/>
         <Route path="Register" element={<Register/>}/>
         <Route path="Order" element={<OrderWholesaler/>}/>
-<<<<<<< HEAD
         <Route path="Courier" element={<Courier/>}/>
         <Route path="Connectcourier" element={<Connectcourier/>}/>
 
-=======
 <Route path="Users" element={<Users/>}/>
->>>>>>> 987c5e919be56e0db8b75df8971f213de981ba32
       
       </Route>
     </Routes>
