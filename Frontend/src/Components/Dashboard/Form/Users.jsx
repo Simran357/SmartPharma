@@ -1,18 +1,29 @@
 import React, { useEffect } from 'react'
+import axiosInstance from './Utils/AxiosInstance'
+import { useState } from 'react'
 
 const Users = () => {
+const [user,setUser] = useState([])
+  useEffect( () => {
+    try{
+       axiosInstance.get("/registerroute/GetRegisterdata")
+      .then((res) => {
+      console.log(res?.data)
+      setUser(res?.data?.data)
+    }).catch((err)=>{
+      console.log("error",err)
+         res.status(400).json({ message: "error in get api",err })
 
-    useEffect(async ()=>{
-        await axios.get("http://localhost:5001/api/registerroute/GetRegisterdata").then((res)=>{
-console.log(res)
-        }).catch((err)=>{
-console.log(err)
-res.status(400).json({message:"error in get api"})
-        })
-    //      console.log(data?.data)
-    })
+    })}
+    catch{    
+      console.log(err)
+      res.status(400).json({ message: "error in get api" })}
+})
   return (
-    <div>Users</div>
+    <>
+    <div>{user?.map((item,index)=><div key={index}>{item}</div>)}</div>
+
+    </>
   )
 }
 

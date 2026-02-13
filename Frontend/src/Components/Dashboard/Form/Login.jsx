@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Checkbox, Form, Input } from 'antd';
+import { Button, Form, Input } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from './Utils/AxiosInstance';
 
@@ -15,7 +15,8 @@ const onFinish = async (values) => {
 
    if (res?.data?.success) {
         alert("Login Successful");
-        setState(res?.data?.message)
+        localStorage.setItem("jwtToken",res?.data?.jwtToken)
+        setState(res?.data?.message)      
         navigate("/Users")
       }
   } catch (err) {

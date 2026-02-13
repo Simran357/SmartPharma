@@ -28,7 +28,7 @@ const isMatch = await bcrypt.compare(password, user?.password)
       });
     }
 
-     const token = jwt.sign(
+     const jwtToken = jwt.sign(
       { password: user.password },
       "simran",
       { expiresIn: "1h" }
@@ -36,7 +36,7 @@ const isMatch = await bcrypt.compare(password, user?.password)
     return res.status(200).json({
         success:true,
         message:"Login successfull",
-        Token:token
+        jwtToken:jwtToken
     })
 
 }
