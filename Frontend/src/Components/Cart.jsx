@@ -4,7 +4,9 @@ import AddShoppingCart from '@mui/icons-material/AddShoppingCart';
 import EditCalendarRounded from '@mui/icons-material/EditCalendarRounded';
 import SupportAgentRounded from '@mui/icons-material/SupportAgentRounded';
 import Download from '@mui/icons-material/Download';
+import { useNavigate } from "react-router-dom";
 const Cart = () => {
+  const navigate = useNavigate()
   return (
 
   
@@ -126,9 +128,11 @@ const Cart = () => {
             <div className="grid md:grid-cols-2 gap-6">
 
               <div className="bg-white rounded-xl shadow-sm p-5">
-                <h3 className="font-bold text-black text-2xl mb-4">
+               <div className="flex justify-between items-center"> <h3 className="font-bold text-black text-2xl mb-4">
                   <LocalShippingOutlined style={{ color: "green" }} /> Courier Selection</h3>
-
+                 <span className="text-green-600 text-xs whitespace-nowrap" 
+                 onClick={()=>navigate("/Connectcourier")}
+                 >Connect Courier</span></div>
                 <div className="border border-green-500 rounded-lg p-4 flex justify-between items-center mb-3">
                   <div>
                     <p className="font-medium  text-black">Delivery FastTrack</p>
@@ -144,6 +148,7 @@ const Cart = () => {
                   </div>
                   <span className="font-semibold">₹280.00</span>
                 </div>
+                <button onClick={()=>{navigate("/Courier")}}>see more option</button>
               </div>
 
               <div className="bg-white rounded-xl shadow-sm p-5 flex flex-col space-y-4">
