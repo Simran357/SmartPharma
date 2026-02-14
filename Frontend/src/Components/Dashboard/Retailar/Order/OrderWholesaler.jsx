@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState } from 'react';
-import Wholesalerfirst from './Wholesalersfirst.jsx/wholesalerfirst';
-import RetailerSpecification from './Wholesalersfirst.jsx/RetailerSpecification';
+import Wholesalerfirst from './WholesalerPages/Wholesalerfirst';
+import RetailerSpecification from './WholesalerPages/RetailerSpecification';
 
 const OrderWholesaler = () => {
    const [activeTab, setActiveTab] = useState("wholesaler");
