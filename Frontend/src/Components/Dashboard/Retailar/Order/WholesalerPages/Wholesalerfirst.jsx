@@ -224,7 +224,6 @@ const Wholesalerfirst = () =>  {
 
             {/* Content */}
             <div className="pt-6 p-5">
-
               {/* Name + Delivery */}
               <div className="flex justify-between items-center">
                 <div>
