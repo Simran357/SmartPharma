@@ -11,7 +11,7 @@ const onFinish = async (values) => {
   console.log("Success:", values);
   try {
     const res = await axiosInstance.post("/registerroute/LoginController",values);
-    console.log(res)
+  
 
    if (res?.data?.success) {
         alert("Login Successful");
