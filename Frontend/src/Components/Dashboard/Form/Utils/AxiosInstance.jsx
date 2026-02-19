@@ -9,14 +9,20 @@ const axiosInstance =  axios.create({
 
 axiosInstance.interceptors.request.use(
     (config)=>{
-   const jwtToken =   localStorage.getItem(jwtToken)
+   const jwtToken =   localStorage.getItem("jwtToken")
         console.log("jwttoken is getting from local storage",jwtToken)
-
-console.log(config)
+if(jwtToken){
+    config.headers.authorization = `Bearer ${jwtToken}`
+}
+ return config;
 
     }
 )
-axiosInstance.interceptors.response.use()
+axiosInstance.interceptors.response.use((response)=>{
+    console.log("response in axiosInstance", response);
+    return response;
+
+})
 export default axiosInstance
 
 //   if(jwtToken){
