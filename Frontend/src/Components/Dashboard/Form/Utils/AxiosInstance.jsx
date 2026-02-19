@@ -2,14 +2,15 @@ import axios from "axios"
 
 const axiosInstance =  axios.create({
     baseURL:"http://localhost:5001/api",
-    timeout:3000
+    timeout:3000,
+     withCredentials:true,
 })
 
 
 
 axiosInstance.interceptors.request.use(
     (config)=>{
-   const jwtToken =   localStorage.getItem("jwtToken")
+   const jwtToken =   sessionStorage.getItem("jwtToken")
         console.log("jwttoken is getting from local storage",jwtToken)
 if(jwtToken){
     config.headers.authorization = `Bearer ${jwtToken}`
@@ -24,8 +25,4 @@ axiosInstance.interceptors.response.use((response)=>{
 
 })
 export default axiosInstance
-
-//   if(jwtToken){
-//         config.headers.authorization = `Bearer ${jwtToken}`;
-//     }
-//     return config;
+  
