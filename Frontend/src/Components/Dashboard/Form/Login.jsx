@@ -11,11 +11,11 @@ const onFinish = async (values) => {
   console.log("Success:", values);
   try {
     const res = await axiosInstance.post("/registerroute/LoginController",values);
-    console.log(res)
+  
 
    if (res?.data?.success) {
         alert("Login Successful");
-        localStorage.setItem("jwtToken",res?.data?.jwtToken)
+     sessionStorage.setItem("jwtToken",res?.data?.jwtToken)
         setState(res?.data?.message)      
         navigate("/Users")
       }

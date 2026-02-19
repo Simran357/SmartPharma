@@ -3,7 +3,8 @@ import axiosInstance from './Utils/AxiosInstance'
 import { useState } from 'react'
 
 const Users = () => {
-const [user,setUser] = useState([])
+const [user,setUser] = useState()
+console.log(user)
   useEffect( () => {
     try{
        axiosInstance.get("/registerroute/GetRegisterdata")
@@ -18,11 +19,23 @@ const [user,setUser] = useState([])
     catch{    
       console.log(err)
       res.status(400).json({ message: "error in get api" })}
-})
+},[])
   return (
     <>
-    <div>{user?.map((item,index)=><div key={index}>{item}</div>)}</div>
+  <div>
+        {user?.map((items,index)=>{
+            return(
+                <div key={index} className=''>
+                <div className='border mt-2 bg-amber-200'>
+                <p>{items?.username}</p>
+                    <p>{items?.password}</p>
+                </div>
+                 
 
+                </div>
+            )
+        })}
+    </div>
     </>
   )
 }
