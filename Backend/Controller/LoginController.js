@@ -33,10 +33,15 @@ const isMatch = await bcrypt.compare(password, user?.password)
       "simran",
       { expiresIn: "1h" }
     );
+
+    res.cookie( "jwtToken",jwtToken,{
+   httpOnly:true,
+   maxAge:36000
+    })
     return res.status(200).json({
         success:true,
         message:"Login successfull",
-        jwtToken:jwtToken
+      
     })
 
 }
