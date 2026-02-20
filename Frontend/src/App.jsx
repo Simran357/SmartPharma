@@ -38,7 +38,6 @@ const App = () => {
 
         <Route path="/lowstock" element={<Lowstock/>} />
 
-<Route path="Users" element={<Users/>}/>
       </Route>
     </Routes>
 
