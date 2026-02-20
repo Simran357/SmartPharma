@@ -30,8 +30,6 @@ console.log(user)
                 <p>{items?.username}</p>
                     <p>{items?.password}</p>
                 </div>
-                 
-
                 </div>
             )
         })}

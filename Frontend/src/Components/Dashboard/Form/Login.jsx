@@ -15,6 +15,7 @@ const onFinish = async (values) => {
 
    if (res?.data?.success) {
         alert("Login Successful");
+        console.log(res?.data)
      sessionStorage.setItem("jwtToken",res?.data?.jwtToken)
         setState(res?.data?.message)      
         navigate("/Users")

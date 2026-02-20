@@ -10,8 +10,8 @@ const axiosInstance =  axios.create({
 
 axiosInstance.interceptors.request.use(
     (config)=>{
-   const jwtToken =   sessionStorage.getItem("jwtToken")
-        console.log("jwttoken is getting from local storage",jwtToken)
+   const jwtToken =  sessionStorage.getItem("jwtToken")
+        console.log("jwttoken is getting from session storage",jwtToken)
 if(jwtToken){
     config.headers.authorization = `Bearer ${jwtToken}`
 }

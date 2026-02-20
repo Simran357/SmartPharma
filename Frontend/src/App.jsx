@@ -9,7 +9,6 @@ import WholeSaler from './Components/Dashboard/WholeSaler'
 import Login from './Components/Dashboard/Form/Login'
 import Register from './Components/Dashboard/Form/Registration'
 import OrderWholesaler from './Components/Dashboard/Retailar/Order/OrderWholesaler'
-
 import Courier from './Components/Billing/Courier'
 import Connectcourier from './Components/Billing/Connectcourier'
 import Users from './Components/Dashboard/Form/Users'
@@ -33,8 +32,7 @@ const App = () => {
         <Route path="Courier" element={<Courier/>}/>
         <Route path="Connectcourier" element={<Connectcourier/>}/>
         <Route path="SingleWholesalerInfo" element={<SingleWholesalerInfo/>}/>
-
-<Route path="Users" element={<Users/>}/>
+        <Route path="Users" element={<Users/>}/>
       </Route>
     </Routes>
 
