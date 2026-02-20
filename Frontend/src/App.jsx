@@ -13,6 +13,7 @@ import Courier from './Components/Billing/Courier'
 import Connectcourier from './Components/Billing/Connectcourier'
 import Users from './Components/Dashboard/Form/Users'
 import SingleWholesalerInfo from './Components/Dashboard/Retailar/Order/WholesalerPages/SingleWholesalerInfo'
+import Lowstock from './Components/Wholesalecompenent.jsx/Lowstock'
 
 const App = () => {
   return (
@@ -32,7 +33,12 @@ const App = () => {
         <Route path="Courier" element={<Courier/>}/>
         <Route path="Connectcourier" element={<Connectcourier/>}/>
         <Route path="SingleWholesalerInfo" element={<SingleWholesalerInfo/>}/>
+
         <Route path="Users" element={<Users/>}/>
+
+        <Route path="/lowstock" element={<Lowstock/>} />
+
+<Route path="Users" element={<Users/>}/>
       </Route>
     </Routes>
 
