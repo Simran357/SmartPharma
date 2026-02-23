@@ -13,6 +13,10 @@ import OrderWholesaler from './Components/Dashboard/Retailar/Order/OrderWholesal
 import Courier from './Components/Billing/Courier'
 import Connectcourier from './Components/Billing/Connectcourier'
 import Users from './Components/Dashboard/Form/Users'
+import TempelateDesigner from './Inventory/TempelateDesigner'
+import ProductOverview from './Inventory/ProductOverview'
+import SingleMedicineInfo from './Inventory/medicine/SingleMedicineInfo'
+
 
 const App = () => {
   return (
@@ -31,8 +35,12 @@ const App = () => {
         <Route path="Order" element={<OrderWholesaler/>}/>
         <Route path="Courier" element={<Courier/>}/>
         <Route path="Connectcourier" element={<Connectcourier/>}/>
-
+<Route path="TempelateDesigner" element={<TempelateDesigner/>}/>
+<Route path="ProductOverview" element={<ProductOverview/>}/>
 <Route path="Users" element={<Users/>}/>
+<Route path="SingleMedicineInfo" element={<SingleMedicineInfo/>}/>
+
+
       </Route>
     </Routes>
 
