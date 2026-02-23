@@ -9,11 +9,15 @@ import WholeSaler from './Components/Dashboard/WholeSaler'
 import Login from './Components/Dashboard/Form/Login'
 import Register from './Components/Dashboard/Form/Registration'
 import OrderWholesaler from './Components/Dashboard/Retailar/Order/OrderWholesaler'
-
 import Courier from './Components/Billing/Courier'
 import Connectcourier from './Components/Billing/Connectcourier'
 import Users from './Components/Dashboard/Form/Users'
+<<<<<<< HEAD
 import Actionable from './Components/Billing/Alert.jsx/Actionable'
+=======
+import SingleWholesalerInfo from './Components/Dashboard/Retailar/Order/WholesalerPages/SingleWholesalerInfo'
+import Lowstock from './Components/Wholesalecompenent.jsx/Lowstock'
+>>>>>>> 22ea999452e5799ea9084ac3e9914036d385481b
 
 const App = () => {
   return (
@@ -32,9 +36,14 @@ const App = () => {
         <Route path="Order" element={<OrderWholesaler/>}/>
         <Route path="Courier" element={<Courier/>}/>
         <Route path="Connectcourier" element={<Connectcourier/>}/>
-         <Route path="Alert" element={<Actionable/>}/>
 
-<Route path="Users" element={<Users/>}/>
+         <Route path="Alert" element={<Actionable/>}/>
+        <Route path="SingleWholesalerInfo" element={<SingleWholesalerInfo/>}/>
+
+        <Route path="Users" element={<Users/>}/>
+
+        <Route path="/lowstock" element={<Lowstock/>} />
+
       </Route>
     </Routes>
 
