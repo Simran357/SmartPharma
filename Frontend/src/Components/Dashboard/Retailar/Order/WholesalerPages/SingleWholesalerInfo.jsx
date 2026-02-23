@@ -237,10 +237,12 @@ const SingleWholesalerInfo = () => {
         </div>
     </div>
   </div>
-            <button className=' px-4 py-2 rounded-xl justify-self-center bg-white/90 border w-fit text-gray-600 border-slate-400 font-medium'>Load More Medicines</button>
 
-  </div>            
-  
+  </div>  
+  <div className='flex justify-center'>
+              <button className=' px-4 py-2 rounded-xl  mt-4 bg-white/90 border w-fit text-gray-600 border-slate-400 font-medium'>Load More Medicines</button>
+          
+  </div>
   </section>
           </div>
           <div className="col-span-12 lg:col-span-3 flex flex-col gap-6">
