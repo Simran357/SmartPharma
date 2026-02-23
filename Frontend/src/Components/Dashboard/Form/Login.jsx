@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { Button, Form, Input } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from './Utils/AxiosInstance';
-
 const Login = () => {
 const navigate =  useNavigate()
+
   const [state,setState] = useState()
 
 const onFinish = async (values) => {
@@ -17,7 +17,8 @@ const onFinish = async (values) => {
         alert("Login Successful");
         console.log(res?.data)
      sessionStorage.setItem("jwtToken",res?.data?.jwtToken)
-        setState(res?.data?.message)      
+        setState(res?.data?.message)  
+            
         navigate("/Users")
       }
   } catch (err) {

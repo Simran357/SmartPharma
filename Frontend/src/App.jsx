@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Routes, Route } from 'react-router'
 import Layout from './Components/Layout'
 import Cart from './Components/Cart'
@@ -14,8 +14,10 @@ import Connectcourier from './Components/Billing/Connectcourier'
 import Users from './Components/Dashboard/Form/Users'
 import SingleWholesalerInfo from './Components/Dashboard/Retailar/Order/WholesalerPages/SingleWholesalerInfo'
 import Lowstock from './Components/Wholesalecompenent.jsx/Lowstock'
+import ProtectedRoute from './Components/Dashboard/Form/ProtectedRoute'
 
 const App = () => {
+
   return (
     <>
     <Routes>
@@ -33,8 +35,13 @@ const App = () => {
         <Route path="Courier" element={<Courier/>}/>
         <Route path="Connectcourier" element={<Connectcourier/>}/>
         <Route path="SingleWholesalerInfo" element={<SingleWholesalerInfo/>}/>
-        <Route path="Users" element={<Users/>}/>
+        <Route path="Users" element={
+          <ProtectedRoute >
+          <Users />
+          </ProtectedRoute>
+          }/>
         <Route path="/lowstock" element={<Lowstock/>} />
+  
 
       </Route>
     </Routes>
