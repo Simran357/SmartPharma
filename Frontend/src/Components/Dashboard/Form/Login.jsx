@@ -2,21 +2,23 @@ import React, { useState } from 'react';
 import { Button, Form, Input } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from './Utils/AxiosInstance';
-
 const Login = () => {
 const navigate =  useNavigate()
+
   const [state,setState] = useState()
 
 const onFinish = async (values) => {
   console.log("Success:", values);
   try {
     const res = await axiosInstance.post("/registerroute/LoginController",values);
-    console.log(res)
+  
 
    if (res?.data?.success) {
         alert("Login Successful");
-        localStorage.setItem("jwtToken",res?.data?.jwtToken)
-        setState(res?.data?.message)      
+        console.log(res?.data)
+     sessionStorage.setItem("jwtToken",res?.data?.jwtToken)
+        setState(res?.data?.message)  
+            
         navigate("/Users")
       }
   } catch (err) {

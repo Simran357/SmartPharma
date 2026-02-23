@@ -1,11 +1,18 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
-const Wholesalerfirst = () => {
+const Wholesalerfirst = () =>  {
+    const navigate =useNavigate()
+
   return (
     <div className='flex gap-4 '>
       <div className="w-full">
         <div className="flex flex-wrap gap-4">
-          <div className="w-full sm:w-[48%] md:w-[31%] lg:w-[23%] bg-[#162538] rounded-2xl overflow-hidden shadow-lg">
+          <div className="w-full sm:w-[48%] md:w-[31%] lg:w-[23%] bg-[#162538] rounded-2xl overflow-hidden shadow-lg"
+          onClick={()=>{
+            navigate("/SingleWholesalerInfo")
+          }}
+          >
 
             {/* Top Image */}
             <div className="relative">
@@ -217,7 +224,6 @@ const Wholesalerfirst = () => {
 
             {/* Content */}
             <div className="pt-6 p-5">
-
               {/* Name + Delivery */}
               <div className="flex justify-between items-center">
                 <div>
