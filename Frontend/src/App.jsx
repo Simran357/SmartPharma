@@ -12,12 +12,9 @@ import OrderWholesaler from './Components/Dashboard/Retailar/Order/OrderWholesal
 import Courier from './Components/Billing/Courier'
 import Connectcourier from './Components/Billing/Connectcourier'
 import Users from './Components/Dashboard/Form/Users'
-<<<<<<< HEAD
 import Actionable from './Components/Billing/Alert.jsx/Actionable'
-=======
 import SingleWholesalerInfo from './Components/Dashboard/Retailar/Order/WholesalerPages/SingleWholesalerInfo'
 import Lowstock from './Components/Wholesalecompenent.jsx/Lowstock'
->>>>>>> 22ea999452e5799ea9084ac3e9914036d385481b
 
 const App = () => {
   return (
