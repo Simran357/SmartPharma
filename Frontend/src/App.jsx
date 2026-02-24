@@ -42,7 +42,7 @@ const App = () => {
         <Route path="Connectcourier" element={<Connectcourier/>}/>
 <Route path="TempelateDesigner" element={<TempelateDesigner/>}/>
 <Route path="ProductOverview" element={<ProductOverview/>}/>
-<Route path="Users" element={<Users/>}/>
+{/* <Route path="Users" element={<Users/>}/> */}
 <Route path="SingleMedicineInfo" element={<SingleMedicineInfo/>}/>
 
 
