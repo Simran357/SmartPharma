@@ -21,7 +21,7 @@ import Actionable from './Components/Billing/Alert.jsx/Actionable'
 import SingleWholesalerInfo from './Components/Dashboard/Retailar/Order/WholesalerPages/SingleWholesalerInfo'
 import Lowstock from './Components/Wholesalecompenent.jsx/Lowstock'
 import ProtectedRoute from './Components/Dashboard/Form/ProtectedRoute'
-
+import AiAgent from './Components/Wholesalecompenent.jsx/Aiagent'
 const App = () => {
 
   return (
@@ -44,7 +44,7 @@ const App = () => {
 <Route path="ProductOverview" element={<ProductOverview/>}/>
 <Route path="Users" element={<Users/>}/>
 <Route path="SingleMedicineInfo" element={<SingleMedicineInfo/>}/>
-
+<Route path="AiAgent" element={<AiAgent/>}/>
 
          <Route path="Alert" element={<Actionable/>}/>
         <Route path="SingleWholesalerInfo" element={<SingleWholesalerInfo/>}/>

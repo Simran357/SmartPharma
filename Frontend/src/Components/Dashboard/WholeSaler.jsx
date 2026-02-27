@@ -42,7 +42,9 @@ const WholeSaler = () => {
         {/* <!-- BEGIN: Top Stats Row --> */}
         <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 cursor-pointer  gap-6">
           {/* <!-- Daily Sales --> */}
-          <div className='  bg-white rounded-3xl p-6 shadow-sm border border-slate-100 flex flex-col justify-between hover:shadow-md transition-shadow'>
+          <div
+             onClick={()=>navigate("/AiAgent")}
+           className='  bg-white rounded-3xl p-6 shadow-sm border border-slate-100 flex flex-col justify-between hover:shadow-md transition-shadow'>
             <div class="flex justify-between items-start">
               <div >
                 <p className='font-medium text-slate-500'>Daily Sales</p>
