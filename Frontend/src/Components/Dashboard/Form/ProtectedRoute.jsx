@@ -4,9 +4,11 @@ import  { contextProvide }  from './Utils/Context/CommonContext';
 
 const ProtectedRoute = ({ children }) => {
   const { auth } = useContext(contextProvide);
-  console.log(auth)
+  console.log("auth",auth)
 
-  return auth ? children : <Navigate to="/Login" />;
+    return  auth ? children : <Navigate to="/Login" />
+
+
 };
 
 export default ProtectedRoute;
