@@ -18,7 +18,6 @@ import Lowstock from './Components/Wholesalecompenent.jsx/Lowstock'
 import TempelateDesigner from './Inventory/TempelateDesigner'
 import ProductOverview from './Inventory/ProductOverview'
 import SingleMedicineInfo from './Inventory/medicine/SingleMedicineInfo'
-import Lowstock from './Components/Wholesalecompenent.jsx/Lowstock'
 import ProtectedRoute from './Components/Dashboard/Form/ProtectedRoute'
 import AiAgent from './Components/Wholesalecompenent.jsx/Aiagent'
 const App = () => {
