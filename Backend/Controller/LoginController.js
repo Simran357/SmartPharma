@@ -29,13 +29,12 @@ const LoginController = async (req,res,next)=>{
     }
 
     const userpayload = {
-      username,
       email,
       password
     }
 
      const jwtToken = jwt.sign(
-      { password: user.password },
+      { user: userpayload},
       "simran",
       { expiresIn: "1h" }
     );
