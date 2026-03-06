@@ -18,9 +18,6 @@ import Lowstock from './Components/Wholesalecompenent.jsx/Lowstock'
 import TempelateDesigner from './Inventory/TempelateDesigner'
 import ProductOverview from './Inventory/ProductOverview'
 import SingleMedicineInfo from './Inventory/medicine/SingleMedicineInfo'
-
-
-import Actionable from './Components/Billing/Alert.jsx/Actionable'
 import SingleWholesalerInfo from './Components/Dashboard/Retailar/Order/WholesalerPages/SingleWholesalerInfo'
 import Lowstock from './Components/Wholesalecompenent.jsx/Lowstock'
 import ProtectedRoute from './Components/Dashboard/Form/ProtectedRoute'
