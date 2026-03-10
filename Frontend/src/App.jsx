@@ -25,6 +25,7 @@ import ReturnInvoice from './Inventory/ReturnInvoice'
 
 
 import AiAgent from './Components/Wholesalecompenent.jsx/Aiagent'
+import Retailors from './Inventory/Retailors'
 const App = () => {
 
   return (
@@ -50,6 +51,7 @@ const App = () => {
 
 <Route path="WhatsappTempelate" element={<WhatsappTempelate/>}/>
 <Route path="ReturnInvoice" element={<ReturnInvoice/>}/>
+<Route path="Retailors" element={<Retailors/>}/>
 
 
 <Route path="AiAgent" element={<AiAgent/>}/>
