@@ -21,6 +21,8 @@ import Actionable from './Components/Billing/Alert.jsx/Actionable'
 import SingleWholesalerInfo from './Components/Dashboard/Retailar/Order/WholesalerPages/SingleWholesalerInfo'
 import Lowstock from './Components/Wholesalecompenent.jsx/Lowstock'
 import ProtectedRoute from './Components/Dashboard/Form/ProtectedRoute'
+import WhatsappTempelate from './Inventory/WhatsappTempelate'
+import ReturnInvoice from './Inventory/ReturnInvoice'
 
 const App = () => {
 
@@ -44,6 +46,8 @@ const App = () => {
 <Route path="ProductOverview" element={<ProductOverview/>}/>
 <Route path="Users" element={<Users/>}/>
 <Route path="SingleMedicineInfo" element={<SingleMedicineInfo/>}/>
+<Route path="WhatsappTempelate" element={<WhatsappTempelate/>}/>
+<Route path="ReturnInvoice" element={<ReturnInvoice/>}/>
 
 
          <Route path="Alert" element={<Actionable/>}/>
