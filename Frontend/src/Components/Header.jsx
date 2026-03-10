@@ -17,7 +17,7 @@ import {
 import MenuIcon from '@mui/icons-material/Menu'
 import SchoolIcon from '@mui/icons-material/School'
 
-import { useNavigate, useLocation } from 'react-router'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { useState } from 'react'
 
 const Header = () => {
@@ -31,8 +31,8 @@ const Header = () => {
     { text: 'WholeSaler', path: '/' },
     { text: 'Billing', path: '/Billing' },
     { text: 'Cart', path: '/Cart' },
-    {text:"Login", path:"/Login"},
-    {text:"Register",path:"/Register"},
+    { text: "Login", path: "/Login" },
+    { text: "Register", path: "/Register" },
   ]
 
   const isActive = (path) => location.pathname === path
@@ -66,7 +66,7 @@ const Header = () => {
 
             <Box>
               <Typography fontWeight="bold" lineHeight={1.2}>
-               SmartPharma
+                SmartPharma
               </Typography>
               <Typography variant="caption" color="text.secondary">
                 Admin Portal
@@ -104,7 +104,7 @@ const Header = () => {
               </Button>
             ))}
 
-         
+
           </Box>
         </Toolbar>
       </AppBar>
@@ -150,7 +150,7 @@ const Header = () => {
             ))}
           </List>
 
-        
+
         </Box>
       </Drawer>
     </>

@@ -54,7 +54,8 @@ navigate("/Users")
   const onFinishFailed = errorInfo => {
     console.log('Failed:', errorInfo);
   };
-  return (<>
+  return (
+  <>
     <div className='m-20 p-6   flex flex-col  items-center'>
         <section className="p-20   rounded-xl border border-slate-100 bg-white shadow ">
         <Form
