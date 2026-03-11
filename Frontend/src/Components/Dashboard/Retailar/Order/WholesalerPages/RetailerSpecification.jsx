@@ -1,8 +1,10 @@
 import React from 'react'
 import HistoryIcon from '@mui/icons-material/History';
 import SearchIcon from '@mui/icons-material/Search';
-import { Plus, PlusCircle } from 'lucide-react';
+import {  PlusCircle } from 'lucide-react';
+import { useNavigate } from 'react-router';
 const RetailerSpecification = () => {
+    const navigate = useNavigate()
     return (
         <>
             <div className='m-2 w-full'>
@@ -51,7 +53,6 @@ const RetailerSpecification = () => {
                     </div>
                 </div>
                 {/* right */}
-
 
                 <div className='flex items-center justify-between px-2 m-4'>
                     <h1 className='text-sm font-bold uppercase tracking-wider text-slate-500'>CURRENTLY ADDED (4 ITEMS)</h1>
@@ -259,7 +260,7 @@ const RetailerSpecification = () => {
                             </div>
                         </div>
                         <div className='flex  align-center justify-center'>
-                            <button className='bg-green-400 rounded-lg px-4 min-w-full py-4 mt-4  font-bold text-md tra'>Find Best Wholesalers</button>
+                            <button className='bg-green-400 rounded-lg px-4 min-w-full py-4 mt-4  font-bold text-md ' onClick={()=>navigate("/filterWholesaler")}>Find Best Wholesalers</button>
                     </div>
                     </div>
                 </div>

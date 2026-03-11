@@ -15,7 +15,7 @@ console.log(state)
       try{
        console.log("response from google ui " ,tokenResponse.access_token)
 
-<<<<<<< HEAD
+
   const [state,setState] = useState()  
 
 const onFinish = async (values) => {
@@ -31,7 +31,7 @@ const onFinish = async (values) => {
         setState(res?.data?.message)  
             
         navigate("/Users")
-=======
+
     const res =  await axiosInstance.post("/registerroute/auth/google", {
       accessToken:tokenResponse.access_token
     })
@@ -44,7 +44,7 @@ navigate("/Users")
       }catch (error){
         console.log("error when hiting google backend api",error)
        setState(error?.response?.data?.message)
->>>>>>> 70ee3806a5686c0647c968ef70dcf02bbbf2fc7d
+
       }
       
     },
@@ -69,7 +69,7 @@ navigate("/Users")
     }
   };
 
-<<<<<<< HEAD
+
 const onFinishFailed = errorInfo => {
   console.log('Failed:', errorInfo);
 };   
@@ -114,59 +114,5 @@ const onFinishFailed = errorInfo => {
 </section>
 </>)}
 export default Login; 
-=======
-  const onFinishFailed = errorInfo => {
-    console.log('Failed:', errorInfo);
-  };
-  return (<>
-    <div className='m-20 p-6   flex flex-col  items-center'>
-        <section className="p-20   rounded-xl border border-slate-100 bg-white shadow ">
-        <Form
-          name="basic"
-          labelCol={{ span: 8 }}
-          wrapperCol={{ span: 16 }}
-          style={{ maxWidth: 600 }}
-          initialValues={{ remember: true }}
-          onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
-          autoComplete="off"
-        >
-          <Form.Item
-            label="email"
-            name="email"
-          >
-            <Input />
-          </Form.Item>
 
-          <Form.Item
-            label="Password"
-            name="password"
-          >
-            <Input.Password />
-          </Form.Item>
-
-
-
-          <Form.Item label={null}>
-            <Button type="primary" htmlType="submit">
-              Submit
-            </Button>
-          </Form.Item>
-          <Form.Item label={null}>
-            <Button type="default"  onClick={googleLogin}>
-                Contiue with Google
-            </Button>
-          </Form.Item>
-        </Form>
-
-
-        <div>
-          <h1>{state}</h1>
-        </div>
-    </section>
-
-      </div>
-  </>)
-}
-export default Login;
->>>>>>> 70ee3806a5686c0647c968ef70dcf02bbbf2fc7d
+  

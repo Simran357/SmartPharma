@@ -7,7 +7,7 @@ const ProtectedRoute = ({ children }) => {
   
   const token = sessionStorage.getItem("jwtToken");
 
-  return auth && token ? children : <Navigate to="/Login" />;
+  return auth && token ? children : <Navigate to="/" />;
 
 
 };
