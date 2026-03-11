@@ -52,25 +52,6 @@ const App = () => {
       <Route path="/" element={<Login/>}/>
       
         <Route path="Register" element={<Register/>}/>
-      Layout = Header + Outlet
-        Default landing page
-         <Route index element={<WholeSaler />} />
-     
-        <Route path="Inventory" element={<Inventory />} />
-        <Route path="Billing" element={<Billing />} />
-        <Route path="Cart" element={<Cart/>} />
-        
-        <Route path="Order" element={<OrderWholesaler/>}/>
-        <Route path="Courier" element={<Courier/>}/>
-        <Route path="Connectcourier" element={<Connectcourier/>}/>
-<Route path="TempelateDesigner" element={<TempelateDesigner/>}/>
-<Route path="ProductOverview" element={<ProductOverview/>}/>
-<Route path="Users" element={<Users/>}/>
-<Route path="SingleMedicineInfo" element={<SingleMedicineInfo/>}/>
-<Route path="AiAgent" element={<AiAgent/>}/>
-
-    <>
-      <Routes>
         {/* Layout = Header + Outlet */}
         <Route element={<Layout />}>
           {/* Default landing page */}
@@ -110,14 +91,8 @@ const App = () => {
           <Route path="filterWholesaler" element={<FilterOutWholesaler/>} />
 
 
-        <Route path="Dashboard" element={
-          <ProtectedRoute >
-            <Layout/>
-          </ProtectedRoute>
-          }>
   
           <Route path="Retailer" element={<Retailer/>} />
-    
           <Route path="Alert" element={<Actionable />} />
           <Route path="SingleWholesalerInfo" element={<SingleWholesalerInfo />} />
           <Route path="Users" element={
