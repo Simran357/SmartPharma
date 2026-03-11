@@ -1,5 +1,5 @@
 import React from 'react'
-import { Routes, Route } from 'react-router'
+import { Routes, Route } from 'react-router-dom'
 import Layout from './Components/Layout'
 // import Cart from './Components/Cart'
 // import Billing from './Components/Billing'
@@ -37,6 +37,13 @@ import SingleMedicineInfo from './Inventory/medicine/SingleMedicineInfo'
 import ProtectedRoute from './Components/Dashboard/Form/ProtectedRoute'
 import FilterOutWholesaler from './Components/Dashboard/Retailar/Order/WholesalerPages/FilterOutWholesaler'
 // import AiAgent from './Components/Wholesalecompenent.jsx/Aiagent'
+
+import WhatsappTempelate from './Inventory/WhatsappTempelate'
+import ReturnInvoice from './Inventory/ReturnInvoice'
+
+
+import AiAgent from './Components/Wholesalecompenent.jsx/Aiagent'
+import Retailors from './Inventory/Retailors'
 const App = () => {
 
   return (
@@ -62,6 +69,32 @@ const App = () => {
 <Route path="SingleMedicineInfo" element={<SingleMedicineInfo/>}/>
 <Route path="AiAgent" element={<AiAgent/>}/>
 
+    <>
+      <Routes>
+        {/* Layout = Header + Outlet */}
+        <Route element={<Layout />}>
+          {/* Default landing page */}
+          <Route index element={<WholeSaler />} />
+          <Route path="Retailer" element={<Retailer />} />
+          <Route path="Inventory" element={<Inventory />} />
+          <Route path="Billing" element={<Billing />} />
+          <Route path="Cart" element={<Cart />} />
+          <Route path="Login" element={<Login />} />
+          <Route path="Register" element={<Register />} />
+          <Route path="Order" element={<OrderWholesaler />} />
+          <Route path="Courier" element={<Courier />} />
+          <Route path="Connectcourier" element={<Connectcourier />} />
+          <Route path="TempelateDesigner" element={<TempelateDesigner />} />
+          <Route path="ProductOverview" element={<ProductOverview />} />
+          {/* <Route path="Users" element={<Users/>}/> */}
+          <Route path="SingleMedicineInfo" element={<SingleMedicineInfo />} />
+
+          <Route path="WhatsappTempelate" element={<WhatsappTempelate />} />
+          <Route path="ReturnInvoice" element={<ReturnInvoice />} />
+          <Route path="Retailors" element={<Retailors />} />
+
+
+          <Route path="AiAgent" element={<AiAgent />} />
 
         <Route path="Alert" element={<Actionable/>}/>
         <Route path="SingleWholesalerInfo" element={<SingleWholesalerInfo/>}/>
@@ -87,9 +120,21 @@ const App = () => {
           <Route path="Retailer" element={<Retailer/>} />
       </Route>
     </Routes>
+          <Route path="Alert" element={<Actionable />} />
+          <Route path="SingleWholesalerInfo" element={<SingleWholesalerInfo />} />
+          <Route path="Users" element={
+            <ProtectedRoute >
+              <Users />
+            </ProtectedRoute>
+          } />
+          <Route path="/lowstock" element={<Lowstock />} />
 
-    
- </> )
+
+        </Route>
+      </Routes>
+
+
+    </>)
 }
 
 export default App
