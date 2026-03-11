@@ -1,104 +1,186 @@
-import React, { useState } from 'react';
+import React from 'react'
 import {
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  
-} from '@ant-design/icons';
-import { Button, Layout, Menu, theme } from 'antd';
 
-import { CalendarMonth, DashboardCustomize, EventSeatOutlined, RoomPreferences, SettingsOutlined, SubjectOutlined } from '@mui/icons-material';
-import Retailer from './Dashboard/Retailar/Retailer';
+    AppBar,
 
+    Toolbar,
 
-const { Header, Sider, Content } = Layout;
-const Adminlayout = () => {
-  const [collapsed, setCollapsed] = useState(false);
-  const [selectedKey,setSelectedKey] = useState()
-  const {
-    token: { colorBgContainer, borderRadiusLG },
-  } = theme.useToken();
+    Typography,
 
-  const Component = {
-     '1': <Retailer/>,
-  
-  }
-  const items = [
-            {
-              key: '1',
-              icon: <DashboardCustomize/>,
-              label: 'Retailer',
-            },
-            {
-              key: '2',
-              icon: <SubjectOutlined />,
-              label: 'Courses',
-            },
-            {
-              key: '3',
-              icon: <RoomPreferences />,
-              label: 'Rooms',
-            },
-            {
-              key: '4',
-              icon: <EventSeatOutlined/>,
-              label: 'Seat Plan',
-            },
-            {
-              key: '5',
-              icon: <CalendarMonth/>,
-              label: 'Datesheet',
-            }, {
-              key: '7',
-              icon: <SettingsOutlined/>,
-              label: 'Settings',
-            },
-          ]
-  return (
-    <>
-    <Layout>
-      <Sider trigger={null} collapsible collapsed={collapsed}>
-        <div className="demo-logo-vertical" />
-        <Menu
-          theme="dark"
-          mode="inline"
-          defaultSelectedKeys={['1']}
-          items={items}
-          onClick={(e)=>{
-            console.log("items",e?.key)
-            setSelectedKey(e?.key)
-          }}
-        />
-      </Sider>
-      <Layout>
-        <Header style={{ padding: 0, background: colorBgContainer }}>
-          <Button
-            type="text"
-            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-            onClick={() => setCollapsed(!collapsed)}
-            style={{
-              fontSize: '16px',
-              width: 64,
-              height: 64,
-            }}
-          />
-        </Header>
-        <Content
-          style={{
-            margin: '24px 16px',
-            padding: 24,
-            minHeight: 280,
-            background: colorBgContainer,
-            borderRadius: borderRadiusLG,
-          }}
-        >
-          {Component[selectedKey]}
-        </Content>
-      </Layout>
-    </Layout>
+    Button,
+
+    Box,
+
+    Drawer,
+
+    List,
+
+    ListItem,
+
+    ListItemButton,
+
+    ListItemText,
+
+    IconButton,
+
+    Divider
+
+} from '@mui/material'
+
+import MenuIcon from '@mui/icons-material/Menu'
+
+import SchoolIcon from '@mui/icons-material/School'
+import { useNavigate, useLocation } from 'react-router'
+import { useState } from 'react'
 
 
-    </>
-  )
+
+const Header = () => {
+
+    const [open, setOpen] = useState(false)
+
+    const navigate = useNavigate()
+
+    const location = useLocation()
+
+
+
+    const menuItems = [
+
+        { text: 'Inventory', path: '/Inventory' },
+
+        { text: 'Retailer', path: '/Retailer' },
+
+        { text: 'WholeSaler', path: '/' },
+
+        { text: 'Billing', path: '/Billing' },
+
+        { text: 'Cart', path: '/Cart' },
+
+        { text: "Login", path: "/Login" },
+
+        { text: "Register", path: "/Register" },
+
+    ]
+
+
+    const isActive = (path) => location.pathname === path
+    const handleNavigate = (path) => {
+        navigate(path)
+        setOpen(false)
+    }
+
+    return (
+        <>
+            <AppBar
+                position="static"
+                elevation={0}
+                sx={{
+                    backdropFilter: 'blur(10px)',
+                    background: 'rgba(255,255,255,0.15)',
+                    borderBottom: '1px solid rgba(255,255,255,0.3)',
+                    color: '#000'
+                }}
+
+            >
+                <Toolbar>
+                    <Box
+                        sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
+                        onClick={() => navigate('/')}
+                    >
+                        <SchoolIcon sx={{ fontSize: 32, mr: 1 }} />
+                        <Box>
+                            <Typography fontWeight="bold" lineHeight={1.2}>
+                                SmartPharma
+                            </Typography>
+                            <Typography variant="caption" color="text.secondary">
+                                Admin Portal
+                            </Typography>
+                        </Box>
+                    </Box>
+
+
+                    <Box sx={{ flexGrow: 1 }} />
+                    <IconButton
+                        sx={{ display: { md: 'none' } }}
+                        onClick={() => setOpen(true)}>
+                        <MenuIcon />
+                    </IconButton>
+                    <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 1 }}>
+                        {menuItems.map((item) => (
+                            <Button
+                                key={item.text}
+                                onClick={() => navigate(item.path)}
+                                sx={{
+                                    color: isActive(item.path) ? '#1976d2' : '#000',
+                                    fontWeight: isActive(item.path) ? 'bold' : 'normal',
+                                    borderBottom: isActive(item.path)
+                                        ? '2px solid #1976d2'
+                                        : '2px solid transparent',
+                                    borderRadius: 0
+                                }}
+
+                            >
+                                {item.text}
+
+                            </Button>
+                        ))}
+                    </Box>
+                </Toolbar>
+            </AppBar>
+
+
+
+
+            <Drawer
+                open={open}
+                onClose={() => setOpen(false)}
+                sx={{
+                    display: { md: 'none' },
+                    '\& .MuiDrawer-paper': {
+                        width: 260,
+                        backgroundColor: '#fff'
+                    }
+
+                }}
+
+            >
+                <Box sx={{ p: 2 }}>
+                    {/\* Drawer Header \*/}
+                    <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                        <SchoolIcon sx={{ mr: 1 }} />
+                        <Box>
+                            <Typography fontWeight="bold">SmartPharma</Typography>
+                            <Typography variant="caption">Admin Portal</Typography>
+                        </Box>
+                    </Box>
+                    <Divider />
+
+                    <List>
+                        {menuItems.map((item) => (
+                            <ListItem key={item.text} disablePadding>
+                                <ListItemButton onClick={() => handleNavigate(item.path)}>
+                                    <ListItemText
+                                        primary={item.text}
+                                        primaryTypographyProps={{
+                                            color: isActive(item.path) ? 'primary' : 'text.primary',
+                                            fontWeight: isActive(item.path) ? 'bold' : 'normal'
+                                        }}
+
+                                    />
+                                </ListItemButton>
+                            </ListItem>
+                        ))}
+                    </List>
+                </Box>
+            </Drawer>
+        </>
+    )
 }
 
-export default Adminlayout
+
+
+export default Header
+
+
+
