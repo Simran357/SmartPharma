@@ -6,14 +6,14 @@ import avocado from "./Pic/OrganicHassAvocados.jpg";
 import BoltIcon from '@mui/icons-material/Bolt';
 const Lowstock = () => {
     return (
-        <div className="bg-gray-50 dark:bg-gray-900 min-h-screen">
+        <div className="bg-gray-50 min-h-screen">
             {/* /-- Main Dashboard Container - / */}
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 ">
                 {/* <!-- Dashboard Header: Title and Primary Action --> */}
                 <div className='flex flex-col md:flex-row  md:items-center justify-between gap-6 mb-8'>
                     <div>
-                        <h1 className='text-3xl font-bold text-slate-900 dark:text-white mb-2'>Low Stock Inventory Alerts</h1>
-                        <p className="text-slate-500 dark:text-slate-400">Manage items that are below your threshold and replenish
+                        <h1 className='text-3xl font-bold text-slate-900  mb-2'>Low Stock Inventory Alerts</h1>
+                        <p className="text-slate-500 ">Manage items that are below your threshold and replenish
                             quickly.</p>
                     </div>
                     <div>

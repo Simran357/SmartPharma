@@ -20,12 +20,13 @@ import SingleMedicineInfo from './Inventory/medicine/SingleMedicineInfo'
 import Actionable from './Components/Billing/Alert.jsx/Actionable'
 import SingleWholesalerInfo from './Components/Dashboard/Retailar/Order/WholesalerPages/SingleWholesalerInfo'
 import Lowstock from './Components/Wholesalecompenent.jsx/Lowstock'
+import Dailysales from './Components/Wholesalecompenent.jsx/Dailysales'
 import ProtectedRoute from './Components/Dashboard/Form/ProtectedRoute'
 import AiAgent from './Components/Wholesalecompenent.jsx/Aiagent'
 const App = () => {
 
   return (
-    <>
+    <> 
     <Routes>
       {/* Layout = Header + Outlet */}
       <Route element={<Layout />}>
@@ -46,7 +47,7 @@ const App = () => {
 <Route path="SingleMedicineInfo" element={<SingleMedicineInfo/>}/>
 <Route path="AiAgent" element={<AiAgent/>}/>
 
-         <Route path="Alert" element={<Actionable/>}/>
+        <Route path="Alert" element={<Actionable/>}/>
         <Route path="SingleWholesalerInfo" element={<SingleWholesalerInfo/>}/>
         <Route path="Users" element={
           <ProtectedRoute >
@@ -54,7 +55,7 @@ const App = () => {
           </ProtectedRoute>
           }/>
         <Route path="/lowstock" element={<Lowstock/>} />
-  
+        <Route path="/dailysales" element={<Dailysales/>} />
 
       </Route>
     </Routes>

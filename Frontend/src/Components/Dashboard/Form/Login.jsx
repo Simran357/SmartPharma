@@ -5,15 +5,15 @@ import axiosInstance from './Utils/AxiosInstance';
 const Login = () => {
 const navigate =  useNavigate()
 
-  const [state,setState] = useState()
+  const [state,setState] = useState()  
 
 const onFinish = async (values) => {
   console.log("Success:", values);
   try {
     const res = await axiosInstance.post("/registerroute/LoginController",values);
   
-
-   if (res?.data?.success) {
+      
+   if (res?.data?.success) {   
         alert("Login Successful");
         console.log(res?.data)
      sessionStorage.setItem("jwtToken",res?.data?.jwtToken)
@@ -29,7 +29,7 @@ const onFinish = async (values) => {
 
 const onFinishFailed = errorInfo => {
   console.log('Failed:', errorInfo);
-};
+};   
     return(<>
         <section className='m-8 p-4'>
     <div className='rounded-xl items-center bg-white p-20 flex flex-col border border-gray-200'>
@@ -57,9 +57,7 @@ const onFinishFailed = errorInfo => {
       <Input.Password />
     </Form.Item>
   
-
-
-    <Form.Item label={null}>
+   <Form.Item label={null}>
       <Button type="primary" htmlType="submit">
         Submit
       </Button>
@@ -72,4 +70,4 @@ const onFinishFailed = errorInfo => {
 </div>
 </section>
 </>)}
-export default Login;
+export default Login; 
