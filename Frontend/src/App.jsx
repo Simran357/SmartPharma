@@ -49,6 +49,7 @@ const App = () => {
           <Route path="TempelateDesigner" element={<TempelateDesigner />} />
           <Route path="ProductOverview" element={<ProductOverview />} />
           <Route path="SingleMedicineInfo" element={<SingleMedicineInfo />} />
+          <Route path="SingleWholesalerInfo" element={<SingleWholesalerInfo/>}/>
           <Route path="WhatsappTempelate" element={<WhatsappTempelate />} />
           <Route path="ReturnInvoice" element={<ReturnInvoice />} />
           <Route path="Retailors" element={<Retailors />} />
