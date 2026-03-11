@@ -23,16 +23,16 @@ import ProductOverview from './Inventory/ProductOverview'
 import SingleMedicineInfo from './Inventory/medicine/SingleMedicineInfo'
 
 
-// import OrderWholesaler from './Components/Dashboard/Retailar/Order/OrderWholesaler'
-// import Courier from './Components/Billing/Courier'
-// import Connectcourier from './Components/Billing/Connectcourier'
-// import Users from './Components/Dashboard/Form/Users'
-// import Actionable from './Components/Billing/Alert.jsx/Actionable'
-// import SingleWholesalerInfo from './Components/Dashboard/Retailar/Order/WholesalerPages/SingleWholesalerInfo'
-// import Lowstock from './Components/Wholesalecompenent.jsx/Lowstock'
-// import TempelateDesigner from './Inventory/TempelateDesigner'
-// import ProductOverview from './Inventory/ProductOverview'
-// import SingleMedicineInfo from './Inventory/medicine/SingleMedicineInfo'
+import OrderWholesaler from './Components/Dashboard/Retailar/Order/OrderWholesaler'
+import Courier from './Components/Billing/Courier'
+import Connectcourier from './Components/Billing/Connectcourier'
+import Users from './Components/Dashboard/Form/Users'
+import Actionable from './Components/Billing/Alert.jsx/Actionable'
+import SingleWholesalerInfo from './Components/Dashboard/Retailar/Order/WholesalerPages/SingleWholesalerInfo'
+import Lowstock from './Components/Wholesalecompenent.jsx/Lowstock'
+import TempelateDesigner from './Inventory/TempelateDesigner'
+import ProductOverview from './Inventory/ProductOverview'
+import SingleMedicineInfo from './Inventory/medicine/SingleMedicineInfo'
 
 import ProtectedRoute from './Components/Dashboard/Form/ProtectedRoute'
 import FilterOutWholesaler from './Components/Dashboard/Retailar/Order/WholesalerPages/FilterOutWholesaler'
@@ -45,9 +45,9 @@ const App = () => {
       <Route path="/" element={<Login/>}/>
       
         <Route path="Register" element={<Register/>}/>
-      {/* Layout = Header + Outlet */}
-        {/* Default landing page */}
-        {/* <Route index element={<WholeSaler />} />
+      Layout = Header + Outlet
+        Default landing page
+         <Route index element={<WholeSaler />} />
      
         <Route path="Inventory" element={<Inventory />} />
         <Route path="Billing" element={<Billing />} />
@@ -58,8 +58,8 @@ const App = () => {
         <Route path="Connectcourier" element={<Connectcourier/>}/>
 <Route path="TempelateDesigner" element={<TempelateDesigner/>}/>
 <Route path="ProductOverview" element={<ProductOverview/>}/>
-{/* <Route path="Users" element={<Users/>}/> */}
-{/* <Route path="SingleMedicineInfo" element={<SingleMedicineInfo/>}/>
+<Route path="Users" element={<Users/>}/>
+<Route path="SingleMedicineInfo" element={<SingleMedicineInfo/>}/>
 <Route path="AiAgent" element={<AiAgent/>}/>
 
 
@@ -74,7 +74,7 @@ const App = () => {
         <Route path="/dailysales" element={<Dailysales/>} />
 
          <Route path="Alert" element={<Actionable/>}/>
-        <Route path="SingleWholesalerInfo" element={<SingleWholesalerInfo/>}/> */} 
+        <Route path="SingleWholesalerInfo" element={<SingleWholesalerInfo/>}/> 
           <Route path="filterWholesaler" element={<FilterOutWholesaler/>} />
 
 
