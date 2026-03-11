@@ -106,7 +106,6 @@ const App = () => {
         <Route path="/lowstock" element={<Lowstock/>} />
         <Route path="/dailysales" element={<Dailysales/>} />
 
-         <Route path="Alert" element={<Actionable/>}/>
         <Route path="SingleWholesalerInfo" element={<SingleWholesalerInfo/>}/> 
           <Route path="filterWholesaler" element={<FilterOutWholesaler/>} />
 
@@ -118,8 +117,7 @@ const App = () => {
           }>
   
           <Route path="Retailer" element={<Retailer/>} />
-      </Route>
-    </Routes>
+    
           <Route path="Alert" element={<Actionable />} />
           <Route path="SingleWholesalerInfo" element={<SingleWholesalerInfo />} />
           <Route path="Users" element={
