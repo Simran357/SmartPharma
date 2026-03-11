@@ -19,6 +19,5 @@ mongoose.connect("mongodb+srv://simran26788_db_user:De4LHTTcgawaBa9G@smartpharma
     chief.listen(PORT)
     console.log("Mongo db connected successfull")
 }).catch((err)=>{
-
 console.log("failed to connect mongo db ", err)
 })
