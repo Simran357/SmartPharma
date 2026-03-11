@@ -12,15 +12,16 @@ import OrderWholesaler from './Components/Dashboard/Retailar/Order/OrderWholesal
 import Courier from './Components/Billing/Courier'
 import Connectcourier from './Components/Billing/Connectcourier'
 import Users from './Components/Dashboard/Form/Users'
+import Actionable from './Components/Billing/Alert.jsx/Actionable'
+import SingleWholesalerInfo from './Components/Dashboard/Retailar/Order/WholesalerPages/SingleWholesalerInfo'
+import Lowstock from './Components/Wholesalecompenent.jsx/Lowstock'
+
+import Dailysales from './Components/Wholesalecompenent.jsx/Dailysales'
+
 import TempelateDesigner from './Inventory/TempelateDesigner'
 import ProductOverview from './Inventory/ProductOverview'
 import SingleMedicineInfo from './Inventory/medicine/SingleMedicineInfo'
 
-
-import Actionable from './Components/Billing/Alert.jsx/Actionable'
-import SingleWholesalerInfo from './Components/Dashboard/Retailar/Order/WholesalerPages/SingleWholesalerInfo'
-import Lowstock from './Components/Wholesalecompenent.jsx/Lowstock'
-import Dailysales from './Components/Wholesalecompenent.jsx/Dailysales'
 import ProtectedRoute from './Components/Dashboard/Form/ProtectedRoute'
 import AiAgent from './Components/Wholesalecompenent.jsx/Aiagent'
 const App = () => {
@@ -43,7 +44,7 @@ const App = () => {
         <Route path="Connectcourier" element={<Connectcourier/>}/>
 <Route path="TempelateDesigner" element={<TempelateDesigner/>}/>
 <Route path="ProductOverview" element={<ProductOverview/>}/>
-<Route path="Users" element={<Users/>}/>
+{/* <Route path="Users" element={<Users/>}/> */}
 <Route path="SingleMedicineInfo" element={<SingleMedicineInfo/>}/>
 <Route path="AiAgent" element={<AiAgent/>}/>
 
