@@ -269,7 +269,7 @@ const Dailysales = () => {
                                         <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase"> Status </th>
                                         <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase"> Action</th>
                                     </tr>
-                                    </thead>
+                                </thead>
                                     <tbody>
                                         </tbody>
                                 </table>
