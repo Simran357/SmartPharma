@@ -66,7 +66,7 @@ const Billing = () => {
 
             {/* TABLE */}
             <div className="p-5 overflow-x-auto">
-              <table className="w-full text-sm min-w-[600px]">
+              <table className="w-full text-sm min-w-600px">
                 <thead className="border-b text-green-600">
                   <tr>
                     <th className="text-left py-2">Product</th>

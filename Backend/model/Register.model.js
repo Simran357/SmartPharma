@@ -23,6 +23,11 @@ const RegisterModel = new mongoose.Schema({
   avatar: {
     type: String,
   },
+  role:{
+    type:"String",
+    enum:["Admin","Retailer","Wholesaler"],
+    default:"Admin"
+  }
 
 }, { timestamps: true })
 

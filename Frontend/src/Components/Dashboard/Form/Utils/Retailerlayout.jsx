@@ -2,24 +2,31 @@ import React, { useState } from 'react';
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
+  RobotFilled,
   
 } from '@ant-design/icons';
 import { Button, Layout, Menu, theme } from 'antd';
 
-import { CalendarMonth, DashboardCustomize, EventSeatOutlined, RoomPreferences, SettingsOutlined, SubjectOutlined } from '@mui/icons-material';
-import Retailer from './Dashboard/Retailar/Retailer';
+import {  DashboardCustomize,  Inventory2,  SubjectOutlined } from '@mui/icons-material';
+import Retailer from '../../Retailar/Retailer';
+import Wholesalerfirst from '../../Retailar/Order/WholesalerPages/Wholesalerfirst';
+import Inventory from '../../../../Inventory/Inventory';
+import AiAgent from '../../../Wholesalecompenent.jsx/Aiagent';
 
 
 const { Header, Sider, Content } = Layout;
-const Adminlayout = () => {
+const Retailerlayout = () => {
   const [collapsed, setCollapsed] = useState(false);
-  const [selectedKey,setSelectedKey] = useState()
+  const [selectedKey,setSelectedKey] = useState('1')
   const {
-    token: { colorBgContainer, borderRadiusLG },
+    token: { colorBgContainer },
   } = theme.useToken();
 
   const Component = {
      '1': <Retailer/>,
+     '2':<Wholesalerfirst/>,
+     '3': <Inventory/>,
+     '4':<AiAgent/>
   
   }
   const items = [
@@ -31,32 +38,33 @@ const Adminlayout = () => {
             {
               key: '2',
               icon: <SubjectOutlined />,
-              label: 'Courses',
+              label: 'Wholesaler',
             },
             {
               key: '3',
-              icon: <RoomPreferences />,
-              label: 'Rooms',
+              icon: <Inventory2 />,
+              label: 'Inventory',
             },
             {
               key: '4',
-              icon: <EventSeatOutlined/>,
-              label: 'Seat Plan',
+              icon:<RobotFilled/>,
+              label: 'Ai agent'
             },
-            {
-              key: '5',
-              icon: <CalendarMonth/>,
-              label: 'Datesheet',
-            }, {
-              key: '7',
-              icon: <SettingsOutlined/>,
-              label: 'Settings',
-            },
+            // {
+            //   key: '5',
+            //   icon: <CalendarMonth/>,
+            //   label: '',
+            // }, 
+            // {
+            //   key: '7',
+            //   icon: <SettingsOutlined/>,
+            //   label: 'Settings',
+            // },
           ]
   return (
     <>
-    <Layout>
-      <Sider trigger={null} collapsible collapsed={collapsed}>
+    <Layout className='min-h-screen'>
+      <Sider trigger={null} collapsible collapsed={collapsed} >
         <div className="demo-logo-vertical" />
         <Menu
           theme="dark"
@@ -82,14 +90,15 @@ const Adminlayout = () => {
             }}
           />
         </Header>
-        <Content
-          style={{
-            margin: '24px 16px',
-            padding: 24,
-            minHeight: 280,
-            background: colorBgContainer,
-            borderRadius: borderRadiusLG,
-          }}
+     <Content className="p-6 h-screen overflow-auto bg-gray-50"
+
+          // style={{
+          //   margin: '24px 16px',
+          //   padding: 24,
+          //   minHeight: 280,
+          //   background: colorBgContainer,
+          //   borderRadius: borderRadiusLG,
+          // }}
         >
           {Component[selectedKey]}
         </Content>
@@ -101,4 +110,4 @@ const Adminlayout = () => {
   )
 }
 
-export default Adminlayout
+export default Retailerlayout
