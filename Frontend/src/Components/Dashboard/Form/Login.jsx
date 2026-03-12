@@ -20,7 +20,8 @@ const Login = () => {
         })
         console.log("google data in login page", res)
         setState(res?.data?.message)
-        navigate("/dashboard")
+        setAuth(true);
+        navigate("/Dashboard")
 
       } catch (error) {
         console.log("error when hiting google backend api", error)
@@ -39,7 +40,9 @@ const Login = () => {
       if (res?.data?.success) {
         alert("Login Successful");
         setState(res?.data?.message)
-        navigate("/dashboard")
+        setAuth(true);
+
+     navigate("/Dashboard")
       }
     } catch (err) {
       console.log("ERROR MESSAGE:", err);

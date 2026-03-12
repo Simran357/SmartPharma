@@ -20,12 +20,9 @@
     "antd": "^6.2.3",
     "axios": "^1.13.4",
     "chart.js": "^4.5.1",
-<<<<<<< HEAD
+
     "chartjs": "^0.3.24",
     "cookie-parser": "^1.4.7",
-=======
-    
->>>>>>> 7ae5b7b808b134b0109a386e2fe1a9cf3ec3183e
     "lucide-react": "^0.563.0",
     "quill": "^2.0.3",
     "react": "^18.3.1",
