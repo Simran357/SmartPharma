@@ -59,8 +59,6 @@ const App = () => {
             <Route path="Courier" element={<Courier />} />
             <Route path="Connectcourier" element={<Connectcourier />} />
           </Route>
-
-
         </Route>
       </Routes>
 
