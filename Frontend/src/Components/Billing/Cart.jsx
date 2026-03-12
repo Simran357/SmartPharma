@@ -171,84 +171,109 @@ const Cart = () => {
             </div>
           </div>
 
-          {/* RIGHT SIDE – GST CARD */}
-          <div className="sticky top-6 h-fit">
-            <div className="bg-white rounded-xl shadow-md overflow-hidden">
-              <div className="bg-[#0f2e1f] text-white px-4 py-3 font-semibold">
-                GST & Price Breakdown
-              </div>
-
-              <div className="p-4 text-sm space-y-3 mb-4">
-                <div className="flex justify-between">
-                  <span>Cart Subtotal</span>
-                  <span>₹950.00</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Scheme Discount</span>
-                  <span className=" text-green-600">-₹185.00</span>
-                </div>
-                <div className="flex justify-between mb-8 ">
-                  <span>Delivery Charges</span>
-                  <span>₹150.00</span>
-                </div>
 
 
-                <div className="flex justify-between text-gray-500">
-                  <span>TAX BREAKDOWN</span>
-                </div>
-                <div className="flex justify-between text-gray-500">
-                  <span>CGST (9%)</span>
-                  <span>₹68.85</span>
-                </div>
-                <div className="flex justify-between text-gray-500">
-                  <span>SGST (9%)</span>
-                  <span>₹68.85</span>
-                </div>
+          {/* </div> */}
 
-                <div className="flex justify-between text-gray-500">
-                  <span>IGST (0%)</span>
-                  <span>₹0.00</span>
-                </div>
+{/* right */}
+{/* RIGHT SIDE */}
+<div className="flex flex-col gap-6">
 
-                <div className="bg-green-50 text-green-700 text-xs p-3  rounded-lg">
-                  <b>Total Savings:</b> ₹185.00
-                  <p className="mt-1 text-[11px] text-gray-600">
-                    You’ve unlocked 6 free units via active schemes.
-                  </p>
-                </div>
+    {/* <div className="max-w-sm bg-white rounded-2xl shadow-md p-6 border"> */}
+    <div className="max-w-sm bg-white rounded-2xl shadow-md p-6 border h-fit sticky top-6"> <h2 className="text-xl font-semibold mb-4">Order Summary</h2>
+      {/* Order Fulfillment */}
+      <div className="flex justify-between mb-2">
+        <span className="font-medium">Order Fulfillment</span>
+        <span className="text-green-600 font-semibold">100% Complete</span>
+      </div>
 
-                <div className="flex flex-col text-sm">
-                  <span className="text-gray-500">GRAND TOTAL</span>
-                  <span className="font-bold text-4xl">₹1,052.70</span>
-                </div>
+      <div className="w-full bg-gray-200 rounded-full h-3 mb-2">
+        <div className="bg-green-500 h-3 rounded-full w-full"></div>
+      </div>
 
+      <p className="text-sm text-gray-500 mb-6">
+        All 3 products are ready to ship immediately.
+      </p>
 
-                <button className="w-full bg-green-500 text-white py-3 rounded-lg font-semibold">
-                  PLACE ORDER →
-                </button>
-              </div>
-            </div>
+      {/* Price Details */}
+      <div className="space-y-3 text-gray-700">
+        <div className="flex justify-between">
+          <span>Subtotal (3 items)</span>
+          <span>$1,550.00</span>
+        </div>
 
-            {/* Dispatch Info Below Button */}
-            <div className="flex flex-col text-black font-bold text-sm  mt-3 bg-white p-5 rounded shadow">
-              <span className="w-2 h-2  rounded-full mr-2 inline-block"></span>
-              <span><SupportAgentRounded style={{ color: "gray" }} />
-                  Need assistance?</span>
-              
-           <p className="mt- text-gray-600 font-normal">
-             Call our procurement desk +91 80-2234-XXXX
-              </p>
-            </div>
+        <div className="flex justify-between">
+          <span>Est. Shipping</span>
+          <span>$25.00</span>
+        </div>
 
+        <div className="flex justify-between">
+          <span>Tax</span>
+          <span>$124.00</span>
+        </div>
 
-          </div>
-
-
-
-
+        <div className="flex justify-between bg-green-50 text-green-700 px-2 py-1 rounded">
+          <span>Optimization Savings</span>
+          <span>-$45.00</span>
         </div>
       </div>
-    </div>
+
+      <hr className="my-5" />
+
+      {/* Order Total */}
+      <div className="flex justify-between items-center mb-5">
+        <span className="text-lg font-semibold">Order Total</span>
+        <span className="text-orange-600 text-xl font-bold">$1,654.00</span>
+      </div>
+
+      {/* Button */}
+      <button className="w-full bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-xl flex items-center justify-center gap-2 shadow-md">
+        
+        Proceed to Checkout
+      </button>
+
+      {/* Footer Info */}
+      <div className="mt-4 text-sm text-gray-500 space-y-1">
+        <p>✔ Secure B2B Payment Processing</p>
+        <p>🚚 Guaranteed delivery by Thursday</p>
+      </div>
+</div>
+{/* </div>  */}
+{/* NEXT BOX */}
+<div className="max-w-sm bg-white rounded-2xl shadow-md p-6 border h-fit sticky top-6"> 
+  <h2 className="text-xl font-semibold mb-4">SHIPMENT ORIGINS</h2>
+
+<div className="flex gap-4">
+  {/* map */}
+  <div className="w-28 h-28 bg-gray-100 rounded-lg flex items-center justify-center">
+            <span className="text-red-500 text-2xl">📍</span>
+          </div>
+
+          {/* Text Section */}
+          <div className="flex flex-col justify-center">
+            
+            <p className="text-xs text-gray-500 font-semibold">
+              PRIMARY HUB
+            </p>
+            <p className="text-gray-800 font-medium mb-2">
+              Mumbai West DC
+            </p>
+
+            <p className="text-xs text-gray-500 font-semibold">
+              SECONDARY HUB
+            </p>
+            <p className="text-gray-800 font-medium">
+              Bangalore Logistics Park
+            </p>
+
+          </div>
+        </div>
+</div>
+</div>
+</div>
+        </div>
+      </div>
+    
   );
 };
 
