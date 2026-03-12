@@ -37,7 +37,7 @@ const App = () => {
             <Layout />
           </ProtectedRoute>}>
           {/* Default landing page */}
-          <Route index element={<WholeSaler />} >
+          <Route path='Wholesaler' element={<WholeSaler />} >
             <Route path="ProductOverview" element={<ProductOverview />} />
             <Route path="Retailors" element={<Retailors />} />
             <Route path="AiAgent" element={<AiAgent />} />
@@ -46,7 +46,7 @@ const App = () => {
             <Route path="Dailysales" element={<Dailysales />} />
             <Route path="FilterWholesaler" element={<FilterOutWholesaler />} />
           </Route>
-          <Route index element={<Retailer />} >
+          <Route path="Retailer" element={<Retailer />} >
             <Route path="Inventory" element={<Inventory />} />
             <Route path="Billing" element={<Billing />} />
             <Route path="SingleMedicineInfo" element={<SingleMedicineInfo />} />
