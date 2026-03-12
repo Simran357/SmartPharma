@@ -9,7 +9,7 @@ import Login from './Components/Dashboard/Form/Login'
 import Register from './Components/Dashboard/Form/Registration'
 import OrderWholesaler from './Components/Dashboard/Retailar/Order/OrderWholesaler'
 import Connectcourier from './Components/Billing/Connectcourier'
-import Actionable from './Components/Billing/Alert/Actionable'
+import Actionable from './Components/Billing/Alert.jsx/Actionable'
 import SingleWholesalerInfo from './Components/Dashboard/Retailar/Order/WholesalerPages/SingleWholesalerInfo'
 import Lowstock from './Components/Wholesalecompenent.jsx/Lowstock'
 import Dailysales from './Components/Wholesalecompenent.jsx/Dailysales'
@@ -24,6 +24,7 @@ import ReturnInvoice from './Inventory/ReturnInvoice'
 import AiAgent from './Components/Wholesalecompenent.jsx/Aiagent'
 import Retailors from './Inventory/Retailors'
 import Inventory from './Inventory/Inventory'
+import Actionable from './Components/Billing/Alert/Actionable'
 const App = () => {
 
   return (
@@ -32,31 +33,34 @@ const App = () => {
         <Route path="/" element={<Login />} />
         <Route path="Register" element={<Register />} />
         {/* Layout = Header + Outlet */}
-        <Route element={
+        <Route path="Dashboard" element={
           <ProtectedRoute >
             <Layout />
           </ProtectedRoute>}>
           {/* Default landing page */}
-          <Route path="Dashboard" element={<WholeSaler />} />
-          <Route path="Retailer" element={<Retailer />} />
-          <Route path="Inventory" element={<Inventory />} />
-          <Route path="Billing" element={<Billing />} />
-          <Route path="Cart" element={<Cart />} />
-          <Route path="Order" element={<OrderWholesaler />} />
-          <Route path="Courier" element={<Courier />} />
-          <Route path="Connectcourier" element={<Connectcourier />} />
-          <Route path="TempelateDesigner" element={<TempelateDesigner />} />
-          <Route path="ProductOverview" element={<ProductOverview />} />
-          <Route path="SingleMedicineInfo" element={<SingleMedicineInfo />} />
-          <Route path="SingleWholesalerInfo" element={<SingleWholesalerInfo />} />
-          <Route path="WhatsappTempelate" element={<WhatsappTempelate />} />
-          <Route path="ReturnInvoice" element={<ReturnInvoice />} />
-          <Route path="Retailors" element={<Retailors />} />
-          <Route path="AiAgent" element={<AiAgent />} />
-          <Route path="Alert" element={<Actionable />} />
-          <Route path="Lowstock" element={<Lowstock />} />
-          <Route path="Dailysales" element={<Dailysales />} />
-          <Route path="FilterWholesaler" element={<FilterOutWholesaler />} />
+          <Route path='Wholesaler' element={<WholeSaler />} >
+            <Route path="ProductOverview" element={<ProductOverview />} />
+            <Route path="Retailors" element={<Retailors />} />
+            <Route path="AiAgent" element={<AiAgent />} />
+            <Route path="Alert" element={<Actionable />} />
+            <Route path="Lowstock" element={<Lowstock />} />
+            <Route path="Dailysales" element={<Dailysales />} />
+            <Route path="FilterWholesaler" element={<FilterOutWholesaler />} />
+          </Route>
+          <Route path="Retailer" element={<Retailer />} >
+            <Route path="Inventory" element={<Inventory />} />
+            <Route path="Billing" element={<Billing />} />
+            <Route path="SingleMedicineInfo" element={<SingleMedicineInfo />} />
+            <Route path="SingleWholesalerInfo" element={<SingleWholesalerInfo />} />
+            <Route path="WhatsappTempelate" element={<WhatsappTempelate />} />
+            <Route path="ReturnInvoice" element={<ReturnInvoice />} />
+            <Route path="TempelateDesigner" element={<TempelateDesigner />} />
+            <Route path="Cart" element={<Cart />} />
+            <Route path="Order" element={<OrderWholesaler />} />
+            <Route path="Courier" element={<Courier />} />
+            <Route path="Connectcourier" element={<Connectcourier />} />
+          </Route>
+
 
         </Route>
       </Routes>

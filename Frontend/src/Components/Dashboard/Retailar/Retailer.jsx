@@ -213,7 +213,7 @@ const Retailer = () => {
       flex flex-col items-center justify-center 
       hover:border-green-600 hover:shadow-lg hover:bg-green-50 transition-all"
                       onClick={() => {
-                        navigate("/order")
+                        navigate("/Order")
                       }}>
                       <div className="w-14 h-14 rounded-full  text-green-700
         flex items-center justify-center text-xl" >

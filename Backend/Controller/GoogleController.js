@@ -39,7 +39,7 @@ secure: false
     
         res.status(200).json({
           message: "Google login success",
-       
+        jwtToken: token
         });
 
     }catch (error) {
