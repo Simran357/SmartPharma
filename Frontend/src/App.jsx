@@ -12,19 +12,14 @@ import OrderWholesaler from './Components/Dashboard/Retailar/Order/OrderWholesal
 import Courier from './Components/Billing/Courier'
 import Connectcourier from './Components/Billing/Connectcourier'
 import Users from './Components/Dashboard/Form/Users'
-import Actionable from './Components/Billing/Alert.jsx/Actionable'
+import Actionable from './Components/Billing/Alert/Actionable'
 import SingleWholesalerInfo from './Components/Dashboard/Retailar/Order/WholesalerPages/SingleWholesalerInfo'
 import Lowstock from './Components/Wholesalecompenent.jsx/Lowstock'
 import TempelateDesigner from './Inventory/TempelateDesigner'
 import ProductOverview from './Inventory/ProductOverview'
 import SingleMedicineInfo from './Inventory/medicine/SingleMedicineInfo'
-
-
-import Actionable from './Components/Billing/Alert.jsx/Actionable'
-import SingleWholesalerInfo from './Components/Dashboard/Retailar/Order/WholesalerPages/SingleWholesalerInfo'
-import Lowstock from './Components/Wholesalecompenent.jsx/Lowstock'
 import ProtectedRoute from './Components/Dashboard/Form/ProtectedRoute'
-
+ import Order from "./Components/Ordersoverview/Order";
 const App = () => {
 
   return (
@@ -47,8 +42,8 @@ const App = () => {
 <Route path="ProductOverview" element={<ProductOverview/>}/>
 <Route path="Users" element={<Users/>}/>
 <Route path="SingleMedicineInfo" element={<SingleMedicineInfo/>}/>
-
-
+ 
+<Route path="OrderOverview" element={<Order/>}/> 
          <Route path="Alert" element={<Actionable/>}/>
         <Route path="SingleWholesalerInfo" element={<SingleWholesalerInfo/>}/>
         <Route path="Users" element={
