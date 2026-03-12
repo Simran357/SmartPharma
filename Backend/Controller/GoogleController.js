@@ -21,25 +21,24 @@ const GoogleController = async (req,res,next)=>{
      const { email, name, picture } = googleRes.data;
    
 
- let user = await RegisterModel.findOne({ email });
-    
-       
-        
+ let user = await RegisterModel.findOne({ email:email });
         if (!user) { 
           user = await RegisterModel.create({
             name,
             email,
             avatar: picture,
-            provider: "google",
           });
         }
 
-        const token = jwt.sign({userId: googleRes.data }, "simran", { expiresIn: "1h" })
-    
+        const token = jwt.sign(   { userId: user._id,
+    role: user.role}, "simran", { expiresIn: "1h" })
+    res.cookie("jwtToken",token,{
+httpOnly:true,
+secure: false
+})
     
         res.status(200).json({
           message: "Google login success",
-          token,
        
         });
 

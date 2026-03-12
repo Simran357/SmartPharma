@@ -10,7 +10,7 @@ const LoginController = async (req,res,next)=>{
       console.log("email:", email);
 
     const user = await RegisterModel.findOne({
-       email
+       email:email
     })
 
     if(!user){
@@ -31,13 +31,10 @@ const isMatch = await bcrypt.compare(password, user?.password)
       });
     }
 
-    const userpayload = {
-      email,
-      password
-    }
 
      const jwtToken = jwt.sign(
-      { user: userpayload},
+      { userId: user._id,
+    role: user.role},
       "simran",
       { expiresIn: "1h" }
     );

@@ -1,28 +1,16 @@
 import React from 'react'
 import {
-
-    AppBar,
-
+  AppBar,
     Toolbar,
-
     Typography,
-
     Button,
-
     Box,
-
     Drawer,
-
     List,
-
     ListItem,
-
     ListItemButton,
-
     ListItemText,
-
     IconButton,
-
     Divider
 
 } from '@mui/material'
@@ -30,37 +18,21 @@ import {
 import MenuIcon from '@mui/icons-material/Menu'
 
 import SchoolIcon from '@mui/icons-material/School'
-import { useNavigate, useLocation } from 'react-router'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { useState } from 'react'
 
-
-
 const Header = () => {
-
     const [open, setOpen] = useState(false)
-
     const navigate = useNavigate()
-
     const location = useLocation()
-
-
-
     const menuItems = [
-
-        { text: 'Inventory', path: '/Inventory' },
-
-        { text: 'Retailer', path: '/Retailer' },
-
-        { text: 'WholeSaler', path: '/' },
-
-        { text: 'Billing', path: '/Billing' },
-
-        { text: 'Cart', path: '/Cart' },
-
-        { text: "Login", path: "/Login" },
-
-        { text: "Register", path: "/Register" },
-
+        { text:'Inventory', path:'/Inventory' },
+        { text:'Retailer', path:'/Retailer' },
+        { text:'WholeSaler', path:'/Dashboard' },
+        { text:'Billing', path: '/Billing' },
+        { text:'Cart', path:'/Cart' },
+        { text:"Login", path:"/" },
+        { text:"Register", path:"/Register" },
     ]
 
 
@@ -81,7 +53,6 @@ const Header = () => {
                     borderBottom: '1px solid rgba(255,255,255,0.3)',
                     color: '#000'
                 }}
-
             >
                 <Toolbar>
                     <Box
@@ -137,7 +108,7 @@ const Header = () => {
                 onClose={() => setOpen(false)}
                 sx={{
                     display: { md: 'none' },
-                    '\& .MuiDrawer-paper': {
+                    '& .MuiDrawer-paper': {
                         width: 260,
                         backgroundColor: '#fff'
                     }
@@ -146,7 +117,6 @@ const Header = () => {
 
             >
                 <Box sx={{ p: 2 }}>
-                    {/\* Drawer Header \*/}
                     <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
                         <SchoolIcon sx={{ mr: 1 }} />
                         <Box>

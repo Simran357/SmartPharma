@@ -3,8 +3,6 @@ import React from 'react'
 const Orders = () => {
   return (
     <div className="flex">  
-       
-   
   <main className=" flex-1 flex flex-col overflow-x-hidden">
     <header className="hidden sm:flex sm:h-16  px-14 border-b border-slate-200  items-center justify-between bg-white/80  backdrop-blur-md sticky top-0 z-40">
       <div>
