@@ -100,9 +100,6 @@ const Header = () => {
                 </Toolbar>
             </AppBar>
 
-
-
-
             <Drawer
                 open={open}
                 onClose={() => setOpen(false)}
