@@ -4,7 +4,6 @@ const RegisterValidation = require("../Validation/RegisterValidation")
 const RegisterController = async (req,res,next)=>{
     console.log("registercontroller hit")
     const registerData = await RegisterValidation.validateAsync(req.body)
-
     //extract data
     const {username,password,email} = registerData
 //validation
@@ -24,6 +23,7 @@ const RegisterController = async (req,res,next)=>{
         username:username,
         email:email,
         password:hashedPassword,
+        provider: "local"
     })
 
     await NewData.save()

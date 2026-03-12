@@ -20,7 +20,10 @@ const LoginController = async (req,res,next)=>{
         })
     }
 const isMatch = await bcrypt.compare(password, user?.password)
+   
 
+
+ 
    if (!isMatch) {
       return res.status(400).json({
         success: false,
@@ -28,8 +31,13 @@ const isMatch = await bcrypt.compare(password, user?.password)
       });
     }
 
+    const userpayload = {
+      email,
+      password
+    }
+
      const jwtToken = jwt.sign(
-      { password: user.password },
+      { user: userpayload},
       "simran",
       { expiresIn: "1h" }
     );
