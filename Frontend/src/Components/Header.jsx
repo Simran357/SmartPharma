@@ -27,39 +27,22 @@ import {
 
 } from '@mui/material'
 
-import MenuIcon from '@mui/icons-material/Menu'
-
-import SchoolIcon from '@mui/icons-material/School'
-import { useNavigate, useLocation } from 'react-router'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { useState } from 'react'
-
-
-
+import MenuIcon from '@mui/icons-material/Menu'
+import SchoolIcon from '@mui/icons-material/School'
 const Header = () => {
-
     const [open, setOpen] = useState(false)
-
     const navigate = useNavigate()
-
     const location = useLocation()
-
-
-
     const menuItems = [
-
-        { text: 'Inventory', path: '/Inventory' },
-
-        { text: 'Retailer', path: '/Retailer' },
-
-        { text: 'WholeSaler', path: '/' },
-
-        { text: 'Billing', path: '/Billing' },
-
-        { text: 'Cart', path: '/Cart' },
-
-        { text: "Login", path: "/Login" },
-
-        { text: "Register", path: "/Register" },
+        { text:'Inventory', path:'/Inventory' },
+        { text:'Retailer', path:'/Retailer' },
+        { text:'WholeSaler', path:'/' },
+        { text:'Billing', path:'/Billing' },
+        { text:'Cart', path:'/Cart' },
+        { text:"Login", path:"/Login" },
+        { text:"Register", path:"/Register" },
 
     ]
 
@@ -137,7 +120,7 @@ const Header = () => {
                 onClose={() => setOpen(false)}
                 sx={{
                     display: { md: 'none' },
-                    '\& .MuiDrawer-paper': {
+                    '& .MuiDrawer-paper': {
                         width: 260,
                         backgroundColor: '#fff'
                     }
@@ -146,8 +129,8 @@ const Header = () => {
 
             >
                 <Box sx={{ p: 2 }}>
-                    {/\* Drawer Header \*/}
-                    <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+{/* Drawer Header */}                   
+ <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
                         <SchoolIcon sx={{ mr: 1 }} />
                         <Box>
                             <Typography fontWeight="bold">SmartPharma</Typography>
