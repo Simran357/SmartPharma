@@ -6,7 +6,6 @@ import {
   
 } from '@ant-design/icons';
 import { Button, Layout, Menu, theme } from 'antd';
-
 import {  DashboardCustomize,  Inventory2,  SubjectOutlined } from '@mui/icons-material';
 import Retailer from '../../Retailar/Retailer';
 import Wholesalerfirst from '../../Retailar/Order/WholesalerPages/Wholesalerfirst';
