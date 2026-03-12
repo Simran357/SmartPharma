@@ -15,19 +15,12 @@ import {
 
 } from '@mui/material'
 
-<<<<<<< HEAD:Frontend/src/Components/Dashboard/Form/Utils/Header.jsx
 import MenuIcon from '@mui/icons-material/Menu'
 
 import SchoolIcon from '@mui/icons-material/School'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useState } from 'react'
 
-=======
-import { useNavigate, useLocation } from 'react-router-dom'
-import { useState } from 'react'
-import MenuIcon from '@mui/icons-material/Menu'
-import SchoolIcon from '@mui/icons-material/School'
->>>>>>> 824ab08e05b2bfcdb96368487b1d2e1ef16b8255:Frontend/src/Components/Header.jsx
 const Header = () => {
     const [open, setOpen] = useState(false)
     const navigate = useNavigate()
@@ -35,20 +28,11 @@ const Header = () => {
     const menuItems = [
         { text:'Inventory', path:'/Inventory' },
         { text:'Retailer', path:'/Retailer' },
-<<<<<<< HEAD:Frontend/src/Components/Dashboard/Form/Utils/Header.jsx
         { text:'WholeSaler', path:'/Dashboard' },
         { text:'Billing', path: '/Billing' },
-        { text:'Cart', path:'/Cart' },
-        { text:"Login", path:"/" },
-        { text:"Register", path:"/Register" },
-=======
-        { text:'WholeSaler', path:'/' },
-        { text:'Billing', path:'/Billing' },
-        { text:'Cart', path:'/Cart' },
-        { text:"Login", path:"/Login" },
-        { text:"Register", path:"/Register" },
-
->>>>>>> 824ab08e05b2bfcdb96368487b1d2e1ef16b8255:Frontend/src/Components/Header.jsx
+        { text: 'Cart', path:'/Cart' },
+        { text: "Login", path:"/" },
+        { text: "Register", path:"/Register" },
     ]
 
 
@@ -133,12 +117,7 @@ const Header = () => {
 
             >
                 <Box sx={{ p: 2 }}>
-<<<<<<< HEAD:Frontend/src/Components/Dashboard/Form/Utils/Header.jsx
                     <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-=======
-{/* Drawer Header */}                   
- <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
->>>>>>> 824ab08e05b2bfcdb96368487b1d2e1ef16b8255:Frontend/src/Components/Header.jsx
                         <SchoolIcon sx={{ mr: 1 }} />
                         <Box>
                             <Typography fontWeight="bold">SmartPharma</Typography>
