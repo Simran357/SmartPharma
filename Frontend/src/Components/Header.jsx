@@ -30,7 +30,7 @@ import {
 import MenuIcon from '@mui/icons-material/Menu'
 
 import SchoolIcon from '@mui/icons-material/School'
-import { useNavigate, useLocation } from 'react-router'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { useState } from 'react'
 
 
@@ -146,7 +146,7 @@ const Header = () => {
 
             >
                 <Box sx={{ p: 2 }}>
-                    {/\* Drawer Header \*/}
+                    {/* Drawer Header */}
                     <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
                         <SchoolIcon sx={{ mr: 1 }} />
                         <Box>
@@ -177,10 +177,4 @@ const Header = () => {
         </>
     )
 }
-
-
-
 export default Header
-
-
-

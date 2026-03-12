@@ -25,11 +25,13 @@ import WhatsappTempelate from './Inventory/WhatsappTempelate'
 import ReturnInvoice from './Inventory/ReturnInvoice'
 import AiAgent from './Components/Wholesalecompenent.jsx/Aiagent'
 import Retailors from './Inventory/Retailors'
+
 const App = () => {
 
   return (
     <> 
     <Routes>
+     
       <Route path="/" element={<Login/>}/>
       
         <Route path="Register" element={<Register/>}/>
