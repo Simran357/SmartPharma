@@ -49,9 +49,6 @@ const App = () => {
               <Route path="ProductOverview" element={<ProductOverview />} />
               <Route path="Retailors" element={<Retailors />} />
               <Route path="Alert" element={<Actionable />} />
-
-         
-
           </Route>
           <Route path="Retailer"  >
             <Route index element={<Retailer />} />
