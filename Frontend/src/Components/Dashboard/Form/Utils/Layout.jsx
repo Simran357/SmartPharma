@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 
 import Retailerlayout from "./Retailerlayout";
 import Wholesalerlayout from "./WholesalerLayout";
@@ -11,6 +11,7 @@ export default function Layout() {
   const [role, setRole] = useState(null);
   const [loading, setLoading] = useState(true);
 console.log("ROLE:", role)
+const location = useLocation()
 useEffect(() => {
   axiosInstance.get("/registerroute/me")
     .then(res => {
@@ -28,6 +29,19 @@ useEffect(() => {
   if (loading) {
     return <div>Loading...</div>;
   }
+
+   if (location.pathname === "/Dashboard") {
+
+    if (role === "Retailer") {
+      return <Navigate to="/Dashboard/Retailer" replace />
+    }
+
+    if (role === "Wholesaler") {
+      return <Navigate to="/Dashboard/Wholesaler" replace />
+    }
+
+  }
+
 switch(role){
   case 'Admin':
     return <>
@@ -36,22 +50,17 @@ switch(role){
     </>
   case 'Wholesaler':
     return (
-      <Wholesalerlayout>
-        <Outlet />
-      </Wholesalerlayout>
+      <Wholesalerlayout/>
+       
     )
 
   case 'Retailer':
     return (
-      <Retailerlayout>
-        <Outlet />
-      </Retailerlayout>
+      <Retailerlayout/>
+     
     )
 
   default:
     return <div>Unauthorized</div>
 }
-
-
-
 }

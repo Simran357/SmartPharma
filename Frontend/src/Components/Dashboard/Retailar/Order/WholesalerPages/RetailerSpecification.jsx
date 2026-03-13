@@ -2,7 +2,7 @@ import React from 'react'
 import HistoryIcon from '@mui/icons-material/History';
 import SearchIcon from '@mui/icons-material/Search';
 import {  PlusCircle } from 'lucide-react';
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 const RetailerSpecification = () => {
     const navigate = useNavigate()
     return (

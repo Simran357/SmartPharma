@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { Upload, ReceiptLong, Verified, CloudOutlined, Error, LocalFireDepartment, AddShoppingCart, EventBusy, TrendingUp, Assessment, AutoAwesome, AssignmentTurnedIn, CurrencyRupee, Inventory, WarningAmber } from '@mui/icons-material';
 import MedicineSalesChart from './SubComponent/MedicineSalesChart';
 const stats = [
@@ -213,7 +214,7 @@ const Retailer = () => {
       flex flex-col items-center justify-center 
       hover:border-green-600 hover:shadow-lg hover:bg-green-50 transition-all"
                       onClick={() => {
-                        navigate("/Order")
+                        navigate("Order")
                       }}>
                       <div className="w-14 h-14 rounded-full  text-green-700
         flex items-center justify-center text-xl" >
@@ -400,6 +401,7 @@ const Retailer = () => {
           </div>
         </section>
       </section>
+      <Outlet/>
     </>
   )
 }

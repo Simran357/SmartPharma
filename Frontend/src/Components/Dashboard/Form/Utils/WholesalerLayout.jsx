@@ -10,41 +10,35 @@ import {  DashboardCustomize,  Inventory2,  SubjectOutlined } from '@mui/icons-m
 import Inventory from '../../../../Inventory/Inventory';
 import AiAgent from '../../../Wholesalecompenent.jsx/Aiagent';
 import WholeSaler from '../../../Wholesalecompenent.jsx/WholeSaler';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 
 
 const { Header, Sider, Content } = Layout;
 const Wholesalerlayout = () => {
   const [collapsed, setCollapsed] = useState(false);
-  const [selectedKey,setSelectedKey] = useState('1')
   const {
     token: { colorBgContainer },
   } = theme.useToken();
 
-  const Component = {
-     '1': <WholeSaler/>,
-     '2': <Inventory/>,
-     '3':<AiAgent/>
-  
-  }
-  const items = [
-            {
-              key: '1',
-              icon: <DashboardCustomize/>,
-              label: 'Wholesaler',
-            },
-          
-            {
-              key: '2',
-              icon: <Inventory2 />,
-              label: 'Inventory',
-            },
-            {
-              key: '3',
-              icon:<RobotFilled/>,
-              label: 'Ai agent'
-            },
-      
-          ]
+ const navigate = useNavigate()
+   const location = useLocation();
+const wholesalerMenu = [
+  {
+    key: "/Dashboard/Wholesaler",
+    icon: <DashboardCustomize />,
+    label: "Dashboard",
+  },
+  {
+    key: "/Dashboard/Wholesaler/Inventory",
+    icon: <Inventory2 />,
+    label: "Inventory",
+  },
+  {
+    key: "/Dashboard/Wholesaler/AiAgent",
+    icon: <RobotFilled />,
+    label: "AI Agent",
+  },
+];
   return (
     <>
     <Layout className='min-h-screen'>
@@ -53,11 +47,11 @@ const Wholesalerlayout = () => {
         <Menu
           theme="dark"
           mode="inline"
-          defaultSelectedKeys={['1']}
-          items={items}
+          defaultSelectedKeys={[location.pathname]}
+          selectedKeys={[location.pathname]}
+          items={wholesalerMenu}
           onClick={(e)=>{
-            console.log("items",e?.key)
-            setSelectedKey(e?.key)
+         navigate(e.key)
           }}
         />
       </Sider>
@@ -76,7 +70,7 @@ const Wholesalerlayout = () => {
         </Header>
      <Content className="p-6 h-screen overflow-auto bg-gray-50"
         >
-          {Component[selectedKey]}
+         <Outlet/>
         </Content>
       </Layout>
     </Layout>
