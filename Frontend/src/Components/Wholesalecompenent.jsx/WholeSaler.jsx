@@ -12,6 +12,8 @@ import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArro
 import DoneIcon from '@mui/icons-material/Done';
 import ApartmentIcon from '@mui/icons-material/Apartment';
 import { Outlet, useNavigate } from "react-router-dom";
+import GroupsIcon from '@mui/icons-material/Groups';
+import DetailsIcon from '@mui/icons-material/Details';
 const WholeSaler = () => {
   const navigate = useNavigate()
   return (
@@ -321,11 +323,8 @@ const WholeSaler = () => {
             <section className='bg-white p-6 rounded-3xl   overflow-hidden border border-slate-100 shadow-sm'>
               <div className='p-6 border-b border-slate-50 flex items-center justify-between '>
                 <h3 className="text-xl font-bold text-slate-800 flex items-center gap-2">
-                  <svg className="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-                    <path
-                      d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"
-                      stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-                  </svg>
+                  
+                  <GroupsIcon className='w-5 h-5 text-indigo-500' />
                   Team Discussion
                 </h3>
                 <span className="text-xs bg-indigo-50 text-indigo-600 px-3 py-1 rounded-full font-bold">LIVE
@@ -369,10 +368,8 @@ const WholeSaler = () => {
                     placeholder="Type a note for the team..." type="text" />
                   <button
                     className="bg-indigo-600 text-white p-3 rounded-2xl hover:bg-indigo-700 shadow-md shadow-indigo-200 transition-all">
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-                      <path d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" stroke-linecap="round"
-                        stroke-linejoin="round" stroke-width="2"></path>
-                    </svg>
+                   
+                    <DetailsIcon className='w-5 h-5' />
                   </button>
                 </div>
               </div>
