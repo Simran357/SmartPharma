@@ -6,7 +6,7 @@ import {
   
 } from '@ant-design/icons';
 import { Button, Layout, Menu, theme } from 'antd';
-import {  DashboardCustomize,  Inventory2,  SubjectOutlined } from '@mui/icons-material';
+import {  DashboardCustomize,  Inventory2 } from '@mui/icons-material';
 
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 
