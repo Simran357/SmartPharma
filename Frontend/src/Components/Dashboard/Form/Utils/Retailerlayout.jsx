@@ -6,8 +6,14 @@ import {
 
 } from '@ant-design/icons';
 import { Button, Layout, Menu, theme } from 'antd';
-import { Outlet, useLocation, useNavigate } from "react-router-dom"
-import { DashboardCustomize, DeliveryDining, Inventory2, SubjectOutlined } from '@mui/icons-material';
+
+import {  DashboardCustomize,  Inventory2,  SubjectOutlined } from '@mui/icons-material';
+import Retailer from '../../Retailar/Retailer';
+import Wholesalerfirst from '../../Retailar/Order/WholesalerPages/Wholesalerfirst';
+import Inventory from '../../../../Inventory/Inventory';
+import AiAgent from '../../../Wholesalecompenent.jsx/Aiagent';
+
+
 const { Header, Sider, Content } = Layout;
 const Retailerlayout = () => {
   const [collapsed, setCollapsed] = useState(false);
