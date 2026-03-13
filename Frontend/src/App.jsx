@@ -24,7 +24,6 @@ import ReturnInvoice from './Inventory/ReturnInvoice'
 import AiAgent from './Components/Wholesalecompenent.jsx/Aiagent'
 import Retailors from './Inventory/Retailors'
 import Inventory from './Inventory/Inventory'
-import Actionable from './Components/Billing/Alert/Actionable'
 
 
 const App = () => {
