@@ -8,10 +8,8 @@ import {
 import { Button, Layout, Menu, theme } from 'antd';
 
 import {  DashboardCustomize,  Inventory2,  SubjectOutlined } from '@mui/icons-material';
-import Retailer from '../../Retailar/Retailer';
-import Wholesalerfirst from '../../Retailar/Order/WholesalerPages/Wholesalerfirst';
-import Inventory from '../../../../Inventory/Inventory';
-import AiAgent from '../../../Wholesalecompenent.jsx/Aiagent';
+import { useLocation, useNavigate } from 'react-router-dom';
+
 
 
 const { Header, Sider, Content } = Layout;
