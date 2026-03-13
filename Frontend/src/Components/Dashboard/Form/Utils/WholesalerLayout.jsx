@@ -6,10 +6,8 @@ import {
   
 } from '@ant-design/icons';
 import { Button, Layout, Menu, theme } from 'antd';
-import {  DashboardCustomize,  Inventory2,  SubjectOutlined } from '@mui/icons-material';
-import Inventory from '../../../../Inventory/Inventory';
-import AiAgent from '../../../Wholesalecompenent.jsx/Aiagent';
-import WholeSaler from '../../../Wholesalecompenent.jsx/WholeSaler';
+import {  DashboardCustomize,  Inventory2 } from '@mui/icons-material';
+
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 
 
