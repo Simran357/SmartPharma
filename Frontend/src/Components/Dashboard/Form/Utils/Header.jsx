@@ -25,18 +25,16 @@ const Header = () => {
     const [open, setOpen] = useState(false)
     const navigate = useNavigate()
     const location = useLocation()
-    const menuItems = [
-        { text:'Inventory', path:'/Inventory' },
-        { text:'Retailer', path:'/Retailer' },
-        { text:'WholeSaler', path:'/Dashboard' },
-        { text:'Billing', path: '/Billing' },
-        { text: 'Cart', path:'/Cart' },
-        { text: "Login", path:"/" },
-        { text: "Register", path:"/Register" },
-    ]
+ const menuItems = [
+ { text:'Retailer', path:'/Dashboard/Retailer' },
+ { text:'Inventory', path:'/Dashboard/Retailer/Inventory' },
+ { text:'Billing', path:'/Dashboard/Retailer/Billing' },
+ { text:'Cart', path:'/Dashboard/Retailer/Cart' },
+ { text:'Wholesalers', path:'/Dashboard/Retailer/Order' },
+ { text:'Wholesaler Panel', path:'/Dashboard/Wholesaler' }
+]
 
-
-    const isActive = (path) => location.pathname === path
+    const isActive = (path) =>location.pathname.startsWith(path)
     const handleNavigate = (path) => {
         navigate(path)
         setOpen(false)

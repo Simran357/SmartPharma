@@ -2,9 +2,11 @@ import React from 'react'
 import { useState } from 'react';
 import Wholesalerfirst from './WholesalerPages/Wholesalerfirst';
 import RetailerSpecification from './WholesalerPages/RetailerSpecification';
+import { Outlet } from 'react-router-dom';
 
 const OrderWholesaler = () => {
    const [activeTab, setActiveTab] = useState("wholesaler");
+   
   return (
     <>
       <div className='m-6 pr-4'>
@@ -77,7 +79,7 @@ const OrderWholesaler = () => {
           </section>
         </div>
         </div>
-
+<Outlet/>
     </>
   )
 }

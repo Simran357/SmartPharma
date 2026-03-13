@@ -10,10 +10,7 @@ createRoot(document.getElementById('root')).render(
       <BrowserRouter>
          <CommonContext>
             <App />
-        
          </CommonContext>
-
       </BrowserRouter>
-
    </GoogleOAuthProvider>
 )

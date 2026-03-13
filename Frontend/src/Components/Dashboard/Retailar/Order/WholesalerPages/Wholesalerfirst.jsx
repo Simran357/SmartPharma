@@ -3,14 +3,15 @@ import { useNavigate } from 'react-router-dom'
 
 const Wholesalerfirst = () =>  {
     const navigate =useNavigate()
+  
 
-  return (
+  return (<>
     <div className='flex gap-4 '>
       <div className="w-full">
         <div className="flex flex-wrap gap-4">
           <div className="w-full sm:w-[48%] md:w-[31%] lg:w-[23%] bg-[#162538] rounded-2xl overflow-hidden shadow-lg"
           onClick={()=>{
-            navigate("/SingleWholesalerInfo")
+            navigate("SingleWholesalerInfo")
           }}
           >
 
@@ -75,7 +76,11 @@ const Wholesalerfirst = () =>  {
             </div>
           </div>
 
-          <div className="w-full sm:w-[48%] md:w-[31%] lg:w-[23%]  bg-[#162538] rounded-2xl overflow-hidden shadow-lg">
+          <div className="w-full sm:w-[48%] md:w-[31%] lg:w-[23%]  bg-[#162538] rounded-2xl overflow-hidden shadow-lg"
+             onClick={()=>{
+            navigate("SingleWholesalerInfo")
+          }}
+          >
 
             {/* Top Image */}
             <div className="relative">
@@ -138,7 +143,11 @@ const Wholesalerfirst = () =>  {
             </div>
           </div>
 
-          <div className="rounded-2xl w-full sm:w-[48%] md:w-[31%] lg:w-[23%]  bg-[#162538]  shadow-xl overflow-hidden">
+          <div className="rounded-2xl w-full sm:w-[48%] md:w-[31%] lg:w-[23%]  bg-[#162538]  shadow-xl overflow-hidden"
+             onClick={()=>{
+            navigate("SingleWholesalerInfo")
+          }}
+          >
 
             {/* Top Image */}
             <div className="relative">
@@ -201,7 +210,11 @@ const Wholesalerfirst = () =>  {
             </div>
           </div>
 
-          <div className="bg-[#162538] w-full sm:w-[48%] md:w-[31%] lg:w-[23%] rounded-xl overflow-hidden shadow-lg">
+          <div className="bg-[#162538] w-full sm:w-[48%] md:w-[31%] lg:w-[23%] rounded-xl overflow-hidden shadow-lg"
+             onClick={()=>{
+            navigate("SingleWholesalerInfo")
+          }}
+          >
 
             {/* Top Image */}
             <div className="relative">
@@ -265,6 +278,8 @@ const Wholesalerfirst = () =>  {
         </div>
       </div>
     </div>
+ 
+    </>
   )
 }
 
