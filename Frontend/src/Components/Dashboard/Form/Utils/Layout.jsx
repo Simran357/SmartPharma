@@ -51,7 +51,4 @@ switch(role){
   default:
     return <div>Unauthorized</div>
 }
-
-
-
 }
