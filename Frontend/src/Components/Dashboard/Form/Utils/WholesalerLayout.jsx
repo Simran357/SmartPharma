@@ -31,6 +31,11 @@ const wholesalerMenu = [
     icon: <Inventory2 />,
     label: "Inventory",
   },
+   {
+    key: "/Dashboard/Wholesaler/Courier",
+    icon: <Inventory2 />,
+    label: "Order",
+  },
   {
     key: "/Dashboard/Wholesaler/AiAgent",
     icon: <RobotFilled />,
