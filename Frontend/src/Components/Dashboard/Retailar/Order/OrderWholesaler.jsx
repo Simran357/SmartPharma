@@ -41,7 +41,6 @@ const OrderWholesaler = () => {
             }`}
         >
           Wholesaler-First
-
           {activeTab === "wholesaler" && (
             <span className="absolute left-0 bottom-0 h-3px w-full bg-green-500 rounded-full"></span>
           )}
@@ -71,11 +70,7 @@ const OrderWholesaler = () => {
         {activeTab === "requirement" && (
           <RetailerSpecification/>
         )}
-      </div>
-
-      
-   
-           
+      </div>   
           </section>
         </div>
         </div>

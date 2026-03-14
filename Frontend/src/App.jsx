@@ -24,6 +24,9 @@ import ReturnInvoice from './Inventory/ReturnInvoice'
 import AiAgent from './Components/Wholesalecompenent.jsx/Aiagent'
 import Retailors from './Inventory/Retailors'
 import Inventory from './Inventory/Inventory'
+import FindWholesaler from './Components/Dashboard/Retailar/Order/WholesalerPages/FindWholesaler'
+import MixedWholesaler from './Components/Dashboard/Retailar/Order/WholesalerPages/MixedWholesaler'
+import OneWholesaler from './Components/Dashboard/Retailar/Order/WholesalerPages/FindWholesaler'
 
 
 const App = () => {
@@ -50,7 +53,7 @@ const App = () => {
               <Route path="Retailors" element={<Retailors />} />
               <Route path="Alert" element={<Actionable />} />
           </Route>
-          <Route path="Retailer"  >
+          <Route path="Retailer">
             <Route index element={<Retailer />} />
             <Route path="Inventory" element={<Inventory />} />
             <Route path="Billing" element={<Billing />} />
@@ -61,9 +64,11 @@ const App = () => {
             <Route path="TempelateDesigner" element={<TempelateDesigner />} />
             <Route path="Cart" element={<Cart />} />
              <Route path="FilterWholesaler" element={<FilterOutWholesaler />} />
-
             <Route path="Order">
               <Route index element={<OrderWholesaler />} />
+              <Route path="FindWholesaler" element={<OneWholesaler/>}/>
+              <Route path="FilterOutWholesaler" element={<FilterOutWholesaler/>}/>
+              <Route path="MixedWholesaler" element={<MixedWholesaler/>}/>
               <Route path=":id" element={<SingleWholesalerInfo />} />
             </Route>
             <Route path="Courier" element={<Courier />} />
