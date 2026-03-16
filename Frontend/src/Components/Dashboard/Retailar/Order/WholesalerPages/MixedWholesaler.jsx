@@ -59,7 +59,6 @@ const statusText = {
   return (
     <>
                <div className="flex flex-col lg:flex-row min-h-screen">
-   
                    <div className="bg-white p-4 w-full lg:w-[22%] border-b lg:border-b-0 lg:border-r border-gray-200">
                        <div className='flex justify-between'>
                            <h1 className='text-gray-600 text-xs font-bold uppercase tracking-wide'>Active Quotes</h1>
