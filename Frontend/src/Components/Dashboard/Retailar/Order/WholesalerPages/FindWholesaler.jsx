@@ -1,101 +1,60 @@
 import { Download, Verified } from '@mui/icons-material'
 import React from 'react'
-import { Table, Tag } from 'antd';
 import { DollarSign, DollarSignIcon, PlusIcon } from 'lucide-react';
 
 const OneWholesaler = () => {
-    const columns = [
-        {
-            title: "STATUS",
-            dataIndex: "status",
-            key: "status",
-            render: (status) => {
-                const map = {
-                    match: { color: "green", text: "Match" },
-                    alt: { color: "orange", text: "Alt Brand" },
-                    missing: { color: "red", text: "Missing" }
-                };
+ const data = [
+  {
+    id: 1,
+    type: "medicine",
+    status: "match",
+    medicine: "Amoxicillin 500mg",
+    company: "GlaxoSmithKline • 10x10 Strip",
+    qty: 20,
+    price: 4.2,
+    subtotal: 84
+  },
 
-                return <Tag color={map[status].color}>{map[status].text}</Tag>;
-            }
-        },
-        {
-            title: "MEDICINE NAME",
-            dataIndex: "medicine",
-            key: "medicine",
-            render: (text, record) => (
-                <div>
-                    <p className="font-semibold">{text}</p>
-                    <p className="text-xs text-gray-400">{record.company}</p>
-                </div>
-            )
-        },
-        {
-            title: "QTY",
-            dataIndex: "qty",
-            key: "qty"
-        },
-        {
-            title: "UNIT PRICE",
-            dataIndex: "price",
-            key: "price",
-            render: (price) => `$${price}`
-        },
-        {
-            title: "SUBTOTAL",
-            dataIndex: "subtotal",
-            key: "subtotal",
-            render: (subtotal) => <b>${subtotal}</b>
-        },
-        {
-            title: "ACTION",
-            key: "action",
-            render: () => (
-                <button className="text-blue-600 text-xs font-semibold">
-                    Change
-                </button>
-            )
-        }
-    ];
-    const data = [
-        {
-            key: "1",
-            status: "match",
-            medicine: "Amoxicillin 500mg",
-            company: "GlaxoSmithKline • 10x10 Strip",
-            qty: 20,
-            price: 4.2,
-            subtotal: 84
-        },
-        {
-            key: "2",
-            status: "alt",
-            medicine: "Lipitor 20mg (Atorvastatin)",
-            company: "Pfizer • Box of 30",
-            qty: 15,
-            price: 12.5,
-            subtotal: 187.5,
-            suggestion: true
-        },
-        {
-            key: "3",
-            status: "missing",
-            medicine: "Augmentin 625 Duo",
-            company: "GSK • Out of Stock",
-            qty: 50,
-            price: 8.9,
-            subtotal: 445
-        },
-        {
-            key: "4",
-            status: "match",
-            medicine: "Paracetamol 650mg",
-            company: "Generic • 1000 Count Jar",
-            qty: 100,
-            price: 1.1,
-            subtotal: 110
-        }
-    ];
+  {
+    id: 2,
+    type: "alternative",
+    medicine: "Amoxicillin 500mg (Brand A)",
+    qty: 100,
+    oldPrice: 95,
+    suggested: "Generic Amox-Gen",
+    price: 72
+  },
+
+  {
+    id: 3,
+    type: "outofstock",
+    medicine: "EpiPen 2-Pak (0.3mg)",
+    message: "Backordered. Next availability 05/12"
+  },
+
+  {
+    id: 4,
+    type: "medicine",
+    status: "match",
+    medicine: "Paracetamol 650mg",
+    company: "Generic • 1000 Count Jar",
+    qty: 100,
+    price: 1.1,
+    subtotal: 110
+  }
+];
+
+const statusDot = {
+  match: "bg-green-500",
+  alt: "bg-orange-400",
+  missing: "bg-red-500"
+};
+
+const statusText = {
+  match: "text-green-600",
+  alt: "text-orange-500",
+  missing: "text-red-500"
+};
     return (
         <>
             <div className="flex flex-col lg:flex-row min-h-screen">
@@ -184,22 +143,188 @@ const OneWholesaler = () => {
                             <h1 className='font-bold text-xl '>Order Details : MedLink Pharma</h1>
                             <p className='text-[10px] text-gray-400'>Reviewing 48 line items for dispatch</p>
                         </div>
-                        <div className="flex flex-wrap gap-2">
+                        <div className="flex flex-wrap gap-2 mt-4">
                             <button className='flex items-center gap-2 border border-gray-200 p-2 rounded-lg'>
                                 <Download fontSize='xs' />  Export</button>
                             <button className=' text-white bg-blue-600 p-2 rounded-lg text-xs '>
                                 Approve & Send Order</button>
                         </div>
                     </div>
+ <div className="bg-white border border-gray-200 rounded-xl m-6">
 
-<div className="p-6 w-full overflow-x-auto">                        
-    <Table
-                            columns={columns}
-                            dataSource={data}
-                            pagination={false}
-                            bordered
-                        />
-                    </div>
+  {/* Header */}
+  <div className="grid grid-cols-7 text-xs font-bold text-gray-500 px-6 py-3 ">
+  <div>STATUS</div>
+  <div className="col-span-2">MEDICINE NAME</div>
+  <div>QTY</div>
+  <div>UNIT PRICE</div>
+  <div>SUBTOTAL</div>
+  <div>ACTION</div>
+</div>
+
+  {data.map((item) => {
+
+    /* ---------- MEDICINE ROW ---------- */
+ if (item.type === "medicine") {
+  return (
+    <div key={item.id} className="">
+
+      <div className="grid grid-cols-7 items-center px-6 py-4 hover:bg-gray-100">
+
+        {/* STATUS */}
+        <div className="flex items-center gap-2 text-sm">
+          <span className={`w-2 h-2 rounded-full ${statusDot[item.status]}`}></span>
+          <span className={statusText[item.status]}>
+            {item.status}
+          </span>
+        </div>
+
+        {/* MEDICINE */}
+        <div className="col-span-2">
+          <p className="font-semibold text-sm">{item.medicine}</p>
+          <p className="text-xs text-gray-400">{item.company}</p>
+        </div>
+
+        {/* QTY */}
+        <div>{item.qty}</div>
+
+        {/* PRICE */}
+        <div>${item.price}</div>
+
+        {/* SUBTOTAL */}
+        <div className="font-semibold">${item.subtotal}</div>
+
+        {/* ACTION */}
+        <div>
+          <button className="text-blue-600 text-sm font-medium">
+            Change
+          </button>
+        </div>
+
+      </div>
+
+      {/* Suggestion Row */}
+      {item.suggestion && (
+        <div className="mx-6 mb-4 bg-green-50 border border-green-200 rounded-xl p-4 flex justify-between items-center">
+
+          <div>
+            <p className="font-semibold text-green-700 text-sm">
+              Switch to Atorva-20 (Generic)
+            </p>
+            <p className="text-xs text-gray-500">
+              Same formula, lower cost per unit
+            </p>
+          </div>
+
+          <div className="flex items-center gap-4">
+
+            <span className="text-green-700 text-xs font-semibold bg-green-100 px-2 py-1 rounded-full">
+              +4.2% Margin Gain
+            </span>
+
+            <button className="bg-green-600 text-white px-4 py-1 rounded-lg text-xs font-semibold">
+              Swap Now
+            </button>
+
+          </div>
+
+        </div>
+      )}
+
+    </div>
+  );
+}
+    /* ---------- ALTERNATIVE CARD ---------- */
+    if (item.type === "alternative") {
+      return (
+        <div key={item.id} className="p-6">
+
+          <div className="border border-yellow-300 bg-yellow-50 rounded-xl p-4">
+
+            <p className="text-xs font-bold text-yellow-700 mb-3">
+              ALTERNATIVE SUGGESTED
+            </p>
+
+            {/* Original */}
+            <div className="flex justify-between items-center bg-white border rounded-lg p-3 mb-2">
+
+              <div>
+                <p className="font-semibold text-sm">{item.medicine}</p>
+                <p className="text-xs text-gray-400">
+                  Original Request • Qty: {item.qty}
+                </p>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <span className="text-xs bg-red-100 text-red-600 px-2 py-1 rounded">
+                  SHORTAGE
+                </span>
+
+                <p className="text-gray-400 line-through">${item.oldPrice}</p>
+              </div>
+
+            </div>
+
+            {/* Suggested */}
+            <div className="flex justify-between items-center bg-white border rounded-lg p-3">
+
+              <div>
+                <p className="font-semibold text-sm">
+                  Suggested: {item.suggested}
+                </p>
+                <p className="text-xs text-gray-400">
+                  Immediate Availability
+                </p>
+              </div>
+
+              <div className="flex items-center gap-4">
+
+                <div className="text-right">
+                  <p className="font-semibold">${item.price}</p>
+                  <p className="text-xs text-green-600 font-medium">
+                    +4% Margin
+                  </p>
+                </div>
+
+                <button className="bg-green-600 text-white px-3 py-1 rounded-lg text-xs">
+                  Switch
+                </button>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+      );
+    }
+
+    /* ---------- OUT OF STOCK ---------- */
+    if (item.type === "outofstock") {
+      return (
+        <div key={item.id} className="p-6">
+
+          <div className="border border-red-300 border-dashed bg-red-50 rounded-xl p-4 flex justify-between items-center">
+
+            <div>
+              <p className="font-semibold text-sm">{item.medicine}</p>
+              <p className="text-xs text-gray-400">{item.message}</p>
+            </div>
+
+            <button className="text-green-600 text-sm font-semibold">
+              Find other supplier
+            </button>
+
+          </div>
+
+        </div>
+      );
+    }
+
+  })}
+
+</div>
 
                 </section>
                 <section className="bg-white w-full lg:w-[30%] border-t lg:border-t-0 lg:border-l border-gray-200">
