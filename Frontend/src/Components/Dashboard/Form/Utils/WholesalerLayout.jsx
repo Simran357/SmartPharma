@@ -7,7 +7,6 @@ import {
 } from '@ant-design/icons';
 import { Button, Layout, Menu, theme } from 'antd';
 import {  DashboardCustomize,  Inventory2 } from '@mui/icons-material';
-
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 
 
@@ -30,6 +29,11 @@ const wholesalerMenu = [
     key: "/Dashboard/Wholesaler/Inventory",
     icon: <Inventory2 />,
     label: "Inventory",
+  },
+   {
+    key: "/Dashboard/Wholesaler/Courier",
+    icon: <Inventory2 />,
+    label: "Order",
   },
   {
     key: "/Dashboard/Wholesaler/AiAgent",

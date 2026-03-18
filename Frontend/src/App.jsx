@@ -25,6 +25,14 @@ import AiAgent from './Components/Wholesalecompenent.jsx/Aiagent'
 import PendingOrders from './Components/Wholesalecompenent.jsx/PendingOrders'
 import Retailors from './Inventory/Retailors'
 import Inventory from './Inventory/Inventory'
+
+
+import FindWholesaler from './Components/Dashboard/Retailar/Order/WholesalerPages/FindWholesaler'
+import MixedWholesaler from './Components/Dashboard/Retailar/Order/WholesalerPages/MixedWholesaler'
+import OneWholesaler from './Components/Dashboard/Retailar/Order/WholesalerPages/FindWholesaler'
+
+
+
 const App = () => {
 
   return (
@@ -37,6 +45,7 @@ const App = () => {
           <ProtectedRoute >
             <Layout /> 
           </ProtectedRoute>}>     
+          </Route>
           <Route index element={<Navigate to="Retailer" replace />} />
           {/* Default landing page */}
           <Route path='Wholesaler' >
@@ -48,9 +57,12 @@ const App = () => {
               <Route path="ProductOverview" element={<ProductOverview />} />
               <Route path="Retailors" element={<Retailors />} />
               <Route path="Alert" element={<Actionable />} />
+
               <Route path="PendingOrders" element={<PendingOrders />} />
+              
+
           </Route>
-          <Route path="Retailer"  >
+          <Route path="Retailer">
             <Route index element={<Retailer />} />
             <Route path="Inventory" element={<Inventory />} />
             <Route path="Billing" element={<Billing />} />
@@ -61,8 +73,15 @@ const App = () => {
             <Route path="TempelateDesigner" element={<TempelateDesigner />} />
             <Route path="Cart" element={<Cart />} />
              <Route path="FilterWholesaler" element={<FilterOutWholesaler />} />
+
            <Route path="Order">
+
+            <Route path="Order">
+
               <Route index element={<OrderWholesaler />} />
+              <Route path="FindWholesaler" element={<OneWholesaler/>}/>
+              <Route path="FilterOutWholesaler" element={<FilterOutWholesaler/>}/>
+              <Route path="MixedWholesaler" element={<MixedWholesaler/>}/>
               <Route path=":id" element={<SingleWholesalerInfo />} />
             </Route>
             <Route path="Courier" element={<Courier />} />
