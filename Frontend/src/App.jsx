@@ -22,10 +22,9 @@ import FilterOutWholesaler from './Components/Dashboard/Retailar/Order/Wholesale
 import WhatsappTempelate from './Inventory/WhatsappTempelate'
 import ReturnInvoice from './Inventory/ReturnInvoice'
 import AiAgent from './Components/Wholesalecompenent.jsx/Aiagent'
+import PendingOrders from './Components/Wholesalecompenent.jsx/PendingOrders'
 import Retailors from './Inventory/Retailors'
 import Inventory from './Inventory/Inventory'
-
-
 const App = () => {
 
   return (
@@ -36,8 +35,8 @@ const App = () => {
         {/* Layout = Header + Outlet */}
         <Route path="Dashboard" element={
           <ProtectedRoute >
-            <Layout />
-          </ProtectedRoute>}>
+            <Layout /> 
+          </ProtectedRoute>}>     
           <Route index element={<Navigate to="Retailer" replace />} />
           {/* Default landing page */}
           <Route path='Wholesaler' >
@@ -49,6 +48,7 @@ const App = () => {
               <Route path="ProductOverview" element={<ProductOverview />} />
               <Route path="Retailors" element={<Retailors />} />
               <Route path="Alert" element={<Actionable />} />
+              <Route path="PendingOrders" element={<PendingOrders />} />
           </Route>
           <Route path="Retailer"  >
             <Route index element={<Retailer />} />
@@ -61,8 +61,7 @@ const App = () => {
             <Route path="TempelateDesigner" element={<TempelateDesigner />} />
             <Route path="Cart" element={<Cart />} />
              <Route path="FilterWholesaler" element={<FilterOutWholesaler />} />
-
-            <Route path="Order">
+           <Route path="Order">
               <Route index element={<OrderWholesaler />} />
               <Route path=":id" element={<SingleWholesalerInfo />} />
             </Route>
@@ -71,8 +70,6 @@ const App = () => {
           </Route>
         </Route>
       </Routes>
-
-    </>)
+   </>)
 }
-
 export default App

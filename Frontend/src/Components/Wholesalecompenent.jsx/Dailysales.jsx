@@ -7,6 +7,7 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import { Doughnut } from "react-chartjs-2";
 import { Chart as Chartjs, ArcElement, Tooltip, Legend } from "chart.js";
 Chartjs.register(ArcElement, Tooltip, Legend);
+import PrintIcon from '@mui/icons-material/Print';
 const Dailysales = () => {
 
     const data = [
@@ -50,7 +51,6 @@ const Dailysales = () => {
         { name: "Cash", value: "25%", color: "border-emerald-400" },
         { name: "Card", value: "15%", color: "border-amber-400" },
     ]
-
     const transactions = [
         {
             id: "#ORD-9024",
@@ -260,22 +260,156 @@ const Dailysales = () => {
                             {/* Table */}
                             <div className="overflow-x-auto">
                                 <table className="w-full text-left">
-                                <thead className="bg-slate-50">
-                                    <tr>
-                                        <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase"> Order ID </th>
-                                        <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase"> Customer </th>
-                                        <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase"> Payment </th>
-                                        <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase"> Items </th>
-                                        <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase"> Status </th>
-                                        <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase"> Action</th>
-                                    </tr>
-                                </thead>
-                                    <tbody>
-                                        </tbody>
+                                    <thead className="bg-slate-50">
+                                        <tr>
+                                            <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase"> Order ID </th>
+                                            <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase"> Customer </th>
+                                            <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase"> Payment </th>
+                                            <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase"> Items </th>
+                                            <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase"> Amount </th>
+
+                                            <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase"> Status </th>
+                                            <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase"> Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="divide-y divide-slate-100">
+                                        {transactions.map((item, index) => (
+                                            <tr key={index}>
+                                                <td className="px-6 py-4 text-sm font-bold text-blue-600">{item.id}</td>
+                                                <td className='px-6 py-4 text-sm font-bold text-blue-600'>{item.customer}</td>
+                                                <td className='px-6 py-4'>
+                                                    <span className="px-2 py-1 bg-blue-100 text-blue-700 text-[10px] font-bold rounded uppercase">
+                                                        {item.payment}
+                                                    </span></td>
+                                                <td className='px-6 py-4 text-sm font-bold text-blue-600'>{item.items}</td>
+                                                <td className='px-6 py-4 text-sm font-bold text-blue-600'>{item.amount}</td>
+                                                <td className='px-6 py-4 text-sm font-bold text-blue-600'>{item.status}</td>
+                                                <td className='px-6 py-4px-6 py-4 text-sm font-bold text-blue-600'>
+                                                    <button className="text-blue-500 hover:text-blue-700">
+                                                        <PrintIcon className='text-sm' />View
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
                                 </table>
                             </div>
-                          </div>
-                    </div>  
+                        </div>
+                        {/* <!-- Top Medicines --> */}
+                        <div className=" flex flex-col  bg-white rounded-xl border border-slate-200 shadow-sm ">
+                            <div className="p-6 border-b border-slate-200 ">
+                                <h4 className="textbase font-bold text-slate-700">Top 5 Medicines</h4>
+                            </div>
+                            <div className="p-4  flex-1 space-y-4">
+                                <div className='flex items-center gap-1'>
+                                    <div className="bg-blue-50 flex items-center justify-center h-10 w-10  rounded-lg  text-blue-600 font-bold p-2">01</div>
+                                    <div className="flex-1 min-w-0">
+                                        <p className="text-sm font-bold text-slate-900  truncate">Metformin 500mg</p>
+                                        <p className="text-xs text-slate-500">Diabetes Care</p>
+                                    </div>
+                                    <div className="text-right">
+                                        <p className="text-sm font-bold text-slate-900 ">82</p>
+                                        <p className="text-[10px] text-emerald-500 font-bold">$820.00</p>
+                                    </div>
+                                </div>
+                                <div className="flex items-center gap-4">
+                                    <div className="h-10 w-10 bg-emerald-50 dark:bg-emerald-900/30 rounded-lg flex items-center justify-center text-emerald-600 font-bold">02</div>
+                                    <div className="flex-1 min-w-0">
+                                        <p className="text-sm font-bold text-slate-900  truncate">Amoxicillin
+                                            250mg</p>
+                                        <p className="text-xs text-slate-500">Antibiotics</p>
+                                    </div>
+                                    <div className="text-right">
+                                        <p className="text-sm font-bold text-slate-900 ">64</p>
+                                        <p className="text-[10px] text-emerald-500 font-bold">$512.00</p>
+                                    </div>
+                                </div>
+                                <div className="flex items-center gap-4">
+                                    <div className="h-10 w-10 rounded-lg font-bold text-green-500 bg-green-50 p-2">03</div>
+                                    <div className="flex-1 min-w-0">
+                                        <p className="text-sm font-bold text-slate-900  truncate">Lisinopril 10mg</p>
+                                        <p className="text-xs text-slate-500">Cholesterol</p>
+                                    </div>
+                                    <div className="text-right">
+                                        <p className="text-sm font-bold text-slate-900 ">51</p>
+                                        <p className="text-[10px] text-emerald-500 font-bold">$408.00</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        {/* <!-- Profit Summary --> */}
+                        <div className="bg-white p-6 rounded-xl border border-slate-200  shadow-sm">
+                            <h4 className="text-base font-bold text-slate-900  mb-6">Profit Summary</h4>
+                            <div className="grid grid-cols-2 gap-6">
+                                <div className="space-y-1">
+                                    <p className="text-xs text-slate-500 font-medium">Purchase Cost</p>
+                                    <p className="text-lg font-bold text-slate-900 ">$3,120.00</p>
+                                </div>
+                                <div className="space-y-1">
+                                    <p className="text-xs text-slate-500 font-medium">Selling Price</p>
+                                    <p className="text-lg font-bold text-slate-900 ">$4,250.00</p>
+                                </div>
+                                <div className="space-y-1 border-t border-slate-100  pt-4">
+                                    <p className="text-xs text-slate-500 font-medium">Net Profit</p>
+                                    <p className="text-xl font-bold text-emerald-500">$1,130.00</p>
+                                </div>
+                                <div className="space-y-1 border-t border-slate-100  pt-4">
+                                    <p className="text-xs text-slate-500 font-medium">Margin %</p>
+                                    <p className="text-xl font-bold text-primary">26.5%</p>
+                                </div>
+                            </div>
+                        </div>
+                        {/* <!-- Returns/Cancelled --> */}
+                        <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                            <h4 className="text-base font-bold text-slate-900  mb-6">Returns &amp; Cancellations</h4>
+                            <div className="flex items-center justify-between mb-6">
+                                <div className="flex flex-col">
+                                    <span className="text-2xl font-bold text-rose-500">08</span>
+                                    <span className="text-xs text-slate-500 font-medium uppercase">Total Count</span>
+                                </div>
+                                <div className="flex flex-col text-right">
+                                    <span className="text-2xl font-bold text-slate-900 ">$142.20</span>
+                                    <span className="text-xs text-slate-500 font-medium uppercase">Refund Amount</span>
+                                </div>
+                            </div>
+                            <div className="space-y-3">
+                                <div className="flex items-center gap-3 p-2 bg-rose-50  rounded-lg">
+                                    <span className="material-symbols-outlined text-rose-500 text-sm">error</span>
+                                    <span className="text-xs text-slate-700 ">Expired batch returned by
+                                        vendor (4)</span>
+                                </div>
+                                <div className="flex items-center gap-3 p-2 bg-slate-50  rounded-lg">
+                                    <span className="material-symbols-outlined text-slate-400 text-sm">cancel</span>
+                                    <span className="text-xs text-slate-700 ">Customer change of mind (2)</span>
+                                </div>
+                            </div>
+                        </div>
+                        {/* <!-- Quick Actions --> */}
+                        <div className="bg-blue-500 p-6 rounded-xl  shadow-lg shadow-primary/20 flex flex-col justify-between">
+                            <h4 className="text-base font-bold text-white mb-6">Quick Actions</h4>
+                            <div className="grid grid-cols-2 gap-3">
+                                <button className="flex flex-col items-center justify-center gap-2 p-3 bg-white/10 hover:bg-white/20 rounded-lg text-white transition-all">
+                                    <span className="material-symbols-outlined">add_shopping_cart</span>
+                                    <span className="text-[10px] font-bold uppercase">Add Sale</span>
+                                </button>
+                                <button className="flex flex-col items-center justify-center gap-2 p-3 bg-white/10 hover:bg-white/20 rounded-lg text-white transition-all">
+                                    <span className="material-symbols-outlined">print</span>
+                                    <span className="text-[10px] font-bold uppercase">Report</span>
+                                </button>
+                                <button className="flex flex-col items-center justify-center gap-2 p-3 bg-white/10 hover:bg-white/20 rounded-lg text-white transition-all">
+                                    <span className="material-symbols-outlined">picture_as_pdf</span>
+                                    <span className="text-[10px] font-bold uppercase">PDF</span>
+                                </button>
+                                <button className="flex flex-col items-center justify-center gap-2 p-3 bg-white/10 hover:bg-white/20 rounded-lg text-white transition-all">
+                                    <span className="material-symbols-outlined">mail</span>
+                                    <span className="text-[10px] font-bold uppercase">Email</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </main >
         </div>
