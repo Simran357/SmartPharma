@@ -31,10 +31,7 @@ import FindWholesaler from './Components/Dashboard/Retailar/Order/WholesalerPage
 import MixedWholesaler from './Components/Dashboard/Retailar/Order/WholesalerPages/MixedWholesaler'
 import OneWholesaler from './Components/Dashboard/Retailar/Order/WholesalerPages/FindWholesaler'
 
-
-
 const App = () => {
-
   return (
     <>
       <Routes>
