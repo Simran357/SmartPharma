@@ -1,5 +1,5 @@
 import React from 'react'
-import { Routes, Route, Navigate } from 'react-router-dom' 
+import { Routes, Route, Navigate } from 'react-router-dom'
 import Layout from './Components/Dashboard/Form/Utils/Layout'
 import Cart from './Components/Billing/Cart'
 import Billing from './Components/Billing/Billing'
@@ -22,15 +22,15 @@ import FilterOutWholesaler from './Components/Dashboard/Retailar/Order/Wholesale
 import WhatsappTempelate from './Inventory/WhatsappTempelate'
 import ReturnInvoice from './Inventory/ReturnInvoice'
 import AiAgent from './Components/Wholesalecompenent.jsx/Aiagent'
-import PendingOrders from './Components/Wholesalecompenent.jsx/PendingOrders'
 import Retailors from './Inventory/Retailors'
 import Inventory from './Inventory/Inventory'
-
-
+import FindWholesaler from './Components/Dashboard/Retailar/Order/WholesalerPages/FindWholesaler'
 import MixedWholesaler from './Components/Dashboard/Retailar/Order/WholesalerPages/MixedWholesaler'
 import OneWholesaler from './Components/Dashboard/Retailar/Order/WholesalerPages/FindWholesaler'
 
+
 const App = () => {
+
   return (
     <>
       <Routes>
@@ -39,11 +39,10 @@ const App = () => {
         {/* Layout = Header + Outlet */}
         <Route path="Dashboard" element={
           <ProtectedRoute >
-            <Layout /> 
-          </ProtectedRoute>}>   
-          </Route>  
+            <Layout />
+          </ProtectedRoute>}>
           <Route index element={<Navigate to="Retailer" replace />} />
-          {/* Default landing page */}  
+          {/* Default landing page */}
           <Route path='Wholesaler' >
             <Route index element={<WholeSaler />}/>
               <Route path="Lowstock" element={<Lowstock />} />
@@ -53,11 +52,7 @@ const App = () => {
               <Route path="ProductOverview" element={<ProductOverview />} />
               <Route path="Retailors" element={<Retailors />} />
               <Route path="Alert" element={<Actionable />} />
-
-              <Route path="PendingOrders" element={<PendingOrders />} />
-
               
-
           </Route>
           <Route path="Retailer">
             <Route index element={<Retailer />} />
@@ -70,11 +65,7 @@ const App = () => {
             <Route path="TempelateDesigner" element={<TempelateDesigner />} />
             <Route path="Cart" element={<Cart />} />
              <Route path="FilterWholesaler" element={<FilterOutWholesaler />} />
-
-           <Route path="Order">
-
             <Route path="Order">
-
               <Route index element={<OrderWholesaler />} />
               <Route path="FindWholesaler" element={<OneWholesaler/>}/>
               <Route path="FilterOutWholesaler" element={<FilterOutWholesaler/>}/>
@@ -86,6 +77,8 @@ const App = () => {
           </Route>
         </Route>
       </Routes>
-   </>)
+
+    </>)
 }
-export default App 
+
+export default App
