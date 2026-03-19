@@ -1,5 +1,5 @@
 import React from 'react'
-import { Routes, Route, Navigate } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom' 
 import Layout from './Components/Dashboard/Form/Utils/Layout'
 import Cart from './Components/Billing/Cart'
 import Billing from './Components/Billing/Billing'
@@ -44,10 +44,10 @@ const App = () => {
         <Route path="Dashboard" element={
           <ProtectedRoute >
             <Layout /> 
-          </ProtectedRoute>}>     
-          </Route>
+          </ProtectedRoute>}>   
+          </Route>  
           <Route index element={<Navigate to="Retailer" replace />} />
-          {/* Default landing page */}
+          {/* Default landing page */}  
           <Route path='Wholesaler' >
             <Route index element={<WholeSaler />}/>
               <Route path="Lowstock" element={<Lowstock />} />
@@ -59,6 +59,7 @@ const App = () => {
               <Route path="Alert" element={<Actionable />} />
 
               <Route path="PendingOrders" element={<PendingOrders />} />
+
               
 
           </Route>
@@ -91,4 +92,4 @@ const App = () => {
       </Routes>
    </>)
 }
-export default App
+export default App 
