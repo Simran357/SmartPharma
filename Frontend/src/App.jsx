@@ -27,7 +27,6 @@ import Retailors from './Inventory/Retailors'
 import Inventory from './Inventory/Inventory'
 
 
-import FindWholesaler from './Components/Dashboard/Retailar/Order/WholesalerPages/FindWholesaler'
 import MixedWholesaler from './Components/Dashboard/Retailar/Order/WholesalerPages/MixedWholesaler'
 import OneWholesaler from './Components/Dashboard/Retailar/Order/WholesalerPages/FindWholesaler'
 
