@@ -3,15 +3,10 @@ import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   RobotFilled,
-
 } from '@ant-design/icons';
 import { Button, Layout, Menu, theme } from 'antd';
-
-import {  DashboardCustomize,  Inventory2,  SubjectOutlined } from '@mui/icons-material';
-import { useLocation, useNavigate } from 'react-router-dom';
-
-
-
+import {  DashboardCustomize,  DeliveryDining,  Inventory2,  SubjectOutlined } from '@mui/icons-material';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 const { Header, Sider, Content } = Layout;
 const Retailerlayout = () => {
   const [collapsed, setCollapsed] = useState(false);

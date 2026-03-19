@@ -5,8 +5,8 @@ import RetailerSpecification from './WholesalerPages/RetailerSpecification';
 import { Outlet } from 'react-router-dom';
 
 const OrderWholesaler = () => {
-   const [activeTab, setActiveTab] = useState("wholesaler");
-   
+  const [activeTab, setActiveTab] = useState("wholesaler");
+
   return (
     <>
       <div className='m-6 pr-4'>
@@ -30,56 +30,49 @@ const OrderWholesaler = () => {
             <h2 className="text-xl font-semibold text-gray-800 mb-4">
               Recommended Wholesalers
             </h2>
-               {/* Tabs */}
-      <div className="flex gap-6 border-b border-gray-200">        
-        <button onClick={() => setActiveTab("wholesaler")}
-          className={`pb-3 text-sm font-medium transition-all relative
-            ${
-              activeTab === "wholesaler"
-                ? "text-green-600"
-                : "text-gray-500 hover:text-gray-700"
-            }`}
-        >
-          Wholesaler-First
+            {/* Tabs */}
+            <div className="flex gap-6 border-b border-gray-200">
+              <button onClick={() => setActiveTab("wholesaler")}
+                className={`pb-3 text-sm font-medium transition-all relative
+            ${activeTab === "wholesaler"
+                    ? "text-green-600"
+                    : "text-gray-500 hover:text-gray-700"
+                  }`}
+              >
+                Wholesaler-First
+                {activeTab === "wholesaler" && (
+                  <span className="absolute left-0 bottom-0 h-3px w-full bg-green-500 rounded-full"></span>
+                )}
+              </button>
 
-          {activeTab === "wholesaler" && (
-            <span className="absolute left-0 bottom-0 h-3px w-full bg-green-500 rounded-full"></span>
-          )}
-        </button>
+              <button
+                onClick={() => setActiveTab("requirement")}
+                className={`pb-3 text-sm font-medium transition-all relative
+            ${activeTab === "requirement"
+                    ? "text-green-600"
+                    : "text-gray-500 hover:text-gray-700"
+                  }`}
+              >
+                Requirement-First
+                {activeTab === "requirement" && (
+                  <span className="absolute left-0 bottom-0 h-[3] w-full bg-green-500 rounded-full"></span>
+                )}
+              </button>
+            </div>
 
-        <button
-          onClick={() => setActiveTab("requirement")}
-          className={`pb-3 text-sm font-medium transition-all relative
-            ${
-              activeTab === "requirement"
-                ? "text-green-600"
-                : "text-gray-500 hover:text-gray-700"
-            }`}
-        >
-          Requirement-First
-          {activeTab === "requirement" && (
-            <span className="absolute left-0 bottom-0 h-[3] w-full bg-green-500 rounded-full"></span>
-          )}
-        </button>
-      </div>
-
-      {/* Page Content */}
-      <div className="mt-6">
-        {activeTab === "wholesaler" && (
-         <Wholesalerfirst/>
-        )}
-        {activeTab === "requirement" && (
-          <RetailerSpecification/>
-        )}
-      </div>
-
-      
-   
-           
+            {/* Page Content */}
+            <div className="mt-6">
+              {activeTab === "wholesaler" && (
+                <Wholesalerfirst />
+              )}
+              {activeTab === "requirement" && (
+                <RetailerSpecification />
+              )}
+            </div>
           </section>
         </div>
-        </div>
-<Outlet/>
+      </div>
+      <Outlet />
     </>
   )
 }
