@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
-
 import Retailerlayout from "./Retailerlayout";
 import Wholesalerlayout from "./WholesalerLayout";
 import axiosInstance from "./AxiosInstance";

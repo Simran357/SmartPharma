@@ -14,6 +14,7 @@ import ApartmentIcon from '@mui/icons-material/Apartment';
 import { Outlet, useNavigate } from "react-router-dom";
 import GroupsIcon from '@mui/icons-material/Groups';
 import DetailsIcon from '@mui/icons-material/Details';
+import PendingOrders from './PendingOrders';
 const WholeSaler = () => {
   const navigate = useNavigate()
   return (
@@ -67,7 +68,9 @@ const WholeSaler = () => {
             </div>
           </div>
           {/* <!-- Pending Orders --> */}
-          <div className='bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col justify-between hover:shadow-md transition-shadow'>
+          <div
+          onClick={()=>navigate("PendingOrders")}
+          className='bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col justify-between hover:shadow-md transition-shadow'>
             <div className="flex justify-between items-start">
               <span className="text-slate-500 font-medium">Pending Orders</span>
               <div className="p-2 bg-orange-50 text-orange-600 rounded-lg">
