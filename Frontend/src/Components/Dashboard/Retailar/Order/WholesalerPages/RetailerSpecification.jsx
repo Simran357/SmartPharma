@@ -1,65 +1,85 @@
 import React from 'react'
 import HistoryIcon from '@mui/icons-material/History';
 import SearchIcon from '@mui/icons-material/Search';
-import { Plus, PlusCircle } from 'lucide-react';
+import {  PlusCircle } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 const RetailerSpecification = () => {
+    const navigate = useNavigate()
     return (
         <>
             <div className='m-2 w-full'>
-                <div className='bg-white border shadow  border-slate-200 p-4 m-2  rounded-xl '>
+              <div className="bg-white border shadow border-slate-200 p-4 md:p-6 rounded-xl m-2">
 
-                    <div className='flex flex-col  lg:flex-row lg:items-center gap-4'>
+  <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between flex-wrap">
 
-                        {/* Left Title Section */}
-                        <div>
-                            <h1 className='text-lg md:text-xl font-semibold  text-salte-700'>Requirement Builder</h1>
-                            <p className='text-xs md:text-sm text-gray-500 whitespace-nowrap'>Add medicines to find the best wholesaler deals</p>
-                        </div>
-                        {/* Right Buttons */}
-                        <div>
-                            <div className='flex  gap-2'>
-                                <button className='bg-slate-100 hover:bg-slate-200 transition rounded-lg text-xs md:text-sm flex items-center gap-2 font-medium px-3 text-black  whitespace-nowrap'>
-                                    <HistoryIcon fontSize='small' />
-                                    Repeat Last Order
-                                </button>
-                                <button className='bg-gray-100 hover:bg-gray-200 transition rounded-lg flex items-center gap-2 font-medium px-3 py-2 text-xs md:text-sm text-black whitespace-nowrap'>
-                                    <HistoryIcon fontSize='small' />
-                                    Upload Past Bill
-                                </button>
-                            </div>
-                        </div>
-                        <div>
-                            <div className='mt-2'>
-                                <div className='flex item-center  border border-gray-300 rounded-xl px-3 py-2 max-w-full focus-within:ring-2  focus-within:ring-green-500 '>
-                                    <SearchIcon className='text-gray-400 mr-2' />
-                                    <input
-                                        type="text"
-                                        placeholder="Search medicines (e.g. Paracetamol, Amoxicillin)..."
-                                        className="w-full outline-none text-sm"
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                        <div className=''>
-                            <div className='mt-2  flex-row flex lg:flex-wrap overflow-x-auto whitespace-nowrap tracking-tighter text-center  gap-2'>
-                                <div className='bg-green-50 rounded-full px-3 py-1 border border-green-300 font-medium text-xs text-green-600  md:text-sm '>Generic vs Branded</div>
-                                <div className='bg-gray-50 px-3 py-1 border  rounded-full border-gray-300 text-xs font-medium text-gray-600  md:text-sm '>High-Margin</div>
-                                <div className='bg-gray-50 px-3 py-1 border rounded-full border-gray-300 text-xs font-medium text-gray-600  md:text-sm '>Form : Tablet</div>
-                                <div className='bg-gray-50 px-3 py-1 border  rounded-full border-gray-300 text-xs font-medium text-gray-600  md:text-sm '>Form : Syrup</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    {/* Title */}
+    <div className="min-w-200px">
+      <h1 className="text-lg md:text-xl font-semibold text-slate-700">
+        Requirement Builder
+      </h1>
+      <p className="text-xs md:text-sm text-gray-500">
+        Add medicines to find the best wholesaler deals
+      </p>
+    </div>
+
+    {/* Buttons */}
+    <div className="flex flex-wrap gap-2">
+      <button className="bg-slate-100 hover:bg-slate-200 transition rounded-lg text-xs md:text-sm flex items-center gap-2 font-medium px-3 py-2 text-black">
+        <HistoryIcon fontSize="small" />
+        Repeat Last Order
+      </button>
+
+      <button className="bg-gray-100 hover:bg-gray-200 transition rounded-lg flex items-center gap-2 font-medium px-3 py-2 text-xs md:text-sm text-black">
+        <HistoryIcon fontSize="small" />
+        Upload Past Bill
+      </button>
+    </div>
+
+    {/* Search */}
+    <div className="w-full xl:max-w-md">
+      <div className="flex items-center border border-gray-300 rounded-xl px-3 py-2 focus-within:ring-2 focus-within:ring-green-500">
+        <SearchIcon className="text-gray-400 mr-2" />
+        <input
+          type="text"
+          placeholder="Search medicines (e.g. Paracetamol, Amoxicillin)..."
+          className="w-full outline-none text-sm"
+        />
+      </div>
+    </div>
+
+    {/* Filters */}
+    <div className="flex flex-wrap gap-2">
+
+      <div className="bg-green-50 rounded-full px-3 py-1 border border-green-300 font-medium text-xs text-green-600 md:text-sm">
+        Generic vs Branded
+      </div>
+
+      <div className="bg-gray-50 px-3 py-1 border rounded-full border-gray-300 text-xs font-medium text-gray-600 md:text-sm">
+        High-Margin
+      </div>
+
+      <div className="bg-gray-50 px-3 py-1 border rounded-full border-gray-300 text-xs font-medium text-gray-600 md:text-sm">
+        Form : Tablet
+      </div>
+
+      <div className="bg-gray-50 px-3 py-1 border rounded-full border-gray-300 text-xs font-medium text-gray-600 md:text-sm">
+        Form : Syrup
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
                 {/* right */}
-
 
                 <div className='flex items-center justify-between px-2 m-4'>
                     <h1 className='text-sm font-bold uppercase tracking-wider text-slate-500'>CURRENTLY ADDED (4 ITEMS)</h1>
                     <button className='text-sm font-bold text-red-500 hover-underline'>Clear All</button>
                 </div>
 
-                <div className='grid sm:grid-cols-2 '>
-                    <div className='p-2 m-2'>
+<div className='grid grid-cols-1 lg:grid-cols-2 gap-4'>                    
+    <div className='p-2 m-2'>
                         <div className=' p-6 m-2 bg-white border shadow border-slate-200 rounded-lg grid grid-cols-1 xl:grid-cols-2 gap-2 '>
                             <div className='bg-white p-2 rounded-xl  sm:flex-1  border border-slate-200 shadow-sm '>
                                 <div className='flex items-start justify-between'>
@@ -80,7 +100,7 @@ const RetailerSpecification = () => {
                                                 <button className='size-6 flex items-center justify-center transition-colors hover:bg-slate-100'>-</button>
                                                 <input
                                                     className='focus:ring-0 border-none w-full bg-transparent text-center text-sm font-bold  px-2 py-1 '
-                                                    type="text" value="24" />
+                                                    type="text"  defaultValue="24" />
                                                 <button className='size-6 transition-colors flex items-center justify-center hover:bg-slate-500 rounded'>+</button>
                                             </span>
                                         </div>
@@ -103,11 +123,11 @@ const RetailerSpecification = () => {
                             <div className='bg-white p-4 rounded-xl border  sm:flex-1 border-slate-200 shadow-sm flex flex-col gap-3 group hover:border-slate-200 transition-all'>
                                 <div className='flex justify-between items-start'>
                                     <div>
-                                        <h4 class="font-extrabold text-lg">Amoxicillin CV 625</h4>
-                                        <p class="text-xs text-slate-500">Salt: Amoxicillin + Clavulanic Acid</p>
+                                        <h4 className="font-extrabold text-lg">Amoxicillin CV 625</h4>
+                                        <p className="text-xs text-slate-500">Salt: Amoxicillin + Clavulanic Acid</p>
                                     </div>
-                                    <button class="text-slate-300 hover:text-red-500 transition-colors">
-                                        <span class="material-symbols-outlined">close</span>
+                                    <button className="text-slate-300 hover:text-red-500 transition-colors">
+                                        <span className="material-symbols-outlined">close</span>
                                     </button>
                                 </div>
                                 <div className='flex justify-between mt-2 gap-4'>
@@ -115,7 +135,7 @@ const RetailerSpecification = () => {
                                         <p className='text-[10px] font-bold text-slate-400 uppercase mb-1'>Quantity</p>
                                         <div className='flex items-center justify-center bg-slate-50 rounded-lg px-2 py-1 border border-slate-100 '>
                                             <button className='size-6 flex items-center justify-center hover:bg-slate-200 rounded transition-colors '>-</button>
-                                            <input className='w-12 text-center bg-transparent border-none focus:ring-0 text-sm font-bold' type="text" value="24" />
+                                            <input className='w-12 text-center bg-transparent border-none focus:ring-0 text-sm font-bold' type="text"  defaultValue="24" />
                                             <button className='size-6 flex items-center justify-center hover:bg-slate-200 rounded transition-colors'>+</button>
                                         </div>
                                     </div>
@@ -129,7 +149,7 @@ const RetailerSpecification = () => {
                                 </div>
                                 <div className='flex items-center justify-between pt-2 border-t border-slate-100 gap-4'>
                                     <span className='px-2 py-0.5 bg-orange-100 whitespace-nowrap text-orange-600 text-[10px] font-bold rounded'>Low Stock Near You</span>
-                                    <span class="text-xs font-bold text-slate-700 whitespace-normal">Est.₹3,550</span>
+                                    <span className="text-xs font-bold text-slate-700 whitespace-normal">Est.₹3,550</span>
                                 </div>
                             </div>
                             <div className='bg-white p-4 rounded-xl border-l-4 sm:flex-1 border border-green-300/90 shadow-sm flex flex-col gap-3 group hover:border-slate-200 transition-all '>
@@ -147,7 +167,7 @@ const RetailerSpecification = () => {
                                         <p className='text-[10px] font-bold text-slate-400 uppercase mb-1'>Quantity</p>
                                         <div className='flex items-center justify-center bg-slate-50 rounded-lg px-2 py-1 border border-slate-100 '>
                                             <button className='size-6 flex items-center justify-center hover:bg-slate-200 rounded'>-</button>
-                                            <input type="text" value="50" className='bg-transparent w-12 border-none focus:ring-0 text-center text-sm font-bold' />
+                                            <input type="text"  defaultValue="50" className='bg-transparent w-12 border-none focus:ring-0 text-center text-sm font-bold' />
                                             <button className='hover:bg-slate-200 rounded size-6 flex items-center justify-center'>+</button>
                                         </div>
                                     </div>
@@ -259,7 +279,7 @@ const RetailerSpecification = () => {
                             </div>
                         </div>
                         <div className='flex  align-center justify-center'>
-                            <button className='bg-green-400 rounded-lg px-4 min-w-full py-4 mt-4  font-bold text-md tra'>Find Best Wholesalers</button>
+                            <button className='bg-green-400 rounded-lg px-4 min-w-full py-4 mt-4  font-bold text-md ' onClick={()=>navigate("FilterOutWholesaler")}>Find Best Wholesalers</button>
                     </div>
                     </div>
                 </div>

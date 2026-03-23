@@ -11,7 +11,10 @@ import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 import DoneIcon from '@mui/icons-material/Done';
 import ApartmentIcon from '@mui/icons-material/Apartment';
-import { useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
+import GroupsIcon from '@mui/icons-material/Groups';
+import DetailsIcon from '@mui/icons-material/Details';
+import PendingOrders from './PendingOrders';
 const WholeSaler = () => {
   const navigate = useNavigate()
   return (
@@ -43,9 +46,9 @@ const WholeSaler = () => {
         <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 cursor-pointer  gap-6">
           {/* <!-- Daily Sales --> */}
           <div
-             onClick={()=>navigate("/AiAgent")}
+             onClick={()=>navigate("Dailysales")} 
            className='  bg-white rounded-3xl p-6 shadow-sm border border-slate-100 flex flex-col justify-between hover:shadow-md transition-shadow'>
-            <div class="flex justify-between items-start">
+            <div className="flex justify-between items-start">
               <div >
                 <p className='font-medium text-slate-500'>Daily Sales</p>
               </div>
@@ -55,7 +58,7 @@ const WholeSaler = () => {
             </div>
             <div className="mt-4">
               <h2 className="text-3xl font-bold text-slate-800">$12,450.00</h2>
-              <span class="text-green-500 text-sm font-semibold flex items-center gap-1 mt-1">
+              <span className="text-green-500 text-sm font-semibold flex items-center gap-1 mt-1">
                 +12.5% vs yesterday
               </span>
               <div className='mt-4'>
@@ -65,7 +68,9 @@ const WholeSaler = () => {
             </div>
           </div>
           {/* <!-- Pending Orders --> */}
-          <div className='bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col justify-between hover:shadow-md transition-shadow'>
+          <div
+          onClick={()=>navigate("PendingOrders")}
+          className='bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col justify-between hover:shadow-md transition-shadow'>
             <div className="flex justify-between items-start">
               <span className="text-slate-500 font-medium">Pending Orders</span>
               <div className="p-2 bg-orange-50 text-orange-600 rounded-lg">
@@ -81,7 +86,7 @@ const WholeSaler = () => {
           </div>
           {/* <!-- Low Stock Alerts --> */}
           <div
-             onClick={() => navigate("/Lowstock")}
+             onClick={() => navigate("Lowstock")}
             className="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col justify-between hover:shadow-md transition-shadow">
             <div className="flex justify-between items-start">
               <span className="text-slate-500 font-medium">Low Stock Alerts</span>
@@ -96,6 +101,7 @@ const WholeSaler = () => {
           </div>
           {/* <!-- Expiry Alerts --> */}
           <div
+           onClick={()=>navigate("AiAgent")}
             className="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col justify-between hover:shadow-md transition-shadow">
             <div className="flex justify-between items-start">
               <span className="text-slate-500 font-medium">Expiry (30 Days)</span>
@@ -123,8 +129,8 @@ const WholeSaler = () => {
                   <div className='w-12 h-12 bg-blue-50  text-blue-500 rounded-xl m-auto  mb-3 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-colors'>
                     <AddIcon className='w-6 h-6' />
                   </div>
-                  <span class="block text-sm font-bold text-slate-700">New Stock</span>
-                  <span class="text-[10px] text-slate-400 uppercase tracking-tighter">Purchase Entry</span>
+                  <span className="block text-sm font-bold text-slate-700">New Stock</span>
+                  <span className="text-[10px] text-slate-400 uppercase tracking-tighter">Purchase Entry</span>
                 </button>
 
                 <button
@@ -175,16 +181,16 @@ const WholeSaler = () => {
                       <th className='px-6 py-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest '>
                         Order ID</th>
                       <th
-                        class="px-6 py-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                        className="px-6 py-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
                         Pharmacy / Customer</th>
                       <th
-                        class="px-6 py-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                        className="px-6 py-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
                         Value</th>
                       <th
-                        class="px-6 py-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                        className="px-6 py-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
                         Status</th>
                       <th
-                        class="px-6 py-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest text-center">
+                        className="px-6 py-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest text-center">
                         Actions</th>
                     </tr>
                   </thead>
@@ -320,11 +326,8 @@ const WholeSaler = () => {
             <section className='bg-white p-6 rounded-3xl   overflow-hidden border border-slate-100 shadow-sm'>
               <div className='p-6 border-b border-slate-50 flex items-center justify-between '>
                 <h3 className="text-xl font-bold text-slate-800 flex items-center gap-2">
-                  <svg className="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-                    <path
-                      d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"
-                      stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-                  </svg>
+                  
+                  <GroupsIcon className='w-5 h-5 text-indigo-500' />
                   Team Discussion
                 </h3>
                 <span className="text-xs bg-indigo-50 text-indigo-600 px-3 py-1 rounded-full font-bold">LIVE
@@ -368,10 +371,8 @@ const WholeSaler = () => {
                     placeholder="Type a note for the team..." type="text" />
                   <button
                     className="bg-indigo-600 text-white p-3 rounded-2xl hover:bg-indigo-700 shadow-md shadow-indigo-200 transition-all">
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-                      <path d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" stroke-linecap="round"
-                        stroke-linejoin="round" stroke-width="2"></path>
-                    </svg>
+                   
+                    <DetailsIcon className='w-5 h-5' />
                   </button>
                 </div>
               </div>
@@ -410,7 +411,7 @@ const WholeSaler = () => {
             <section className='bg-white rounded-3xl border border-slate-100 shadow-sm p-6'>
               <div className="flex items-center justify-between mb-6">
                 <h4 className="font-bold text-slate-800 flex items-center gap-2">
-                  <svg class="w-5 h-5 text-rose-500" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+                  <svg className="w-5 h-5 text-rose-500" fill="none" stroke="currentColor" viewbox="0 0 24 24">
                     <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round"
                       stroke-linejoin="round" stroke-width="2"></path>
                   </svg>
@@ -421,11 +422,11 @@ const WholeSaler = () => {
                   Alerts</span>
               </div>
 
-              <div class="space-y-4">
+              <div className="space-y-4">
                 <div className="p-4 rounded-2xl bg-slate-50 border-l-4 border-rose-500">
                   <div className="flex items-center gap-3">
-                    <div class="p-2 bg-white rounded-lg shadow-sm">
-                      <svg class="w-5 h-5 text-rose-500" fill="none" stroke="currentColor"
+                    <div className="p-2 bg-white rounded-lg shadow-sm">
+                      <svg className="w-5 h-5 text-rose-500" fill="none" stroke="currentColor"
                         viewbox="0 0 24 24">
                         <path
                           d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"
@@ -445,7 +446,7 @@ const WholeSaler = () => {
                 <div className="p-4 rounded-2xl bg-slate-50 border-l-4 border-amber-400">
                   <div className="flex items-center gap-3">
                     <div className="p-2 bg-white rounded-lg shadow-sm">
-                      <svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor"
+                      <svg className="w-5 h-5 text-amber-500" fill="none" stroke="currentColor"
                         viewbox="0 0 24 24">
                         <path
                           d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"
@@ -522,7 +523,8 @@ const WholeSaler = () => {
 
         </div>
       </main>
+      <Outlet/>
     </div>
   )
 }
-export default WholeSaler
+export default WholeSaler 

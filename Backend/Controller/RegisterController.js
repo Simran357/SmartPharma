@@ -30,7 +30,8 @@ const RegisterController = async (req,res,next)=>{
 
 return res.status(200).json({
     success:true,
-    message:"registration successfull"});
+    message:"registration successfull"
+});
 
 
 }

@@ -2,10 +2,13 @@ const mongoose = require("mongoose")
 const express = require("express")
 const chief = express()
 const cors = require("cors")
+const cookieParser = require("cookie-parser")
+
 const routes = require("./routes/index")
 
-chief.use(express.json())
 
+chief.use(express.json())
+chief.use(cookieParser())
 chief.use(cors({
     origin:["http://localhost:5173","http://localhost:5174"],
     methods:["GET","POST","PUT","DELETE"],
@@ -19,6 +22,5 @@ mongoose.connect("mongodb+srv://simran26788_db_user:De4LHTTcgawaBa9G@smartpharma
     chief.listen(PORT)
     console.log("Mongo db connected successfull")
 }).catch((err)=>{
-
 console.log("failed to connect mongo db ", err)
 })

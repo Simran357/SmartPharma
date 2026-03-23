@@ -3,14 +3,15 @@ import { useNavigate } from 'react-router-dom'
 
 const Wholesalerfirst = () =>  {
     const navigate =useNavigate()
+  
 
-  return (
+  return (<>
     <div className='flex gap-4 '>
       <div className="w-full">
         <div className="flex flex-wrap gap-4">
           <div className="w-full sm:w-[48%] md:w-[31%] lg:w-[23%] bg-[#162538] rounded-2xl overflow-hidden shadow-lg"
           onClick={()=>{
-            navigate("/SingleWholesalerInfo")
+            navigate("SingleWholesalerInfo")
           }}
           >
 
@@ -21,12 +22,10 @@ const Wholesalerfirst = () =>  {
                 alt="warehouse"
                 className="h-40 w-full object-cover"
               />
-
               {/* Fastest Delivery Badge */}
               <span className="absolute top-3 left-3 bg-green-500 text-white text-xs px-3 py-1 rounded-full font-medium">
                 FASTEST DELIVERY
               </span>
-
               {/* Avatar Letter */}
               <div className="absolute -bottom-6 left-4 w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-lg border-4 border-[#162538]">
                 A
@@ -35,27 +34,23 @@ const Wholesalerfirst = () =>  {
 
             {/* Content */}
             <div className="pt-8 p-5 text-white">
-
               {/* Name + Delivery */}
               <div className="flex justify-between items-center">
                 <div>
                   <h3 className="text-lg font-semibold">Apex Distributors</h3>
                   <p className="text-sm text-gray-400">⭐ 4.9 (1.2k orders)</p>
                 </div>
-
                 <div className="text-right">
                   <p className="text-xs text-gray-400">DELIVERY IN</p>
                   <p className="text-blue-400 font-semibold">2.5 hrs</p>
                 </div>
               </div>
-
               {/* Stats */}
               <div className="grid grid-cols-2 gap-4 mt-5">
                 <div className="bg-[#1c2f46] rounded-xl p-4">
                   <p className="text-xs text-gray-400 whitespace-nowrap">AVG MARGIN</p>
                   <p className="text-xl font-semibold mt-1">22%</p>
                 </div>
-
                 <div className="bg-[#1c2f46] rounded-xl p-4">
                   <p className="text-xs text-gray-400">STOCK LEVEL</p>
                   <p className="text-xl font-semibold mt-1">98%</p>
@@ -75,7 +70,11 @@ const Wholesalerfirst = () =>  {
             </div>
           </div>
 
-          <div className="w-full sm:w-[48%] md:w-[31%] lg:w-[23%]  bg-[#162538] rounded-2xl overflow-hidden shadow-lg">
+          <div className="w-full sm:w-[48%] md:w-[31%] lg:w-[23%]  bg-[#162538] rounded-2xl overflow-hidden shadow-lg"
+             onClick={()=>{
+            navigate("SingleWholesalerInfo")
+          }}
+          >
 
             {/* Top Image */}
             <div className="relative">
@@ -138,7 +137,11 @@ const Wholesalerfirst = () =>  {
             </div>
           </div>
 
-          <div className="rounded-2xl w-full sm:w-[48%] md:w-[31%] lg:w-[23%]  bg-[#162538]  shadow-xl overflow-hidden">
+          <div className="rounded-2xl w-full sm:w-[48%] md:w-[31%] lg:w-[23%]  bg-[#162538]  shadow-xl overflow-hidden"
+             onClick={()=>{
+            navigate("SingleWholesalerInfo")
+          }}
+          >
 
             {/* Top Image */}
             <div className="relative">
@@ -201,7 +204,11 @@ const Wholesalerfirst = () =>  {
             </div>
           </div>
 
-          <div className="bg-[#162538] w-full sm:w-[48%] md:w-[31%] lg:w-[23%] rounded-xl overflow-hidden shadow-lg">
+          <div className="bg-[#162538] w-full sm:w-[48%] md:w-[31%] lg:w-[23%] rounded-xl overflow-hidden shadow-lg"
+             onClick={()=>{
+            navigate("SingleWholesalerInfo")
+          }}
+          >
 
             {/* Top Image */}
             <div className="relative">
@@ -265,6 +272,8 @@ const Wholesalerfirst = () =>  {
         </div>
       </div>
     </div>
+ 
+    </>
   )
 }
 

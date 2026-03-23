@@ -4,10 +4,10 @@ import  { contextProvide }  from './Utils/Context/CommonContext';
 
 const ProtectedRoute = ({ children }) => {
   const { auth } = useContext(contextProvide);
-  
-  const token = sessionStorage.getItem("jwtToken");
+    if (auth === null) return <div>Loading...</div>;
 
-  return auth && token ? children : <Navigate to="/Login" />;
+
+  return auth  ? children : <Navigate to="/" />;
 
 
 };
