@@ -47,21 +47,23 @@ const App = () => {
               <Route path="Lowstock" element={<Lowstock />} />
               <Route path="Dailysales" element={<Dailysales />} />
               <Route path="AiAgent" element={<AiAgent />} />
-              <Route path="Inventory" element={<Inventory />} />
-              <Route path="ProductOverview" element={<ProductOverview />} />
+    <Route path="Inventory" element={<Inventory />}/>   
+                       <Route path="TempelateDesigner" element={<TempelateDesigner />} />
+         
+             <Route path="ProductOverview" element={<ProductOverview />} />
               <Route path="Retailors" element={<Retailors />} />
               <Route path="Alert" element={<Actionable />} />
               <Route path="pendingorders" element={<PendingOrders />} />
           </Route>
           <Route path="Retailer">
             <Route index element={<Retailer />} />
-            <Route path="Inventory" element={<Inventory />} />
+            <Route path="Inventory" element={<Inventory />}/>
+            <Route path="TempelateDesigner" element={<TempelateDesigner />} />
             <Route path="Billing" element={<Billing />} />
             <Route path="AiAgent" element={<AiAgent />} />
             <Route path="SingleMedicineInfo" element={<SingleMedicineInfo />} />
             <Route path="WhatsappTempelate" element={<WhatsappTempelate />} />
             <Route path="ReturnInvoice" element={<ReturnInvoice />} />
-            <Route path="TempelateDesigner" element={<TempelateDesigner />} />
             <Route path="Cart" element={<Cart />} />
              <Route path="FilterWholesaler" element={<FilterOutWholesaler />} />
             <Route path="Order">
