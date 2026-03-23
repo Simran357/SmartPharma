@@ -42,8 +42,13 @@ const wholesalerMenu = [
   }, {
     key: "/Dashboard/Wholesaler/TempelateDesigner",
     icon: <RobotFilled />,
-    label: "TempelateDesigner",
+    label: "TempelateDesigner"},
+    {
+    key: "/Dashboard/Wholesaler/Retailors",
+    icon: <RobotFilled />,
+    label: "Retailors",
   },
+  
 ];
   return (
     <>
