@@ -1,5 +1,4 @@
-import Sidebar from "./Sidebar";
-import Topbar from "./Topbar";
+
 import StatCard from "./StatCard";
 import InventoryTable from "./InventoryTable";
 
@@ -7,12 +6,10 @@ export default function Inventory() {
   return (
     <div className="flex min-h-screen bg-gray-50">
 
-      {/* LEFT SIDEBAR */}
-      <Sidebar />
+   
 
       {/* RIGHT CONTENT */}
       <div className="flex-1">
-        <Topbar />
 
         <main className="p-8">
           <div className="grid grid-cols-3 gap-6 mb-8">
