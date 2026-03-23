@@ -10,6 +10,13 @@ import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutli
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 import DoneIcon from '@mui/icons-material/Done';
+import PrintIcon from '@mui/icons-material/Print';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import ScienceIcon from '@mui/icons-material/Science';
+
+
+
+
 import ApartmentIcon from '@mui/icons-material/Apartment';
 import { Outlet, useNavigate } from "react-router-dom";
 import GroupsIcon from '@mui/icons-material/Groups';
@@ -18,7 +25,7 @@ import PendingOrders from './PendingOrders';
 const WholeSaler = () => {
   const navigate = useNavigate()
   return (
-    
+
     <div className=" bg-gray-50 p-6 md:p-10 ">
       {/* <!-- BEGIN: Main Dashboard Layout --> */}
       <main className='max-w-7xl mx-auto space-y-10 '>
@@ -46,8 +53,8 @@ const WholeSaler = () => {
         <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 cursor-pointer  gap-6">
           {/* <!-- Daily Sales --> */}
           <div
-             onClick={()=>navigate("Dailysales")} 
-           className='  bg-white rounded-3xl p-6 shadow-sm border border-slate-100 flex flex-col justify-between hover:shadow-md transition-shadow'>
+            onClick={() => navigate("Dailysales")}
+            className='  bg-white rounded-3xl p-6 shadow-sm border border-slate-100 flex flex-col justify-between hover:shadow-md transition-shadow'>
             <div className="flex justify-between items-start">
               <div >
                 <p className='font-medium text-slate-500'>Daily Sales</p>
@@ -69,8 +76,8 @@ const WholeSaler = () => {
           </div>
           {/* <!-- Pending Orders --> */}
           <div
-          onClick={()=>navigate("PendingOrders")}
-          className='bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col justify-between hover:shadow-md transition-shadow'>
+            onClick={() => navigate("PendingOrders")}
+            className='bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col justify-between hover:shadow-md transition-shadow'>
             <div className="flex justify-between items-start">
               <span className="text-slate-500 font-medium">Pending Orders</span>
               <div className="p-2 bg-orange-50 text-orange-600 rounded-lg">
@@ -86,7 +93,7 @@ const WholeSaler = () => {
           </div>
           {/* <!-- Low Stock Alerts --> */}
           <div
-             onClick={() => navigate("Lowstock")}
+            onClick={() => navigate("Lowstock")}
             className="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col justify-between hover:shadow-md transition-shadow">
             <div className="flex justify-between items-start">
               <span className="text-slate-500 font-medium">Low Stock Alerts</span>
@@ -101,7 +108,7 @@ const WholeSaler = () => {
           </div>
           {/* <!-- Expiry Alerts --> */}
           <div
-           onClick={()=>navigate("AiAgent")}
+            onClick={() => navigate("ExpiryMedicine")}
             className="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col justify-between hover:shadow-md transition-shadow">
             <div className="flex justify-between items-start">
               <span className="text-slate-500 font-medium">Expiry (30 Days)</span>
@@ -221,22 +228,15 @@ const WholeSaler = () => {
                       <td className="px-6 py-5 text-sm font-bold text-slate-800">$850.50</td>
                       <td className="px-6 py-5">
                         <span className="status-pill status-packed"><span
-                          className="inline-block w-2 h-2 rounded-full mr-2 bg-current shadow-[0_0_8px_rgba(0,0,0,0.2)]"></span></span>
+                          className="inline-block w-2 h-2 rounded-full mr-2 bg-current shadow-xl]"></span></span>
                       </td>
                       <td className="px-6 py-5 text-center flex justify-center gap-3 mt-1 text-slate-400">
-                        <svg className="w-5 h-5 cursor-pointer hover:text-blue-500 transition-colors"
-                          fill="none" stroke="currentColor" viewbox="0 0 24 24">
-                          <path
-                            d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"
-                            stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-                        </svg>
-                        <svg className="w-5 h-5 cursor-pointer hover:text-blue-500 transition-colors"
-                          fill="none" stroke="currentColor" viewbox="0 0 24 24">
-                          <path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-linecap="round"
-                            stroke-linejoin="round" stroke-width="2"></path>
-                        </svg>
+                        <PrintIcon
+                          className="w-5 h-5 cursor-pointer hover:text-blue-500 transition-colors"
+                        />
+                       
                       </td>
-                    </tr>
+                    </tr>  
                     <tr className="hover:bg-slate-50 transition-colors">
                       <td className="px-6 py-5 text-sm font-semibold text-slate-600">#ORD-9022</td>
                       <td className="px-6 py-5">
@@ -246,15 +246,13 @@ const WholeSaler = () => {
                       <td className="px-6 py-5 text-sm font-bold text-slate-800">$2,100.00</td>
                       <td className="px-6 py-5">
                         <span className="status-pill status-dispatched"><span
-                          className="inline-block w-2 h-2 rounded-full mr-2 bg-current shadow-[0_0_8px_rgba(0,0,0,0.2)]"></span></span>
+                          className="inline-block w-2 h-2 rounded-full mr-2 bg-current shadow-xl]"></span></span>
                       </td>
                       <td className="px-6 py-5 text-center text-slate-400">
-                        <svg className="w-5 h-5 mx-auto cursor-pointer hover:text-blue-500" fill="none"
-                          stroke="currentColor" viewbox="0 0 24 24">
-                          <path
-                            d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"
-                            stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-                        </svg>
+                       
+                       <MoreHorizIcon className=" w-5 h-5 mx-auto cursor-pointer hover:text-blue-500" />
+                       
+                       
                       </td>
                     </tr>
                   </tbody>
@@ -269,19 +267,20 @@ const WholeSaler = () => {
                 <h3 className="text-lg font-bold text-slate-800 mb-4">Inventory Health</h3>
                 <div className="flex items-center gap-6">
                   <div className="relative w-24 h-24">
-                    <svg className="w-full h-full" viewbox="0 0 36 36">
-                      <circle cx="18" cy="18" fill="none" r="16" stroke="#f1f5f9" stroke-width="4">
+                    <svg className="w-full h-full" viewBox="0 0 36 36">
+                      <circle cx="18" cy="18" fill="none" r="16" stroke="#f1f5f9" strokeWidth="4">
                       </circle>
                       <circle cx="18" cy="18" fill="none" r="16" stroke="#22c55e"
-                        stroke-dasharray="70, 100" stroke-linecap="round" stroke-width="4"></circle>
+                        strokeDasharray="70, 100" strokeLinecap="round" strokeWidth="4"></circle>
                       <circle cx="18" cy="18" fill="none" r="16" stroke="#f59e0b"
-                        stroke-dasharray="15, 100" stroke-dashoffset="-70" stroke-linecap="round"
-                        stroke-width="4"></circle>
+                        strokeDasharray="15, 100" strokeDashoffset="-70" strokeLinecap="round"
+                        strokeWidth="4"></circle>
                       <circle cx="18" cy="18" fill="none" r="16" stroke="#ef4444"
-                        stroke-dasharray="15, 100" stroke-dashoffset="-85" stroke-linecap="round"
-                        stroke-width="4"></circle>
+                        strokeDasharray="15, 100" strokeDashoffsett="-85" strokeLinecap="round"
+                        strokeWidth="4"></circle>
                     </svg>
                   </div>
+                   {/* Legend */}
                   <div className="space-y-2 text-sm">
                     <div className="flex items-center gap-2"><span
                       className="w-2 h-2 rounded-full bg-green-500"></span> <span
@@ -326,7 +325,7 @@ const WholeSaler = () => {
             <section className='bg-white p-6 rounded-3xl   overflow-hidden border border-slate-100 shadow-sm'>
               <div className='p-6 border-b border-slate-50 flex items-center justify-between '>
                 <h3 className="text-xl font-bold text-slate-800 flex items-center gap-2">
-                  
+
                   <GroupsIcon className='w-5 h-5 text-indigo-500' />
                   Team Discussion
                 </h3>
@@ -371,7 +370,7 @@ const WholeSaler = () => {
                     placeholder="Type a note for the team..." type="text" />
                   <button
                     className="bg-indigo-600 text-white p-3 rounded-2xl hover:bg-indigo-700 shadow-md shadow-indigo-200 transition-all">
-                   
+
                     <DetailsIcon className='w-5 h-5' />
                   </button>
                 </div>
@@ -411,9 +410,9 @@ const WholeSaler = () => {
             <section className='bg-white rounded-3xl border border-slate-100 shadow-sm p-6'>
               <div className="flex items-center justify-between mb-6">
                 <h4 className="font-bold text-slate-800 flex items-center gap-2">
-                  <svg className="w-5 h-5 text-rose-500" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-                    <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round"
-                      stroke-linejoin="round" stroke-width="2"></path>
+                  <svg className="w-5 h-5 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" strokeLinecap="round"
+                      strokeLinejoin="round" strokeWidth="2"></path>
                   </svg>
                   Batch &amp; Expiry
                 </h4>
@@ -426,12 +425,9 @@ const WholeSaler = () => {
                 <div className="p-4 rounded-2xl bg-slate-50 border-l-4 border-rose-500">
                   <div className="flex items-center gap-3">
                     <div className="p-2 bg-white rounded-lg shadow-sm">
-                      <svg className="w-5 h-5 text-rose-500" fill="none" stroke="currentColor"
-                        viewbox="0 0 24 24">
-                        <path
-                          d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"
-                          stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-                      </svg>
+                   <ScienceIcon className="w-5 h-5 text-rose-500 cursor-pointer hover:text-rose-600 transition-colors" />
+
+
                     </div>
                     <div className="flex-1">
                       <p className="text-sm font-bold text-slate-800">Amoxicillin 500mg</p>
@@ -446,12 +442,8 @@ const WholeSaler = () => {
                 <div className="p-4 rounded-2xl bg-slate-50 border-l-4 border-amber-400">
                   <div className="flex items-center gap-3">
                     <div className="p-2 bg-white rounded-lg shadow-sm">
-                      <svg className="w-5 h-5 text-amber-500" fill="none" stroke="currentColor"
-                        viewbox="0 0 24 24">
-                        <path
-                          d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"
-                          stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-                      </svg>
+                      <ScienceIcon className="w-5 h-5 text-amber-500 cursor-pointer hover:text-amber-600 transition-colors" />
+                      
                     </div>
                     <div className="flex-1">
                       <p className="text-sm font-bold text-slate-800">Cough Syrup (Z-Type)</p>
@@ -470,60 +462,60 @@ const WholeSaler = () => {
             </section>
 
             {/* <!-- Pending Franchise Requests --> */}
-             <section className="bg-white rounded-3xl border border-slate-100 shadow-sm p-6"
-                    data-purpose="franchise-requests-widget">
-                    <h4 className="font-bold text-slate-800 mb-6 flex items-center gap-2">
-                        <ApartmentIcon className='text-blue-500' />
-                        Franchise Requests
-                    </h4>
-                    <div className="space-y-4">
-                        <div
-                            className="flex items-center justify-between p-3 hover:bg-slate-50 rounded-2xl transition-colors cursor-pointer">
-                            <div className="flex items-center gap-3">
-                                <div
-                                    className="w-10 h-10 bg-blue-100 text-blue-700 rounded-full flex items-center justify-center font-bold text-xs">
-                                    JP</div>
-                                <div>
-                                    <p className="text-sm font-bold text-slate-800">Janata Pharma</p>
-                                    <p className="text-[10px] text-slate-400">New Registration</p>
-                                </div>
-                            </div>
-                            <button
-                                className="p-1.5 bg-green-50 text-green-600 rounded-lg hover:bg-green-600 hover:text-white transition-colors">
-                                <DoneIcon />
-                            </button>
-                        </div>
-                        <div
-                            className="flex items-center justify-between p-3 hover:bg-slate-50 rounded-2xl transition-colors cursor-pointer">
-                            <div className="flex items-center gap-3">
-                                <div
-                                    className="w-10 h-10 bg-indigo-100 text-indigo-700 rounded-full flex items-center justify-center font-bold text-xs">
-                                    SM</div>
-                                <div>
-                                    <p className="text-sm font-bold text-slate-800">Star Meds Co.</p>
-                                    <p className="text-[10px] text-slate-400">Credit Limit Increase</p>
-                                </div>
-                            </div>
-                            <button
-                                className="p-1.5 bg-green-50 text-green-600 rounded-lg hover:bg-green-600 hover:text-white transition-colors">
-                                <DoneIcon />
-                            </button>
-                        </div>
+            <section className="bg-white rounded-3xl border border-slate-100 shadow-sm p-6"
+              data-purpose="franchise-requests-widget">
+              <h4 className="font-bold text-slate-800 mb-6 flex items-center gap-2">
+                <ApartmentIcon className='text-blue-500' />
+                Franchise Requests
+              </h4>
+              <div className="space-y-4">
+                <div
+                  className="flex items-center justify-between p-3 hover:bg-slate-50 rounded-2xl transition-colors cursor-pointer">
+                  <div className="flex items-center gap-3">
+                    <div
+                      className="w-10 h-10 bg-blue-100 text-blue-700 rounded-full flex items-center justify-center font-bold text-xs">
+                      JP</div>
+                    <div>
+                      <p className="text-sm font-bold text-slate-800">Janata Pharma</p>
+                      <p className="text-[10px] text-slate-400">New Registration</p>
                     </div>
-                    <div className="mt-6 p-4 bg-blue-50/50 rounded-2xl flex gap-3 items-center">
-                        <div className="bg-blue-600 p-1.5 rounded-lg text-white">
-                            
-                        </div>
-                        <p className="text-[11px] text-blue-800 font-medium">3 more requests need your verification today.
-                        </p>
+                  </div>
+                  <button
+                    className="p-1.5 bg-green-50 text-green-600 rounded-lg hover:bg-green-600 hover:text-white transition-colors">
+                    <DoneIcon />
+                  </button>
+                </div>
+                <div
+                  className="flex items-center justify-between p-3 hover:bg-slate-50 rounded-2xl transition-colors cursor-pointer">
+                  <div className="flex items-center gap-3">
+                    <div
+                      className="w-10 h-10 bg-indigo-100 text-indigo-700 rounded-full flex items-center justify-center font-bold text-xs">
+                      SM</div>
+                    <div>
+                      <p className="text-sm font-bold text-slate-800">Star Meds Co.</p>
+                      <p className="text-[10px] text-slate-400">Credit Limit Increase</p>
                     </div>
-                </section>
+                  </div>
+                  <button
+                    className="p-1.5 bg-green-50 text-green-600 rounded-lg hover:bg-green-600 hover:text-white transition-colors">
+                    <DoneIcon />
+                  </button>
+                </div>
+              </div>
+              <div className="mt-6 p-4 bg-blue-50/50 rounded-2xl flex gap-3 items-center">
+                <div className="bg-blue-600 p-1.5 rounded-lg text-white">
+
+                </div>
+                <p className="text-[11px] text-blue-800 font-medium">3 more requests need your verification today.
+                </p>
+              </div>
+            </section>
           </aside>
 
 
         </div>
       </main>
-      <Outlet/>
+      <Outlet />
     </div>
   )
 }
