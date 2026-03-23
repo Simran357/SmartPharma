@@ -17,18 +17,6 @@ function ReturnInvoice() {
     return (
 
         <div>
-            <nav className='bg-gray-200 py-4 w-full px-65 flex items-center justify-between'>
-                <div className='flex items-center gap-3 '>
-                    <FaMedkit size={33} className='text-white bg-green-500 p-1 rounded-full' />
-                    <h1 className='text-xl font-bold'>PharmaConnect</h1>
-                </div>
-                <div className='flex items-center gap-2'>
-                    <FaBell size={30} className='text-green-500 p-1 bg-green-300 rounded-full' />
-                    <FaUser size={30} className='text-green-500 p-1 bg-green-300 rounded-full' />
-                    <img src="https://img.musesai.io/pic/202504/X5IZTNiNrPsk.jpg" alt="" size={30}
-                        className='h-7.5 w-7.5 object-center rounded-full' />
-                </div>
-            </nav>
             <main className='flex flex-col items-center justify-center py-20 text-center gap-4 bg-gray-100'>
                 <div className="w-18 h-18 flex items-center justify-center rounded-full bg-green-100 ">
                     <div className="w-10 h-10 flex items-center justify-center rounded-full bg-green-500">

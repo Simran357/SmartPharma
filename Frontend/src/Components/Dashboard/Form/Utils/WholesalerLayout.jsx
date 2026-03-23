@@ -39,7 +39,12 @@ const wholesalerMenu = [
     key: "/Dashboard/Wholesaler/AiAgent",
     icon: <RobotFilled />,
     label: "AI Agent",
+  }, {
+    key: "/Dashboard/Wholesaler/Retailors",
+    icon: <RobotFilled />,
+    label: "Retailors",
   },
+  
 ];
   return (
     <>

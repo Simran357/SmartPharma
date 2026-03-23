@@ -1,9 +1,7 @@
 import React, { useState } from 'react'
-import { FaCheck } from "react-icons/fa";
 import { FaVideo } from "react-icons/fa";
 import { FaPhoneAlt } from "react-icons/fa";
 import { IoArrowBack } from "react-icons/io5";
-import { FaHospitalSymbol } from "react-icons/fa";
 import { FaStethoscope } from "react-icons/fa";
 import { FaRegClipboard } from "react-icons/fa";
 import { FaBoxOpen } from "react-icons/fa";
@@ -12,7 +10,6 @@ import { FaShieldAlt } from "react-icons/fa";
 // import { MdVerified } from "react-icons/md";
 import { FaCheckCircle } from "react-icons/fa";
 import {  FaPlus,FaShoppingCart } from "react-icons/fa";
-import { AiOutlinePlus } from "react-icons/ai";
 import { AiOutlineAppstore } from "react-icons/ai";
 
 
