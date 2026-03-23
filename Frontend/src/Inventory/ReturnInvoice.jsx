@@ -9,8 +9,8 @@ import { FaEye } from "react-icons/fa";
 
 
 const data = [
-    { name: "Chetan", age: 22, city: "Delhi" },
-    { name: "Rahul", age: 24, city: "Mumbai" }
+    { BatchId: "#DL1120", Description: "Amoxicillin 500mg Capsules", Qty: "150 Units" },
+    
 ];
 
 function ReturnInvoice() {
@@ -29,16 +29,16 @@ function ReturnInvoice() {
                         className='h-7.5 w-7.5 object-center rounded-full' />
                 </div>
             </nav>
-            <main className='flex flex-col items-center justify-center py-20 text-center gap-4'>
-                <div className="w-18 h-18 flex items-center justify-center rounded-full bg-green-100">
+            <main className='flex flex-col items-center justify-center py-20 text-center gap-4 bg-gray-100'>
+                <div className="w-18 h-18 flex items-center justify-center rounded-full bg-green-100 ">
                     <div className="w-10 h-10 flex items-center justify-center rounded-full bg-green-500">
                         <FaCheck className="text-white text-xl" />
                     </div>
                 </div>
                 <h1 className='text-2xl font-bold '>Return Invoice Generated</h1>
                 <p className='w-md'>Return request for <b>Batch #DL1120(150 Units)</b> Has been sent to <b>Sunrise Pharam.</b></p>
-                <div className='flex flex-col'>
-                    <header className='flex items-center w-2xl justify-between bg-gray-200 p-1.5 rounded-sm'>
+                <div className='flex flex-col bg-white rounded-md overflow-hidden shadow-lg'>
+                    <header className='flex items-center w-2xl justify-between bg-gray-200 px-3 py-1.5 rounded-sm'>
                         <div className='flex gap-1 items-center'>
                             <FaRegFileAlt size={20} />
                             <p>Preview:Rl-2023-1120.pdf</p>
@@ -94,23 +94,34 @@ function ReturnInvoice() {
                         <div className="grid grid-cols-[1fr_2fr_1fr] w-full">
 
                             {/* Header */}
-                            <div className="p-1 border-b-2 border-gray-500">Name</div>
-                            <div className="p-1 border-b-2 border-x-2 border-gray-500">Age</div>
-                            <div className="p-1 border-b-2 border-gray-500">City</div>
+                            <div className="p-1 border-b border-gray-500">Batch ID</div>
+                            <div className="p-1 border-b border-x border-gray-500">Description</div>
+                            <div className="p-1 border- border-gray-500">Qty</div>
 
                             {/* Rows */}
                             {data.map((item, i) => (
                                 <React.Fragment key={i}>
-                                    <div className="p-1 border-t-2 border-r-2 border-gray-500">{item.name}</div>
-                                    <div className="p-1 border-t-2 border-x-2 border-gray-500">{item.age}</div>
-                                    <div className="p-1 border-t-2 border-gray-500">{item.city}</div>
+                                    <div className="p-1   border-gray-500">{item.BatchId}</div>
+                                    <div className="p-1  border-x border-gray-500">{item.Description}</div>
+                                    <div className="p-1 border-t border-gray-500">{item.Qty}</div>
                                 </React.Fragment>
                             ))}
+
 
                         </div>
 
                     </div>
+                            <div className='flex flex-col text-right justify-end p-6 mt-5'>
+                                <p className='text-gray-500'>Total Return Value Est.</p>
+                                <h1 className='text-2xl font-semibold'>$2450.00</h1>
+                            </div>
                 </div>
+                <div className='flex gap-5'>
+                    <button className='px-6 py-1  bg-green-500 text-white rounded-2xl font-semibold'> Download Invoice</button>
+                    <button className='px-6 py-1  bg-gray-200 text-black rounded-2xl font-semibold'>Return Dashboard</button>
+                </div>
+
+                <p className='mt-3'>Having Trouble?<span className='text-green-500'> Contact Support</span> or <span className='text-green-500'>View History</span></p>
             </main>
         </div>
 

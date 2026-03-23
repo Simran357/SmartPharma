@@ -4,15 +4,15 @@ import App from './App.jsx'
 import { BrowserRouter } from 'react-router-dom'
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import CommonContext from './Components/Dashboard/Form/Utils/Context/CommonContext.jsx'
+import Layout from './Components/Layout.jsx';
 
 createRoot(document.getElementById('root')).render(
    <GoogleOAuthProvider clientId="384732871188-kufjkrt0rc3jfvjbkc78vdupcsntnt5q.apps.googleusercontent.com">
       <BrowserRouter>
          <CommonContext>
-
+            <Layout />
             <App />
          </CommonContext>
-
       </BrowserRouter>
 
    </GoogleOAuthProvider>
