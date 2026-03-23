@@ -28,7 +28,7 @@ import FindWholesaler from './Components/Dashboard/Retailar/Order/WholesalerPage
 import MixedWholesaler from './Components/Dashboard/Retailar/Order/WholesalerPages/MixedWholesaler'
 import OneWholesaler from './Components/Dashboard/Retailar/Order/WholesalerPages/FindWholesaler'
 import PendingOrders from './Components/Wholesalecompenent.jsx/PendingOrders'
-
+import ExpiryMedicine from './Components/Wholesalecompenent.jsx/ExpiryMedicine'
 const App = () => {
 
   return (
@@ -53,6 +53,7 @@ const App = () => {
               <Route path="Retailors" element={<Retailors />} />
               <Route path="Alert" element={<Actionable />} />
               <Route path="pendingorders" element={<PendingOrders />} />
+              <Route path="ExpiryMedicine" element={<ExpiryMedicine />} />
           </Route>
           <Route path="Retailer">
             <Route index element={<Retailer />} />

@@ -7,7 +7,7 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import { Doughnut } from "react-chartjs-2";
 import { Chart as Chartjs, ArcElement, Tooltip, Legend } from "chart.js";
 Chartjs.register(ArcElement, Tooltip, Legend);
-import PrintIcon from '@mui/icons-material/Print';
+import PrintIcon from '@mui/icons-material/Print'; 
 const Dailysales = () => {
 
     const data = [
