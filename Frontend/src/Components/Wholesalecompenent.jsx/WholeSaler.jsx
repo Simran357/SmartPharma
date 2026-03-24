@@ -13,10 +13,6 @@ import DoneIcon from '@mui/icons-material/Done';
 import PrintIcon from '@mui/icons-material/Print';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import ScienceIcon from '@mui/icons-material/Science';
-
-
-
-
 import ApartmentIcon from '@mui/icons-material/Apartment';
 import { Outlet, useNavigate } from "react-router-dom";
 import GroupsIcon from '@mui/icons-material/Groups';
@@ -484,7 +480,7 @@ const WholeSaler = () => {
                     className="p-1.5 bg-green-50 text-green-600 rounded-lg hover:bg-green-600 hover:text-white transition-colors">
                     <DoneIcon />
                   </button>
-                </div>
+                </div> 
                 <div
                   className="flex items-center justify-between p-3 hover:bg-slate-50 rounded-2xl transition-colors cursor-pointer">
                   <div className="flex items-center gap-3">

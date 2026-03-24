@@ -28,14 +28,18 @@ import MixedWholesaler from './Components/Dashboard/Retailar/Order/WholesalerPag
 import OneWholesaler from './Components/Dashboard/Retailar/Order/WholesalerPages/FindWholesaler'
 import PendingOrders from './Components/Wholesalecompenent.jsx/PendingOrders'
 import ExpiryMedicine from './Components/Wholesalecompenent.jsx/ExpiryMedicine'
+import Index from './webpage/index'
 const App = () => {
-
+  
   return (
-    <>
+    <>  
       <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="Register" element={<Register />} />
+        <Route path="/" element={<Index />}/>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         {/* Layout = Header + Outlet */}
+      
+
         <Route path="Dashboard" element={
           <ProtectedRoute >
             <Layout />
