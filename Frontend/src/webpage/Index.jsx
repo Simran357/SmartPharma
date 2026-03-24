@@ -1,9 +1,12 @@
 import React from 'react'
+import NavBar from './Components/NavBar'
+import HeroSection from './Components/HeroSection'
 
 const index = () => {
   return (
     <div>
-        <p className='text-3xl font-bold text-center mt-20'>Welcome to SmartPharma</p>
+         <NavBar />
+         <HeroSection />
     </div>
   )
 }
