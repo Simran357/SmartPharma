@@ -6,16 +6,16 @@ import Billing from './Components/Billing/Billing'
 import Retailer from './Components/Dashboard/Retailar/Retailer'
 import WholeSaler from './Components/Wholesalecompenent.jsx/WholeSaler'
 import Login from './Components/Dashboard/Form/Login'
-import Register from './Components/Dashboard/Form/Registration'   
+import Register from './Components/Dashboard/Form/Registration'
 import OrderWholesaler from './Components/Dashboard/Retailar/Order/OrderWholesaler'
 import Connectcourier from './Components/Billing/Connectcourier'
-import Actionable from './Components/Billing/Alert/Actionable' 
+import Actionable from './Components/Billing/Alert/Actionable'
 import SingleWholesalerInfo from './Components/Dashboard/Retailar/Order/WholesalerPages/SingleWholesalerInfo'
 import Lowstock from './Components/Wholesalecompenent.jsx/Lowstock'
 import Dailysales from './Components/Wholesalecompenent.jsx/Dailysales'
 import ProductOverview from './Inventory/ProductOverview'
 import SingleMedicineInfo from './Inventory/medicine/SingleMedicineInfo'
-import Courier from './Components/Billing/Courier'  
+import Courier from './Components/Billing/Courier'
 import TempelateDesigner from './Inventory/TempelateDesigner'
 import ProtectedRoute from './Components/Dashboard/Form/ProtectedRoute'
 import FilterOutWholesaler from './Components/Dashboard/Retailar/Order/WholesalerPages/FilterOutWholesaler'
@@ -30,15 +30,15 @@ import PendingOrders from './Components/Wholesalecompenent.jsx/PendingOrders'
 import ExpiryMedicine from './Components/Wholesalecompenent.jsx/ExpiryMedicine'
 import Index from './webpage/index'
 const App = () => {
-  
+
   return (
-    <>  
+    <>
       <Routes>
-        <Route path="/" element={<Index />}/>
+        <Route path="/" element={<Index />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         {/* Layout = Header + Outlet */}
-      
+
 
         <Route path="Dashboard" element={
           <ProtectedRoute >
@@ -47,22 +47,22 @@ const App = () => {
           <Route index element={<Navigate to="Retailer" replace />} />
           {/* Default landing page */}
           <Route path='Wholesaler' >
-            <Route index element={<WholeSaler />}/>
-              <Route path="Lowstock" element={<Lowstock />} />
-              <Route path="Dailysales" element={<Dailysales />} />
-              <Route path="AiAgent" element={<AiAgent />} />
-    <Route path="Inventory" element={<Inventory />}/>   
-                       <Route path="TempelateDesigner" element={<TempelateDesigner />} />
-         
-             <Route path="ProductOverview" element={<ProductOverview />} />
-              <Route path="Retailors" element={<Retailors />} />
-              <Route path="Alert" element={<Actionable />} />
-              <Route path="pendingorders" element={<PendingOrders />} />
-              <Route path="ExpiryMedicine" element={<ExpiryMedicine />} />
+            <Route index element={<WholeSaler />} />
+            <Route path="Lowstock" element={<Lowstock />} />
+            <Route path="Dailysales" element={<Dailysales />} />
+            <Route path="AiAgent" element={<AiAgent />} />
+            <Route path="Inventory" element={<Inventory />} />
+            <Route path="TempelateDesigner" element={<TempelateDesigner />} />
+
+            <Route path="ProductOverview" element={<ProductOverview />} />
+            <Route path="Retailors" element={<Retailors />} />
+            <Route path="Alert" element={<Actionable />} />
+            <Route path="pendingorders" element={<PendingOrders />} />
+            <Route path="ExpiryMedicine" element={<ExpiryMedicine />} />
           </Route>
           <Route path="Retailer">
             <Route index element={<Retailer />} />
-            <Route path="Inventory" element={<Inventory />}/>
+            <Route path="Inventory" element={<Inventory />} />
             <Route path="TempelateDesigner" element={<TempelateDesigner />} />
             <Route path="Billing" element={<Billing />} />
             <Route path="AiAgent" element={<AiAgent />} />
@@ -70,12 +70,12 @@ const App = () => {
             <Route path="WhatsappTempelate" element={<WhatsappTempelate />} />
             <Route path="ReturnInvoice" element={<ReturnInvoice />} />
             <Route path="Cart" element={<Cart />} />
-             <Route path="FilterWholesaler" element={<FilterOutWholesaler />} />
+            <Route path="FilterWholesaler" element={<FilterOutWholesaler />} />
             <Route path="Order">
               <Route index element={<OrderWholesaler />} />
-              <Route path="FindWholesaler" element={<OneWholesaler/>}/>
-              <Route path="FilterOutWholesaler" element={<FilterOutWholesaler/>}/>
-              <Route path="MixedWholesaler" element={<MixedWholesaler/>}/>
+              <Route path="FindWholesaler" element={<OneWholesaler />} />
+              <Route path="FilterOutWholesaler" element={<FilterOutWholesaler />} />
+              <Route path="MixedWholesaler" element={<MixedWholesaler />} />
               <Route path=":id" element={<SingleWholesalerInfo />} />
             </Route>
             <Route path="Courier" element={<Courier />} />
