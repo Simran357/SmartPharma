@@ -44,7 +44,11 @@ const Retailerlayout = () => {
       icon: <DeliveryDining/>,
       label: "ReturnInvoice",
     },
-    
+    {
+    key: "/Dashboard/Retailer/OneMedicine",
+    icon: <DeliveryDining/>,
+    label: "OneMedicine",
+  }
   ]
 
 
