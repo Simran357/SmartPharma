@@ -28,7 +28,7 @@ import MixedWholesaler from './Components/Dashboard/Retailar/Order/WholesalerPag
 import OneWholesaler from './Components/Dashboard/Retailar/Order/WholesalerPages/FindWholesaler'
 import PendingOrders from './Components/Wholesalecompenent.jsx/PendingOrders'
 import ExpiryMedicine from './Components/Wholesalecompenent.jsx/ExpiryMedicine'
-import OneMedicine from './Components/Hitesh/OneMedicine'
+import Index from './webpage/index'
 const App = () => {
 
   return (
@@ -71,8 +71,6 @@ const App = () => {
             <Route path="ReturnInvoice" element={<ReturnInvoice />} />
             <Route path="Cart" element={<Cart />} />
             <Route path="FilterWholesaler" element={<FilterOutWholesaler />} />
-             <Route path="FilterWholesaler" element={<FilterOutWholesaler />} />
-             <Route path="OneMedicine" element={<OneMedicine />} />
             <Route path="Order">
               <Route index element={<OrderWholesaler />} />
               <Route path="FindWholesaler" element={<OneWholesaler />} />
