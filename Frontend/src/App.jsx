@@ -29,12 +29,13 @@ import OneWholesaler from './Components/Dashboard/Retailar/Order/WholesalerPages
 import PendingOrders from './Components/Wholesalecompenent.jsx/PendingOrders'
 import ExpiryMedicine from './Components/Wholesalecompenent.jsx/ExpiryMedicine'
 import OneMedicine from './Components/Hitesh/OneMedicine'
+import Index from "./webpage/Index"
 const App = () => {
 
   return (
     <>
       <Routes>
-        <Route path="/" element={<Index />} />
+        <Route path="/" element={<Index/>} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         {/* Layout = Header + Outlet */}
@@ -70,6 +71,7 @@ const App = () => {
             <Route path="WhatsappTempelate" element={<WhatsappTempelate />} />
             <Route path="ReturnInvoice" element={<ReturnInvoice />} />
             <Route path="Cart" element={<Cart />} />
+            <Route path="FilterWholesaler" element={<FilterOutWholesaler />} />
              <Route path="FilterWholesaler" element={<FilterOutWholesaler />} />
              <Route path="OneMedicine" element={<OneMedicine />} />
             <Route path="Order">
