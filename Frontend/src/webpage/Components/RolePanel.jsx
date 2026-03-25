@@ -1,7 +1,8 @@
 import React from 'react'
 import adminImg from '../assets/admin.jpg'
-// import retailerImg from "../assets/retailer-panel.jpg";
-// import wholesalerImg from "../assets/wholesaler-panel.jpg";
+import retailerImg from '../assets/retailer.jpg'
+import wholesalerImg from '../assets/wholesaler.jpg'
+import { motion } from "framer-motion";
 const RolePanel = () => {
   const panels = [
   {
@@ -12,31 +13,46 @@ const RolePanel = () => {
   {
     title: "Retailer Panel",
     desc: "Smart billing with FEFO auto-selection & real-time stock.",
-    // img: retailerImg,
+    img: retailerImg,
   },
   {
     title: "Wholesaler Panel",
     desc: "Stock supply tracking, purchase orders & distribution insights.",
-    // img: wholesalerImg,
+    img: wholesalerImg,
   },
 ];
   return (
     <>
-    <div>
-    <div className='text-center max-w-2xl mx-auto mb-14'>
-            <h1 className="text-3xl md:text-4xl font-heading font-bold mb-4">Role-Based Access</h1>
-            <p className='text-sm text-muted-foreground whitespace-nowrap'>Tailored dashboards for Admins, Retailers & Wholesalers.</p>
-        <div className='bg-white rounded-2xl shadow-xl border-slate-100 flex flex-col items-center  p-4 mt-4'>
-             <div className='flex flex-col items-center'>
-        <h1 className='text-2xl font-bold text-black whitespace-nowrap'>Admin Dashboard</h1>
-        <p className='text-slate-400 text-md'>Analytics, risk scoring, expiry alerts & system-wide reports.</p>
-       </div> 
-            <div className='bg-pink-800 shadow  rounded-xl'>
-            <img className='bg-cover' src={adminImg} alt={adminImg}/>
+    <section className='p-8'>
+      <div className='container'>
+        <div className='text-center max-w-2xl mx-auto mb-14'>
+          <h2 className='text-3xl md:text-4xl font-heading font-bold mb-4'>Role-based Access</h2>
+          <p className='text-muted-foreground'>Tailored dashboards for Admins, Retailers and Wholesalers.</p>
         </div>
-     </div>
-    </div>
-      </div>
+
+        <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
+          {panels.map((p,i)=>(
+          <motion.div className='smart-card overflow-hidden group'
+          key={p.title}
+          initial={{opacity:0,y:20}}
+          whileInView={{opacity:1,y:0}}
+          viewport={{once:true}}
+          transition={{delay:i*0.15}}
+
+          >
+            <div className='bg-white rounded-xl border borrder-border  overflow-hidden mb-4'>
+              <img 
+              src={p.img}
+              alt={p.title}
+              className='object-cover group-hover:scale-105 w-full h-44 transition-transform duration-500'
+              />
+            </div>
+            <h3 className='font-heading font-bold text-lg mb-2'>{p.title}</h3>
+            <p className='text-muted-foreground text-sm'>{p.desc}</p>
+          </motion.div>
+        ))}</div>
+         </div>
+    </section>
     </>
   )
 }

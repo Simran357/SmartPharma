@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input ,Divider } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from './Utils/AxiosInstance';
 import { contextProvide } from './Utils/Context/CommonContext';
@@ -7,12 +7,14 @@ import { useGoogleLogin } from '@react-oauth/google';
 const Login = () => {
   const navigate = useNavigate()
   const { setAuth } = useContext(contextProvide)
-  const [state, setState] = useState("")
-  console.log(state)
+ const [state, setState] = useState("");
+  const [loading, setLoading] = useState(false);
+    console.log(state)
   const googleLogin = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       console.log("tokenresponse", tokenResponse.access_token)
       try {
+         setLoading(true);
         console.log("response from google ui ", tokenResponse.access_token)
 
         const res = await axiosInstance.post("/registerroute/auth/google", {
@@ -24,6 +26,7 @@ const Login = () => {
         navigate("/Dashboard")
 
       } catch (error) {
+         setLoading(false);
         console.log("error when hiting google backend api", error)
         setState(error?.response?.data?.message)
       }
@@ -36,6 +39,7 @@ const Login = () => {
   const onFinish = async (values) => {
     console.log("Success:", values);
     try {
+       setLoading(true);
       const res = await axiosInstance.post("/registerroute/LoginController", values);
       if (res?.data?.success) {
         alert("Login Successful");
@@ -45,6 +49,7 @@ const Login = () => {
      navigate("/Dashboard")
       }
     } catch (err) {
+       setLoading(false);
       console.log("ERROR MESSAGE:", err);
       setState(err?.response?.data?.message);
     }
@@ -55,53 +60,82 @@ const Login = () => {
   };
   return (
     <>
-      <div className='m-20 p-6   flex flex-col  items-center'>
-        <section className="p-20   rounded-xl border border-slate-100 bg-white shadow ">
-          <Form
-            name="basic"
-            labelCol={{ span: 8 }}
-            wrapperCol={{ span: 16 }}
-            style={{ maxWidth: 600 }}
-            initialValues={{ remember: true }}
-            onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
-            autoComplete="off"
+    <div className="w-full flex justify-center items-center">
+      
+      {/* CARD */}
+<div className="w-full max-w-md bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl shadow-lg p-6">
+        {/* HEADER */}
+        <div className="text-center mb-6">
+          <h2 className="text-2xl font-bold text-slate-800">
+            Welcome Back 👋
+          </h2>
+          <p className="text-sm text-gray-200">
+            Login to continue to SmartPharm
+          </p>
+        </div>
+
+        {/* FORM */}
+        <Form
+          layout="vertical"
+          onFinish={onFinish}
+          autoComplete="off"
+        >
+          <Form.Item
+            label="Email"
+            name="email"
+            rules={[{ required: true, message: "Please enter email" }]}
           >
-            <Form.Item
-              label="email"
-              name="email"
+            <Input
+              size="large"
+              placeholder="Enter your email"
+              className="rounded-lg"
+            />
+          </Form.Item>
+
+          <Form.Item
+            label="Password"
+            name="password"
+            rules={[{ required: true, message: "Please enter password" }]}
+          >
+            <Input.Password
+              size="large"
+              placeholder="Enter password"
+              className="rounded-lg"
+            />
+          </Form.Item>
+
+          {/* LOGIN BUTTON */}
+          <Form.Item>
+            <Button
+              htmlType="submit"
+              loading={loading}
+              className="w-full bg-linear-to-r from-emerald-400 to-teal-500 text-white border-none h-10 rounded-lg"
             >
-              <Input />
-            </Form.Item>
+              Login
+            </Button>
+          </Form.Item>
+        </Form>
 
-            <Form.Item
-              label="Password"
-              name="password"
-            >
-              <Input.Password />
-            </Form.Item>
+        {/* DIVIDER */}
+        <Divider>OR</Divider>
 
+        {/* GOOGLE BUTTON */}
+        <Button
+          onClick={googleLogin}
+          loading={loading}
+          className="w-full h-10 rounded-lg border"
+        >
+          Continue with Google
+        </Button>
 
-
-            <Form.Item label={null}>
-              <Button type="primary" htmlType="submit">
-                Submit
-              </Button>
-            </Form.Item>
-            <Form.Item label={null}>
-              <Button type="default" onClick={googleLogin}>
-                Contiue with Google
-              </Button>
-            </Form.Item>
-          </Form>
-
-
-          <div>
-            <h1>{state}</h1>
-          </div>
-        </section>
-
+        {/* MESSAGE */}
+        {state && (
+          <p className="text-center mt-4 text-sm text-red-500">
+            {state}
+          </p>
+        )}
       </div>
+    </div>
     </>)
 }
 export default Login;
