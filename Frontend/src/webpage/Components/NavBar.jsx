@@ -6,7 +6,7 @@ const NavBar = () => {
     const [scrolled, setScrolled] = useState(false)
     const [mobileOpen, setMobileOpen] = useState(false)
 
-    const links = ["Home", "Medicines", "Services", "Contact"];
+    const links = ["Home", "Medicines", "Services", "Contact","RoleBased"];
 
     // Scroll effect
     useEffect(() => {
