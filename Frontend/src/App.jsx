@@ -31,6 +31,8 @@ import ExpiryMedicine from './Components/Wholesalecompenent.jsx/ExpiryMedicine'
 import OneMedicine from './Components/Hitesh/OneMedicine'
 import Index from "./webpage/Index"
 import ActionablePrevention from './Components/Hitesh/ActionablePrevention'
+import SingleRetailerDetails from './Components/Hitesh/SingleRetailerDetails'
+
 const App = () => {
 
   return (
@@ -56,7 +58,12 @@ const App = () => {
             <Route path="Inventory" element={<Inventory />} />
             <Route path="TempelateDesigner" element={<TempelateDesigner />} />
             <Route path="ProductOverview" element={<ProductOverview />} />
-            <Route path="Retailors" element={<Retailors />} />
+            <Route path="Retailors">
+              <Route index  element={<Retailors />}/>
+             <Route path=":id" element={<SingleRetailerDetails/>} />
+            </Route>
+             
+
             <Route path="Alert" element={<Actionable />} />
             <Route path="pendingorders" element={<PendingOrders />} />
             <Route path="ExpiryMedicine" element={<ExpiryMedicine />} />
