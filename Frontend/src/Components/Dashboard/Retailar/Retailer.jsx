@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import { Upload, ReceiptLong, Verified, CloudOutlined, Error, LocalFireDepartment, AddShoppingCart, EventBusy, TrendingUp, Assessment, AutoAwesome, AssignmentTurnedIn, CurrencyRupee, Inventory, WarningAmber } from '@mui/icons-material';
 import MedicineSalesChart from './SubComponent/MedicineSalesChart';
+import { Bell, Settings, User } from "lucide-react";
 const stats = [
   {
     id: 1,
@@ -70,6 +71,7 @@ const Retailer = () => {
   return (
     <>
       <section className="p-4 md:p-6 space-y-6">
+          
         <section className="mt-2">
           <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 ">
             {stats.map((item, i) => (

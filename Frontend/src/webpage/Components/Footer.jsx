@@ -15,6 +15,23 @@ export default function Footer() {
         {/* links */}
         <div>
           <h2 className="text-white text-xl font-bold mb-3">Quick Links</h2>
+          <ul className="space-y-2">
+    <li>
+      <a href="/" className="hover:text-white">Home</a>
+    </li>
+    <li>
+      <a href="/about" className="hover:text-white">Medicines</a>
+    </li>
+    <li>
+      <a href="/about" className="hover:text-white">Services</a>
+    </li>
+    <li>
+      <a href="/about" className="hover:text-white">Contact</a>
+    </li>
+    <li>
+      <a href="/about" className="hover:text-white">Role Based</a>
+    </li>
+    </ul>
         </div>
 
         {/* Contact */}
