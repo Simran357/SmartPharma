@@ -55,7 +55,6 @@ const App = () => {
             <Route path="AiAgent" element={<AiAgent />} />
             <Route path="Inventory" element={<Inventory />} />
             <Route path="TempelateDesigner" element={<TempelateDesigner />} />
-
             <Route path="ProductOverview" element={<ProductOverview />} />
             <Route path="Retailors" element={<Retailors />} />
             <Route path="Alert" element={<Actionable />} />
