@@ -12,25 +12,6 @@ import Contact from './Components/Contact'
 const index = () => {
   return (
     <div>
-<<<<<<< HEAD
-         <NavBar />
-
-         
-         <HeroSection />
-           <WhySmartPharm />
-         
-        
-
-         
-
-         <ServiceSection />
-
-              <RolePanel/>
-              <AboutSection/>
-
-        
-        
-=======
       <NavBar />
       <HeroSection />
       <WhySmartPharm />
@@ -39,7 +20,6 @@ const index = () => {
       <AboutSection />
       <Contact/>
       <Footer />
->>>>>>> 1bf6fa7c5fd84e98b50cbbf669e9f8ebaaac291b
 
     </div>
   )
