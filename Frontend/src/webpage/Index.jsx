@@ -11,9 +11,9 @@ const index = () => {
          <NavBar />
          <HeroSection />
 
-         <ServiceSection />
               <RolePanel/>
               <AboutSection/>
+         <Services/>
         
     </div>
   )
