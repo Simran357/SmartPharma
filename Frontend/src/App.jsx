@@ -30,6 +30,7 @@ import PendingOrders from './Components/Wholesalecompenent.jsx/PendingOrders'
 import ExpiryMedicine from './Components/Wholesalecompenent.jsx/ExpiryMedicine'
 import OneMedicine from './Components/Hitesh/OneMedicine'
 import Index from "./webpage/Index"
+import ActionablePrevention from './Components/Hitesh/ActionablePrevention'
 const App = () => {
 
   return (
@@ -73,6 +74,7 @@ const App = () => {
             <Route path="FilterWholesaler" element={<FilterOutWholesaler />} />
              <Route path="FilterWholesaler" element={<FilterOutWholesaler />} />
              <Route path="OneMedicine" element={<OneMedicine />} />
+             <Route path="ActionablePrevention" element={<ActionablePrevention />} />
             <Route path="Order">
               <Route index element={<OrderWholesaler />} />
               <Route path="FindWholesaler" element={<OneWholesaler />} />

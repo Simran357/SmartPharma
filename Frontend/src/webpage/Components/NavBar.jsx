@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Menu, X, Pill } from "lucide-react";
-
+import Login from "../../Components/Dashboard/Form/Login";
+import { motion } from "framer-motion";
 const NavBar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-
-  const links = ["Home", "Medicines", "Services", "Contact"];
+  const [isOpen, setIsOpen] = useState(false)
+  const links = ["Home", "Medicines", "Services", "Contact", "RoleBased"];
 
   // Scroll effect
   useEffect(() => {
@@ -19,9 +20,9 @@ const NavBar = () => {
 
   return (
     <nav className={`fixed top-0 w-full z-50 ${scrolled ? "bg-white shadow-md" : "bg-transparent"}`}>
-      
+
       <div className="flex justify-between items-center p-4">
-        
+
         {/* Logo */}
         <div className="flex items-center gap-2">
           <div className="bg-linear-to-br from-emerald-400 to-teal-500 p-2 rounded-lg">
@@ -49,7 +50,9 @@ const NavBar = () => {
             className="px-3 py-2 bg-white border rounded-lg"
           />
 
-          <button className="bg-linear-to-r from-emerald-400 to-teal-500 text-white px-5 py-2 rounded-full shadow">
+        <button
+            className="bg-linear-to-r from-emerald-400 to-teal-500 text-white px-5 py-2 rounded-full"
+            onClick={() => setIsOpen(true)}>
             Login/Register
           </button>
         </div>
@@ -66,7 +69,7 @@ const NavBar = () => {
       {/* Mobile Menu */}
       {mobileOpen && (
         <div className="absolute top-full left-0 w-full bg-white shadow-md p-4 flex flex-col gap-4 md:hidden">
-          
+
           {links.map((item) => (
             <a
               key={item}
@@ -81,15 +84,38 @@ const NavBar = () => {
           <input
             type="text"
             placeholder="Search..."
-            className="px-3 py-2   border rounded"
+            className="px-3 py-2 border rounded"
           />
-
-          <button className="bg-linear-to-r from-emerald-400 to-teal-500 text-white px-5 py-2 rounded-full">
-            Login/Register
-          </button>
         </div>
+
       )}
+     {isOpen && (
+  <div
+    className="fixed inset-0 flex items-center justify-center bg-transparent"
+    onClick={() => setIsOpen(false)}
+  >
+    <motion.div
+      initial={{ scale: 0 }}
+      animate={{ scale: 1 }}
+      transition={{ duration: 0.3 }}
+      onClick={(e) => e.stopPropagation()}
+      className="p-2 w-[90%] md:w-500px"
+    >
+      <Login />
+
+      <button
+        className="mt-2 text-red-400 text-sm block mx-auto"
+        onClick={() => setIsOpen(false)}
+      >
+        Close
+      </button>
+    </motion.div>
+  </div>
+)}
     </nav>
+
+
+
   );
 };
 
