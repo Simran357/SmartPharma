@@ -1,7 +1,7 @@
 import react from "react"
 import { Truck, FileText, BarChart3, Pill } from "lucide-react";
 
-export default function Services() {
+const ServiceSection=()=> {
   const services = [
     {
       icon: <Pill size={26} />,
@@ -64,4 +64,4 @@ export default function Services() {
     </section>
   );
 }
-    
+export default Services
