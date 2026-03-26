@@ -21,14 +21,14 @@ const index = () => {
          
         
 
-         <HeroSection />
+         
 
          <ServiceSection />
 
               <RolePanel/>
               <AboutSection/>
 
-         <Services/>
+        
         
 
     </div>
