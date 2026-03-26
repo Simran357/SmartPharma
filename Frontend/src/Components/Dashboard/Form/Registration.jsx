@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Button, Form, Input } from "antd";
 import axiosInstance from "./Utils/AxiosInstance";
 import { useNavigate } from "react-router-dom";
-import { Bell, Search, Settings, SquarePlus, User } from "lucide-react";
 import { MedicalInformation } from "@mui/icons-material";
 
 const Register = () => {
@@ -34,32 +33,34 @@ const Register = () => {
 
   return (
     <section className="min-h-screen flex flex-col items-center justify-center position">
-        <header className="w-full bg-white border-b border-slate-200 px-6 py-3 flex items-center justify-between absolute top-0">
-              <div className="flex items-center gap-6">
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 bg-green-500 rounded-md flex items-center justify-center text-white shadow-sm">
-                    <MedicalInformation size={20} />
-                  </div>
-                  <span className="font-extrabold text-slate-900 text-xl tracking-tight">SmartPharm</span>
-                </div>
-      
-              
-              </div>
-      
-              <div className="flex items-center gap-8">
-                
-              
-              </div>
-            </header>
-      
+      <header className="w-full bg-white border-b border-slate-200 px-6 py-3 flex items-center justify-between absolute top-0">
+        <div className="flex items-center gap-6 ">
+          <div className="flex items-center gap-2"
+          onClick={()=>navigate("/")}
+          >
+            <div className="w-8 h-8 bg-green-500 rounded-md flex items-center justify-center text-white shadow-sm">
+              <MedicalInformation size={20} />
+            </div>
+            <span className="font-extrabold text-slate-900 text-xl tracking-tight">SmartPharm</span>
+          </div>
+
+
+        </div>
+
+        <div className="flex items-center gap-8">
+
+
+        </div>
+      </header>
+
       <div className="bg-white shadow-xl rounded-2xl p-10 w-full max-w-md">
-        
+
         <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">
           Create Account
         </h2>
 
         <Form layout="vertical" onFinish={onFinish} autoComplete="off">
-          
+
           <Form.Item label="Username" name="username">
             <Input placeholder="Enter username" />
           </Form.Item>
@@ -95,8 +96,8 @@ const Register = () => {
         <p className="text-center mt-4 text-sm">
           Already have an account ?
           <span
-onClick={() => navigate("/", { state: { openModal: true } })}          
-  className="text-teal-600 font-medium cursor-pointer"
+            onClick={() => navigate("/", { state: { openModal: true } })}
+            className="text-teal-600 font-medium cursor-pointer"
           >
             Login
           </span>

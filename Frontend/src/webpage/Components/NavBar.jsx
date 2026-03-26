@@ -9,7 +9,7 @@ const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false)
   const location = useLocation();
   const links = ["Home", "Medicines", "Services", "Contact", "RoleBased"];
-
+console.log("location",location)
   // Scroll effect
   useEffect(() => {
     const handleScroll = () => {
@@ -19,11 +19,11 @@ const NavBar = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-// useEffect(() => {
-//   if (location.state?.openModal) {
-//     setIsOpen(true);
-//   }
-// }, [location.state]);
+useEffect(() => {
+  if (location.state?.openModal) {
+    setIsOpen(true);
+  }
+}, [location.state]);
   return (
     <nav className={`fixed top-0 w-full z-50 ${scrolled ? "bg-white shadow-md" : "bg-transparent"}`}>
 
