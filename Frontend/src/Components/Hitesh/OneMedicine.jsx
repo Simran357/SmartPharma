@@ -1,25 +1,16 @@
 import React from 'react';
 import {
-  Search,
-  Bell,
-  ThermometerSnowflake,
-  Printer,
-  ChevronRight,
   ArrowLeft,
   Pencil,
   ShoppingCart,
   Headset,
-  SquarePlus,
-  ArrowDownToLine,
-  History
+
 } from 'lucide-react';
 
 function OneMedicine() {
   return (
     <div className="min-h-screen bg-[#f8fafc] font-sans text-slate-800 flex flex-col">
-      {/* Top Navigation */}
   
-      {/* Main Layout Area */}
       <div className="flex flex-1 overflow-hidden">
 
         {/* Center Content */}
@@ -67,7 +58,7 @@ function OneMedicine() {
               </div>
               
               {/* Empty Space for Chart - mock x axis */}
-              <div className="flex-1 min-h-[160px] flex flex-col justify-end relative">
+              <div className="flex-1 min-h-160px flex flex-col justify-end relative">
                 <div className="absolute inset-0 z-0">
                    {/* We would place a Chart component here */}
                 </div>
@@ -199,7 +190,7 @@ function OneMedicine() {
       </div>
 
       {/* Footer */}
-      <footer className="bg-white border-t border-slate-200 py-3 px-6 flex justify-between items-center z-10 block">
+      <footer className="bg-white border-t border-slate-200 py-3 px-6 flex w-full justify-between items-center z-10 ">
         <div className="flex items-center gap-8">
           <button className="flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-slate-800 transition-colors">
             <Headset size={16} /> SUPPORT: 1800-PHARMA-CARE

@@ -1,95 +1,98 @@
-import React, { useState } from 'react';
-import { Button, Form, Input } from 'antd';
-import axiosInstance from './Utils/AxiosInstance';
+import React, { useState } from "react";
+import { Button, Form, Input } from "antd";
+import axiosInstance from "./Utils/AxiosInstance";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
-  const [state,setState] = useState()
-  const [getData,setGetData] = useState([])
-console.log(getData)
-const onFinish = async (values) => {
-  console.log("Success:", values);
+  const [state, setState] = useState();
+  const [getData, setGetData] = useState([]);
+  const navigate = useNavigate();
 
-  try {
-    const res = await axiosInstance.post("/registerroute/registercontroller", values);
+  const onFinish = async (values) => {
+    try {
+      const res = await axiosInstance.post(
+        "/registerroute/registercontroller",
+        values
+      );
 
-    if(res?.data?.success){
-      const data = await axiosInstance.get("/registerroute/GetRegisterdata")
-         console.log(data?.data)
-         if(data){
-          setGetData(data?.data?.data)
-         }
+      if (res?.data?.success) {
+        const data = await axiosInstance.get(
+          "/registerroute/GetRegisterdata"
+        );
+        if (data) {
+          setGetData(data?.data?.data);
+        }
+      }
+
+      setState(res.data.message);
+    } catch (err) {
+      setState(err?.response?.data?.message);
     }
-    console.log("successful registration", res?.data);
-    setState(res.data.message);
-  } catch (err) {
-    console.log("ERROR MESSAGE:", err?.response?.data?.message);
-    setState(err?.response?.data?.message);
-  }
+  };
+
+  return (
+    <section className="min-h-screen flex items-center justify-center bg-linear-to-r from-emerald-100 to-teal-200">
+      
+      <div className="bg-white shadow-xl rounded-2xl p-10 w-full max-w-md">
+        
+        <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">
+          Create Account
+        </h2>
+
+        <Form layout="vertical" onFinish={onFinish} autoComplete="off">
+          
+          <Form.Item label="Username" name="username">
+            <Input placeholder="Enter username" />
+          </Form.Item>
+
+          <Form.Item label="Email" name="email">
+            <Input placeholder="Enter email" />
+          </Form.Item>
+
+          <Form.Item label="Password" name="password">
+            <Input.Password placeholder="Enter password" />
+          </Form.Item>
+
+          <Form.Item label="Confirm Password" name="confirmpassword">
+            <Input.Password placeholder="Confirm password" />
+          </Form.Item>
+
+          <Form.Item>
+            <Button
+              htmlType="submit"
+              className="w-full bg-linear-to-r from-emerald-400 to-teal-500 text-white border-none h-10 rounded-lg"
+            >
+              Register
+            </Button>
+          </Form.Item>
+        </Form>
+
+        {/* Message */}
+        {state && (
+          <p className="text-center mt-3 text-sm text-gray-600">{state}</p>
+        )}
+
+        {/* Login Link */}
+        <p className="text-center mt-4 text-sm">
+          Already have an account?{" "}
+          <span
+            onClick={() => navigate("/")}
+            className="text-teal-600 font-medium cursor-pointer"
+          >
+            Login
+          </span>
+        </p>
+      </div>
+
+      {/* Optional: Show registered users */}
+      <div className="absolute bottom-5 left-5 text-black">
+        {getData.map((item) => (
+          <p key={item._id}>{item.username}</p>
+        ))}
+      </div>
+
+    </section>
+  );
 };
 
-
-const onFinishFailed = errorInfo => {
-  console.log('Failed:', errorInfo);
-};
-    return(<>
-    <section className='m-8 '>
-    <div className='rounded-xl items-center bg-white p-20 flex flex-col border border-gray-200'>
-  <Form
-    name="basic"
-    labelCol={{ span: 8 }}
-    wrapperCol={{ span: 16 }}
-    style={{ maxWidth: 600 }}
-    initialValues={{ remember: true }}
-    onFinish={onFinish}
-    onFinishFailed={onFinishFailed}
-    autoComplete="off"
-  >
-    <Form.Item
-      label="Username"
-      name="username"
-    >
-      <Input />
-    </Form.Item>
-
-<Form.Item
-      label="Email"
-      name="email"
-    >
-      <Input />
-    </Form.Item>
-
-    <Form.Item
-      label="Password"
-      name="password"
-    >
-      <Input.Password />
-    </Form.Item>
-     <Form.Item
-          label="Confirm Password"
-          name="confirmpassword"
-        >
-          <Input.Password />
-        </Form.Item>
-
-
-    <Form.Item>
-      <Button type="primary" htmlType="submit">
-        Submit
-      </Button>
-    </Form.Item>
-  </Form>
-</div>
-  <h1 className='text-black'>{state}</h1>
-<div className='text-black'>{getData.map((item) => (
-  <div key={item._id}>
-    <p>{item.username}</p>
-  </div>
-))}
-</div>
-
-  </section>
-
-
-
-</>)}
 export default Register;

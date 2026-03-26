@@ -2,16 +2,35 @@ import React from 'react'
 import NavBar from './Components/NavBar'
 import HeroSection from './Components/HeroSection'
 
+
 import WhySmartPharm from './Components/WhySmartPharma'
+
+import ServiceSection from './Components/ServiceSection'
+import RolePanel from './Components/RolePanel'
+import AboutSection from './Components/AboutSection'
+
+
 const index = () => {
   return (
     <div>
          <NavBar />
+
          
          <HeroSection />
            <WhySmartPharm />
          
         
+
+         <HeroSection />
+
+         <ServiceSection />
+
+              <RolePanel/>
+              <AboutSection/>
+
+         <Services/>
+        
+
     </div>
   )
 }
