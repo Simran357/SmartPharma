@@ -32,6 +32,7 @@ import OneMedicine from './Components/Hitesh/OneMedicine'
 import Index from "./webpage/Index"
 import ActionablePrevention from './Components/Hitesh/ActionablePrevention'
 import SingleRetailerDetails from './Components/Hitesh/SingleRetailerDetails'
+import AdminRoleAssign from './Components/Dashboard/Retailar/AdminRoleAssign'
 
 const App = () => {
 
@@ -52,6 +53,7 @@ const App = () => {
           {/* Default landing page */}
           <Route path='Wholesaler' >
             <Route index element={<WholeSaler />} />
+            <Route path="AdminRoleAssign" element={<AdminRoleAssign/>}/>
             <Route path="Lowstock" element={<Lowstock />} />
             <Route path="Dailysales" element={<Dailysales />} />
             <Route path="AiAgent" element={<AiAgent />} />
