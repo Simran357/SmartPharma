@@ -47,7 +47,7 @@ const wholesalerMenu = [
     key: "/Dashboard/Wholesaler/Retailors",
     icon: <RobotFilled />,
     label: "Retailors",
-  },
+  }, 
   
 ];
   return (
