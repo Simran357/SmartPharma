@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Menu, X, Pill } from "lucide-react";
 import Login from "../../Components/Dashboard/Form/Login";
 import { motion } from "framer-motion";
+import { useLocation } from "react-router-dom";
 const NavBar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false)
+  const location = useLocation();
   const links = ["Home", "Medicines", "Services", "Contact", "RoleBased"];
 
   // Scroll effect
@@ -17,7 +19,11 @@ const NavBar = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
+// useEffect(() => {
+//   if (location.state?.openModal) {
+//     setIsOpen(true);
+//   }
+// }, [location.state]);
   return (
     <nav className={`fixed top-0 w-full z-50 ${scrolled ? "bg-white shadow-md" : "bg-transparent"}`}>
 
@@ -91,7 +97,7 @@ const NavBar = () => {
       )}
      {isOpen && (
   <div
-    className="fixed inset-0 flex items-center justify-center bg-transparent"
+className="fixed inset-0 bg-black/40 flex items-center justify-center"
     onClick={() => setIsOpen(false)}
   >
     <motion.div

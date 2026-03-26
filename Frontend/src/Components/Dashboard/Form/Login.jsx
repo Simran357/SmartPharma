@@ -107,16 +107,20 @@ const Login = () => {
                 htmlType="submit"
                 loading={loading}
                 className="w-full bg-linear-to-r from-emerald-400 to-teal-500 text-white border-none h-10 rounded-lg">
-              Login
+                Login
               </Button>
             </Form.Item>
             <Form.Item>
               <Button
-              onClick={() => navigate("/register")}
-              className="w-full  text-white border-none h-10 rounded-lg">
-              Already have an account?
+                className="w-full  text-white border-none h-10 rounded-lg">
+                Don't have an account ? <span
+                  onClick={() => navigate("/register")}
+                  className="text-teal-600 font-medium cursor-pointer"
+                >
+                  Register
+                </span>
               </Button>
-              </Form.Item>
+            </Form.Item>
           </Form>
 
           {/* DIVIDER */}
