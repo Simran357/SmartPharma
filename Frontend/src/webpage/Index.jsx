@@ -8,7 +8,6 @@ const index = () => {
          <NavBar />
          <HeroSection />
 
-         
          <ServiceSection />
          <Services/>
         
