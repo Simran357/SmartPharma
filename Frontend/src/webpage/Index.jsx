@@ -12,13 +12,10 @@ const index = () => {
          <HeroSection />
 
          <ServiceSection />
-<<<<<<< HEAD
               <RolePanel/>
               <AboutSection/>
-=======
          <Services/>
         
->>>>>>> 752cb610929fa2553b4dab6470bf5e2417e03066
     </div>
   )
 }
