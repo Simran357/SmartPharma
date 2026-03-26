@@ -64,4 +64,4 @@ const ServiceSection=()=> {
     </section>
   );
 }
-export default Services
+export default ServiceSection
