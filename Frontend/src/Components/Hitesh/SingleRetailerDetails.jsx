@@ -109,15 +109,15 @@ const trendData = [
   { month: "Oct", revenue: 90000, orders: 420 },
 ];
 return(
-<>
+
 <div className="p-6 bg-gray-100 min-h-screen">
       
       {/* Main Container */}
       <div className="max-w-7xl mx-auto space-y-6">
 
           {/* LEFT SIDE */}
-      <div className="flex items-center gap-4">
-        
+       <div className="bg-white rounded-2xl shadow p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+     
         {/* Logo */}
         <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-green-200 to-green-500 flex items-center justify-center">
           <span className="text-white font-bold">M</span>
@@ -172,8 +172,9 @@ return(
         
 
         {/* Grid Section */}
-         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6"> 
-         
+         {/* <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">  */}
+         {/* TOP CARDS */}
+  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
          { /* CARD 1 */}
   <div className="bg-white rounded-2xl shadow p-5">
      <div className="flex flex-row justify-between gap-2">
@@ -215,8 +216,9 @@ return(
     <p className="text-gray-500 text-sm mt-1">Average gross margin</p>
     <p className="text-green-500">A-Class Retailer</p>
   </div>
-   
+   </div>
   
+  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
           {/* LEFT SIDE */}
           <div className="lg:col-span-2 space-y-6">
 
@@ -284,17 +286,18 @@ return(
               </div>
             
 
-          </div>
+   </div>       {/* left */}
 
-          {/* RIGHT SIDE */}
-          <div className="space-y-6">
+         
+              {/* RIGHT SIDE */}
+  <div className="lg:col-span-1 space-y-6">
 
             {/* Risk Assessment */}
            <div className="bg-white rounded-2xl shadow p-6">
   <h2 className="text-lg font-semibold mb-2">Risk Assessment</h2>
 
   <div className="bg-green-100 rounded-2xl p-4 mt-2">
-    <div className="flex item-centers gap-2">
+    <div className="flex items-center gap-2">
     <CheckCircle className="text-green-600 w-5 h-5 "/>
     <p className="text-green-600 font-medium leading-tight">
       Payment Health
@@ -404,8 +407,8 @@ return(
         </div>
 
       </div>
-    </div>
-</>
+    
+</div>
 )
 }
 
