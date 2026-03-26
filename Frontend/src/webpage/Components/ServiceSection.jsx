@@ -45,7 +45,7 @@ export default function Services() {
             className="bg-white border rounded-2xl p-6 text-center shadow-sm hover:shadow-lg transition duration-300"
           >
             {/* Icon */}
-            <div className="w-14 h-14 mx-auto flex items-center justify-center rounded-xl bg-gradient-to-r from-green-400 to-teal-500 text-white mb-4">
+            <div className="w-14 h-14 mx-auto flex items-center justify-center rounded-xl bg-linear-to-r from-green-400 to-teal-500 text-white mb-4">
               {item.icon}
             </div>
 
