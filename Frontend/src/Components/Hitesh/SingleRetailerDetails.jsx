@@ -36,6 +36,10 @@ const SingleRetailerDetails = () => {
       title: "AMOUNT",
       dataIndex: "amount",
       key: "amount",
+       render: (amount) => (
+    <span className="font-bold text-black">
+      {amount}
+    </span>),
     },
     {
       title: "STATUS",
@@ -72,6 +76,7 @@ const SingleRetailerDetails = () => {
       date: "2026-03-20",
       items: "25 SKUs",
       amount: "₹42,500",
+       
       status: "SHIPPED",
     },
     {
@@ -88,7 +93,6 @@ const SingleRetailerDetails = () => {
       date: "2026-03-24",
       items: "45 SKUs",
       amount: "₹1,12,000",
-     
       status: "DELIVERED",
     },
      {
@@ -109,15 +113,15 @@ const trendData = [
   { month: "Oct", revenue: 90000, orders: 420 },
 ];
 return(
-<>
+
 <div className="p-6 bg-gray-100 min-h-screen">
       
       {/* Main Container */}
       <div className="max-w-7xl mx-auto space-y-6">
 
           {/* LEFT SIDE */}
-      <div className="flex items-center gap-4">
-        
+       <div className="bg-white rounded-2xl shadow p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+     
         {/* Logo */}
         <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-green-200 to-green-500 flex items-center justify-center">
           <span className="text-white font-bold">M</span>
@@ -127,10 +131,10 @@ return(
 <div className="w-full">
 
   {/* Top Row */}
-  <div className="flex items-center justify-between">
+  <div className="">
 
         {/* Details */}
-        <div>
+        <div className="flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <h1 className="text-xl font-bold">MediCare Pharmacy</h1>
             <span className="bg-green-100 text-green-600 text-xs px-3 py-1 rounded-full font-semibold">
@@ -139,21 +143,18 @@ return(
           </div>
 
       {/* RIGHT SIDE BUTTONS */}
-      <div className="flex items-center gap-3">
-        
+      <div className="flex items-center gap-3"> 
         <button className="px-4 py-2 border rounded-lg text-sm hover:bg-gray-100">
           Contact
         </button>
-
-        <button className="px-4 py-2 bg-green-600 text-white rounded-lg text-sm hover:bg-green-700">
+  <button className="px-4 py-2 bg-green-600 text-white rounded-lg text-sm hover:bg-green-700">
           Adjust Credit
         </button>
-
-        <button className="px-4 py-2 border border-red-400 text-red-500 rounded-lg text-sm hover:bg-red-50">
+ <button className="px-4 py-2 border border-red-400 text-red-500 rounded-lg text-sm hover:bg-red-50">
           Block
         </button>
 
-      </div>
+ </div>
 </div>
 </div>
           <p className="text-gray-500 text-sm mt-1">
@@ -172,8 +173,9 @@ return(
         
 
         {/* Grid Section */}
-         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6"> 
-         
+         {/* <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">  */}
+         {/* TOP CARDS */}
+  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
          { /* CARD 1 */}
   <div className="bg-white rounded-2xl shadow p-5">
      <div className="flex flex-row justify-between gap-2">
@@ -215,8 +217,9 @@ return(
     <p className="text-gray-500 text-sm mt-1">Average gross margin</p>
     <p className="text-green-500">A-Class Retailer</p>
   </div>
-   
+   </div>
   
+  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
           {/* LEFT SIDE */}
           <div className="lg:col-span-2 space-y-6">
 
@@ -284,17 +287,18 @@ return(
               </div>
             
 
-          </div>
+   </div>       {/* left */}
 
-          {/* RIGHT SIDE */}
-          <div className="space-y-6">
+         
+              {/* RIGHT SIDE */}
+  <div className="lg:col-span-1 space-y-6">
 
             {/* Risk Assessment */}
            <div className="bg-white rounded-2xl shadow p-6">
   <h2 className="text-lg font-semibold mb-2">Risk Assessment</h2>
 
   <div className="bg-green-100 rounded-2xl p-4 mt-2">
-    <div className="flex item-centers gap-2">
+    <div className="flex items-center gap-2">
     <CheckCircle className="text-green-600 w-5 h-5 "/>
     <p className="text-green-600 font-medium leading-tight">
       Payment Health
@@ -404,8 +408,8 @@ return(
         </div>
 
       </div>
-    </div>
-</>
+    
+</div>
 )
 }
 
