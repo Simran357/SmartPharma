@@ -11,7 +11,6 @@ import Footer from './Components/Footer'
 const index = () => {
   return (
     <div>
-<<<<<<< HEAD
          <NavBar />
 
          
@@ -29,7 +28,7 @@ const index = () => {
 
         
         
-=======
+
       <NavBar />
       <HeroSection />
       <WhySmartPharm />
@@ -37,7 +36,7 @@ const index = () => {
       <RolePanel />
       <AboutSection />
       <Footer />
->>>>>>> 1bf6fa7c5fd84e98b50cbbf669e9f8ebaaac291b
+
 
     </div>
   )

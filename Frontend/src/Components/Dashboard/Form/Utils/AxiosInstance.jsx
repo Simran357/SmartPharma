@@ -6,8 +6,6 @@ const axiosInstance =  axios.create({
      withCredentials:true,
 })
 
-
-
 axiosInstance.interceptors.request.use(
     (config)=>{
    const jwtToken =  sessionStorage.getItem("jwtToken")
@@ -19,10 +17,11 @@ if(jwtToken){
 
     }
 )
+
 axiosInstance.interceptors.response.use((response)=>{
     console.log("response in axiosInstance", response);
     return response;
 
 })
-export default axiosInstance
+export default axiosInstance  
   

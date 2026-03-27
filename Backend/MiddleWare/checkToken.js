@@ -8,7 +8,7 @@ const checkToken = (req, res, next) => {
         }
         const verifyToken = jwtToken.verify(jwtToken, "simran")
         console.log(verifyToken)
-     return verifyToken
+        return verifyToken
     }
     catch {
         (error) => {
@@ -16,5 +16,4 @@ const checkToken = (req, res, next) => {
         }
     }
 }
-
-model.exports = checkToken
+module.exports = checkToken 
