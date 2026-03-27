@@ -36,6 +36,10 @@ const SingleRetailerDetails = () => {
       title: "AMOUNT",
       dataIndex: "amount",
       key: "amount",
+       render: (amount) => (
+    <span className="font-bold text-black">
+      {amount}
+    </span>),
     },
     {
       title: "STATUS",
@@ -72,6 +76,7 @@ const SingleRetailerDetails = () => {
       date: "2026-03-20",
       items: "25 SKUs",
       amount: "₹42,500",
+       
       status: "SHIPPED",
     },
     {
@@ -88,7 +93,6 @@ const SingleRetailerDetails = () => {
       date: "2026-03-24",
       items: "45 SKUs",
       amount: "₹1,12,000",
-     
       status: "DELIVERED",
     },
      {
@@ -127,10 +131,10 @@ return(
 <div className="w-full">
 
   {/* Top Row */}
-  <div className="flex items-center justify-between">
+  <div className="">
 
         {/* Details */}
-        <div>
+        <div className="flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <h1 className="text-xl font-bold">MediCare Pharmacy</h1>
             <span className="bg-green-100 text-green-600 text-xs px-3 py-1 rounded-full font-semibold">
@@ -139,21 +143,18 @@ return(
           </div>
 
       {/* RIGHT SIDE BUTTONS */}
-      <div className="flex items-center gap-3">
-        
+      <div className="flex items-center gap-3"> 
         <button className="px-4 py-2 border rounded-lg text-sm hover:bg-gray-100">
           Contact
         </button>
-
-        <button className="px-4 py-2 bg-green-600 text-white rounded-lg text-sm hover:bg-green-700">
+  <button className="px-4 py-2 bg-green-600 text-white rounded-lg text-sm hover:bg-green-700">
           Adjust Credit
         </button>
-
-        <button className="px-4 py-2 border border-red-400 text-red-500 rounded-lg text-sm hover:bg-red-50">
+ <button className="px-4 py-2 border border-red-400 text-red-500 rounded-lg text-sm hover:bg-red-50">
           Block
         </button>
 
-      </div>
+ </div>
 </div>
 </div>
           <p className="text-gray-500 text-sm mt-1">
