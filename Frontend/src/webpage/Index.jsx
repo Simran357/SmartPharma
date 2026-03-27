@@ -12,6 +12,7 @@ import Contact from './Components/Contact'
 const index = () => {
   return (
     <div>
+
       <NavBar />
       <HeroSection />
       <WhySmartPharm />
@@ -20,6 +21,7 @@ const index = () => {
       <AboutSection />
       <Contact/>
       <Footer />
+
 
     </div>
   )

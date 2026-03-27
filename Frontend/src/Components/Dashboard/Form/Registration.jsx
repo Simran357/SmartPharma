@@ -24,7 +24,7 @@ const Register = () => {
           setGetData(data?.data?.data);
         }
       }
-
+      
       setState(res.data.message);
     } catch (err) {
       setState(err?.response?.data?.message);

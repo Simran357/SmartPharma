@@ -12,4 +12,4 @@ router.get("/GetRegisterdata",GetRegisterdata)
 router.post("/auth/google",GoogleController)
 router.get("/me",getMe)
 console.log("router.file")
-module.exports = router
+module.exports = router 
