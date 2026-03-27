@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { FaSearch, FaShieldAlt, FaWindows, FaStore, FaShoppingCart, FaCog, } from "react-icons/fa";
-import { FaChartBar } from "react-icons/fa";
-import { FaDownload, FaPlus } from "react-icons/fa";
+import { FaSearch, FaShieldAlt } from "react-icons/fa";
+import { FaDownload } from "react-icons/fa";
 import { AiOutlinePlus } from "react-icons/ai";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
+import {  useNavigate } from "react-router-dom";
 
 
 const Retailors = () => {
@@ -14,6 +14,7 @@ const Retailors = () => {
         { name: "Health Plus", city: "Punjab", contact: "9876542222", status: "active", salary: "$11,555", outstanding: "$400" },
         
     ];
+    const navigate = useNavigate()
 
 
     const [tab, setTab] = useState("all");
@@ -29,7 +30,7 @@ const Retailors = () => {
         return item.status === tab;
     });
 
-    return (
+    return (<>
         <div className="w-full h-screen flex">
 
             {/* Sidebar */}
@@ -97,7 +98,8 @@ const Retailors = () => {
 
                         {/* Cards */}
                         <div className="flex-1 overflow-y-auto overflow-x-hidden relative">
-                            <div className="flex flex-wrap gap-6">
+                            <div className="flex flex-wrap gap-6" 
+                            >
 
                                 {filteredRetailors.map((item, i) => {
 
@@ -110,6 +112,7 @@ const Retailors = () => {
 
                                         <div
                                             key={i}
+                                             onClick={() => navigate("SingleRetailerDetails")}
                                             className="border rounded-lg py-6 flex flex-col w-80 justify-between bg-white shadow-md"
                                         >
                                             <div className="flex px-4 justify-between">
@@ -197,7 +200,9 @@ const Retailors = () => {
                 )}
 
             </div>
+          
         </div>
+        </>
     );
 };
 

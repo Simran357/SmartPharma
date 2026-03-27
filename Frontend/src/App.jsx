@@ -31,6 +31,9 @@ import ExpiryMedicine from './Components/Wholesalecompenent.jsx/ExpiryMedicine'
 import OneMedicine from './Components/Hitesh/OneMedicine'
 import Index from "./webpage/Index"
 import ActionablePrevention from './Components/Hitesh/ActionablePrevention'
+import SingleRetailerDetails from './Components/Hitesh/SingleRetailerDetails'
+import AdminRoleAssign from './Components/Dashboard/Retailar/AdminRoleAssign'
+
 const App = () => {
 
   return (
@@ -50,13 +53,19 @@ const App = () => {
           {/* Default landing page */}
           <Route path='Wholesaler' >
             <Route index element={<WholeSaler />} />
+            <Route path="AdminRoleAssign" element={<AdminRoleAssign/>}/>
             <Route path="Lowstock" element={<Lowstock />} />
             <Route path="Dailysales" element={<Dailysales />} />
             <Route path="AiAgent" element={<AiAgent />} />
             <Route path="Inventory" element={<Inventory />} />
             <Route path="TempelateDesigner" element={<TempelateDesigner />} />
             <Route path="ProductOverview" element={<ProductOverview />} />
-            <Route path="Retailors" element={<Retailors />} />
+            <Route path="Retailors">
+              <Route index  element={<Retailors />}/>
+             <Route path=":id" element={<SingleRetailerDetails/>} />
+            </Route>
+             
+
             <Route path="Alert" element={<Actionable />} />
             <Route path="pendingorders" element={<PendingOrders />} />
             <Route path="ExpiryMedicine" element={<ExpiryMedicine />} />

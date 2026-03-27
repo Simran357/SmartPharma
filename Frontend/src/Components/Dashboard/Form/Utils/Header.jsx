@@ -31,6 +31,7 @@ const Header = () => {
  { text:'Billing', path:'/Dashboard/Retailer/Billing' },
  { text:'Cart', path:'/Dashboard/Retailer/Cart' },
  { text:'Wholesalers', path:'/Dashboard/Retailer/Order' },
+ { text:'Role Control', path:'/Dashboard/Wholesaler/AdminRoleAssign' },
  { text:'Wholesaler Panel', path:'/Dashboard/Wholesaler' }
 ]
 

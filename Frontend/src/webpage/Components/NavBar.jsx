@@ -9,7 +9,7 @@ const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false)
   const location = useLocation();
   const links = ["Home", "Medicines", "Services", "Contact", "RoleBased"];
-
+console.log("location",location)
   // Scroll effect
   useEffect(() => {
     const handleScroll = () => {
