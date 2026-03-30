@@ -33,6 +33,7 @@ import Index from "./webpage/Index"
 import ActionablePrevention from './Components/Hitesh/ActionablePrevention'
 import SingleRetailerDetails from './Components/Hitesh/SingleRetailerDetails'
 import AdminRoleAssign from './Components/Dashboard/Retailar/AdminRoleAssign'
+import Addstock from './Components/Wholesalecompenent.jsx/Addstock'
 
 const App = () => {
 
@@ -76,6 +77,7 @@ const App = () => {
             <Route path="TempelateDesigner" element={<TempelateDesigner />} />
             <Route path="Billing" element={<Billing />} />
             <Route path="AiAgent" element={<AiAgent />} />
+            <Route path="AddStock" element={<Addstock />} />
             <Route path="SingleMedicineInfo" element={<SingleMedicineInfo />} />
             <Route path="WhatsappTempelate" element={<WhatsappTempelate />} />
             <Route path="ReturnInvoice" element={<ReturnInvoice />} />

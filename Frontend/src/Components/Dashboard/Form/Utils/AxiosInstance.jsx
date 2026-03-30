@@ -1,27 +1,50 @@
-import axios from "axios"
+import axios from "axios";
 
-const axiosInstance =  axios.create({
-    baseURL:"http://localhost:5001/api",
-    timeout:3000,
-     withCredentials:true,
-})
+// Create axios instance
+const axiosInstance = axios.create({
+  baseURL: "http://localhost:5001/api",
+  timeout: 3000,
+  withCredentials: true, // send cookies if needed
+});
 
+// Request interceptor
 axiosInstance.interceptors.request.use(
-    (config)=>{
-   const jwtToken =  sessionStorage.getItem("jwtToken")
-        console.log("jwttoken is getting from session storage",jwtToken)
-if(jwtToken){
-    config.headers.authorization = `Bearer ${jwtToken}`
-}
- return config;
-
+  (config) => {
+    const jwtToken = localStorage.getItem("jwtToken");
+    if (jwtToken) {
+      config.headers.Authorization = `Bearer ${jwtToken}`; // Standard header key
+      console.log("JWT token attached to request");
     }
-)
+    return config;
+  },
+  (error) => {
+    // Handle request errors
+    console.error("Axios request error:", error);
+    return Promise.reject(error);
+  }
+);
 
-axiosInstance.interceptors.response.use((response)=>{
-    console.log("response in axiosInstance", response);
+// Response interceptor
+axiosInstance.interceptors.response.use(
+  (response) => {
+    console.log("Axios response:", response);
     return response;
+  },
+  (error) => {
+    // Handle response errors
+    if (error.response) {
+      console.error("Axios response error:", error.response.status, error.response.data);
+      if (error.response.status === 401) {
+        console.warn("Unauthorized! Token might be invalid or expired.");
+        // Optionally, redirect to login page or clear localStorage
+        // localStorage.removeItem("jwtToken");
+        // window.location.href = "/login";
+      }
+    } else {
+      console.error("Axios network/error:", error.message);
+    }
+    return Promise.reject(error);
+  }
+);
 
-})
-export default axiosInstance  
-  
+export default axiosInstance;

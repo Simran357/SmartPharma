@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import NotificationsNoneSharpIcon from '@mui/icons-material/NotificationsNoneSharp';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import CardTravelIcon from '@mui/icons-material/CardTravel';
@@ -18,8 +18,10 @@ import { Outlet, useNavigate } from "react-router-dom";
 import GroupsIcon from '@mui/icons-material/Groups';
 import DetailsIcon from '@mui/icons-material/Details';
 import PendingOrders from './PendingOrders';
+import Addstock from './Addstock';
 const WholeSaler = () => {
   const navigate = useNavigate()
+  
   return (
 
     <div className=" bg-gray-50 p-6 md:p-10 ">
@@ -127,14 +129,17 @@ const WholeSaler = () => {
                 <ElectricBoltIcon className='w-5 h-5  text-blue-400 ' />
                 Quick Actions</h3>
 
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 ">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 " >
                 <button className=' p-6 bg-white rounded-2xl border border-slate-100 shadow-sm hover:border-blue-400 hover:shadow-lg transition-all text-center group '>
                   <div className='w-12 h-12 bg-blue-50  text-blue-500 rounded-xl m-auto  mb-3 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-colors'>
-                    <AddIcon className='w-6 h-6' />
+                    <AddIcon
+                      className='w-6 h-6'
+                    />
                   </div>
                   <span className="block text-sm font-bold text-slate-700">New Stock</span>
                   <span className="text-[10px] text-slate-400 uppercase tracking-tighter">Purchase Entry</span>
                 </button>
+
 
                 <button
                   className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:border-blue-400 hover:shadow-lg transition-all text-center group">
@@ -230,9 +235,9 @@ const WholeSaler = () => {
                         <PrintIcon
                           className="w-5 h-5 cursor-pointer hover:text-blue-500 transition-colors"
                         />
-                       
+
                       </td>
-                    </tr>  
+                    </tr>
                     <tr className="hover:bg-slate-50 transition-colors">
                       <td className="px-6 py-5 text-sm font-semibold text-slate-600">#ORD-9022</td>
                       <td className="px-6 py-5">
@@ -245,10 +250,10 @@ const WholeSaler = () => {
                           className="inline-block w-2 h-2 rounded-full mr-2 bg-current shadow-xl]"></span></span>
                       </td>
                       <td className="px-6 py-5 text-center text-slate-400">
-                       
-                       <MoreHorizIcon className=" w-5 h-5 mx-auto cursor-pointer hover:text-blue-500" />
-                       
-                       
+
+                        <MoreHorizIcon className=" w-5 h-5 mx-auto cursor-pointer hover:text-blue-500" />
+
+
                       </td>
                     </tr>
                   </tbody>
@@ -276,7 +281,7 @@ const WholeSaler = () => {
                         strokeWidth="4"></circle>
                     </svg>
                   </div>
-                   {/* Legend */}
+                  {/* Legend */}
                   <div className="space-y-2 text-sm">
                     <div className="flex items-center gap-2"><span
                       className="w-2 h-2 rounded-full bg-green-500"></span> <span
@@ -421,7 +426,7 @@ const WholeSaler = () => {
                 <div className="p-4 rounded-2xl bg-slate-50 border-l-4 border-rose-500">
                   <div className="flex items-center gap-3">
                     <div className="p-2 bg-white rounded-lg shadow-sm">
-                   <ScienceIcon className="w-5 h-5 text-rose-500 cursor-pointer hover:text-rose-600 transition-colors" />
+                      <ScienceIcon className="w-5 h-5 text-rose-500 cursor-pointer hover:text-rose-600 transition-colors" />
 
 
                     </div>
@@ -439,7 +444,7 @@ const WholeSaler = () => {
                   <div className="flex items-center gap-3">
                     <div className="p-2 bg-white rounded-lg shadow-sm">
                       <ScienceIcon className="w-5 h-5 text-amber-500 cursor-pointer hover:text-amber-600 transition-colors" />
-                      
+
                     </div>
                     <div className="flex-1">
                       <p className="text-sm font-bold text-slate-800">Cough Syrup (Z-Type)</p>
@@ -480,7 +485,7 @@ const WholeSaler = () => {
                     className="p-1.5 bg-green-50 text-green-600 rounded-lg hover:bg-green-600 hover:text-white transition-colors">
                     <DoneIcon />
                   </button>
-                </div> 
+                </div>
                 <div
                   className="flex items-center justify-between p-3 hover:bg-slate-50 rounded-2xl transition-colors cursor-pointer">
                   <div className="flex items-center gap-3">
