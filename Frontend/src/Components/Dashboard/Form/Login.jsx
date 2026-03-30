@@ -41,6 +41,8 @@ const Login = () => {
       setLoading(true);
       const res = await axiosInstance.post("/registerroute/LoginController", values);
       if (res?.data?.success) {
+        const setToken = res?.data?.jwtToken
+        localStorage.setItem("jwtToken", setToken)
         alert("Login Successful");
         setState(res?.data?.message)
         setAuth(true);

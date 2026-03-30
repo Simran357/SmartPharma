@@ -1,35 +1,91 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { DownOutlined, EditFilled, SettingOutlined } from '@ant-design/icons';
 import { Dropdown, Space } from 'antd';
-
+import axiosInstance from "../Form/Utils/AxiosInstance";
 const AdminRoleAssign = () => {
   const [openModel, setModel] = useState(false)
+  const [users, setUser] = useState([])
+  // const [selectRole, setSelectRole] = useState("")
+
   const items = [
     {
       key: '1',
       label: 'USER',
-      disabled: true,
+      role: "user",
+      // disabled: true,
     },
-    {
-      type: 'divider',
-    },
+    // {
+    //   type: 'divider',
+    // },
+    // {
+    //   key: '2',
+    //   label: 'ADMIN',
+    //   extra: '⌘R',
+    // },
     {
       key: '2',
-      label: 'ADMIN',
-      extra: '⌘R',
-    },
-    {
-      key: '3',
       label: 'RETAILER',
+      role: "retailer",
+
       extra: '⌘W',
     },
     {
-      key: '4',
+      key: '3',
       label: 'WHOLESALER',
+      role: "wholesaler",
       icon: <SettingOutlined />,
       extra: '⌘U',
     },
   ];
+
+  useEffect(() => {
+    console.log("Component mounted ✅");
+    getUser()
+  }, []);
+
+  const getUser = async () => {
+    console.log("getUser called 🔥");
+    try {
+      const res = await axiosInstance.get("/registerroute/getuserController")
+      if (res?.data?.success) {
+        setUser(res.data.data)
+
+
+      }
+    } catch (error) {
+      console.log("Error fetching user data:", error);
+    }
+  }
+  
+  const handleMenuClick = async ({ key }, userId) => {
+    console.log(" handleMenuClick called " );
+    const selectedItem = items.find(item => item.key === key);
+    const role = selectedItem?.role;
+
+    console.log("Selected role:", role, "for user ID:", userId);
+
+    // // state ch store (optional but tu use kar rahi aa)
+    // setSelectRole(role);  
+     try {
+      const res = await axiosInstance.put(`/registerroute/updateRole/${userId}`,
+        { role });
+
+      if (res?.data?.success) {
+        // UI update without reload
+        setUser(prev => {
+           prev.map(user=>{
+            user._id === userId ? { ...user, role } : user
+
+           })
+           
+        })
+      };
+    } catch (error) {
+      console.log("Error assigning role:", error);
+    }
+  };
+
+
   return (
     <>
       <section className='m-6'>
@@ -52,12 +108,13 @@ const AdminRoleAssign = () => {
         <div class="grid grid-cols-4 gap-6 mt-6">
           <div class="col-span-1 p-6 rounded-xl shadow-sm border">
             <p class="text-xs font-bold uppercase tracking-widest  mb-2">Total Users</p>
-            <h3 class="text-2xl font-extrabold ">1,284</h3>
+            <h3 class="text-2xl font-extrabold ">{users.length}</h3>
             <p class="text-[10px] text-primary font-semibold mt-2 flex items-center"><span class="material-symbols-outlined text-[12px] mr-1">trending_up</span> +12% from last month</p>
           </div>
           <div class="col-span-1 p-6 rounded-xl shadow-sm border">
             <p class="text-xs font-bold uppercase tracking-widest  mb-2">Active Admins</p>
-            <h3 class="text-2xl font-extrabold ">42</h3>
+            <h3 class="text-2xl font-extrabold ">
+              {users.filter(user => user.role === "Admin").length}</h3>
             <p class="text-[10px] font-medium mt-2">3 Pending approval</p>
           </div>
           <div class="col-span-2 p-6 rounded-xl relative overflow-hidden flex items-center">
@@ -105,48 +162,52 @@ const AdminRoleAssign = () => {
           </thead>
 
           <tbody>
-            {[1, 2, 3, 4].map((item, index) => (
+            {users.map((user, index) => (
               <tr key={index} className="bg-white shadow-sm hover:shadow-md transition rounded-xl">
 
                 <td className="px-6 py-4 flex items-center space-x-3">
                   <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center font-bold text-primary">
-                    ER
+                    {user.username?.charAt(0).toUpperCase()}
                   </div>
                   <div>
-                    <p className="font-semibold text-sm">Elena Rodriguez</p>
-                    <p className="text-xs text-slate-500">ID: #USR1024</p>
+                    <p className="font-semibold text-sm">{user.username}</p>
+                    <p className="text-xs text-slate-500">ID: {user._id}</p>
                   </div>
                 </td>
 
                 <td className="px-6 py-4 text-sm text-slate-600">
-                  elena.r@architect
+                  {user.email}
                 </td>
 
                 <td className="px-6 py-4">
                   <span className="px-3 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-600">
-                    ADMIN
+                    {user.role}
                   </span>
                 </td>
 
                 <td className="px-6 py-4 text-sm text-slate-500">
-                  2 mins ago
+                  {user.createdAt}
                 </td>
 
                 <td className="px-6 py-4">
                   <button
                     onClick={() => setModel(!openModel)}
                     className="px-4 py-2 text-xs font-semibold rounded-lg bg-primary text-blue-600 underline hover:bg-primary/90 transition">
-                 
-                
-                  
-                    <Dropdown menu={{ items }}>
+
+
+
+                    <Dropdown
+                      menu={{
+                        items,
+                        onClick: (info) => handleMenuClick(info, user._id),
+                      }}>
                       <a onClick={e => e.preventDefault()}>
-Assign Role
-                          <DownOutlined />
+                        Assign Role
+                        <DownOutlined />
                       </a>
                     </Dropdown>
 
-                 </button>
+                  </button>
                 </td>
 
               </tr>
