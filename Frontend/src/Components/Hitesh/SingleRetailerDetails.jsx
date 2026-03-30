@@ -123,7 +123,7 @@ return(
        <div className="bg-white rounded-2xl shadow p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
      
         {/* Logo */}
-        <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-green-200 to-green-500 flex items-center justify-center">
+        <div className="w-16 h-16 rounded-xl bg-linear-to-br from-green-200 to-green-500 flex items-center justify-center">
           <span className="text-white font-bold">M</span>
         </div>
 
