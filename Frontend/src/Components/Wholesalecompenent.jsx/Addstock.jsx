@@ -1,8 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
+import axiosInstance from "../Dashboard/Form/Utils/AxiosInstance";
 
 const Addstock = ({ close }) => {
 
-  return (
+  const [formData, setFormData] = useState({
+    ProductName: "",
+    ProductSku: "",
+    ProductCategory: "",
+    ProductQuantity: "",
+    ProductExpiryDate: ""
+  });
+  const handleSubmit = async () => {
+    console.log(formData);
+    close();
+
+    try {
+      await axiosInstance.post("/registerroute/AddProductList", {formData}).then((res) => {
+        if (res?.data?.success) {
+          alert("product is added to db successfully")
+        }
+        console.log(res?.data?.message)
+      }).catch((error) => {
+        console.log("error in api res", error)
+      })
+    } catch (error) {
+      console.log("error",error)
+    }
+  };
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value
+    }));
+  }; return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/40 z-50">
 
       <div className="bg-white w-600px rounded-xl shadow-lg p-6">
@@ -24,17 +56,31 @@ const Addstock = ({ close }) => {
 
           <div>
             <label className="text-sm font-medium">Product Name *</label>
-            <input className="w-full border rounded-lg p-2 mt-1" />
+            <input className="w-full border rounded-lg p-2 mt-1"
+              type="text"
+              name="ProductName"
+              value={formData.ProductName}
+              onChange={handleChange}
+            />
           </div>
 
           <div>
             <label className="text-sm font-medium">SKU *</label>
-            <input className="w-full border rounded-lg p-2 mt-1" />
+            <input className="w-full border rounded-lg p-2 mt-1"
+              type="text"
+              name="ProductSku"
+              value={formData.ProductSku}
+              onChange={handleChange}
+            />
           </div>
 
           <div>
             <label className="text-sm font-medium">Category *</label>
-            <select className="w-full border rounded-lg p-2 mt-1">
+            <select className="w-full border rounded-lg p-2 mt-1"
+              name="ProductCategory"
+              value={formData.ProductCategory}
+              onChange={handleChange}
+            >
               <option>Select category</option>
               <option>Antibiotics</option>
               <option>Analgesics</option>
@@ -43,12 +89,22 @@ const Addstock = ({ close }) => {
 
           <div>
             <label className="text-sm font-medium">Quantity *</label>
-            <input type="number" className="w-full border rounded-lg p-2 mt-1" />
+            <input className="w-full border rounded-lg p-2 mt-1"
+              type="number"
+
+              name="ProductQuantity"
+              value={formData.ProductQuantity}
+              onChange={handleChange}
+            />
           </div>
 
           <div className="col-span-2">
             <label className="text-sm font-medium">Expiry Date *</label>
-            <input type="date" className="w-full border rounded-lg p-2 mt-1" />
+            <input type="date" className="w-full border rounded-lg p-2 mt-1"
+              name="ProductExpiryDate"
+              value={formData.ProductExpiryDate}
+              onChange={handleChange}
+            />
           </div>
 
         </div>
@@ -59,7 +115,10 @@ const Addstock = ({ close }) => {
             Cancel
           </button>
 
-          <button className="px-4 py-2 bg-blue-500 text-white rounded-lg">
+          <button className="px-4 py-2 bg-blue-500 text-white rounded-lg"
+            onClick={handleSubmit}
+
+          >
             Save Stock
           </button>
         </div>
