@@ -130,5 +130,4 @@ const Addstock = ({ close }) => {
     </div>
   );
 };
-
 export default Addstock;
