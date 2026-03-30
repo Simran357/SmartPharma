@@ -3,8 +3,8 @@ const jwt = require("jsonwebtoken")
 
 const getMe = (req,res,next)=>{
 
-  const token = req.cookies.jwtToken
-console.log(req.cookies.jwtToken)
+  const token = req.headers.authorization?.split(" ")[1]
+console.log("balle ballee",token)
   if(!token){
     return res.status(401).json({
       message:"Unauthorized"
