@@ -39,12 +39,12 @@ const AdminRoleAssign = () => {
   ];
 
   useEffect(() => {
-    console.log("Component mounted ✅");
+    console.log("Component mounted ");
     getUser()
   }, []);
 
   const getUser = async () => {
-    console.log("getUser called 🔥");
+    console.log("getUser called ");
     try {
       const res = await axiosInstance.get("/registerroute/getuserController")
       if (res?.data?.success) {
@@ -107,7 +107,7 @@ console.log("Click")
             <button className="px-6 py-2.5  text-sm font-bold rounded-lg shadow-sm  transition-all flex items-center space-x-2"
             >
               <span class="material-symbols-outlined text-sm">add_circle</span>
-              <span>Create New Role</span>
+              <span>Create New User</span>
             </button>
           </div>
         </div>

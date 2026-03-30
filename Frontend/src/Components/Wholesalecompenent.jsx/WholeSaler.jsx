@@ -21,9 +21,9 @@ import DetailsIcon from '@mui/icons-material/Details';
 import Addstock from './Addstock';
 const WholeSaler = () => {
   const navigate = useNavigate()
-               const [model, setModel] = useState(false);
+  const [model, setModel] = useState(false);
   return (
-   
+
     <div className=" bg-gray-50 p-6 md:p-10 ">
       {/* <!-- BEGIN: Main Dashboard Layout --> */}
       <main className='max-w-7xl mx-auto space-y-10 '>
@@ -130,9 +130,9 @@ const WholeSaler = () => {
                 Quick Actions</h3>
 
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 " >
-                <button 
-                 onClick={() => setModel(true)}
-                className=' p-6 bg-white rounded-2xl border border-slate-100 shadow-sm hover:border-blue-400 hover:shadow-lg transition-all text-center group '>
+                <button
+                  onClick={() => setModel(true)}
+                  className=' p-6 bg-white rounded-2xl border border-slate-100 shadow-sm hover:border-blue-400 hover:shadow-lg transition-all text-center group '>
                   <div className='w-12 h-12 bg-blue-50  text-blue-500 rounded-xl m-auto  mb-3 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-colors'>
                     <AddIcon
                       className='w-6 h-6'
@@ -141,7 +141,7 @@ const WholeSaler = () => {
                   <span className="block text-sm font-bold text-slate-700">New Stock</span>
                   <span className="text-[10px] text-slate-400 uppercase tracking-tighter">Purchase Entry</span>
                 </button>
-    {model && <Addstock close={() => setModel(false)} />}
+                {model && <Addstock close={() => setModel(false)} />}
 
                 <button
                   className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:border-blue-400 hover:shadow-lg transition-all text-center group">

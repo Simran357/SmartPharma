@@ -263,7 +263,10 @@ const Wholesalerfirst = () =>  {
               {/* Bottom */}
               <div className="flex justify-between items-center">
                 <p className="text-sm text-gray-400">📍 2.4 km away</p>
-                <button className="bg-blue-600  hover:bg-blue-700  px-4 py-2 rounded-lg text-white text-sm">
+                <button className="bg-blue-600  hover:bg-blue-700  px-4 py-2 rounded-lg text-white text-sm"
+                onClick={()=> navigate("SingleWholesalerInfo")}
+                
+                >
                   Open Store
                 </button>
               </div>
