@@ -2,6 +2,7 @@ import React from 'react'
 import { ShoppingBag, AddShoppingCart, LocalShipping, CurrencyRupee } from '@mui/icons-material';
 import { Checkbox, Select } from 'antd';
 import { useNavigate } from 'react-router-dom';
+import Item from 'antd/es/list/Item';
 const SingleWholesalerInfo = () => {
   const navigate = useNavigate()
   return (

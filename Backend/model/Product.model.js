@@ -3,14 +3,20 @@ const mongoose = require("mongoose")
 
 
 const ProductSchema = new mongoose.Schema({
+  userId:{
+    type:String,
+    required:true
+  },
   ProductName: {
     type: String,
     required: true,
   },
   ProductSku: {
     type: String,
-    required: true,
-    unique: true,
+  unique: true,
+  required: true,
+  trim: true
+  
   },
   ProductCategory: {
     type: String,
