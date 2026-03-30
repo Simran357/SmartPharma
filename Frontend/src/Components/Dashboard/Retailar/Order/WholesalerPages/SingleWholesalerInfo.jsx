@@ -1,7 +1,9 @@
 import React from 'react'
 import { ShoppingBag, AddShoppingCart, LocalShipping, CurrencyRupee } from '@mui/icons-material';
 import { Checkbox, Select } from 'antd';
+import { useNavigate } from 'react-router-dom';
 const SingleWholesalerInfo = () => {
+  const navigate = useNavigate()
   return (
     <>
       <div className='m-6'>
@@ -138,7 +140,10 @@ const SingleWholesalerInfo = () => {
         </p>
         <p className='text-[10px] text-emerald-500 font-bold'>10% off on Bulk</p>
       </div>
-      <button className='bg-emerald-500/10 hover:bg-emerald-50 hover:text-slate-900 p-2 rounded-lg transition-all '>
+      <button className='bg-emerald-500/10 hover:bg-emerald-50 hover:text-slate-900 p-2 rounded-lg transition-all '
+      
+      onClick={()=>navigate("Cart")}
+      >
         <span className=''>< AddShoppingCart/></span>
       </button>
       </div>
@@ -231,7 +236,10 @@ const SingleWholesalerInfo = () => {
             </p>
             <p className='text-[10px] text-slate-400 font-medium '> Exp: Oct 2025</p>
           </div>
-        <button className='bg-emerald-300/10 hover:bg-emerald-500 text-emerald-600 rounded-lg transition-all hover:text-slate-900 p-2'>
+        <button
+        onClick={()=>navigate("Cart")}
+        
+        className='bg-emerald-300/10 hover:bg-emerald-500 text-emerald-600 rounded-lg transition-all hover:text-slate-900 p-2'>
         <AddShoppingCart/>
         </button>    
         </div>
@@ -250,7 +258,7 @@ const SingleWholesalerInfo = () => {
               <div className='flex justify-between items-center'>
                 <span className='flex gap-2'>
                   <ShoppingBag fontSize='medium' />
-                  <p className='text-md font-bold '>MY CART</p>
+                  <p className='text-md font-bold' >MY CART</p>
                 </span>
                 <span className='bg-green-300/90  text-green-800/80 text-xs font-medium rounded-2xl px-2'>3 Items</span>
               </div>
