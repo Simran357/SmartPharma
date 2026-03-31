@@ -1,16 +1,17 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FaSearch, FaShieldAlt } from "react-icons/fa";
 import { FaDownload } from "react-icons/fa";
 import { AiOutlinePlus } from "react-icons/ai";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import {  useNavigate } from "react-router-dom";
+import { contextProvide } from "../Components/Dashboard/Form/Utils/Context/CommonContext";
 
 
 const Retailors = () => {
 
   const [users, setUser] = useState([])
 
-
+const {userRoles} = useContext(contextProvide)
 
 
 
@@ -29,12 +30,13 @@ const Retailors = () => {
         console.log("Component mounted ");
         getUser()
       }, []);
-    const data = [
-        { name: "Aman Pharma", city: "Delhi", contact: "9876543210", status: "active", salary: "$14,512", outstanding: "$0" },
-        { name: "City Medicos", city: "Mumbai", contact: "9876541111", status: "inactive", salary: "$12,470", outstanding: "$6000" },
-        { name: "Health Plus", city: "Punjab", contact: "9876542222", status: "active", salary: "$11,555", outstanding: "$400" },
-        
-    ];
+
+      
+
+  const filteredUsers =
+    userRoles === "Wholesaler"
+      ? users : users.filter(user => user.role === userRoles);
+ console.log(filteredUsers)
     const navigate = useNavigate()
 
 
