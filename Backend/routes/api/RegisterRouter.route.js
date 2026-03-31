@@ -9,13 +9,14 @@ const { getUsers, updateRoleController , createNewUser } = require("../../Contro
 const AddProductList = require("../../Controller/AddProductList")
 // const getUser=require("../../Controller/getUsers")
 // const updateRoleController=require("../../Controller/updateRoleController")
-
+const FetchProductList = require("../../Controller/FetchProduct")
 router.post("/registercontroller",RegisterController)
 router.post("/LoginController",LoginController)
 router.get("/GetRegisterdata",GetRegisterdata)
 router.post("/auth/google",GoogleController)
 router.post("/createNewUser",createNewUser)
 router.post("/AddProductList",AddProductList)
+router.get("/productList/:id",FetchProductList)
 
 router.get("/getuserController",getUsers)
 router.put("/updateRole/:id", updateRoleController)

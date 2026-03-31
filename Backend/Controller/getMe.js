@@ -12,7 +12,7 @@ console.log("balle ballee",token)
   }
 
   const decoded = jwt.verify(token,"simran")
-
+console.log(decoded)
   res.json({
     user:decoded
   })

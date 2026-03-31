@@ -1,11 +1,74 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { useEffect, useState } from "react";
+import axios from "axios";
 import { ShoppingBag, AddShoppingCart, LocalShipping, CurrencyRupee } from '@mui/icons-material';
 import { Checkbox, Select } from 'antd';
 import { useNavigate, useParams } from 'react-router-dom';
+import Item from 'antd/es/list/Item';
+import { contextProvide } from '../../../Form/Utils/Context/CommonContext';
+import axiosInstance from '../../../Form/Utils/AxiosInstance';
+
 const SingleWholesalerInfo = () => {
   const {userId} = useParams()
   console
   const navigate = useNavigate()
+  //STATE
+   const [medicines1, setMedicines] = useState([]);
+  const [cart, setCart] = useState([]);
+  const addToCart = (item) => {
+    setCart((prev) => [...prev, item]);
+  };
+  const total = cart.reduce((acc, item) => acc + item.price, 0);
+const [loading, setLoading] = useState(false);
+const [error, setError] = useState("");
+  const { auth } = useContext(contextProvide);
+  console.log("auth",auth)
+useEffect(() => {
+   if (!auth) return;
+  const fetchProducts = async () => {
+    try {
+      const res = await axiosInstance.get(
+        `/registerroute/productList/${auth}`
+      );
+
+      console.log("data from backend",res?.data);
+
+setMedicines(res?.data?.data);
+    } catch (error) {
+      console.log("Error:", error);
+    }
+  };
+
+  fetchProducts();
+}, [auth]);
+
+console.log(medicines1)
+const medicines = [
+  {
+    name: "Amoxicillin 500mg",
+    price: 14.5,
+    img: "/src/assets/unnamed.png",
+    status: "IN STOCK"
+  },
+{
+     name: "Metformin  500mg",
+    price: 14.5,
+    img: "/src/assets/unnamed2.png"
+      ,
+    status: "IN STOCK"
+  },
+  {
+       name: "Cetriaxone 1g",
+   price: 14.5,     img: "/src/assets/unnamed3.png",
+     status: "IN STOCK"
+  },
+   {
+       name: "Cetriaxone 1g",
+   price: 14.5,     img: "/src/assets/unnamed3.png",
+     status: "IN STOCK"
+  }
+ ];
+ 
   return (
     <>
       <div className='m-6'>
@@ -246,6 +309,7 @@ const SingleWholesalerInfo = () => {
               </div>
             </section>
           </div>
+          {/* my cart */}
           <div className="col-span-12 lg:col-span-3 flex flex-col gap-6">
             <section className='bg-white border shadow-xl w-full  mt-8 border-gray-300 p-6 rounded-xl'>
               <div className='flex justify-between items-center'>

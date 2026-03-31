@@ -6,7 +6,7 @@ import { contextProvide } from './Utils/Context/CommonContext';
 import { useGoogleLogin } from '@react-oauth/google';
 const Login = () => {
   const navigate = useNavigate()
-  const { setAuth } = useContext(contextProvide)
+  // const { setAuth } = useContext(contextProvide)
   const [state, setState] = useState("");
   const [loading, setLoading] = useState(false);
   console.log(state)
@@ -21,7 +21,6 @@ const Login = () => {
         })
         console.log("google data in login page", res)
         setState(res?.data?.message)
-        setAuth(true);
         navigate("/Dashboard")
 
       } catch (error) {
@@ -42,10 +41,10 @@ const Login = () => {
       const res = await axiosInstance.post("/registerroute/LoginController", values);
       if (res?.data?.success) {
         const setToken = res?.data?.jwtToken
+        console.log(setToken)
         localStorage.setItem("jwtToken", setToken)
         alert("Login Successful");
         setState(res?.data?.message)
-        setAuth(true);
         navigate("/Dashboard")
       }
     } catch (err) {

@@ -13,9 +13,8 @@ const ProductSchema = new mongoose.Schema({
   },
   ProductSku: {
     type: String,
-  unique: true,
   required: true,
-  trim: true
+
   
   },
   ProductCategory: {

@@ -5,7 +5,7 @@ import { AiOutlinePlus } from "react-icons/ai";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import {  useNavigate } from "react-router-dom";
 import { contextProvide } from "../Components/Dashboard/Form/Utils/Context/CommonContext";
-
+import axiosInstance from "../Components/Dashboard/Form/Utils/AxiosInstance";
 
 const Retailors = () => {
 
@@ -20,7 +20,7 @@ const {userRoles} = useContext(contextProvide)
     try {
       const res = await axiosInstance.get("/registerroute/getuserController")
       if (res?.data?.success) {
-        setUser(res.data.data)
+        setUser(res?.data?.data)
       }
     } catch (error) {
       console.log("Error fetching user data:", error);
@@ -32,11 +32,14 @@ const {userRoles} = useContext(contextProvide)
       }, []);
 
       
-
-  const filteredUsers =
-    userRoles === "Wholesaler"
-      ? users : users.filter(user => user.role === userRoles);
- console.log(filteredUsers)
+const filteredUsers = users.filter(user => user.role === "Retailer");
+ 
+    // const data = [
+    //     { name: "Aman Pharma", city: "Delhi", contact: "9876543210", status: "active", salary: "$14,512", outstanding: "$0" },
+    //     { name: "City Medicos", city: "Mumbai", contact: "9876541111", status: "inactive", salary: "$12,470", outstanding: "$6000" },
+    //     { name: "Health Plus", city: "Punjab", contact: "9876542222", status: "active", salary: "$11,555", outstanding: "$400" },
+        
+    // ];
     const navigate = useNavigate()
 
 
@@ -126,11 +129,11 @@ const {userRoles} = useContext(contextProvide)
 
                                 {filteredRetailors.map((item, i) => {
 
-                                    const salary = Number(item.salary.replace(/[^0-9]/g, ""));
-                                    const outstanding = Number(item.outstanding.replace(/[^0-9]/g, ""));
+                                    // const salary = Number(item.salary.replace(/[^0-9]/g, ""));
+                                    // const outstanding = Number(item.outstanding.replace(/[^0-9]/g, ""));
 
-                                    const progress = (outstanding / salary) * 100;
-                                    const isHigh = progress >= 75;
+                                    // const progress = (outstanding / salary) * 100;
+                                    // const isHigh = progress >= 75;
                                     return (
 
                                         <div
@@ -142,20 +145,20 @@ const {userRoles} = useContext(contextProvide)
                                                 <div className="flex items-center gap-2">
                                                     <FaShieldAlt className="p-2 bg-gray-100 rounded-full text-green-600 w-10 h-10" />
                                                     <div>
-                                                        <h1 className="font-semibold">{item.name}</h1>
-                                                        <p className="text-sm text-gray-500">{item.city}</p>
+                                                        <h1 className="font-semibold">{item.username}</h1>
+                                                        <p className="text-sm text-gray-500">{item.email}</p>
                                                     </div>
                                                 </div>
 
                                                 <span className="px-3 py-1 rounded-full text-xs text-green-600 bg-green-100 h-fit">
-                                                    {item.status}
+                                                    {item.contact}
                                                 </span>
                                             </div>
 
                                             <div className="flex gap-5 px-6 py-6 pt-8">
                                                 <div>
                                                     <p className="text-base text-gray-700">Monthly Salary</p>
-                                                    <h1 className="text-2xl font-bold">{item.salary}</h1>
+                                                    <h1 className="text-2xl font-bold">{item.location}</h1>
                                                 </div>
                                                 <div>
                                                     <p className="text-base text-gray-700">Outstanding</p>
