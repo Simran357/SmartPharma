@@ -3,15 +3,15 @@ import axiosInstance from '../AxiosInstance'
 
 export const contextProvide = createContext()
 const CommonContext = ({ children }) => { 
-  const [auth, setAuth] = useState()
+  const [auth, setAuth] = useState("")
 
       useEffect(() => {
     axiosInstance.get("/registerroute/me")
-      .then(() => {
-        setAuth(true);
+      .then((res) => {
+        setAuth(res?.user?.userId);
       })  
       .catch(() => {
-        setAuth(false);
+        setAuth("");
       });
   }, []);
    return (
