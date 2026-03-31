@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 
 const RegisterModel = new mongoose.Schema({
-    username: {
+  username: {
     type: String,
   },
 
@@ -13,7 +13,13 @@ const RegisterModel = new mongoose.Schema({
   password: {
     type: String,
   },
-
+  contact: {
+    type: String,
+    required: true,
+  },
+  license: {
+    type: String
+  },
   provider: {
     type: String,
     enum: ["local", "google"],
@@ -23,10 +29,10 @@ const RegisterModel = new mongoose.Schema({
   avatar: {
     type: String,
   },
-  role:{
-    type:"String",
-    enum:["Admin","Retailer","Wholesaler","User"],
-    default:"User"
+  role: {
+    type: String,
+    enum: ["Admin", "Retailer", "Wholesaler", "User"],
+    default: "User"
   }
 
 }, { timestamps: true })

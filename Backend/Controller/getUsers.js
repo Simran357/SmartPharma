@@ -1,4 +1,48 @@
 const getUserModel = require("../model/Register.model")
+const bcrypt = require("bcrypt")
+
+const createNewUser = async (req, res, next) => {
+
+    try {
+        console.log("form da data through body ", req.body)
+        const { username, email, password, contact, license, role } = req.body;
+
+
+        // check existing user
+        const existingUser = await getUserModel.findOne({ email })
+        if (existingUser) {
+            return res.status(400).json({
+                success: false,
+                message: "User already exists"
+            })
+        }
+        const hashPw = await bcrypt.hash(password, 10)
+
+        const newUser = new getUserModel({
+            username,
+            email,
+            password: hashPw,
+            contact,
+            license,
+            role
+        })
+
+        await newUser.save()
+
+        res.status(201).json({
+            success: true,
+            message: "User created successfully",
+            data: newUser 
+        })
+    } catch (error) {
+        console.log(" eh error try di crate user de tym te ", error)
+        res.status(500).json({
+            success: false,
+            message: error.message
+        })
+    }
+
+}
 
 const getUsers = async (req, res, next) => {
     try {
@@ -22,7 +66,7 @@ const updateRoleController = async (req, res, next) => {
     try {
         const { id } = req.params
         const { role } = req.body
-                  
+
         const updatedUser = await getUserModel.findByIdAndUpdate(
             id,
             { role },
@@ -43,4 +87,4 @@ const updateRoleController = async (req, res, next) => {
     }
 
 }
-module.exports = { getUsers, updateRoleController } 
+module.exports = { getUsers, updateRoleController, createNewUser } 

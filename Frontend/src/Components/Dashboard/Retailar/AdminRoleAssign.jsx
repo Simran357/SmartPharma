@@ -5,7 +5,138 @@ import axiosInstance from "../Form/Utils/AxiosInstance";
 const AdminRoleAssign = () => {
   const [openModel, setModel] = useState(false)
   const [users, setUser] = useState([])
-  // const [selectRole, setSelectRole] = useState("")
+  const [selectedRole, setSelectedRole] = useState("All")
+
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+    contact: "",
+    license: "",
+    role: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const renderCreateUserModal = () => {
+    if (!openModel) return null;
+    const handleCreateUser = async (e) => {
+      e.preventDefault();
+      console.log("Form Data ", formData);
+
+      try {
+        const res = await axiosInstance.post("/registerroute/createNewUser", formData)
+        if (res?.data?.success) {
+          setFormData(res.data.data);
+        }
+        setModel(false);
+      } catch (error) {
+        console.log("Error jdo user add kr rhe a :", error);
+      }
+    };
+
+    return (
+      <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50">
+
+        <div className="w-500px bg-gray-100 rounded-xl overflow-hidden shadow-lg">
+
+          {/* Header */}
+          <div className="bg-blue-600 text-white text-sm p-4">
+            Fill in the details below to add a new user
+          </div>
+
+          {/* Form */}
+          <form
+            onSubmit={handleCreateUser}
+            className="p-5 space-y-3">
+
+            <input
+              type="text"
+              name="username"
+              // value={formData.username}
+              placeholder="Full Name"
+              onChange={handleChange}
+              className="w-full p-3 rounded-xl border"
+            />
+
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              onChange={handleChange}
+              className="w-full p-3 rounded-xl border"
+            />
+
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              onChange={handleChange}
+              className="w-full p-3 rounded-xl border"
+            />
+
+            <div className="flex gap-3">
+              <input
+                type="text"
+                name="contact"
+                placeholder="Contact"
+                onChange={handleChange}
+                className="w-full p-3 rounded-xl border"
+              />
+
+              <input
+                type="text"
+                name="license"
+                placeholder="License"
+                onChange={handleChange}
+                className="w-full p-3 rounded-xl border"
+              />
+            </div>
+
+            <select
+              name="role"
+              onChange={handleChange}
+              className="w-full p-3 rounded-xl border"
+            >
+              <option value="">Select Role</option>
+              <option value="Wholesaler">Wholesaler</option>
+              <option value="Retailer">Retailer</option>
+            </select>
+
+            {/* Buttons */}
+            <div className="flex justify-end gap-3 pt-3">
+              <button
+                type="button"
+                onClick={() => setModel(false)}
+                className="px-4 py-2 bg-gray-300 rounded-lg"
+              >
+                Cancel
+              </button>
+
+              <button
+                type="submit"
+                onClick={() => setModel(true)}
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg"
+              >
+                Create User
+              </button>
+            </div>
+
+          </form>
+
+        </div>
+      </div>
+    );
+  };
+
+  const filteredUsers =
+    selectedRole === "All"
+      ? users : users.filter(user => user.role === selectedRole);
 
   const items = [
     {
@@ -56,9 +187,9 @@ const AdminRoleAssign = () => {
       console.log("Error fetching user data:", error);
     }
   }
-  
+
   const handleMenuClick = async ({ key }, userId) => {
-    console.log(" handleMenuClick called " );
+    console.log(" handleMenuClick called ");
     const selectedItem = items.find(item => item.key === key);
     const role = selectedItem?.role;
 
@@ -66,81 +197,83 @@ const AdminRoleAssign = () => {
 
     // // state ch store (optional but tu use kar rahi aa)
     // setSelectRole(role);  
-     try {
+    try {
       const res = await axiosInstance.put(`/registerroute/updateRole/${userId}`,
         { role });
 
       if (res?.data?.success) {
         // UI update without reload
         setUser(prev => {
-           prev.map(user=>{
+          prev.map(user => {
             user._id === userId ? { ...user, role } : user
-
-           })
-           
+          })
         })
       };
     } catch (error) {
       console.log("Error assigning role:", error);
     }
   };
-
-
   return (
     <>
       <section className='m-6'>
-        <div class="flex justify-between items-end">
-          <div class="space-y-1">
-            <h2 class="text-3xl font-extrabold tracking-tight">User Role Management</h2>
-            <p class=" text-sm font-medium">Define, assign, and audit access permissions across your organization.</p>
+        <div className="flex justify-between items-end">
+          <div className="space-y-1">
+            <h2 className="text-3xl font-extrabold tracking-tight">User Role Management</h2>
+            <p className=" text-sm font-medium">Define, assign, and audit access permissions across your organization.</p>
           </div>
-          <div class="flex space-x-3">
-            <button class="px-6 py-2.5  text-sm font-semibold rounded-lg  transition-colors">
+          <div className="flex space-x-3">
+            <button className="px-6 py-2.5  text-sm font-semibold rounded-lg  transition-colors">
               Export Report
             </button>
-            <button class="px-6 py-2.5  text-sm font-bold rounded-lg shadow-sm  transition-all flex items-center space-x-2">
-              <span class="material-symbols-outlined text-sm">add_circle</span>
+            <button
+              onClick={() => setModel(true)}
+              className="px-6 py-2.5  text-sm font-bold rounded-lg shadow-sm  transition-all flex items-center space-x-2">
+              <span className="material-symbols-outlined text-sm">add_circle</span>
               <span>Create New User</span>
             </button>
+            {renderCreateUserModal()}
           </div>
         </div>
 
-        <div class="grid grid-cols-4 gap-6 mt-6">
-          <div class="col-span-1 p-6 rounded-xl shadow-sm border">
-            <p class="text-xs font-bold uppercase tracking-widest  mb-2">Total Users</p>
-            <h3 class="text-2xl font-extrabold ">{users.length}</h3>
-            <p class="text-[10px] text-primary font-semibold mt-2 flex items-center"><span class="material-symbols-outlined text-[12px] mr-1">trending_up</span> +12% from last month</p>
+        <div className="grid grid-cols-4 gap-6 mt-6">
+          <div className="col-span-1 p-6 rounded-xl shadow-sm border">
+            <p className="text-xs font-bold uppercase tracking-widest  mb-2">Total Users</p>
+            <h3 className="text-2xl font-extrabold ">{users.length}</h3>
+            <p className="text-[10px] text-primary font-semibold mt-2 flex items-center"><span class="material-symbols-outlined text-[12px] mr-1">trending_up</span> +12% from last month</p>
           </div>
-          <div class="col-span-1 p-6 rounded-xl shadow-sm border">
-            <p class="text-xs font-bold uppercase tracking-widest  mb-2">Active Admins</p>
-            <h3 class="text-2xl font-extrabold ">
+          <div className="col-span-1 p-6 rounded-xl shadow-sm border">
+            <p className="text-xs font-bold uppercase tracking-widest  mb-2">Active Admins</p>
+            <h3 className="text-2xl font-extrabold ">
               {users.filter(user => user.role === "Admin").length}</h3>
-            <p class="text-[10px] font-medium mt-2">3 Pending approval</p>
+            <p className="text-[10px] font-medium mt-2">3 Pending approval</p>
           </div>
-          <div class="col-span-2 p-6 rounded-xl relative overflow-hidden flex items-center">
-            <div class="relative z-10 space-y-2">
-              <h4 class="text-lg font-bold">Security Pulse</h4>
-              <p class="text-sm max-w-200px">All role templates are currently aligned with ISO 27001 standards.</p>
+          <div className="col-span-2 p-6 rounded-xl relative overflow-hidden flex items-center">
+            <div className="relative z-10 space-y-2">
+              <h4 className="text-lg font-bold">Security Pulse</h4>
+              <p className="text-sm max-w-200px">All role templates are currently aligned with ISO 27001 standards.</p>
             </div>
-            <div class="ml-auto w-32 h-16 bg-primary/10 rounded-full blur-2xl absolute -right-20px"></div>
-            <span class="material-symbols-outlined text-6xl text-primary/10 absolute -right-0.5 -bottom-1.5">shield</span>
+            <div className="ml-auto w-32 h-16 bg-primary/10 rounded-full blur-2xl absolute -right-20px"></div>
+            <span className="material-symbols-outlined text-6xl text-primary/10 absolute -right-0.5 -bottom-1.5">shield</span>
           </div>
         </div>
 
-        <div class="rounded-lg shadow-sm">
-          <div class="px-6 py-5 flex items-center justify-between border-b">
-            <div class="flex items-center space-x-4">
-              <div class="relative group">
-                <span class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-sm">filter_list</span>
-                <select class="bg-surface-container-low border-none rounded-lg pl-9 pr-8 py-2 text-sm focus:ring-1 focus:ring-primary/20 appearance-none font-medium">
-                  <option>All Roles</option>
-                  <option>Administrator</option>
-                  <option>Editor</option>
-                  <option>Viewer</option>
+        <div className="rounded-lg shadow-sm">
+          <div className="px-6 py-5 flex items-center justify-between border-b">
+            <div className="flex items-center space-x-4">
+              <div className="relative group">
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-sm">filter_list</span>
+                <select
+                  value={selectedRole}
+                  onChange={(e) => setSelectedRole(e.target.value)}
+                  className="bg-surface-container-low border-none rounded-lg pl-9 pr-8 py-2 text-sm focus:ring-1 focus:ring-primary/20 appearance-none font-medium">
+                  <option value="All">All Roles</option>
+                  <option value="Admin">Admin</option>
+                  <option value="Retailer">Retailer</option>
+                  <option value="Wholesaler">Wholesaler</option>
                 </select>
               </div>
               <div class="h-8 w-1 bg-outline-variant/20"></div>
-              <span class="text-xs font-bold uppercase">324 Users Filtered</span>
+              <span class="text-xs font-bold uppercase">{filteredUsers.length}</span>
             </div>
             <div class="relative">
               <span class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-sm">search</span>
@@ -155,6 +288,7 @@ const AdminRoleAssign = () => {
             <tr className="text-left">
               <th className="px-6 py-3 text-slate-500 font-semibold text-xs tracking-wide">NAME & IDENTITY</th>
               <th className="px-6 py-3 text-slate-500 font-semibold text-xs tracking-wide">EMAIL ADDRESS</th>
+
               <th className="px-6 py-3 text-slate-500 font-semibold text-xs tracking-wide">CURRENT ROLE</th>
               <th className="px-6 py-3 text-slate-500 font-semibold text-xs tracking-wide">LAST ACTIVE</th>
               <th className="px-6 py-3 text-slate-500 font-semibold text-xs tracking-wide">ACTIONS</th>
@@ -162,7 +296,7 @@ const AdminRoleAssign = () => {
           </thead>
 
           <tbody>
-            {users.map((user, index) => (
+            {filteredUsers.map((user, index) => (
               <tr key={index} className="bg-white shadow-sm hover:shadow-md transition rounded-xl">
 
                 <td className="px-6 py-4 flex items-center space-x-3">
