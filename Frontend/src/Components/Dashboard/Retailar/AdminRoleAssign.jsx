@@ -4,15 +4,17 @@ import { Dropdown, Space } from 'antd';
 import axiosInstance from "../Form/Utils/AxiosInstance";
 const AdminRoleAssign = () => {
   const [openModel, setModel] = useState(false)
-  const [users, setUser] = useState([])
+  const [users, setUser] = useState([])  
   const [selectedRole, setSelectedRole] = useState("All")
 
   const [formData, setFormData] = useState({
     username: "",
     email: "",
     password: "",
+    pharmacyName:"",
     contact: "",
     license: "",
+    location:"",
     role: "",
   });
 
@@ -79,6 +81,16 @@ const AdminRoleAssign = () => {
               onChange={handleChange}
               className="w-full p-3 rounded-xl border"
             />
+            
+             <input
+              type="pharmacyName"
+              name="pharmacyName"
+              placeholder="pharmacyName"
+              onChange={handleChange}
+              className="w-full p-3 rounded-xl border"
+            />
+
+
 
             <div className="flex gap-3">
               <input
@@ -88,6 +100,16 @@ const AdminRoleAssign = () => {
                 onChange={handleChange}
                 className="w-full p-3 rounded-xl border"
               />
+              <input
+                type="text"
+                name="location"
+                placeholder="Location"
+                onChange={handleChange}
+                className="w-full p-3 rounded-xl border"
+              />
+     
+
+
 
               <input
                 type="text"
@@ -262,7 +284,7 @@ const AdminRoleAssign = () => {
             <div className="flex items-center space-x-4">
               <div className="relative group">
                 <span className="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-sm">filter_list</span>
-                <select
+                <select 
                   value={selectedRole}
                   onChange={(e) => setSelectedRole(e.target.value)}
                   className="bg-surface-container-low border-none rounded-lg pl-9 pr-8 py-2 text-sm focus:ring-1 focus:ring-primary/20 appearance-none font-medium">

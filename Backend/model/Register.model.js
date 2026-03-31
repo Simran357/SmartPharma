@@ -13,11 +13,17 @@ const RegisterModel = new mongoose.Schema({
   password: {
     type: String,
   },
+  pharmacyName:{
+   type: String,
+  },
   contact: {
     type: String,
     required: true,
   },
   license: {
+    type: String
+  },
+  location:{
     type: String
   },
   provider: {

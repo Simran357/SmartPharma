@@ -1,11 +1,11 @@
 const getUserModel = require("../model/Register.model")
-const bcrypt = require("bcrypt")
+const bcrypt = require("bcrypt")  
 
 const createNewUser = async (req, res, next) => {
 
     try {
         console.log("form da data through body ", req.body)
-        const { username, email, password, contact, license, role } = req.body;
+        const { username, email, password, pharmacyName, contact, location, license, role } = req.body;
 
 
         // check existing user
@@ -22,8 +22,10 @@ const createNewUser = async (req, res, next) => {
             username,
             email,
             password: hashPw,
+            pharmacyName,
             contact,
             license,
+            location,
             role
         })
 
@@ -32,7 +34,7 @@ const createNewUser = async (req, res, next) => {
         res.status(201).json({
             success: true,
             message: "User created successfully",
-            data: newUser 
+            data: newUser
         })
     } catch (error) {
         console.log(" eh error try di crate user de tym te ", error)
