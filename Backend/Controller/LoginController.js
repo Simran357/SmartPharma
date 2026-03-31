@@ -40,7 +40,7 @@ const isMatch = await bcrypt.compare(password, user?.password)
     );
 
     res.cookie("jwtToken",jwtToken,
-      { maxAge:3600,
+      { maxAge:36000,
          httpOnly:true,
          secure:true,
     })
