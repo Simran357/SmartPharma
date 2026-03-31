@@ -142,7 +142,7 @@ const WholeSaler = () => {
                   <span className="text-[10px] text-slate-400 uppercase tracking-tighter">Purchase Entry</span>
                 </button>
                 {model && <Addstock close={() => setModel(false)} />}
-
+                    
                 <button
                   className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:border-blue-400 hover:shadow-lg transition-all text-center group">
                   <div

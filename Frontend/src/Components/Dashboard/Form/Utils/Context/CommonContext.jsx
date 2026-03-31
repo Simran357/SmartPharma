@@ -4,13 +4,17 @@ import axiosInstance from '../AxiosInstance'
 export const contextProvide = createContext()
 const CommonContext = ({ children }) => { 
   const [auth, setAuth] = useState("")
-    const [userRoles, setRoles] = useState("")
+  const [userRoles,setUserRoles] = useState("")
+
+   
 
     console.log("auth",auth)
      
       useEffect(() => {
     axiosInstance.get("/registerroute/me")
       .then((res) => {
+        setAuth(res?.user?.userId);
+        setUserRoles(res?.user?.role)
     console.log("FULL RESPONSE:", res);
 console.log("USER:", res?.data?.user);
 const token = res?.data?.user?.userId

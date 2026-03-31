@@ -1,13 +1,42 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FaSearch, FaShieldAlt } from "react-icons/fa";
 import { FaDownload } from "react-icons/fa";
 import { AiOutlinePlus } from "react-icons/ai";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import {  useNavigate } from "react-router-dom";
+import { contextProvide } from "../Components/Dashboard/Form/Utils/Context/CommonContext";
 
 
 const Retailors = () => {
 
+  const [users, setUser] = useState([])
+
+const {userRoles} = useContext(contextProvide)
+
+
+
+    const getUser = async () => {
+    console.log("getUser called ");
+    try {
+      const res = await axiosInstance.get("/registerroute/getuserController")
+      if (res?.data?.success) {
+        setUser(res.data.data)
+      }
+    } catch (error) {
+      console.log("Error fetching user data:", error);
+    }
+  }
+     useEffect(() => {
+        console.log("Component mounted ");
+        getUser()
+      }, []);
+
+      
+
+  const filteredUsers =
+    userRoles === "Wholesaler"
+      ? users : users.filter(user => user.role === userRoles);
+ console.log(filteredUsers)
     useEffect(()=>{
         
     },[])
