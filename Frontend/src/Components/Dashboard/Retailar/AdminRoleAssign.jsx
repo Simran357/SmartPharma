@@ -49,8 +49,6 @@ const AdminRoleAssign = () => {
       const res = await axiosInstance.get("/registerroute/getuserController")
       if (res?.data?.success) {
         setUser(res.data.data)
-
-
       }
     } catch (error) {
       console.log("Error fetching user data:", error);

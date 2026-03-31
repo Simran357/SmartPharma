@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaSearch, FaShieldAlt } from "react-icons/fa";
 import { FaDownload } from "react-icons/fa";
 import { AiOutlinePlus } from "react-icons/ai";
@@ -8,6 +8,27 @@ import {  useNavigate } from "react-router-dom";
 
 const Retailors = () => {
 
+  const [users, setUser] = useState([])
+
+
+
+
+
+    const getUser = async () => {
+    console.log("getUser called ");
+    try {
+      const res = await axiosInstance.get("/registerroute/getuserController")
+      if (res?.data?.success) {
+        setUser(res.data.data)
+      }
+    } catch (error) {
+      console.log("Error fetching user data:", error);
+    }
+  }
+     useEffect(() => {
+        console.log("Component mounted ");
+        getUser()
+      }, []);
     const data = [
         { name: "Aman Pharma", city: "Delhi", contact: "9876543210", status: "active", salary: "$14,512", outstanding: "$0" },
         { name: "City Medicos", city: "Mumbai", contact: "9876541111", status: "inactive", salary: "$12,470", outstanding: "$6000" },
