@@ -13,8 +13,8 @@ const CommonContext = ({ children }) => {
       useEffect(() => {
     axiosInstance.get("/registerroute/me")
       .then((res) => {
-        setAuth(res?.user?.userId);
-        setUserRoles(res?.user?.role)
+        setAuth(res?.data?.user?.userId);
+        setUserRoles(res?.data?.user?.role)
     console.log("FULL RESPONSE:", res);
 console.log("USER:", res?.data?.user);
 const token = res?.data?.user?.userId
@@ -33,7 +33,7 @@ if (token) {
   }, []);
 
    return (
-    <contextProvide.Provider value={{auth ,setAuth, userRole, setUserRole}}>
+    <contextProvide.Provider value={{auth ,setAuth, userRoles, setUserRoles}}>
       {children}
     </contextProvide.Provider>
   )
