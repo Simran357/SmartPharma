@@ -7,8 +7,7 @@ const LoginController = async (req,res,next)=>{
     console.log("login controller hit")
     const loginData = await LoginValidation.validateAsync(req.body)
     const {email , password} = loginData
-      console.log("email:", email);
-
+     console.log("email:", email);
     const user = await RegisterModel.findOne({
        email:email
     })
@@ -20,10 +19,7 @@ const LoginController = async (req,res,next)=>{
         })
     }
 const isMatch = await bcrypt.compare(password, user?.password)
-   
 
-
- 
    if (!isMatch) {
       return res.status(400).json({
         success: false,

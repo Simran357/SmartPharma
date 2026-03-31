@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import { Upload, ReceiptLong, Verified, CloudOutlined, Error, LocalFireDepartment, AddShoppingCart, EventBusy, TrendingUp, Assessment, AutoAwesome, AssignmentTurnedIn, CurrencyRupee, Inventory, WarningAmber } from '@mui/icons-material';
 import MedicineSalesChart from './SubComponent/MedicineSalesChart';
-import { Bell, Settings, User } from "lucide-react";
 const stats = [
   {
     id: 1,
@@ -32,7 +31,6 @@ const stats = [
     disc: "Valuation of 2,450 unique SKUs",
     border: "hover:border-green-500",
 
-
   },
   {
     id: 4,
@@ -53,7 +51,6 @@ const stats = [
     border: "hover:border-red-500",
     iconBg: "text-red-600"
 
-
   },
   {
     id: 5,
@@ -71,7 +68,6 @@ const Retailer = () => {
   return (
     <>
       <section className="p-4 md:p-6 space-y-6">
-          
         <section className="mt-2">
           <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 ">
             {stats.map((item, i) => (
@@ -92,7 +88,6 @@ const Retailer = () => {
                   <span className={`text-sm  ${item.iconBg}  text-green-700  px-2 py-1 rounded-full`}>
                     {item.change}
                   </span>
-
                 </div>
                 <span className={`text-xs mt-2 lg:whitespace  ${item.iconBg} font-50% text-gray-600 `}>
                   {item.disc}
@@ -101,7 +96,6 @@ const Retailer = () => {
             ))}
           </div>
         </section>
-
 
         <section className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
           <div className="lg:col-span-2 space-y-6">
@@ -131,7 +125,6 @@ const Retailer = () => {
                     <button className='bg-green-500 p-2 rounded-xl text-xs text-green-200 font-medium'>Best: Dolo 650</button></span>
                 </div>
               </section>
-
 
               <section className="grid md:grid-cols-1 gap-4 auto-rows-fr">
                 <section className='bg-green-50 border border-green-200 rounded-xl p-2 max-h-fit'>
@@ -184,7 +177,6 @@ const Retailer = () => {
                   </section>
                 </section>
               </section>
-
             </div>
           </div>
           <div className="flex flex-col gap-6 ">
@@ -296,7 +288,6 @@ const Retailer = () => {
                     </div>
                   </div>
                 </div>
-
               </div>
             </section>
 
@@ -326,7 +317,6 @@ const Retailer = () => {
                       <p>DEAD STOCK</p>
                     </span>
                     <div className="flex flex-col gap-2 justify-between mt-2 ">
-
                       <span className=" bg-red-100 p-2 flex justify-between  gap-2 border-2 border-red-300 rounded-xl">
                         <h1 className="text-sm text-black ">Zyrtec Syr</h1>
                         <h1 className="text-sm text-red-700">60d +</h1>
@@ -386,7 +376,6 @@ const Retailer = () => {
                     </span>
                   </span>
                 </div>
-
                 <hr className="mt-2 text-gray-300" />
                 <span className="flex gap-2 justify-between">
                   <h1 className="text-sm text-gray-500 font-medium">TOTAL PAYABLE</h1>
@@ -397,7 +386,6 @@ const Retailer = () => {
                 </span>
               </div>
             </div>
-
           </div>
         </section>
       </section>

@@ -1,9 +1,10 @@
 import React from 'react'
 import { ShoppingBag, AddShoppingCart, LocalShipping, CurrencyRupee } from '@mui/icons-material';
 import { Checkbox, Select } from 'antd';
-import { useNavigate } from 'react-router-dom';
-import Item from 'antd/es/list/Item';
+import { useNavigate, useParams } from 'react-router-dom';
 const SingleWholesalerInfo = () => {
+  const {userId} = useParams()
+  console
   const navigate = useNavigate()
   return (
     <>
@@ -20,11 +21,9 @@ const SingleWholesalerInfo = () => {
                   <p className=' bg-green-200/80 px-1 text-xs rounded-2xl text-green-700/90 uppercase '>verified</p>
                 </span>
                 <p className='text-sm font-medium text-gray-700 '>License # 12345-BA Established 2008 </p>
-
               </div>
             </span>
           </div>
-
           <div className='flex flex-row gap-2 ml-4 mt-4'>
             <div className='flex flex-row gap-8'>
               <span className='flex flex-col items-center'>
@@ -54,8 +53,7 @@ const SingleWholesalerInfo = () => {
               <span className=''>
                 <h1 className='text-gray-500 font-bold text-sm mt-2'>BATCH SEARCH</h1>
                 <input
-                  className="w-full bg-gray-100 py-2 px-3 rounded-lg mt-2" placeholder='Enter Batch No.'
-                />
+                  className="w-full bg-gray-100 py-2 px-3 rounded-lg mt-2" placeholder='Enter Batch No.'/>
               </span>
 
               <div className=' mt-4 '>
@@ -118,141 +116,135 @@ const SingleWholesalerInfo = () => {
                 </span>
               </div>
 
-<div className='grid grid-col-1 sm:grid-cols-2 xl:grid-cols-3 gap-5'>
-<div className='bg-white rounded-xl border border-slate-200 text-[10px] hover:shadow-lg  transition-shadow group font-bold px-2 py-1 '>
-  <div className='relative aspect-square bg-slate-100 flex items-center justify-center p-4 m-4'>
-    <img className='w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform'
-    src='\src\assets\unnamed.png'/>
-    <span className='absolute top-3 right-3 bg-white/90 text-[10px] font-bold px-2 py-1 rounded text-emerald-300 border border-slate-300'>IN STOCK</span>
-    <div className='absolute bottom-3 left-3 flex gap-1'>
-      <span className='bg-blue-100 text-blue-600 text-[10px] font-bold px-1.5 py-0.5 rounded'>Tablet</span>
-    </div>
-  </div>
-  <div className='p-4'>
-    <div className='mb-3'>
-      <p className='text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1'>GSK BN-450912</p>
-      <h3 className='font-bold text-slate-900 line-clamp-1 group-hover:text-emerald-500 text-lg transition-colors'>Amoxicillin 500mg</h3>
-      <p className='text-xs text-slate-500 line-clamp-2'>Salt: Amoxicillin Trihydrate</p>
-    </div>
-    <div className='flex items-end gap-2 justify-between'>
-      <div>
-        <p className='text-lg font-black text-slate-900 '>14.50 
-          <span className='text-[10px] font-normal text-slate-400'> / unit</span>
-        </p>
-        <p className='text-[10px] text-emerald-500 font-bold'>10% off on Bulk</p>
-      </div>
-      <button className='bg-emerald-500/10 hover:bg-emerald-50 hover:text-slate-900 p-2 rounded-lg transition-all '
-      
-      onClick={()=>navigate("Cart")}
-      >
-        <span className=''>< AddShoppingCart/></span>
-      </button>
-      </div>
-    </div>
-  </div>
+              <div className='grid grid-col-1 sm:grid-cols-2 xl:grid-cols-3 gap-5'>
+                <div className='bg-white rounded-xl border border-slate-200 text-[10px] hover:shadow-lg  transition-shadow group font-bold px-2 py-1 '>
+                  <div className='relative aspect-square bg-slate-100 flex items-center justify-center p-4 m-4'>
+                    <img className='w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform'
+                      src='\src\assets\unnamed.png' />
+                    <span className='absolute top-3 right-3 bg-white/90 text-[10px] font-bold px-2 py-1 rounded text-emerald-300 border border-slate-300'>IN STOCK</span>
+                    <div className='absolute bottom-3 left-3 flex gap-1'>
+                      <span className='bg-blue-100 text-blue-600 text-[10px] font-bold px-1.5 py-0.5 rounded'>Tablet</span>
+                    </div>
+                  </div>
+                  <div className='p-4'>
+                    <div className='mb-3'>
+                      <p className='text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1'>GSK BN-450912</p>
+                      <h3 className='font-bold text-slate-900 line-clamp-1 group-hover:text-emerald-500 text-lg transition-colors'>Amoxicillin 500mg</h3>
+                      <p className='text-xs text-slate-500 line-clamp-2'>Salt: Amoxicillin Trihydrate</p>
+                    </div>
+                    <div className='flex items-end gap-2 justify-between'>
+                      <div>
+                        <p className='text-lg font-black text-slate-900 '>14.50
+                          <span className='text-[10px] font-normal text-slate-400'> / unit</span>
+                        </p>
+                        <p className='text-[10px] text-emerald-500 font-bold'>10% off on Bulk</p>
+                      </div>
+                      <button className='bg-emerald-500/10 hover:bg-emerald-50 hover:text-slate-900 p-2 rounded-lg transition-all '
+                        onClick={() => navigate("Cart")}>
+                        <span className=''>< AddShoppingCart/></span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
 
-  <div className='bg-white rounded-xl border border-slate-200 text-[10px] hover:shadow-lg group  transition-shadow font-bold px-2 py-1'>
-    <div className='relative aspect-square flex items-center justify-center bg-slate-100 p-4 m-4 '>
-      <img className='w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform' 
-      src="/src/assets/unnamed1.png"
-      />
-      <span className='absolute top-3 right-3 border border-amber-500/90 bg-white/90 text-amber-500 px-2 py-1 rounded text-[10px] '>LOW STOCK</span>
-      <div className='absolute bottom-3 left-3 flex gap-1'>
-        <span className='text-purple-600 bg-purple-100 px-1.5 py-0.5 rounded text-[10px]'>Capsule</span>
-      </div>
-    </div>
-    <div className='p-4'>
-      <div className='mb-3'>
-        <p className='text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1'>Pfizer BN-882110</p>
-        <h3 className='font-bold text-slate-900 group-hover:text-emerald-500/90 transition-colors line-clamp-1 text-lg'>Atorvastation 20mg</h3>
-        <p className='text-xs text-slate-500 line-clamp-1'>Salt: Atrovastation Calcium</p>
-      </div>
-        <div className='flex itmes-end gap-2 justify-between'>
-          <div>
-            <p className='text-lg  font-black text-slate-900 '>
-              32.00
-              <span className='text-[10px] font-normal text-slate-400'> / unit</span>
-            </p>
-            <p className='text-[10px] text-slate-400 font-medium '> Exp: Aug 2026</p>
-          </div>
-        <button className='bg-emerald-300/10 hover:bg-emerald-500 text-emerald-600 rounded-lg transition-all hover:text-slate-900 p-2'>
-        <AddShoppingCart/>
-        </button>    
-        </div>
-    </div>
-  </div>
+                <div className='bg-white rounded-xl border border-slate-200 text-[10px] hover:shadow-lg group  transition-shadow font-bold px-2 py-1'>
+                  <div className='relative aspect-square flex items-center justify-center bg-slate-100 p-4 m-4 '>
+                    <img className='w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform'
+                      src="/src/assets/unnamed1.png"/>
+                    <span className='absolute top-3 right-3 border border-amber-500/90 bg-white/90 text-amber-500 px-2 py-1 rounded text-[10px] '>LOW STOCK</span>
+                    <div className='absolute bottom-3 left-3 flex gap-1'>
+                      <span className='text-purple-600 bg-purple-100 px-1.5 py-0.5 rounded text-[10px]'>Capsule</span>
+                    </div>
+                  </div>
+                  <div className='p-4'>
+                    <div className='mb-3'>
+                      <p className='text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1'>Pfizer BN-882110</p>
+                      <h3 className='font-bold text-slate-900 group-hover:text-emerald-500/90 transition-colors line-clamp-1 text-lg'>Atorvastation 20mg</h3>
+                      <p className='text-xs text-slate-500 line-clamp-1'>Salt: Atrovastation Calcium</p>
+                    </div>
+                    <div className='flex itmes-end gap-2 justify-between'>
+                      <div>
+                        <p className='text-lg  font-black text-slate-900 '>
+                          32.00
+                          <span className='text-[10px] font-normal text-slate-400'> / unit</span>
+                        </p>
+                        <p className='text-[10px] text-slate-400 font-medium '> Exp: Aug 2026</p>
+                      </div>
+                      <button className='bg-emerald-300/10 hover:bg-emerald-500 text-emerald-600 rounded-lg transition-all hover:text-slate-900 p-2'>
+                        <AddShoppingCart />
+                      </button>
+                    </div>
+                  </div>
+                </div>
 
- 
-  <div className='bg-white rounded-xl border border-slate-200 text-[10px] group hover:shadow-lg transition-shadow font-bold px-2 py-1'>
-    <div className='relative aspect-square flex items-center justify-center bg-slate-100 p-4 m-4 '>
-      <img className='w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform' 
-      src="/src/assets/unnamed2.png"
-      />
-      <span className='absolute top-3 right-3 border border-amber-500/90 bg-white/90 text-amber-500 px-2 py-1 rounded text-[10px] '>IN STOCK</span>
-      <div className='absolute bottom-3 left-3 flex gap-1'>
-        <span className='text-purple-600 bg-purple-100 px-1.5 py-0.5 rounded text-[10px]'>Syrup</span>
-      </div>
-    </div>
-    <div className='p-4'>
-      <div className='mb-3'>
-        <p className='text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1'>ABBOTT BN-112005</p>
-        <h3 className='font-bold text-slate-900 group-hover:text-emerald-500/90 transition-colors line-clamp-1 text-lg'>Metformin 500mg</h3>
-        <p className='text-xs text-slate-500 line-clamp-1'>Salt: Metformin Hydrochloride</p>
-      </div>
-        <div className='flex itmes-end gap-2 justify-between'>
-          <div>
-            <p className='text-lg  font-black text-slate-900 '>
-              8.75
-              <span className='text-[10px] font-normal text-slate-400'> / unit</span>
-            </p>
-            <p className='text-[10px] text-slate-400 font-medium '> Price Dropped</p>
-          </div>
-        <button className='bg-emerald-300/10 hover:bg-emerald-500 text-emerald-600 rounded-lg transition-all hover:text-slate-900 p-2'>
-        <AddShoppingCart/>
-        </button>    
-        </div>
-    </div>
-  </div>
-  
-  <div className='bg-white rounded-xl border border-slate-200 text-[10px] group  hover:shadow-lg  transition-shadow font-bold px-2 py-1'>
-    <div className='relative aspect-square flex items-center justify-center bg-slate-100 p-4 m-4 '>
-      <img className='w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform' 
-      src="/src/assets/unnamed3.png"
-      />
-      <div className='absolute bottom-3 left-3 flex gap-1'>
-        <span className='text-red-600 bg-purple-100 px-1.5 py-0.5 rounded text-[10px]'>Injectable</span>
-      </div>
-    </div>
-    <div className='p-4'>
-      <div className='mb-3'>
-        <p className='text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1'>CIPLA BN-90211</p>
-        <h3 className='font-bold text-slate-900 group-hover:text-emerald-500/90 transition-colors line-clamp-1 text-lg'>Cetriaxone 1g</h3>
-        <p className='text-xs text-slate-500 line-clamp-1'>Salt: Ceftriaxone Sodium</p>
-      </div>
-        <div className='flex itmes-end gap-2 justify-between'>
-          <div>
-            <p className='text-lg  font-black text-slate-900 '>
-              145.00
-              <span className='text-[10px] font-normal text-slate-400'> / unit</span>
-            </p>
-            <p className='text-[10px] text-slate-400 font-medium '> Exp: Oct 2025</p>
-          </div>
-        <button
-        onClick={()=>navigate("Cart")}
-        
-        className='bg-emerald-300/10 hover:bg-emerald-500 text-emerald-600 rounded-lg transition-all hover:text-slate-900 p-2'>
-        <AddShoppingCart/>
-        </button>    
-        </div>
-    </div>
-  </div>
+                <div className='bg-white rounded-xl border border-slate-200 text-[10px] group hover:shadow-lg transition-shadow font-bold px-2 py-1'>
+                  <div className='relative aspect-square flex items-center justify-center bg-slate-100 p-4 m-4 '>
+                    <img className='w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform'
+                      src="/src/assets/unnamed2.png"
+                    />
+                    <span className='absolute top-3 right-3 border border-amber-500/90 bg-white/90 text-amber-500 px-2 py-1 rounded text-[10px] '>IN STOCK</span>
+                    <div className='absolute bottom-3 left-3 flex gap-1'>
+                      <span className='text-purple-600 bg-purple-100 px-1.5 py-0.5 rounded text-[10px]'>Syrup</span>
+                    </div>
+                  </div>
+                  <div className='p-4'>
+                    <div className='mb-3'>
+                      <p className='text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1'>ABBOTT BN-112005</p>
+                      <h3 className='font-bold text-slate-900 group-hover:text-emerald-500/90 transition-colors line-clamp-1 text-lg'>Metformin 500mg</h3>
+                      <p className='text-xs text-slate-500 line-clamp-1'>Salt: Metformin Hydrochloride</p>
+                    </div>
+                    <div className='flex itmes-end gap-2 justify-between'>
+                      <div>
+                        <p className='text-lg  font-black text-slate-900 '>
+                          8.75
+                          <span className='text-[10px] font-normal text-slate-400'> / unit</span>
+                        </p>
+                        <p className='text-[10px] text-slate-400 font-medium '> Price Dropped</p>
+                      </div>
+                      <button className='bg-emerald-300/10 hover:bg-emerald-500 text-emerald-600 rounded-lg transition-all hover:text-slate-900 p-2'>
+                        <AddShoppingCart />
+                      </button>
+                    </div>
+                  </div>
+                </div>
 
-  </div>  
-  <div className='flex justify-center'>
-              <button className=' px-4 py-2 rounded-xl  mt-4 bg-white/90 border w-fit text-gray-600 border-slate-400 font-medium'>Load More Medicines</button>
-          
-  </div>
-  </section>
+                <div className='bg-white rounded-xl border border-slate-200 text-[10px] group  hover:shadow-lg  transition-shadow font-bold px-2 py-1'>
+                  <div className='relative aspect-square flex items-center justify-center bg-slate-100 p-4 m-4 '>
+                    <img className='w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform'
+                      src="/src/assets/unnamed3.png"/>
+                    <div className='absolute bottom-3 left-3 flex gap-1'>
+                      <span className='text-red-600 bg-purple-100 px-1.5 py-0.5 rounded text-[10px]'>Injectable</span>
+                    </div>
+                  </div>
+                  <div className='p-4'>
+                    <div className='mb-3'>
+                      <p className='text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1'>CIPLA BN-90211</p>
+                      <h3 className='font-bold text-slate-900 group-hover:text-emerald-500/90 transition-colors line-clamp-1 text-lg'>Cetriaxone 1g</h3>
+                      <p className='text-xs text-slate-500 line-clamp-1'>Salt: Ceftriaxone Sodium</p>
+                    </div>
+                    <div className='flex itmes-end gap-2 justify-between'>
+                      <div>
+                        <p className='text-lg  font-black text-slate-900 '>
+                          145.00
+                          <span className='text-[10px] font-normal text-slate-400'> / unit</span>
+                        </p>
+                        <p className='text-[10px] text-slate-400 font-medium '> Exp: Oct 2025</p>
+                      </div>
+                      <button
+                        onClick={() => navigate("Cart")}
+                        className='bg-emerald-300/10 hover:bg-emerald-500 text-emerald-600 rounded-lg transition-all hover:text-slate-900 p-2'>
+                        <AddShoppingCart />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <div className='flex justify-center'>
+                <button className=' px-4 py-2 rounded-xl  mt-4 bg-white/90 border w-fit text-gray-600 border-slate-400 font-medium'>Load More Medicines</button>
+
+              </div>
+            </section>
           </div>
           <div className="col-span-12 lg:col-span-3 flex flex-col gap-6">
             <section className='bg-white border shadow-xl w-full  mt-8 border-gray-300 p-6 rounded-xl'>
@@ -311,17 +303,15 @@ const SingleWholesalerInfo = () => {
               </div>
             </section>
             <section className="bg-green-50 border shadow-xl border-green-200 p-6 rounded-xl">
-             <span className='text-black text-lg font-bold'>Active Schemes</span> 
-             <div className='bg-white/80 border-gray-100 p-6 rounded-lg mt-2 '>
-              <h1 className='font-bold text-xs '>Buy 100 Get 1 Free</h1>
-              <p className='text-slate-400 text-xs mt-2'>On all GSK Antibioics range</p>
-              <button className='border border-emerald-300 mt-2 text-emerald-400 bg-white px-0.5 text-xs py-1 w-full'>Apply</button>
-             </div>
+              <span className='text-black text-lg font-bold'>Active Schemes</span>
+              <div className='bg-white/80 border-gray-100 p-6 rounded-lg mt-2 '>
+                <h1 className='font-bold text-xs '>Buy 100 Get 1 Free</h1>
+                <p className='text-slate-400 text-xs mt-2'>On all GSK Antibioics range</p>
+                <button className='border border-emerald-300 mt-2 text-emerald-400 bg-white px-0.5 text-xs py-1 w-full'>Apply</button>
+              </div>
             </section>
           </div>
         </div>
-
-
 
       </div>
     </>

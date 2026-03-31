@@ -9,15 +9,16 @@ const CommonContext = ({ children }) => {
       useEffect(() => {
     axiosInstance.get("/registerroute/me")
       .then((res) => {
-        setAuth(res?.user?.userId);
-        setUserRoles(res?.user?.role)
+        setAuth(res?.data?.user?.userId);
+        setUserRoles(res?.data?.user?.role)
       })  
       .catch(() => {
         setAuth("");
+        setUserRoles("")
       });
   }, []);
    return (
-    <contextProvide.Provider value={{auth ,setAuth,userRoles}}>
+    <contextProvide.Provider value={{auth ,setAuth,userRoles,setUserRoles}}>
       {children}
     </contextProvide.Provider>
   )

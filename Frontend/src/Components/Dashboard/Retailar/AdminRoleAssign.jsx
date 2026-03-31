@@ -1,161 +1,16 @@
 import React, { useState, useEffect } from 'react'
-import { DownOutlined, EditFilled, SettingOutlined } from '@ant-design/icons';
-import { Dropdown, Space } from 'antd';
+import { DownOutlined, SettingOutlined } from '@ant-design/icons';
+import { Dropdown } from 'antd';
 import axiosInstance from "../Form/Utils/AxiosInstance";
+import CreateUserForm from './CreateUserForm';
 const AdminRoleAssign = () => {
-  const [openModel, setModel] = useState(false)
-  const [users, setUser] = useState([])  
+  const [users, setUser] = useState([])
   const [selectedRole, setSelectedRole] = useState("All")
-
-  const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    password: "",
-    pharmacyName:"",
-    contact: "",
-    license: "",
-    location:"",
-    role: "",
-  });
-
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const renderCreateUserModal = () => {
-    if (!openModel) return null;
-    const handleCreateUser = async (e) => {
-      e.preventDefault();
-      console.log("Form Data ", formData);
-
-      try {
-        const res = await axiosInstance.post("/registerroute/createNewUser", formData)
-        if (res?.data?.success) {
-          setFormData(res.data.data);
-        }
-        setModel(false);
-      } catch (error) {
-        console.log("Error jdo user add kr rhe a :", error);
-      }
-    };
-
-    return (
-      <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50">
-
-        <div className="w-500px bg-gray-100 rounded-xl overflow-hidden shadow-lg">
-
-          {/* Header */}
-          <div className="bg-blue-600 text-white text-sm p-4">
-            Fill in the details below to add a new user
-          </div>
-
-          {/* Form */}
-          <form
-            onSubmit={handleCreateUser}
-            className="p-5 space-y-3">
-
-            <input
-              type="text"
-              name="username"
-              // value={formData.username}
-              placeholder="Full Name"
-              onChange={handleChange}
-              className="w-full p-3 rounded-xl border"
-            />
-
-            <input
-              type="email"
-              name="email"
-              placeholder="Email"
-              onChange={handleChange}
-              className="w-full p-3 rounded-xl border"
-            />
-
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              onChange={handleChange}
-              className="w-full p-3 rounded-xl border"
-            />
-            
-             <input
-              type="pharmacyName"
-              name="pharmacyName"
-              placeholder="pharmacyName"
-              onChange={handleChange}
-              className="w-full p-3 rounded-xl border"
-            />
+const [openModel, setModel] = useState(false)
 
 
 
-            <div className="flex gap-3">
-              <input
-                type="text"
-                name="contact"
-                placeholder="Contact"
-                onChange={handleChange}
-                className="w-full p-3 rounded-xl border"
-              />
-              <input
-                type="text"
-                name="location"
-                placeholder="Location"
-                onChange={handleChange}
-                className="w-full p-3 rounded-xl border"
-              />
-     
-
-
-
-              <input
-                type="text"
-                name="license"
-                placeholder="License"
-                onChange={handleChange}
-                className="w-full p-3 rounded-xl border"
-              />
-            </div>
-
-            <select
-              name="role"
-              onChange={handleChange}
-              className="w-full p-3 rounded-xl border"
-            >
-              <option value="">Select Role</option>
-              <option value="Wholesaler">Wholesaler</option>
-              <option value="Retailer">Retailer</option>
-            </select>
-
-            {/* Buttons */}
-            <div className="flex justify-end gap-3 pt-3">
-              <button
-                type="button"
-                onClick={() => setModel(false)}
-                className="px-4 py-2 bg-gray-300 rounded-lg"
-              >
-                Cancel
-              </button>
-
-              <button
-                type="submit"
-                onClick={() => setModel(true)}
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg"
-              >
-                Create User
-              </button>
-            </div>
-
-          </form>
-
-        </div>
-      </div>
-    );
-  };
-
+ 
   const filteredUsers =
     selectedRole === "All"
       ? users : users.filter(user => user.role === selectedRole);
@@ -164,28 +19,20 @@ const AdminRoleAssign = () => {
     {
       key: '1',
       label: 'USER',
-      role: "user",
+      role: "User",
       // disabled: true,
     },
-    // {
-    //   type: 'divider',
-    // },
-    // {
-    //   key: '2',
-    //   label: 'ADMIN',
-    //   extra: '⌘R',
-    // },
+
     {
       key: '2',
       label: 'RETAILER',
-      role: "retailer",
-
+      role: "Retailer",
       extra: '⌘W',
     },
     {
       key: '3',
       label: 'WHOLESALER',
-      role: "wholesaler",
+      role: "Wholesaler",
       icon: <SettingOutlined />,
       extra: '⌘U',
     },
@@ -223,19 +70,17 @@ const AdminRoleAssign = () => {
 
       if (res?.data?.success) {
         // UI update without reload
-        setUser(prev => {
-          prev.map(user => {
+        setUser(prev =>
+          prev.map(user =>
             user._id === userId ? { ...user, role } : user
-          })
-        })
+          )
+        )
       };
     } catch (error) {
       console.log("Error assigning role:", error);
     }
   };
-const handleClick=()=>{
-console.log("Click")
-}
+
 
   return (
     <>
@@ -249,11 +94,11 @@ console.log("Click")
             <button className="px-6 py-2.5  text-sm font-semibold rounded-lg  transition-colors">
               Export Report
             </button>
-            <button class="px-6 py-2.5  text-sm font-bold rounded-lg shadow-sm  transition-all flex items-center space-x-2">
+            <button class="px-6 py-2.5  text-sm font-bold rounded-lg shadow-sm  transition-all flex items-center space-x-2" onClick={() => setModel(true)}>
               <span class="material-symbols-outlined text-sm">add_circle</span>
               <span>Create New User</span>
             </button>
-            {renderCreateUserModal()}
+
           </div>
         </div>
 
@@ -284,7 +129,7 @@ console.log("Click")
             <div className="flex items-center space-x-4">
               <div className="relative group">
                 <span className="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-sm">filter_list</span>
-                <select 
+                <select
                   value={selectedRole}
                   onChange={(e) => setSelectedRole(e.target.value)}
                   className="bg-surface-container-low border-none rounded-lg pl-9 pr-8 py-2 text-sm focus:ring-1 focus:ring-primary/20 appearance-none font-medium">
@@ -319,7 +164,7 @@ console.log("Click")
 
           <tbody>
             {filteredUsers.map((user, index) => (
-              <tr key={index} className="bg-white shadow-sm hover:shadow-md transition rounded-xl">
+              <tr key={user._id} className="bg-white shadow-sm hover:shadow-md transition rounded-xl">
 
                 <td className="px-6 py-4 flex items-center space-x-3">
                   <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center font-bold text-primary">
@@ -346,24 +191,16 @@ console.log("Click")
                 </td>
 
                 <td className="px-6 py-4">
-                  <button
-                    onClick={() => setModel(!openModel)}
-                    className="px-4 py-2 text-xs font-semibold rounded-lg bg-primary text-blue-600 underline hover:bg-primary/90 transition">
-
-
-
-                    <Dropdown
-                      menu={{
-                        items,
-                        onClick: (info) => handleMenuClick(info, user._id),
-                      }}>
-                      <a onClick={e => e.preventDefault()}>
-                        Assign Role
-                        <DownOutlined />
-                      </a>
-                    </Dropdown>
-
-                  </button>
+                  <Dropdown
+                    menu={{
+                      items,
+                      onClick: (info) => handleMenuClick(info, user._id),
+                    }}
+                  >
+                    <button className="px-4 py-2 bg-blue-500 text-white rounded">
+                      Assign Role <DownOutlined />
+                    </button>
+                  </Dropdown>
                 </td>
 
               </tr>
@@ -390,7 +227,12 @@ console.log("Click")
         </span>
 
       </div>
-
+{openModel && (
+  <CreateUserForm 
+    setModel={setModel} 
+    getUser={getUser} 
+  />
+)}
     </>
   )
 }
