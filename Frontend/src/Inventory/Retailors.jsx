@@ -8,6 +8,13 @@ import {  useNavigate } from "react-router-dom";
 
 const Retailors = () => {
 
+    useEffect(()=>{
+        
+    },[])
+    
+  const GetRetailer =()=>{
+
+  }
     const data = [
         { name: "Aman Pharma", city: "Delhi", contact: "9876543210", status: "active", salary: "$14,512", outstanding: "$0" },
         { name: "City Medicos", city: "Mumbai", contact: "9876541111", status: "inactive", salary: "$12,470", outstanding: "$6000" },

@@ -1,10 +1,72 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { useEffect, useState } from "react";
+import axios from "axios";
 import { ShoppingBag, AddShoppingCart, LocalShipping, CurrencyRupee } from '@mui/icons-material';
 import { Checkbox, Select } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import Item from 'antd/es/list/Item';
+import { contextProvide } from '../../../Form/Utils/Context/CommonContext';
+import axiosInstance from '../../../Form/Utils/AxiosInstance';
+
 const SingleWholesalerInfo = () => {
   const navigate = useNavigate()
+  //STATE
+   const [medicines1, setMedicines] = useState([]);
+  const [cart, setCart] = useState([]);
+  const addToCart = (item) => {
+    setCart((prev) => [...prev, item]);
+  };
+  const total = cart.reduce((acc, item) => acc + item.price, 0);
+const [loading, setLoading] = useState(false);
+const [error, setError] = useState("");
+  const { auth } = useContext(contextProvide);
+  console.log("auth",auth)
+useEffect(() => {
+   if (!auth) return;
+  const fetchProducts = async () => {
+    try {
+      const res = await axiosInstance.get(
+        `/registerroute/productList/${auth}`
+      );
+
+      console.log("data from backend",res?.data);
+
+setMedicines(res?.data?.data);
+    } catch (error) {
+      console.log("Error:", error);
+    }
+  };
+
+  fetchProducts();
+}, [auth]);
+
+console.log(medicines1)
+const medicines = [
+  {
+    name: "Amoxicillin 500mg",
+    price: 14.5,
+    img: "/src/assets/unnamed.png",
+    status: "IN STOCK"
+  },
+{
+     name: "Metformin  500mg",
+    price: 14.5,
+    img: "/src/assets/unnamed2.png"
+      ,
+    status: "IN STOCK"
+  },
+  {
+       name: "Cetriaxone 1g",
+   price: 14.5,     img: "/src/assets/unnamed3.png",
+     status: "IN STOCK"
+  },
+   {
+       name: "Cetriaxone 1g",
+   price: 14.5,     img: "/src/assets/unnamed3.png",
+     status: "IN STOCK"
+  }
+ ];
+ 
   return (
     <>
       <div className='m-6'>
@@ -118,8 +180,8 @@ const SingleWholesalerInfo = () => {
                 </span>
               </div>
 
-<div className='grid grid-col-1 sm:grid-cols-2 xl:grid-cols-3 gap-5'>
-<div className='bg-white rounded-xl border border-slate-200 text-[10px] hover:shadow-lg  transition-shadow group font-bold px-2 py-1 '>
+<div className='grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5'>
+{/* <div className='bg-white rounded-xl border border-slate-200 text-[10px] hover:shadow-lg  transition-shadow group font-bold px-2 py-1 '>
   <div className='relative aspect-square bg-slate-100 flex items-center justify-center p-4 m-4'>
     <img className='w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform'
     src='\src\assets\unnamed.png'/>
@@ -245,15 +307,49 @@ const SingleWholesalerInfo = () => {
         </button>    
         </div>
     </div>
-  </div>
+  </div> */}
+{medicines.map((item, index) => (
+    <div key={index} className='bg-white rounded-xl border border-slate-200 text-[10px] hover:shadow-lg transition-shadow group font-bold px-2 py-1'>
 
-  </div>  
+      <div className='relative aspect-square bg-slate-100 flex items-center justify-center p-4 m-4'>
+        <img
+          src={item.img}
+          className='w-full h-full object-contain group-hover:scale-105 transition-transform'
+        />
+
+        <span className='absolute top-3 right-3 bg-white/90 px-2 py-1 rounded text-emerald-500 border'>
+          {item.status}
+        </span>
+      </div>
+
+      <div className='p-4'>
+        <h3 className='font-bold text-lg'>{item.name}</h3>
+
+        <p className='text-lg font-black'>
+          {item.price} <span className='text-xs'>/ unit</span>
+        </p>
+
+        <button
+          onClick={() =>{ addToCart(item);
+            navigate("/cart");}}
+          className='mt-2 bg-emerald-500/10 p-2 rounded'
+        >
+          <AddShoppingCart />
+        </button>
+      </div>
+
+    </div>
+))}
+</div>
+ 
+  {/* load */}
   <div className='flex justify-center'>
               <button className=' px-4 py-2 rounded-xl  mt-4 bg-white/90 border w-fit text-gray-600 border-slate-400 font-medium'>Load More Medicines</button>
           
   </div>
   </section>
           </div>
+          {/* my cart */}
           <div className="col-span-12 lg:col-span-3 flex flex-col gap-6">
             <section className='bg-white border shadow-xl w-full  mt-8 border-gray-300 p-6 rounded-xl'>
               <div className='flex justify-between items-center'>

@@ -42,8 +42,7 @@ const isMatch = await bcrypt.compare(password, user?.password)
     res.cookie("jwtToken",jwtToken,
       { maxAge:3600,
          httpOnly:true,
-         secure:true,
-    })
+secure: false    })
     return res.status(200).json({
         success:true,
         message:"Login successfull",
