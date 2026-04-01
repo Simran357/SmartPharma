@@ -207,7 +207,7 @@ const filteredUsers = users.filter(user => user.role === "Retailer");
                                                     ? "bg-green-500 text-white"
                                                     : "bg-white text-black hover:bg-gray-200"
                                                 }`}
-                                        >
+                                        >  
                                             {num}
                                         </button>
                                     ))}
