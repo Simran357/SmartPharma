@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { ShoppingBag, AddShoppingCart, LocalShipping, CurrencyRupee } from '@mui/icons-material';
 import { Checkbox, Select } from 'antd';
 import { useNavigate, useParams } from 'react-router-dom';
 import axiosInstance from '../../../Form/Utils/AxiosInstance';
+import { contextProvide } from '../../../Form/Utils/Context/CommonContext';
 const SingleWholesalerInfo = () => {
   const {id} = useParams()
   console.log(id)
+  const {auth} = useContext(contextProvide)
   const [medicines, setMedicines] = useState([])
   const [singleRetailer,setSingleRetailer] = useState([])
   console.log("singleRetailer",singleRetailer)
@@ -24,7 +26,7 @@ const SingleWholesalerInfo = () => {
 const getMedicines = async () => {
    console.log("getMedicines called");
   try {
-    const res = await axiosInstance.get(`/registerroute/getProductList/${id}`)
+    const res = await axiosInstance.get(`/registerroute/getProductList/${auth}`)
     console.log("MEDICINE API RESPONSE:", res?.data); 
     if (res?.data?.success) {
       setMedicines(res?.data?.data)

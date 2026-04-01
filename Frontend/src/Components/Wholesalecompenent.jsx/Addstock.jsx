@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import axiosInstance from "../Dashboard/Form/Utils/AxiosInstance";
+import { contextProvide } from "../Dashboard/Form/Utils/Context/CommonContext";
 
 const Addstock = ({ close }) => {
-
+const {auth} = useContext(contextProvide)
   const [formData, setFormData] = useState({
     ProductName: "",
     ProductSku: "",
@@ -16,7 +17,7 @@ const Addstock = ({ close }) => {
     close();
 
     try {
-      await axiosInstance.post("/registerroute/AddProductList", {formData}).then((res) => {
+      await axiosInstance.post("/registerroute/AddProductList", {formData,auth}).then((res) => {
         if (res?.data?.success) {
           alert("product is added to db successfully")
         }

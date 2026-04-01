@@ -45,7 +45,7 @@ const Login = () => {
         localStorage.setItem("jwtToken", setToken)
         alert("Login Successful");
         setState(res?.data?.message)
-        setAuth(true);
+        setAuth(res?.data?.jwtToken)
         navigate("/Dashboard")
       }
     } catch (err) {
