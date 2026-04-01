@@ -29,7 +29,7 @@ const WholeSaler = () => {
       <main className='max-w-7xl mx-auto space-y-10 '>
         {/* <!-- Dashboard Header: Contains greeting and search/notification bar | --> */}
         <header className='flex flex-col md:flex-row md:items-center justify-between gap-4'>
-          <div >
+          <div>
             <h1 className='text-3xl font-bold text-slate-800 tracking-tight'>Dashboard Overview</h1>
             <p className=' text-slate-500 mt-1'>Welcome back, Amit. Here is what's happening today.</p>
           </div>
@@ -52,13 +52,13 @@ const WholeSaler = () => {
           {/* <!-- Daily Sales --> */}
           <div
             onClick={() => navigate("Dailysales")}
-            className='  bg-white rounded-3xl p-6 shadow-sm border border-slate-100 flex flex-col justify-between hover:shadow-md transition-shadow'>
+            className=' bg-white rounded-3xl p-6 shadow-sm border border-slate-100 flex flex-col justify-between hover:shadow-md transition-shadow'>
             <div className="flex justify-between items-start">
               <div >
                 <p className='font-medium text-slate-500'>Daily Sales</p>
               </div>
               <div className='bg-blue-50 rounded-lg p-2 text-blue-600'>
-                <AttachMoneyIcon className='' />
+                <AttachMoneyIcon />
               </div>
             </div>
             <div className="mt-4">
@@ -67,8 +67,6 @@ const WholeSaler = () => {
                 +12.5% vs yesterday
               </span>
               <div className='mt-4'>
-
-
               </div>
             </div>
           </div>
@@ -79,7 +77,7 @@ const WholeSaler = () => {
             <div className="flex justify-between items-start">
               <span className="text-slate-500 font-medium">Pending Orders</span>
               <div className="p-2 bg-orange-50 text-orange-600 rounded-lg">
-                <CardTravelIcon className='' />
+                <CardTravelIcon />
               </div>
             </div>
             <div className="mt-4">
@@ -237,7 +235,6 @@ const WholeSaler = () => {
                         <PrintIcon
                           className="w-5 h-5 cursor-pointer hover:text-blue-500 transition-colors"
                         />
-
                       </td>
                     </tr>
                     <tr className="hover:bg-slate-50 transition-colors">
@@ -252,10 +249,7 @@ const WholeSaler = () => {
                           className="inline-block w-2 h-2 rounded-full mr-2 bg-current shadow-xl]"></span></span>
                       </td>
                       <td className="px-6 py-5 text-center text-slate-400">
-
                         <MoreHorizIcon className=" w-5 h-5 mx-auto cursor-pointer hover:text-blue-500" />
-
-
                       </td>
                     </tr>
                   </tbody>
@@ -373,7 +367,6 @@ const WholeSaler = () => {
                     placeholder="Type a note for the team..." type="text" />
                   <button
                     className="bg-indigo-600 text-white p-3 rounded-2xl hover:bg-indigo-700 shadow-md shadow-indigo-200 transition-all">
-
                     <DetailsIcon className='w-5 h-5' />
                   </button>
                 </div>
@@ -429,8 +422,6 @@ const WholeSaler = () => {
                   <div className="flex items-center gap-3">
                     <div className="p-2 bg-white rounded-lg shadow-sm">
                       <ScienceIcon className="w-5 h-5 text-rose-500 cursor-pointer hover:text-rose-600 transition-colors" />
-
-
                     </div>
                     <div className="flex-1">
                       <p className="text-sm font-bold text-slate-800">Amoxicillin 500mg</p>
@@ -446,7 +437,6 @@ const WholeSaler = () => {
                   <div className="flex items-center gap-3">
                     <div className="p-2 bg-white rounded-lg shadow-sm">
                       <ScienceIcon className="w-5 h-5 text-amber-500 cursor-pointer hover:text-amber-600 transition-colors" />
-
                     </div>
                     <div className="flex-1">
                       <p className="text-sm font-bold text-slate-800">Cough Syrup (Z-Type)</p>
@@ -514,8 +504,6 @@ const WholeSaler = () => {
               </div>
             </section>
           </aside>
-
-
         </div>
       </main>
       <Outlet />

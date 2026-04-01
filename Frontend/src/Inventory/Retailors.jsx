@@ -8,13 +8,13 @@ import { contextProvide } from "../Components/Dashboard/Form/Utils/Context/Commo
 import axiosInstance from "../Components/Dashboard/Form/Utils/AxiosInstance";
 
 const Retailors = () => {
-
-  const [users, setUser] = useState([])
-
-const {userRoles} = useContext(contextProvide)
-
-
-
+    const [users, setUser] = useState([])
+    const navigate = useNavigate()
+    const [tab, setTab] = useState("all")
+    // const { userRoles } = useContext(contextProvide)
+    // 👉 NEW STATE for sidebar
+    const [activeMenu, setActiveMenu] = useState("retailors");
+    const [activePage, setActivePage] = useState(1);
     const getUser = async () => {
     console.log("getUser called ");
     try {
@@ -29,7 +29,7 @@ const {userRoles} = useContext(contextProvide)
      useEffect(() => {
         console.log("Component mounted ");
         getUser()
-      }, []);
+    }, []);
 
       
 const filteredUsers = users.filter(user => user.role === "Retailer");
@@ -58,10 +58,6 @@ const filteredUsers = users.filter(user => user.role === "Retailer");
 
     return (<>
         <div className="w-full h-screen flex">
-
-            {/* Sidebar */}
-          
-
             {/* Main Content */}
             <div className="h-full flex-1 bg-gray-200 p-6 flex flex-col">
 
@@ -137,9 +133,9 @@ const filteredUsers = users.filter(user => user.role === "Retailer");
                                     return (
 
                                         <div
-                                            key={i}
-                                             onClick={() => navigate("SingleRetailerDetails")}
-                                            className="border rounded-lg py-6 flex flex-col w-80 justify-between bg-white shadow-md"
+                                            key={item._id}
+                                            onClick={() => navigate(`SingleRetailerDetails/${item._id}`)}
+                                            className="w-full sm:w-[48%] md:w-[31%] lg:w-[23%] bg-white rounded-2xl shadow-md hover:shadow-xl transition cursor-pointer overflow-hidden"
                                         >
                                             <div className="flex px-4 justify-between">
                                                 <div className="flex items-center gap-2">
@@ -166,58 +162,65 @@ const filteredUsers = users.filter(user => user.role === "Retailer");
                                                 </div>
                                             </div>
 
-                                            <div className="w-full px-4 py-4">
-                                                <div className="flex justify-between text-sm mb-1">
-                                                    <span>Loading</span>
-                                                    <span>{progress.toFixed(0)}%</span>
-                                                </div>
+                                            {/* Content */}
+                                            <div className="pt-6 p-4">
+                                                <h2 className="font-semibold text-lg">{item.username}</h2>
+                                                <p className="text-gray-500 text-sm mb-2">
+                                                    {item.location || "Unknown"}
+                                                </p>
 
-                                                <div className="w-full bg-gray-200 rounded-full h-3">
-                                                    <div
-                                                        className={`h-3 rounded-full transition-all duration-500 ${isHigh ? "bg-red-500" : "bg-green-500"
-                                                            }`}
-                                                        style={{ width: `${progress}%` }}
-                                                    ></div>
-                                                </div>
-                                            </div>
+                                                <p className="text-xs text-gray-400">PHARMACY</p>
+                                                <p className="font-medium mb-2">
+                                                    {item.pharmacyName || "Not Available"}
+                                                </p>
 
-                                            <div className="flex justify-between items-center px-4 pt-2">
-                                                <div>
-                                                    <span className="text-sm text-gray-500">Contact</span>
-                                                    <h3 className="text-sm font-medium">{item.contact}</h3>
-                                                </div>
+                                                <p className="text-xs text-gray-400">CONTACT</p>
+                                                <p className="text-sm mb-3">
+                                                    {item.contact || "N/A"}
+                                                </p>
 
-                                                <button className="px-4 py-1 bg-green-400 rounded-full text-sm">
-                                                    View
-                                                </button>
+                                                <div className="flex justify-between items-center">
+                                                    <span className="text-xs text-gray-400">
+                                                        📍 {item.location || "N/A"}
+                                                    </span>
+
+                                                    <button className="bg-green-500 text-white px-3 py-1 text-sm rounded-lg hover:bg-green-600">
+                                                        View
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
-                                    )
-                                })}
-
+                                    ))
+                                ) : (
+                                    <p className="text-gray-600 text-center w-full">
+                                        No Retailers Found
+                                    </p>
+                                )}
                             </div>
-                            <div className="flex items-center justify-between w-full px-6 absolute bottom-3">
-                                <p className="text-white">
-                                    Showing <b>1 to 5</b> of 42 Retailors
+
+                            {/* Pagination (FIXED BELOW, NO OVERLAP) */}
+                            <div className="flex items-center justify-between px-2 py-4">
+                                <p className="text-gray-600">
+                                    Showing <b>1 to 5</b> of {filteredUsers.length} Retailers
                                 </p>
 
-                                <div className="flex items-center gap-6">
-                                    <AiOutlineLeft className="cursor-pointer hover:scale-110 transition text-white" />
+                                <div className="flex items-center gap-4">
+                                    <AiOutlineLeft className="cursor-pointer hover:scale-110 transition" />
 
                                     {[1, 2, 3].map((num) => (
                                         <button
                                             key={num}
                                             onClick={() => setActivePage(num)}
                                             className={`rounded-full py-1 px-3 transition ${activePage === num
-                                                ? "bg-green-500 text-white"
-                                                : "bg-white text-black hover:bg-gray-200"
+                                                    ? "bg-green-500 text-white"
+                                                    : "bg-white text-black hover:bg-gray-200"
                                                 }`}
                                         >
                                             {num}
                                         </button>
                                     ))}
 
-                                    <AiOutlineRight className="cursor-pointer hover:scale-110 transition text-white" />
+                                    <AiOutlineRight className="cursor-pointer hover:scale-110 transition" />
                                 </div>
                             </div>
 
@@ -226,9 +229,9 @@ const filteredUsers = users.filter(user => user.role === "Retailer");
                 )}
 
             </div>
-          
+
         </div>
-        </>
+    </>
     );
 };
 

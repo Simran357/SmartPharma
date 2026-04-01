@@ -12,6 +12,7 @@ const Addstock = ({ close }) => {
     ProductQuantity: "",
     ProductExpiryDate: ""
   });
+  console.log("auth id in add stock",auth)
   const handleSubmit = async () => {
     console.log(formData);
     close();
