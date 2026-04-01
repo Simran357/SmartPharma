@@ -6,7 +6,7 @@ import { contextProvide } from './Utils/Context/CommonContext';
 import { useGoogleLogin } from '@react-oauth/google';
 const Login = () => {
   const navigate = useNavigate()
-  // const { setAuth } = useContext(contextProvide)
+  const { setAuth } = useContext(contextProvide)
   const [state, setState] = useState("");
   const [loading, setLoading] = useState(false);
   console.log(state)
