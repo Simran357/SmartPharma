@@ -9,12 +9,11 @@ import axiosInstance from "../Components/Dashboard/Form/Utils/AxiosInstance";
 
 const Retailors = () => {
     const [users, setUser] = useState([])
-    const navigate = useNavigate()
-    const [tab, setTab] = useState("all")
-    // const { userRoles } = useContext(contextProvide)
-    // 👉 NEW STATE for sidebar
+     const navigate = useNavigate()
+    const [tab, setTab] = useState("all");
     const [activeMenu, setActiveMenu] = useState("retailors");
     const [activePage, setActivePage] = useState(1);
+
     const getUser = async () => {
     console.log("getUser called ");
     try {
@@ -32,26 +31,11 @@ const Retailors = () => {
     }, []);
 
       
-const filteredUsers = users.filter(user => user.role === "Retailer");
- 
-    // const data = [
-    //     { name: "Aman Pharma", city: "Delhi", contact: "9876543210", status: "active", salary: "$14,512", outstanding: "$0" },
-    //     { name: "City Medicos", city: "Mumbai", contact: "9876541111", status: "inactive", salary: "$12,470", outstanding: "$6000" },
-    //     { name: "Health Plus", city: "Punjab", contact: "9876542222", status: "active", salary: "$11,555", outstanding: "$400" },
-        
-    // ];
-    const navigate = useNavigate()
-
-
-    const [tab, setTab] = useState("all");
-    
-
-
-    // 👉 NEW STATE for sidebar
-    const [activeMenu, setActiveMenu] = useState("retailors");
-    const [activePage, setActivePage] = useState(1);
-
-    const filteredRetailors = data.filter((item) => {
+const filteredUsers = users.filter(
+  user => user.role?.toLowerCase() === "retailer"
+); 
+   
+    const filteredRetailors = filteredUsers.filter((item) => {
         if (tab === "all") return true;
         return item.status === tab;
     });
@@ -123,7 +107,7 @@ const filteredUsers = users.filter(user => user.role === "Retailer");
                             <div className="flex flex-wrap gap-6" 
                             >
 
-                                {filteredRetailors.lengt> 0 ? filteredRetailors.map((item, i) => (
+                                {filteredRetailors.length > 0 ? filteredRetailors.map((item, i) => (
                                         <div
                                             key={item._id}
                                             onClick={() => navigate(`${item._id}`)}
