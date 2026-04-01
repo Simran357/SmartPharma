@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { ShoppingBag, AddShoppingCart, LocalShipping, CurrencyRupee } from '@mui/icons-material';
 import { Checkbox, Select } from 'antd';
-import { useNavigate, useParams } from 'react-router-dom';
+import {  useParams } from 'react-router-dom';
 import axiosInstance from '../../../Form/Utils/AxiosInstance';
 import { contextProvide } from '../../../Form/Utils/Context/CommonContext';
 const SingleWholesalerInfo = () => {
@@ -15,7 +15,7 @@ const SingleWholesalerInfo = () => {
         console.log("getUser called ");
         try {
             const res = await axiosInstance.get(`/registerroute/getSingleRetailor/${id}`)
-            if (res?.data?.success) {
+            if (res?.data) {
                 setSingleRetailer(res?.data?.data)
                 console.log("singlwholesalerid",res?.data)
             }
@@ -23,12 +23,13 @@ const SingleWholesalerInfo = () => {
             console.log("Error fetching user data:", error);
         }
     }
+    console.log("auth in frontend",auth)
 const getMedicines = async () => {
    console.log("getMedicines called");
   try {
     const res = await axiosInstance.get(`/registerroute/getProductList/${auth}`)
     console.log("MEDICINE API RESPONSE:", res?.data); 
-    if (res?.data?.success) {
+    if (res?.data) {
       setMedicines(res?.data?.data)
     }
   } catch (err) {
@@ -45,7 +46,7 @@ const getMedicines = async () => {
     }, [id]);
 
  console.log("medicines",medicines)
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
   return (
     <>
       <div className='m-6'>
@@ -160,51 +161,65 @@ const getMedicines = async () => {
             <div className='grid grid-col-1 sm:grid-cols-2 xl:grid-cols-3 gap-5'>
   {medicines?.length > 0 ? (
     medicines.map((med) => (
-      <div key={med._id} className='bg-white rounded-xl border border-slate-200 text-[10px] hover:shadow-lg group font-bold px-2 py-1'>
-        
-        <div className='relative aspect-square bg-slate-100 flex items-center justify-center p-4 m-4'>
-          <img
-            className='w-full h-full object-contain'
-            src="/src/assets/unnamed.png"
-          />
+  
 
-          <span className='absolute top-3 right-3 bg-white text-xs px-2 py-1 rounded'>
-            {med.ProductQuantity > 10 ? "IN STOCK" : "LOW STOCK"}
-          </span>
+    <div className="bg-white rounded-xl border border-gray-200 hover:shadow-lg transition p-3 text-sm font-medium">
 
-          <div className='absolute bottom-3 left-3'>
-            <span className='bg-blue-100 text-blue-600 px-1.5 py-0.5 rounded text-xs'>
-              {med.ProductCategory}
-            </span>
-          </div>
-        </div>
+      {/* Image Section */}
+      <div className="relative aspect-square bg-gray-100 rounded-lg flex items-center justify-center p-4">
 
-        <div className='p-4'>
-          <p className='text-xs text-slate-400'>{med.ProductSku}</p>
+        <img
+          src="/src/assets/unnamed.png"
+          alt={med.ProductName}
+          className="w-full h-full object-contain"
+        />
 
-          <h3 className='font-bold text-lg'>
-            {med.ProductName}
-          </h3>
+        {/* Stock Badge */}
+        <span className={`absolute top-2 right-2 text-xs px-2 py-1 rounded 
+          ${med.ProductQuantity > 10 
+            ? "bg-green-100 text-green-700" 
+            : "bg-orange-100 text-orange-600"}`}>
+          {med.ProductQuantity > 10 ? "IN STOCK" : "LOW STOCK"}
+        </span>
 
-          <p className='text-xs text-slate-500'>
-            Exp: {new Date(med.ProductExpiryDate).toLocaleDateString()}
+        {/* Category Tag */}
+        <span className="absolute bottom-2 left-2 bg-blue-100 text-blue-600 px-2 py-0.5 rounded text-xs">
+          {med.ProductCategory}
+        </span>
+      </div>
+
+      {/* Content */}
+      <div className="mt-3 space-y-1">
+        <p className="text-gray-400 text-xs">{med.ProductSku}</p>
+
+        <h3 className="font-semibold text-base">
+          {med.ProductName}
+        </h3>
+
+        <p className="text-gray-500 text-xs">
+          Exp: {new Date(med.ProductExpiryDate).toLocaleDateString()}
+        </p>
+
+        {/* Price + Cart */}
+        <div className="flex justify-between items-center mt-2">
+          <p className="text-lg font-bold text-gray-800">
+            ₹ {med.price || 0}
+            <span className="text-xs text-gray-400 ml-1">/ unit</span>
           </p>
 
-          <div className='flex justify-between items-center mt-2'>
-            <p className='text-lg font-bold'>
-              ₹ {med.price || 0}
-            </p>
-
-            <button
-              onClick={() => navigate("Cart")}
-              className='bg-emerald-200 p-2 rounded'
-            >
-              <AddShoppingCart />
-            </button>
-          </div>
+          <button className="bg-green-100 hover:bg-green-200 p-2 rounded-lg transition">
+            🛒
+          </button>
         </div>
 
+        {/* Optional Offer */}
+        <p className="text-green-500 text-xs font-semibold">
+          10% Off on Bulk
+        </p>
       </div>
+    </div>
+ 
+
     ))
   ) : (
     <p>No Medicines Found</p>
