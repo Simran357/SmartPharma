@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { ShoppingBag, AddShoppingCart, LocalShipping, CurrencyRupee } from '@mui/icons-material';
 import { Checkbox, Select } from 'antd';
-import {  useParams } from 'react-router-dom';
+import {  useNavigate, useParams } from 'react-router-dom';
 import axiosInstance from '../../../Form/Utils/AxiosInstance';
 import { contextProvide } from '../../../Form/Utils/Context/CommonContext';
 const SingleWholesalerInfo = () => {
@@ -10,6 +10,8 @@ const SingleWholesalerInfo = () => {
   const {auth} = useContext(contextProvide)
   const [medicines, setMedicines] = useState([])
   const [singleWholesaler,setSingleWholesaler] = useState({})
+  const [cartProduct,setCartProduct] = useState([])
+  const navigate = useNavigate()
   console.log("singleWholesaler",singleWholesaler)
    const getUser = async () => {
         console.log("getUser called ");
@@ -46,7 +48,53 @@ const getMedicines = async () => {
 
     }, [id]);
 
+
+  const handleCartItem = (ProductId) => {
+  const selectedProduct = medicines.find(
+    (product) => product._id === ProductId
+  );
+
+  if (!selectedProduct) return;
+
+  setCartProduct((prevCart) => {
+    const existingItem = prevCart.find(
+      (item) => item._id === ProductId
+    );
+
+    if (existingItem) {
+      return prevCart.map((item) =>
+        item._id === ProductId
+          ? { ...item, qty: item.qty + 1 }
+          : item
+      );
+    }
+
+    return [...prevCart, { ...selectedProduct, qty: 1 }];
+  });
+};
  console.log("medicines",medicines)
+
+ const increaseQty = (id) => {
+  setCartProduct((prev) =>
+    prev.map((item) =>
+      item._id === id
+        ? { ...item, qty: item.qty + 1 }
+        : item
+    )
+  );
+};
+
+ const decreaseQty = (id) => {
+  setCartProduct((prev) =>
+    prev
+      .map((item) =>
+        item._id === id
+          ? { ...item, qty: item.qty - 1 }
+          : item
+      )
+      .filter((item) => item.qty > 0) // remove if qty = 0
+  );
+};
   // const navigate = useNavigate()
   return (
     <>
@@ -208,7 +256,9 @@ const getMedicines = async () => {
             <span className="text-xs text-gray-400 ml-1">/ unit</span>
           </p>
 
-          <button className="bg-green-100 hover:bg-green-200 p-2 rounded-lg transition">
+          <button className="bg-green-100 hover:bg-green-200 p-2 rounded-lg transition"
+          onClick={()=>handleCartItem(med._id)}
+          >
             🛒
           </button>
         </div>
@@ -233,71 +283,134 @@ const getMedicines = async () => {
             </section>
           </div>
           {/* my cart */}
-          <div className="col-span-12 lg:col-span-3 flex flex-col gap-6">
-            <section className='bg-white border shadow-xl w-full  mt-8 border-gray-300 p-6 rounded-xl'>
-              <div className='flex justify-between items-center'>
-                <span className='flex gap-2'>
-                  <ShoppingBag fontSize='medium' />
-                  <p className='text-md font-bold' >MY CART</p>
-                </span>
-                <span className='bg-green-300/90  text-green-800/80 text-xs font-medium rounded-2xl px-2'>3 Items</span>
-              </div>
+    {/* MY CART (OLD DESIGN + NEW LOGIC) */}
+<div className="col-span-12 lg:col-span-3 flex flex-col gap-6">
+  <section className='bg-white border shadow-xl w-full mt-8 border-gray-300 p-6 rounded-xl'>
+    
+    {/* Header */}
+    <div className='flex justify-between items-center'>
+      <span className='flex gap-2 items-center'>
+        <ShoppingBag fontSize='medium' />
+        <p className='text-md font-bold'>MY CART</p>
+      </span>
 
-              <div className='mt-4'>
-                <div className='flex gap-2 items-center'>
-                  <div className='w-12 h-12 rounded-xl p-2 bg-linear-to-t from-amber-500 to-cyan-700'></div>
-                  <div className='flex justify-between w-full'>
-                    <span className='flex flex-col '>
-                      <h1 className='text-sm font-bold '>Amocxicillin 500mg</h1>
-                      <p className='text-gray-400 text-sm'>Qty: 500 Units</p>
-                    </span>
-                    <span>
-                      <span className='text-sm items-center flex'>
-                        <CurrencyRupee fontSize='small' /> 7,250</span>
-                    </span>
-                  </div>
-                </div>
-                <div className='flex gap-2 items-center mt-2'>
-                  <div className='w-12 h-12 rounded-xl p-2 bg-linear-to-t from-amber-500 to-cyan-700'></div>
-                  <div className='flex justify-between w-full'>
-                    <span className='flex flex-col '>
-                      <h1 className='text-sm font-bold '>Atorvastatin 20mg</h1>
-                      <p className='text-gray-400 text-sm'>Qty: 100 Units</p>
-                    </span>
-                    <span>
-                      <span className='text-sm items-center flex'>
-                        <CurrencyRupee fontSize='small' /> 3,200</span>
-                    </span>
-                  </div>
-                </div>
-                <div className='border border-t-gray-50 mt-4'></div>
-                <div>
-                  <span className='flex justify-between items-center mt-2'>
-                    <h1 className='text-gray-400 text-sm'>Sub Total</h1>
-                    <p className='flex items-center font-bold '> - <CurrencyRupee fontSize='small' />10,450.00</p>
-                  </span>
-                  <span className='flex justify-between items-center mt-2'>
-                    <h1 className='text-gray-400 text-sm'>Bulk Discount</h1>
-                    <p className='flex items-center text-green-300/80 font-bold '> - <CurrencyRupee fontSize='small' />450.00</p>
-                  </span>
-                  <span className='flex justify-between items-center mt-4'>
-                    <h1 className='text-gray-800 text-lg font-bold'>Total Amount </h1>
-                    <p className='flex items-center font-bold text-lg'> - <CurrencyRupee fontSize='small' />10,000.00</p>
-                  </span>
+      <span className='bg-green-300/90 text-green-800/80 text-xs font-medium rounded-2xl px-2'>
+        {cartProduct.length} Items
+      </span>
+    </div>
 
-                  <button className='w-full p-4 bg-green-600/70 rounded-xl mt-2  text-black text-2xl font-bold'>Proceed to Checkout</button>
-                </div>
-              </div>
-            </section>
-            <section className="bg-green-50 border shadow-xl border-green-200 p-6 rounded-xl">
-              <span className='text-black text-lg font-bold'>Active Schemes</span>
-              <div className='bg-white/80 border-gray-100 p-6 rounded-lg mt-2 '>
-                <h1 className='font-bold text-xs '>Buy 100 Get 1 Free</h1>
-                <p className='text-slate-400 text-xs mt-2'>On all GSK Antibioics range</p>
-                <button className='border border-emerald-300 mt-2 text-emerald-400 bg-white px-0.5 text-xs py-1 w-full'>Apply</button>
-              </div>
-            </section>
-          </div>
+    {/* CART ITEMS */}
+    <div className='mt-4'>
+      {cartProduct.length === 0 ? (
+        <p className='text-gray-400 text-sm'>Cart is empty</p>
+      ) : (
+        cartProduct.map((item) => (
+          <div key={item._id} className='flex gap-2 items-center mt-3'>
+
+            {/* image placeholder */}
+            <div className='w-12 h-12 rounded-xl bg-linear-to-t from-amber-500 to-cyan-700'></div>
+
+            {/* content */}
+           <div className='flex justify-between w-full items-center'>
+  
+  <span className='flex flex-col'>
+    <h1 className='text-sm font-bold'>
+      {item.ProductName}
+    </h1>
+
+    {/* QTY CONTROLS */}
+    <div className="flex items-center gap-2 mt-1">
+
+      <button
+        onClick={() => decreaseQty(item._id)}
+        className="px-2 bg-gray-200 rounded"
+      >
+        -
+      </button>
+
+      <span className="text-sm font-medium">
+        {item.qty}
+      </span>
+
+      <button
+        onClick={() => increaseQty(item._id)}
+        className="px-2 bg-gray-200 rounded"
+      >
+        +
+      </button>
+    </div>
+  </span>
+
+  <span className='text-sm flex items-center font-medium'>
+    <CurrencyRupee fontSize='small' />
+    {item.qty * (item.price || 0)}
+  </span>
+</div>
+  </div>
+        ))
+      )}
+    </div>
+
+    {/* DIVIDER */}
+    <div className='border border-t-gray-50 mt-4'></div>
+
+    {/* TOTAL SECTION */}
+    <div className='mt-3'>
+
+      <span className='flex justify-between items-center'>
+        <h1 className='text-gray-400 text-sm'>Sub Total</h1>
+        <p className='flex items-center font-bold'>
+          <CurrencyRupee fontSize='small' />
+          {cartProduct.reduce((total, item) => {
+  return total + (item.qty * item.price);
+}, 0)}
+        </p>
+      </span>
+
+      <span className='flex justify-between items-center mt-2'>
+        <h1 className='text-gray-400 text-sm'>Bulk Discount</h1>
+        <p className='flex items-center text-green-300/80 font-bold'>
+          - <CurrencyRupee fontSize='small' />450.00
+        </p>
+      </span>
+
+      <span className='flex justify-between items-center mt-4'>
+        <h1 className='text-gray-800 text-lg font-bold'>
+          Total Amount
+        </h1>
+
+        <p className='flex items-center font-bold text-lg'>
+          <CurrencyRupee fontSize='small' />
+          {cartProduct.reduce((total, item) => {
+  return total + (item.qty * item.price);
+}, 0) - 450}
+        </p>
+      </span>
+
+      {/* CHECKOUT */}
+      <button className='w-full p-2 bg-green-600/70 rounded-xl mt-3 whitespace-nowrap text-black text-lg font-bold'
+      onClick={()=>navigate("Cart",{ state: { cartProduct }})}
+      >
+        Proceed to Checkout
+      </button>
+    </div>
+  </section>
+
+  {/* ACTIVE SCHEME */}
+  <section className="bg-green-50 border shadow-xl border-green-200 p-6 rounded-xl">
+    <span className='text-black text-lg font-bold'>Active Schemes</span>
+    <div className='bg-white/80 border-gray-100 p-6 rounded-lg mt-2'>
+      <h1 className='font-bold text-xs'>Buy 100 Get 1 Free</h1>
+      <p className='text-slate-400 text-xs mt-2'>
+        On all GSK Antibiotics range
+      </p>
+
+      <button className='border border-emerald-300 mt-2 text-emerald-400 bg-white px-1 text-xs py-1 w-full'>
+        Apply
+      </button>
+    </div>
+  </section>
+</div>
         </div>
 
       </div>
