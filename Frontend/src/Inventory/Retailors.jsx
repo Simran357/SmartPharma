@@ -1,10 +1,9 @@
-import { useContext, useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import { FaSearch, FaShieldAlt } from "react-icons/fa";
 import { FaDownload } from "react-icons/fa";
 import { AiOutlinePlus } from "react-icons/ai";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import {  useNavigate } from "react-router-dom";
-import { contextProvide } from "../Components/Dashboard/Form/Utils/Context/CommonContext";
 import axiosInstance from "../Components/Dashboard/Form/Utils/AxiosInstance";
 
 const Retailors = () => {
@@ -13,7 +12,6 @@ const Retailors = () => {
     const [tab, setTab] = useState("all");
     const [activeMenu, setActiveMenu] = useState("retailors");
     const [activePage, setActivePage] = useState(1);
-
     const getUser = async () => {
     console.log("getUser called ");
     try {

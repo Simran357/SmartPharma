@@ -15,6 +15,7 @@ import {
   Legend,
 } from "recharts";
 import { CheckCircle, AlertTriangle, Info,FileText,Upload,Banknote,ShoppingBag, BarChart, Building2 } from "lucide-react";
+import { useParams } from "react-router-dom";
 const SingleRetailerDetails = () => {
    const {id} = useParams()
     console.log(id)
@@ -32,6 +33,10 @@ const SingleRetailerDetails = () => {
                   console.log("Error fetching user data:", error);
               }
           }
+
+          useEffect(()=>{
+            getUser()
+          },[])
   //  TABLE COLUMNS (OUTSIDE JSX)
   const columns = [
     {
