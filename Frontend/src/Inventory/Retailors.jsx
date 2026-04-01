@@ -3,46 +3,42 @@ import { FaSearch, FaShieldAlt } from "react-icons/fa";
 import { FaDownload } from "react-icons/fa";
 import { AiOutlinePlus } from "react-icons/ai";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
-import { useNavigate } from "react-router-dom";
-// import { contextProvide } from "../Components/Dashboard/Form/Utils/Context/CommonContext";
+import {  useNavigate } from "react-router-dom";
+import { contextProvide } from "../Components/Dashboard/Form/Utils/Context/CommonContext";
 import axiosInstance from "../Components/Dashboard/Form/Utils/AxiosInstance";
-
 
 const Retailors = () => {
     const [users, setUser] = useState([])
-    const navigate = useNavigate()
-    const [tab, setTab] = useState("all")
-    // const { userRoles } = useContext(contextProvide)
-    // 👉 NEW STATE for sidebar
+     const navigate = useNavigate()
+    const [tab, setTab] = useState("all");
     const [activeMenu, setActiveMenu] = useState("retailors");
     const [activePage, setActivePage] = useState(1);
-    const getUser = async () => {
-        console.log("getUser called ");
-        try {
-            const res = await axiosInstance.get("/registerroute/getuserController")
-            if (res?.data?.success) {
-                setUser(res?.data?.data)
-            }
-        } catch (error) {
-            console.log("Error fetching user data:", error);
-        }
-    }
 
-    useEffect(() => {
+    const getUser = async () => {
+    console.log("getUser called ");
+    try {
+      const res = await axiosInstance.get("/registerroute/getuserController")
+      if (res?.data?.success) {
+        setUser(res?.data?.data)
+      }
+    } catch (error) {
+      console.log("Error fetching user data:", error);
+    }
+  }
+     useEffect(() => {
         console.log("Component mounted ");
         getUser()
     }, []);
 
-    console.log("items",)
-
-
-    const filteredUsers = users
-        .filter(user => user.role === "Retailer")
-        .filter(user => {
-            if (tab === "all") return true;
-            return user.status === tab; // backend se aana chahiye
-        });
-
+      
+const filteredUsers = users.filter(
+  user => user.role?.toLowerCase() === "retailer"
+); 
+   
+    const filteredRetailors = filteredUsers.filter((item) => {
+        if (tab === "all") return true;
+        return item.status === tab;
+    });
 
     return (<>
         <div className="w-full h-screen flex">
@@ -106,31 +102,39 @@ const Retailors = () => {
                             </button>
                         </div>
 
-                        <div className="flex-1 flex flex-col justify-between">
-                            {/* Cards */}
-                            <div className="flex flex-wrap gap-6 pb-6">
-                                {filteredUsers.length > 0 ? (
-                                    filteredUsers.map((item) => (
+                        {/* Cards */}
+                        <div className="flex-1 overflow-y-auto overflow-x-hidden relative">
+                            <div className="flex flex-wrap gap-6" 
+                            >
+
+                                {filteredRetailors.length > 0 ? filteredRetailors.map((item, i) => (
                                         <div
                                             key={item._id}
                                             onClick={() => navigate(`${item._id}`)}
                                             className="w-full sm:w-[48%] md:w-[31%] lg:w-[23%] bg-white rounded-2xl shadow-md hover:shadow-xl transition cursor-pointer overflow-hidden"
                                         >
+                                            <div className="flex px-4 justify-between">
+                                                <div className="flex items-center gap-2">
+                                                    <FaShieldAlt className="p-2 bg-gray-100 rounded-full text-green-600 w-10 h-10" />
+                                                    <div>
+                                                        <h1 className="font-semibold">{item.username}</h1>
+                                                        <p className="text-sm text-gray-500">{item.email}</p>
+                                                    </div>
+                                                </div>
 
-                                            {/* Image Section */}
-                                            <div className="relative">
-                                                <img
-                                                    src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d"
-                                                    alt="store"
-                                                    className="h-36 w-full object-cover"
-                                                />
-
-                                                <span className="absolute top-3 left-3 bg-green-500 text-white text-xs px-3 py-1 rounded-full">
-                                                    ACTIVE
+                                                <span className="px-3 py-1 rounded-full text-xs text-green-600 bg-green-100 h-fit">
+                                                    {item.contact}
                                                 </span>
+                                            </div>
 
-                                                <div className="absolute -bottom-5 left-4 w-10 h-10 bg-blue-600 text-white flex items-center justify-center rounded-lg border-4 border-white font-bold">
-                                                    {item.username?.charAt(0).toUpperCase()}
+                                            <div className="flex gap-5 px-6 py-6 pt-8">
+                                                <div>
+                                                    <p className="text-base text-gray-700">Monthly Salary</p>
+                                                    <h1 className="text-2xl font-bold">{item.location}</h1>
+                                                </div>
+                                                <div>
+                                                    <p className="text-base text-gray-700">Outstanding</p>
+                                                    <h1 className="text-2xl font-bold">{item.outstanding}</h1>
                                                 </div>
                                             </div>
 
@@ -162,8 +166,8 @@ const Retailors = () => {
                                                 </div>
                                             </div>
                                         </div>
-                                    ))
-                                ) : (
+                                ))
+                                 : (
                                     <p className="text-gray-600 text-center w-full">
                                         No Retailers Found
                                     </p>
@@ -187,7 +191,7 @@ const Retailors = () => {
                                                     ? "bg-green-500 text-white"
                                                     : "bg-white text-black hover:bg-gray-200"
                                                 }`}
-                                        >
+                                        >  
                                             {num}
                                         </button>
                                     ))}
