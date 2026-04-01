@@ -1,9 +1,7 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import axiosInstance from "../Dashboard/Form/Utils/AxiosInstance";
-import { contextProvide } from "../Dashboard/Form/Utils/Context/CommonContext";
 
 const Addstock = ({ close }) => {
-  const { auth } = useContext(contextProvide);
 
   const [formData, setFormData] = useState({
     ProductName: "",
@@ -18,7 +16,7 @@ const Addstock = ({ close }) => {
     close();
 
     try {
-      await axiosInstance.post("/registerroute/AddProductList", {formData,auth}).then((res) => {
+      await axiosInstance.post("/registerroute/AddProductList", {formData}).then((res) => {
         if (res?.data?.success) {
           alert("product is added to db successfully")
         }
@@ -87,7 +85,6 @@ const Addstock = ({ close }) => {
               <option>Select category</option>
               <option>Antibiotics</option>
               <option>Analgesics</option>
-               <option>Tablet</option>
             </select>
           </div>
 
