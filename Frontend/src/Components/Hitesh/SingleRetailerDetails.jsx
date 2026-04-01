@@ -25,7 +25,7 @@ const SingleRetailerDetails = () => {
               console.log("getUser called ");
               try {
                   const res = await axiosInstance.get(`/registerroute/getSingleRetailor/${id}`)
-                  if (res?.data?.success) {
+                  if (res?.data) {
                       setSingleRetailer(res?.data?.data)
                       console.log("singleretailerid",res?.data)
                   }
