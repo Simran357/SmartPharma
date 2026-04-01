@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken")
 
-const authMiddleware = (req, res, next) => {
+const getMe = (req, res, next) => {
   const token = req.headers.authorization?.split(" ")[1]
 
   if (!token) {
@@ -10,11 +10,13 @@ const authMiddleware = (req, res, next) => {
   try {
     const decoded = jwt.verify(token, "simran")
 
-    req.user = decoded   // 🔥 sabse important line
-    next()               // 🔥 VERY IMPORTANT
+    res.json({
+      user:decoded
+    })   // 🔥 sabse important line
+               // 🔥 VERY IMPORTANT
   } catch (err) {
     return res.status(401).json({ message: "Invalid token" })
   }
 }
 
-module.exports = authMiddleware
+module.exports = getMe
