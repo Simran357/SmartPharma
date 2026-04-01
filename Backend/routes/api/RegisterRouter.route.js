@@ -9,6 +9,9 @@ const { getUsers, updateRoleController , createNewUser } = require("../../Contro
 const AddProductList = require("../../Controller/AddProductList")
 const getProductList =  require("../../Controller/getProductlist")
 const getSingleRetailor=require("../../Controller/getSingleRetailorInfo")
+const getsingleWholesaler = require("../../Controller/getsingleWholesaler")
+
+
 router.post("/registercontroller",RegisterController)
 router.post("/LoginController",LoginController)
 router.get("/GetRegisterdata",GetRegisterdata)
@@ -17,7 +20,7 @@ router.post("/createNewUser",createNewUser)
 router.post("/AddProductList",AddProductList)
 router.get("/getSingleRetailor/:id",getSingleRetailor)
 router.get("/getProductList/:id",getProductList)
-
+router.get("/getsingleWholesaler/:id",getsingleWholesaler)
 router.get("/getuserController",getUsers)
 router.put("/updateRole/:id", updateRoleController)
 router.get("/me",getMe)

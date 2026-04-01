@@ -17,7 +17,7 @@ console.log("auth",auth)
   let ProductCheck = await ProductModel.findOne({ ProductName });
     if(!ProductCheck){
         ProductCheck = await ProductModel.create({
-           auth,
+          userId: auth,
             ProductName:ProductName,
             ProductSku:ProductSku,
             ProductExpiryDate:ProductExpiryDate,

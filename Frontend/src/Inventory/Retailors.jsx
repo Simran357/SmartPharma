@@ -113,7 +113,7 @@ const Retailors = () => {
                                     filteredUsers.map((item) => (
                                         <div
                                             key={item._id}
-                                            onClick={() => navigate(`SingleRetailerDetails/${item._id}`)}
+                                            onClick={() => navigate(`${item._id}`)}
                                             className="w-full sm:w-[48%] md:w-[31%] lg:w-[23%] bg-white rounded-2xl shadow-md hover:shadow-xl transition cursor-pointer overflow-hidden"
                                         >
 

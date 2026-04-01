@@ -6,17 +6,18 @@ import axiosInstance from '../../../Form/Utils/AxiosInstance';
 import { contextProvide } from '../../../Form/Utils/Context/CommonContext';
 const SingleWholesalerInfo = () => {
   const {id} = useParams()
-  console.log(id)
+  console.log("id",id)
   const {auth} = useContext(contextProvide)
   const [medicines, setMedicines] = useState([])
-  const [singleRetailer,setSingleRetailer] = useState([])
-  console.log("singleRetailer",singleRetailer)
+  const [singleWholesaler,setSingleWholesaler] = useState({})
+  console.log("singleWholesaler",singleWholesaler)
    const getUser = async () => {
         console.log("getUser called ");
         try {
-            const res = await axiosInstance.get(`/registerroute/getSingleRetailor/${id}`)
+            const res = await axiosInstance.get(`/registerroute/getsingleWholesaler/${id}`)
             if (res?.data) {
-                setSingleRetailer(res?.data?.data)
+              console.log("wholesaler single",res?.data)
+                setSingleWholesaler(res?.data?.data)
                 console.log("singlwholesalerid",res?.data)
             }
         } catch (error) {
@@ -27,7 +28,7 @@ const SingleWholesalerInfo = () => {
 const getMedicines = async () => {
    console.log("getMedicines called");
   try {
-    const res = await axiosInstance.get(`/registerroute/getProductList/${auth}`)
+    const res = await axiosInstance.get(`/registerroute/getProductList/${id}`)
     console.log("MEDICINE API RESPONSE:", res?.data); 
     if (res?.data) {
       setMedicines(res?.data?.data)
@@ -59,10 +60,10 @@ const getMedicines = async () => {
               <div className='flex flex-col items-center gap-2'>
                 <span className='flex flex-row items-center gap-2'>
 <h1 className='font-bold text-xl'>
-  {singleRetailer?.pharmacyName || "No Name"}
+  {singleWholesaler?.pharmacyName || "No Name"}
 </h1>                  <p className=' bg-green-200/80 px-1 text-xs rounded-2xl text-green-700/90 uppercase '>verified</p>
                 </span>
-                <p className='text-sm font-medium text-gray-700 '>License # 12345-BA Established 2008 </p>
+                <p className='text-sm font-medium text-gray-700 '>{singleWholesaler?.license}</p>
               </div>
             </span>
           </div>
@@ -158,7 +159,7 @@ const getMedicines = async () => {
                 </span>
               </div>
 
-            <div className='grid grid-col-1 sm:grid-cols-2 xl:grid-cols-3 gap-5'>
+            <div className='grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5'>
   {medicines?.length > 0 ? (
     medicines.map((med) => (
   
