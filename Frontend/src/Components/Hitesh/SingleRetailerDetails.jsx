@@ -1,5 +1,6 @@
 
-
+import  {useState,useEffect} from "react"
+import axiosInstance from "../Dashboard/Form/Utils/AxiosInstance";
 import react from "react"
 import { Table } from "antd";
 import { Tag } from "antd";
@@ -15,6 +16,22 @@ import {
 } from "recharts";
 import { CheckCircle, AlertTriangle, Info,FileText,Upload,Banknote,ShoppingBag, BarChart, Building2 } from "lucide-react";
 const SingleRetailerDetails = () => {
+   const {id} = useParams()
+    console.log(id)
+     const [singleRetailer,setSingleRetailer] = useState([])
+      console.log("singleRetailer",singleRetailer)
+       const getUser = async () => {
+              console.log("getUser called ");
+              try {
+                  const res = await axiosInstance.get(`/registerroute/getSingleRetailor/${id}`)
+                  if (res?.data?.success) {
+                      setSingleRetailer(res?.data?.data)
+                      console.log("singleretailerid",res?.data)
+                  }
+              } catch (error) {
+                  console.log("Error fetching user data:", error);
+              }
+          }
   //  TABLE COLUMNS (OUTSIDE JSX)
   const columns = [
     {
