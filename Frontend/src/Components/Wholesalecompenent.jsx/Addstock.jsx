@@ -1,9 +1,7 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import axiosInstance from "../Dashboard/Form/Utils/AxiosInstance";
-import { contextProvide } from "../Dashboard/Form/Utils/Context/CommonContext";
 
 const Addstock = ({ close }) => {
-const {auth} = useContext(contextProvide)
   const [formData, setFormData] = useState({
     ProductName: "",
     ProductSku: "",
@@ -11,13 +9,13 @@ const {auth} = useContext(contextProvide)
     ProductQuantity: "",
     ProductExpiryDate: ""
   });
-  console.log("auth id in add stock",auth)
+  console.log("auth id in add stock",)
   const handleSubmit = async () => {
-    console.log(formData);
+    console.log("form data in frontend",formData);
     close();
 
     try {
-      await axiosInstance.post("/registerroute/AddProductList", {formData,auth}).then((res) => {
+      await axiosInstance.post("/registerroute/AddProductList",formData).then((res) => {
         if (res?.data?.success) {
           alert("product is added to db successfully")
         }
