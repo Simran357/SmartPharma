@@ -3,8 +3,7 @@ import axiosInstance from "../Dashboard/Form/Utils/AxiosInstance";
 import { contextProvide } from "../Dashboard/Form/Utils/Context/CommonContext";
 
 const Addstock = ({ close }) => {
-  const { auth } = useContext(contextProvide);
-
+const {auth} = useContext(contextProvide)
   const [formData, setFormData] = useState({
     ProductName: "",
     ProductSku: "",
@@ -87,7 +86,6 @@ const Addstock = ({ close }) => {
               <option>Select category</option>
               <option>Antibiotics</option>
               <option>Analgesics</option>
-               <option>Tablet</option>
             </select>
           </div>
 

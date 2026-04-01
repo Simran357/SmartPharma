@@ -3,11 +3,10 @@ import { Navigate } from 'react-router-dom';
 import  { contextProvide }  from './Utils/Context/CommonContext';
 
 const ProtectedRoute = ({ children }) => {
-  const { auth } = useContext(contextProvide);
-    if (auth === null) return <div>Loading...</div>;
-
-
-  return auth  ? children : <Navigate to="/" />;
+  const { userRoles } = useContext(contextProvide);
+  console.log("userRole in protected route",userRoles)
+if (!userRoles) return <div>Loading...</div>;
+  return userRoles  ? children : <Navigate to="/" />;
 
 
 };
