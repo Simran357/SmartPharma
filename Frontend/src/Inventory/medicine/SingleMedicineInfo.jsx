@@ -154,7 +154,7 @@ function SingleMedicineInfo() {
               <span className="text-sm text-green-600 cursor-pointer">
                 View All Archive
               </span>
-            </div>
+            </div>    
 
             <table className="w-full text-sm text-left">
               <thead className="bg-gray-100 text-gray-600 uppercase text-xs">
