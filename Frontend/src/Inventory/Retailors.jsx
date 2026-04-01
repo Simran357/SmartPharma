@@ -3,62 +3,49 @@ import { FaSearch, FaShieldAlt } from "react-icons/fa";
 import { FaDownload } from "react-icons/fa";
 import { AiOutlinePlus } from "react-icons/ai";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
-import {  useNavigate } from "react-router-dom";
-import { contextProvide } from "../Components/Dashboard/Form/Utils/Context/CommonContext";
+import { useNavigate } from "react-router-dom";
+// import { contextProvide } from "../Components/Dashboard/Form/Utils/Context/CommonContext";
+import axiosInstance from "../Components/Dashboard/Form/Utils/AxiosInstance";
 
 
 const Retailors = () => {
-
-  const [users, setUser] = useState([])
-
-const {userRoles} = useContext(contextProvide)
-
-
-
-    const getUser = async () => {
-    console.log("getUser called ");
-    try {
-      const res = await axiosInstance.get("/registerroute/getuserController")
-      if (res?.data?.success) {
-        setUser(res.data.data)
-      }
-    } catch (error) {
-      console.log("Error fetching user data:", error);
-    }
-  }
-     useEffect(() => {
-        console.log("Component mounted ");
-        getUser()
-      }, []);
-
-      
-
-  const filteredUsers =
-    userRoles === "Wholesaler"
-      ? users : users.filter(user => user.role === userRoles);
- console.log(filteredUsers)
+    const [users, setUser] = useState([])
     const navigate = useNavigate()
-
-
-    const [tab, setTab] = useState("all");
-    
-
-
+    const [tab, setTab] = useState("all")
+    // const { userRoles } = useContext(contextProvide)
     // 👉 NEW STATE for sidebar
     const [activeMenu, setActiveMenu] = useState("retailors");
     const [activePage, setActivePage] = useState(1);
+    const getUser = async () => {
+        console.log("getUser called ");
+        try {
+            const res = await axiosInstance.get("/registerroute/getuserController")
+            if (res?.data?.success) {
+                setUser(res?.data?.data)
+            }
+        } catch (error) {
+            console.log("Error fetching user data:", error);
+        }
+    }
 
-    const filteredRetailors = data.filter((item) => {
-        if (tab === "all") return true;
-        return item.status === tab;
-    });
+    useEffect(() => {
+        console.log("Component mounted ");
+        getUser()
+    }, []);
+
+    console.log("items",)
+
+
+    const filteredUsers = users
+        .filter(user => user.role === "Retailer")
+        .filter(user => {
+            if (tab === "all") return true;
+            return user.status === tab; // backend se aana chahiye
+        });
+
 
     return (<>
         <div className="w-full h-screen flex">
-
-            {/* Sidebar */}
-          
-
             {/* Main Content */}
             <div className="h-full flex-1 bg-gray-200 p-6 flex flex-col">
 
@@ -119,102 +106,93 @@ const {userRoles} = useContext(contextProvide)
                             </button>
                         </div>
 
-                        {/* Cards */}
-                        <div className="flex-1 overflow-y-auto overflow-x-hidden relative">
-                            <div className="flex flex-wrap gap-6" 
-                            >
-
-                                {filteredRetailors.map((item, i) => {
-
-                                    const salary = Number(item.salary.replace(/[^0-9]/g, ""));
-                                    const outstanding = Number(item.outstanding.replace(/[^0-9]/g, ""));
-
-                                    const progress = (outstanding / salary) * 100;
-                                    const isHigh = progress >= 75;
-                                    return (
-
+                        <div className="flex-1 flex flex-col justify-between">
+                            {/* Cards */}
+                            <div className="flex flex-wrap gap-6 pb-6">
+                                {filteredUsers.length > 0 ? (
+                                    filteredUsers.map((item) => (
                                         <div
-                                            key={i}
-                                             onClick={() => navigate("SingleRetailerDetails")}
-                                            className="border rounded-lg py-6 flex flex-col w-80 justify-between bg-white shadow-md"
+                                            key={item._id}
+                                            onClick={() => navigate(`SingleRetailerDetails/${item._id}`)}
+                                            className="w-full sm:w-[48%] md:w-[31%] lg:w-[23%] bg-white rounded-2xl shadow-md hover:shadow-xl transition cursor-pointer overflow-hidden"
                                         >
-                                            <div className="flex px-4 justify-between">
-                                                <div className="flex items-center gap-2">
-                                                    <FaShieldAlt className="p-2 bg-gray-100 rounded-full text-green-600 w-10 h-10" />
-                                                    <div>
-                                                        <h1 className="font-semibold">{item.name}</h1>
-                                                        <p className="text-sm text-gray-500">{item.city}</p>
-                                                    </div>
-                                                </div>
 
-                                                <span className="px-3 py-1 rounded-full text-xs text-green-600 bg-green-100 h-fit">
-                                                    {item.status}
+                                            {/* Image Section */}
+                                            <div className="relative">
+                                                <img
+                                                    src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d"
+                                                    alt="store"
+                                                    className="h-36 w-full object-cover"
+                                                />
+
+                                                <span className="absolute top-3 left-3 bg-green-500 text-white text-xs px-3 py-1 rounded-full">
+                                                    ACTIVE
                                                 </span>
-                                            </div>
 
-                                            <div className="flex gap-5 px-6 py-6 pt-8">
-                                                <div>
-                                                    <p className="text-base text-gray-700">Monthly Salary</p>
-                                                    <h1 className="text-2xl font-bold">{item.salary}</h1>
-                                                </div>
-                                                <div>
-                                                    <p className="text-base text-gray-700">Outstanding</p>
-                                                    <h1 className="text-2xl font-bold">{item.outstanding}</h1>
+                                                <div className="absolute -bottom-5 left-4 w-10 h-10 bg-blue-600 text-white flex items-center justify-center rounded-lg border-4 border-white font-bold">
+                                                    {item.username?.charAt(0).toUpperCase()}
                                                 </div>
                                             </div>
 
-                                            <div className="w-full px-4 py-4">
-                                                <div className="flex justify-between text-sm mb-1">
-                                                    <span>Loading</span>
-                                                    <span>{progress.toFixed(0)}%</span>
-                                                </div>
+                                            {/* Content */}
+                                            <div className="pt-6 p-4">
+                                                <h2 className="font-semibold text-lg">{item.username}</h2>
+                                                <p className="text-gray-500 text-sm mb-2">
+                                                    {item.location || "Unknown"}
+                                                </p>
 
-                                                <div className="w-full bg-gray-200 rounded-full h-3">
-                                                    <div
-                                                        className={`h-3 rounded-full transition-all duration-500 ${isHigh ? "bg-red-500" : "bg-green-500"
-                                                            }`}
-                                                        style={{ width: `${progress}%` }}
-                                                    ></div>
-                                                </div>
-                                            </div>
+                                                <p className="text-xs text-gray-400">PHARMACY</p>
+                                                <p className="font-medium mb-2">
+                                                    {item.pharmacyName || "Not Available"}
+                                                </p>
 
-                                            <div className="flex justify-between items-center px-4 pt-2">
-                                                <div>
-                                                    <span className="text-sm text-gray-500">Contact</span>
-                                                    <h3 className="text-sm font-medium">{item.contact}</h3>
-                                                </div>
+                                                <p className="text-xs text-gray-400">CONTACT</p>
+                                                <p className="text-sm mb-3">
+                                                    {item.contact || "N/A"}
+                                                </p>
 
-                                                <button className="px-4 py-1 bg-green-400 rounded-full text-sm">
-                                                    View
-                                                </button>
+                                                <div className="flex justify-between items-center">
+                                                    <span className="text-xs text-gray-400">
+                                                        📍 {item.location || "N/A"}
+                                                    </span>
+
+                                                    <button className="bg-green-500 text-white px-3 py-1 text-sm rounded-lg hover:bg-green-600">
+                                                        View
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
-                                    )
-                                })}
-
+                                    ))
+                                ) : (
+                                    <p className="text-gray-600 text-center w-full">
+                                        No Retailers Found
+                                    </p>
+                                )}
                             </div>
-                            <div className="flex items-center justify-between w-full px-6 absolute bottom-3">
-                                <p className="text-white">
-                                    Showing <b>1 to 5</b> of 42 Retailors
+
+                            {/* Pagination (FIXED BELOW, NO OVERLAP) */}
+                            <div className="flex items-center justify-between px-2 py-4">
+                                <p className="text-gray-600">
+                                    Showing <b>1 to 5</b> of {filteredUsers.length} Retailers
                                 </p>
 
-                                <div className="flex items-center gap-6">
-                                    <AiOutlineLeft className="cursor-pointer hover:scale-110 transition text-white" />
+                                <div className="flex items-center gap-4">
+                                    <AiOutlineLeft className="cursor-pointer hover:scale-110 transition" />
 
                                     {[1, 2, 3].map((num) => (
                                         <button
                                             key={num}
                                             onClick={() => setActivePage(num)}
                                             className={`rounded-full py-1 px-3 transition ${activePage === num
-                                                ? "bg-green-500 text-white"
-                                                : "bg-white text-black hover:bg-gray-200"
+                                                    ? "bg-green-500 text-white"
+                                                    : "bg-white text-black hover:bg-gray-200"
                                                 }`}
                                         >
                                             {num}
                                         </button>
                                     ))}
 
-                                    <AiOutlineRight className="cursor-pointer hover:scale-110 transition text-white" />
+                                    <AiOutlineRight className="cursor-pointer hover:scale-110 transition" />
                                 </div>
                             </div>
 
@@ -223,9 +201,9 @@ const {userRoles} = useContext(contextProvide)
                 )}
 
             </div>
-          
+
         </div>
-        </>
+    </>
     );
 };
 

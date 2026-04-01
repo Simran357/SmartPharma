@@ -9,7 +9,8 @@ const CommonContext = ({ children }) => {
       useEffect(() => {
     axiosInstance.get("/registerroute/me")
       .then((res) => {
-        setAuth(res?.data?.user?.userId);
+        console.log("res",res?.data)
+        setAuth(res?.data?.user?.userId );
         setUserRoles(res?.data?.user?.role)
       })  
       .catch(() => {
@@ -17,6 +18,7 @@ const CommonContext = ({ children }) => {
         setUserRoles("")
       });
   }, []);
+  console.log("auth in context",auth)
    return (
     <contextProvide.Provider value={{auth ,setAuth,userRoles,setUserRoles}}>
       {children}

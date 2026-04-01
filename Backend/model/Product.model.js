@@ -5,7 +5,7 @@ const mongoose = require("mongoose")
 const ProductSchema = new mongoose.Schema({
   userId:{
     type:String,
-    required:true
+
   },
   ProductName: {
     type: String,
@@ -13,7 +13,7 @@ const ProductSchema = new mongoose.Schema({
   },
   ProductSku: {
     type: String,
-  unique: true,
+
   required: true,
   trim: true
   

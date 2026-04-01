@@ -3,7 +3,7 @@ import axios from "axios";
 // Create axios instance
 const axiosInstance = axios.create({
   baseURL: "http://localhost:5001/api",
-  timeout: 3000,
+  timeout: 10000,
   withCredentials: true, // send cookies if needed
 });
 

@@ -12,6 +12,7 @@ const Wholesalerfirst = () =>  {
     getUser()
   }, []);
 
+  
   const getUser = async () => {
     console.log("getUser called ");
     try {
@@ -39,7 +40,7 @@ const Wholesalerfirst = () =>  {
           <div
             key={user._id}
             className="w-full sm:w-[48%] md:w-[31%] lg:w-[23%] bg-[#162538] rounded-2xl shadow-xl overflow-hidden cursor-pointer"
-            onClick={() => navigate(`SingleWholesalerInfo/${user._id}`)}
+            onClick={() => navigate(`${user._id}`)}
           >
 
             {/* Top Image */}
