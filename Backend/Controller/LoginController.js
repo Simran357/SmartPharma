@@ -29,11 +29,13 @@ const isMatch = await bcrypt.compare(password, user?.password)
 
 
      const jwtToken = jwt.sign(
-      { userId: user._id,
-      role: user.role},
-      "simran",
-      { expiresIn: "1h" }
-    );
+  {
+    id: user._id,
+    role: user.role
+  },
+  "simran",
+  { expiresIn: "1d" }
+)
 
     res.cookie("jwtToken",jwtToken,
       { maxAge:36000,

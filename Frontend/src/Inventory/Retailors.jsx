@@ -123,18 +123,10 @@ const filteredUsers = users.filter(user => user.role === "Retailer");
                             <div className="flex flex-wrap gap-6" 
                             >
 
-                                {filteredRetailors.map((item, i) => {
-
-                                    // const salary = Number(item.salary.replace(/[^0-9]/g, ""));
-                                    // const outstanding = Number(item.outstanding.replace(/[^0-9]/g, ""));
-
-                                    // const progress = (outstanding / salary) * 100;
-                                    // const isHigh = progress >= 75;
-                                    return (
-
+                                {filteredRetailors.lengt> 0 ? filteredRetailors.map((item, i) => (
                                         <div
                                             key={item._id}
-                                            onClick={() => navigate(`SingleRetailerDetails/${item._id}`)}
+                                            onClick={() => navigate(`${item._id}`)}
                                             className="w-full sm:w-[48%] md:w-[31%] lg:w-[23%] bg-white rounded-2xl shadow-md hover:shadow-xl transition cursor-pointer overflow-hidden"
                                         >
                                             <div className="flex px-4 justify-between">
@@ -190,8 +182,8 @@ const filteredUsers = users.filter(user => user.role === "Retailer");
                                                 </div>
                                             </div>
                                         </div>
-                                    ))
-                                ) : (
+                                ))
+                                 : (
                                     <p className="text-gray-600 text-center w-full">
                                         No Retailers Found
                                     </p>
@@ -215,7 +207,7 @@ const filteredUsers = users.filter(user => user.role === "Retailer");
                                                     ? "bg-green-500 text-white"
                                                     : "bg-white text-black hover:bg-gray-200"
                                                 }`}
-                                        >
+                                        >  
                                             {num}
                                         </button>
                                     ))}

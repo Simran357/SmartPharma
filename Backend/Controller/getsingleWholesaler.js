@@ -1,9 +1,12 @@
 const RegisterModel = require("../model/Register.model");
 
-const getSingleRetailor = async (req, res) => {
+const getsingleWholesaler = async (req, res,next) => {
+    console.log("getsingleWholesaler")
     try {
         const { id } = req.params;
-        const user = await RegisterModel.find({id});
+
+        const user = await RegisterModel.findById(id)
+                console.log("SingleWholesaler" ,user)
         res.status(200).json({
             success: true,
             data: user
@@ -18,4 +21,4 @@ const getSingleRetailor = async (req, res) => {
     }
 };
 
-module.exports = getSingleRetailor;
+module.exports = getsingleWholesaler;

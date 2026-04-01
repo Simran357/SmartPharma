@@ -36,6 +36,7 @@ const CreateUserForm = ({ setModel, getUser }) => {
   return (
    <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50">
   <div className="w-500px bg-white rounded-2xl shadow-xl overflow-hidden">
+
     <div className="bg-blue-600 text-white p-4 font-semibold">
       Add New User
     </div>
