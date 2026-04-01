@@ -8,10 +8,7 @@ const AdminRoleAssign = () => {
   const [selectedRole, setSelectedRole] = useState("All")
 const [openModel, setModel] = useState(false)
 
-
-
- 
-  const filteredUsers =
+ const filteredUsers =
     selectedRole === "All"
       ? users : users.filter(user => user.role === selectedRole);
 
@@ -94,8 +91,8 @@ const [openModel, setModel] = useState(false)
             <button className="px-6 py-2.5  text-sm font-semibold rounded-lg  transition-colors">
               Export Report
             </button>
-            <button class="px-6 py-2.5  text-sm font-bold rounded-lg shadow-sm  transition-all flex items-center space-x-2" onClick={() => setModel(true)}>
-              <span class="material-symbols-outlined text-sm">add_circle</span>
+            <button className="px-6 py-2.5  text-sm font-bold rounded-lg shadow-sm  transition-all flex items-center space-x-2" onClick={() => setModel(true)}>
+              <span className="material-symbols-outlined text-sm">add_circle</span>
               <span>Create New User</span>
             </button>
 
@@ -139,12 +136,12 @@ const [openModel, setModel] = useState(false)
                   <option value="Wholesaler">Wholesaler</option>
                 </select>
               </div>
-              <div class="h-8 w-1 bg-outline-variant/20"></div>
-              <span class="text-xs font-bold uppercase">{filteredUsers.length}</span>
+              <div className="h-8 w-1 bg-outline-variant/20"></div>
+              <span className="text-xs font-bold uppercase">{filteredUsers.length}</span>
             </div>
-            <div class="relative">
-              <span class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-sm">search</span>
-              <input class="bg-surface-container-low border-none rounded-lg pl-9 pr-4 py-2 text-sm focus:ring-2 focus:ring-primary/20 w-80" placeholder="Search by name or email..." type="text" />
+            <div className="relative">
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-sm">search</span>
+              <input className="bg-surface-container-low border-none rounded-lg pl-9 pr-4 py-2 text-sm focus:ring-2 focus:ring-primary/20 w-80" placeholder="Search by name or email..." type="text" />
             </div>
           </div>
         </div>
@@ -210,13 +207,13 @@ const [openModel, setModel] = useState(false)
       </div>
       <div className="col-span-2 p-6 rounded-xl relative overflow-hidden m-4 flex mt-38 items-center bg-blue-600 text-white shadow-md">
 
-        {/* Content */}
+        {/* Content */} 
         <div className="relative z-10 space-y-2">
           <h4 className="text-lg font-bold">Security Pulse</h4>
           <p className="text-sm max-w-xs text-blue-100">
             All role templates are currently aligned with ISO 27001 standards.
           </p>
-        </div>
+        </div> 
 
         {/* Glow Effect */}
         <div className="ml-auto w-40 h-20 bg-white/20 rounded-full blur-3xl absolute -right-16 -top-6"></div>

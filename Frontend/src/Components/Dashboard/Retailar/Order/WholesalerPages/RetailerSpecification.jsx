@@ -1,12 +1,12 @@
 import React from 'react'
 import HistoryIcon from '@mui/icons-material/History';
 import SearchIcon from '@mui/icons-material/Search';
-import {  PlusCircle } from 'lucide-react';
+import { PlusCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 const RetailerSpecification = () => {
     const navigate = useNavigate()
     return (
-        <>
+        <>  
             <div className='m-2 w-full'>
               <div className="bg-white border shadow border-slate-200 p-4 md:p-6 rounded-xl m-2">
 

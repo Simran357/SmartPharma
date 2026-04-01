@@ -1,24 +1,19 @@
 
 const jwt = require("jsonwebtoken")
 
-const getMe = (req,res,next)=>{
+const getMe = (req, res, next) => {
 
   const token = req.headers.authorization?.split(" ")[1]
-console.log("balle ballee",token)
-  if(!token){
+  console.log("balle ballee", token)
+  if (!token) {
     return res.status(401).json({
-      message:"Unauthorized"
+      message: "Unauthorized"
     })
   }
-
-  const decoded = jwt.verify(token,"simran")
-console.log(decoded)
+  const decoded = jwt.verify(token, "simran")
+  console.log(decoded)
   res.json({
-    user:decoded
+    user: decoded
   })
-
-
 }
-
-
-module.exports = getMe
+module.exports = getMe 
