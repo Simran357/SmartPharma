@@ -1,7 +1,7 @@
 
 import  {useState,useEffect} from "react"
 import axiosInstance from "../Dashboard/Form/Utils/AxiosInstance";
-import react from "react"
+import React from "react"
 import { Table } from "antd";
 import { Tag } from "antd";
 import {
@@ -18,8 +18,9 @@ import { CheckCircle, AlertTriangle, Info,FileText,Upload,Banknote,ShoppingBag, 
 import { useParams } from "react-router-dom";
 const SingleRetailerDetails = () => {
    const {id} = useParams()
+   console.log(id)
     console.log(id)
-     const [singleRetailer,setSingleRetailer] = useState([])
+     const [singleRetailer,setSingleRetailer] = useState({})
       console.log("singleRetailer",singleRetailer)
        const getUser = async () => {
               console.log("getUser called ");
@@ -34,9 +35,11 @@ const SingleRetailerDetails = () => {
               }
           }
 
-          useEffect(()=>{
-            getUser()
-          },[])
+         useEffect(() => {
+  if (id) {
+    getUser();
+  }
+}, [id]);
   //  TABLE COLUMNS (OUTSIDE JSX)
   const columns = [
     {
@@ -158,7 +161,11 @@ return(
         {/* Details */}
         <div className="flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <h1 className="text-xl font-bold">MediCare Pharmacy</h1>
+
+
+          <h1 className="text-xl font-bold">
+ {singleRetailer && singleRetailer.pharmacyname ? singleRetailer.pharmacyname : "Loading..."}
+</h1>
             <span className="bg-green-100 text-green-600 text-xs px-3 py-1 rounded-full font-semibold">
               ACTIVE
             </span>
@@ -179,11 +186,14 @@ return(
  </div>
 </div>
 </div>
-          <p className="text-gray-500 text-sm mt-1">
-            ID: RT8821 | Mumbai, MH | GST: 27AADCM2233M1Z5
-          </p>
+         <p className="text-gray-500 text-sm mt-1">
+  ID: {singleRetailer?._id} | {singleRetailer?.location} | GST: {singleRetailer?.license}
+</p>
 
           <div className="flex items-center gap-4 mt-2 text-sm text-gray-600">
+             <span>👤 {singleRetailer?.username || "Loading..."}</span>
+  <span>📧 {singleRetailer?.email || "Loading..."}</span>
+  <span>📞 {singleRetailer?.contact || "Loading..."}</span>
             <span>⭐ 4.8 (124 reviews)</span>
             <span>✔ Partner for 5 years</span>
           </div>
