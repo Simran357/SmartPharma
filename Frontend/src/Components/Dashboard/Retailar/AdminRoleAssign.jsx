@@ -7,7 +7,7 @@ const AdminRoleAssign = () => {
   const [users, setUser] = useState([])
   const [selectedRole, setSelectedRole] = useState("All")
 const [openModel, setModel] = useState(false)
-
+  
  const filteredUsers =
     selectedRole === "All"
       ? users : users.filter(user => user.role === selectedRole);
@@ -38,8 +38,8 @@ const [openModel, setModel] = useState(false)
   useEffect(() => {
     console.log("Component mounted ");
     getUser()
-  }, []);
-
+  }, []);  
+                                              
   const getUser = async () => {
     console.log("getUser called ");
     try {
@@ -77,6 +77,7 @@ const [openModel, setModel] = useState(false)
       console.log("Error assigning role:", error);
     }
   };
+  
 
 
   return (
@@ -86,7 +87,7 @@ const [openModel, setModel] = useState(false)
           <div className="space-y-1">
             <h2 className="text-3xl font-extrabold tracking-tight">User Role Management</h2>
             <p className=" text-sm font-medium">Define, assign, and audit access permissions across your organization.</p>
-          </div>
+          </div>  
           <div className="flex space-x-3">
             <button className="px-6 py-2.5  text-sm font-semibold rounded-lg  transition-colors">
               Export Report

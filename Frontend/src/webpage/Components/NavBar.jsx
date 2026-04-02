@@ -10,21 +10,22 @@ const NavBar = () => {
   const location = useLocation();
   const links = ["Home", "Medicines", "Services", "Contact", "RoleBased"];
 console.log("location",location)
-  // Scroll effect 
-  useEffect(() => {
+  // Scroll effect                          
+  useEffect(() => {  
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
     };
-
+                                                               
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
 useEffect(() => {
   if (location.state?.openModal) {
     setIsOpen(true);
-  }
-}, [location.state]);
-  return (
+  }   
+}, [location.state]);  
+  return ( 
     <nav className={`fixed top-0 w-full z-50 ${scrolled ? "bg-white shadow-md" : "bg-transparent"}`}>
 
       <div className="flex justify-between items-center p-4">
@@ -47,7 +48,7 @@ useEffect(() => {
             </a>
           ))}
         </div>
-
+                                  
         {/* Desktop Right */}
         <div className="hidden md:flex gap-3 items-center">
           <input
@@ -55,7 +56,7 @@ useEffect(() => {
             placeholder="Search..."
             className="px-3 py-2 bg-white border rounded-lg"
           />
-
+  
         <button
             className="bg-linear-to-r from-emerald-400 to-teal-500 text-white px-5 py-2 rounded-full"
             onClick={() => setIsOpen(true)}>
@@ -67,15 +68,15 @@ useEffect(() => {
         <button
           className="md:hidden text-2xl"
           onClick={() => setMobileOpen(!mobileOpen)}
-        >
+        > 
           {mobileOpen ? <X /> : <Menu />}
-        </button>
+        </button>   
       </div>
 
       {/* Mobile Menu */}
-      {mobileOpen && (
+      {mobileOpen && (    
         <div className="absolute top-full left-0 w-full bg-white shadow-md p-4 flex flex-col gap-4 md:hidden">
-
+                
           {links.map((item) => (
             <a
               key={item}
@@ -93,12 +94,11 @@ useEffect(() => {
             className="px-3 py-2 border rounded"
           />
         </div>
-
-      )}
-     {isOpen && (
+ )}  
+     {isOpen && (    
   <div
 className="fixed inset-0 bg-black/40 flex items-center justify-center"
-    onClick={() => setIsOpen(false)}
+    onClick={() => setIsOpen(false)} 
   >
     <motion.div
       initial={{ scale: 0 }}
@@ -112,17 +112,12 @@ className="fixed inset-0 bg-black/40 flex items-center justify-center"
       <button
         className="mt-2 text-red-400 text-sm block mx-auto"
         onClick={() => setIsOpen(false)}
-      >
-        Close
+      >  
+        Close   
       </button>
     </motion.div>
   </div>
 )}
     </nav>
-
-
-
-  );
-};
-
+);}; 
 export default NavBar;
