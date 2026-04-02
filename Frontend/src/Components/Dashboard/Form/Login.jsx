@@ -45,9 +45,8 @@ const Login = () => {
         localStorage.setItem("jwtToken", setToken)
         alert("Login Successful");
         setState(res?.data?.message)
-        setAuth(res?.data?.jwtToken)
-        navigate("/Dashboard") 
-      } 
+        navigate("/Dashboard")
+      }
     } catch (err) {
       setLoading(false);
       console.log("ERROR MESSAGE:", err);
