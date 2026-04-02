@@ -26,7 +26,7 @@ const UserProfileMenu = ({ username = "User", role = "Admin" }) => {
       {/* Avatar */}
       <div
         onClick={() => setOpen(!open)}
-        className="w-10 h-10 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 text-white flex items-center justify-center font-bold cursor-pointer shadow-md"
+        className="w-10 h-10 rounded-full bg-linear-to-r from-indigo-500 to-purple-500 text-white flex items-center justify-center font-bold cursor-pointer shadow-md"
       >
         {username?.charAt(0).toUpperCase()}
       </div>
