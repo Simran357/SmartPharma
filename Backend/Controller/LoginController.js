@@ -17,7 +17,7 @@ const LoginController = async (req,res,next)=>{
             success:true,
             message:"user does not exist"
         })
-    }
+    } 
 const isMatch = await bcrypt.compare(password, user?.password)
 
    if (!isMatch) {
@@ -44,7 +44,7 @@ secure: false    })
     return res.status(200).json({
         success:true,
         message:"Login successfull",
-      jwtToken:jwtToken
+         jwtToken:jwtToken
     })
 
 }

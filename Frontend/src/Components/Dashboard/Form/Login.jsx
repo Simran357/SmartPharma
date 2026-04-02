@@ -4,12 +4,12 @@ import { useNavigate } from 'react-router-dom';
 import axiosInstance from './Utils/AxiosInstance';
 import { contextProvide } from './Utils/Context/CommonContext';
 import { useGoogleLogin } from '@react-oauth/google';
-const Login = () => {
-  const navigate = useNavigate()
+const Login = () => {                
+  const navigate = useNavigate()   
   const { setAuth } = useContext(contextProvide)
   const [state, setState] = useState("");
   const [loading, setLoading] = useState(false);
-  console.log(state)
+  console.log(state)      
   const googleLogin = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       console.log("tokenresponse", tokenResponse.access_token)
@@ -33,21 +33,21 @@ const Login = () => {
     onError: () => {
       console.log("login failed")
     }
-  })
+  })   
   const onFinish = async (values) => {
     console.log("Success:", values);
-    try {
-      setLoading(true);
+    try {    
+      setLoading(true); 
       const res = await axiosInstance.post("/registerroute/LoginController", values);
       if (res?.data?.success) {
         const setToken = res?.data?.jwtToken
-        console.log(setToken)
+        console.log(setToken) 
         localStorage.setItem("jwtToken", setToken)
         alert("Login Successful");
         setState(res?.data?.message)
         setAuth(res?.data?.jwtToken)
-        navigate("/Dashboard")
-      }
+        navigate("/Dashboard") 
+      } 
     } catch (err) {
       setLoading(false);
       console.log("ERROR MESSAGE:", err);
@@ -84,7 +84,7 @@ const Login = () => {
               label="Email"
               name="email"
               rules={[{ required: true, message: "Please enter email" }]}
-            >
+            >   
               <Input
                 size="large"
                 placeholder="Enter your email"
@@ -135,13 +135,13 @@ const Login = () => {
             className="w-full h-10 rounded-lg border"
           >
             Continue with Google
-          </Button>
-
-          {/* MESSAGE */}
-          {state && (
+          </Button>       
+                                           
+          {/* MESSAGE */}                                  
+          {state && ( 
             <p className="text-center mt-4 text-sm text-red-500">
               {state}
-            </p>
+            </p>  
           )}
         </div>
       </div>

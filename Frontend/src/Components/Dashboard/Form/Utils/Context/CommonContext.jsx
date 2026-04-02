@@ -1,6 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react'
 import axiosInstance from '../AxiosInstance'
-
 export const contextProvide = createContext()
 const CommonContext = ({ children }) => { 
   const [auth, setAuth] = useState(null)
@@ -15,7 +14,7 @@ console.log("userrole in sontext", userRoles)
         setUserRoles(res?.data?.user?.role)
       })  
       .catch(() => {
-        setAuth("");
+        setAuth(""); 
         setUserRoles("")
       });
   }, []);
