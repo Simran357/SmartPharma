@@ -1,36 +1,56 @@
-const ProductModel = require("../model/Product.model")
+const ProductModel = require("../model/Product.model");
 
-const AddProductList= async (req,res,next)=>{
+const AddProductList = async (req, res) => {
+  try {
+    const userId = req?.user?.id;
+    console.log("USER ID:", userId);
+    console.log("BODY:", req.body);
 
-    console.log("Addproduct list hits")
-   
-     const { formData ,auth } = req.body;
-console.log("auth",auth)
-  const {
-    ProductName,
-    ProductSku,
-    ProductQuantity,
-    ProductCategory,
-    ProductExpiryDate
-  } = formData;
+    const {
+      ProductName,
+      ProductSku,
+      ProductQuantity,
+      ProductCategory,
+      ProductExpiryDate
+    } = req.body;
 
-  let ProductCheck = await ProductModel.findOne({ ProductName });
-    if(!ProductCheck){
-        ProductCheck = await ProductModel.create({
-          userId: auth,
-            ProductName:ProductName,
-            ProductSku:ProductSku,
-            ProductExpiryDate:ProductExpiryDate,
-            ProductQuantity:ProductQuantity,
-            ProductCategory:ProductCategory,
-
-        })
+    if (!ProductName || !ProductSku || !ProductCategory || !ProductQuantity || !ProductExpiryDate) {
+      return res.status(400).json({ message: "All fields required" });
     }
 
+    let ProductCheck = await ProductModel.findOne({
+      ProductSku,
+      ProductExpiryDate,
+        userId
 
+    });
 
-    res.status(200).json({message:"medicine save successfully"})
+    if (!ProductCheck) {
+      const newProduct = await ProductModel.create({
+        userId,
+        ProductName,
+        ProductSku,
+        ProductQuantity,
+        ProductCategory,
+        ProductExpiryDate
+      });
 
-}
+      return res.status(200).json({
+        success: true,
+        message: "medicine save successfully",
+        data: newProduct
+      });
+    }
 
-module.exports = AddProductList
+    return res.status(200).json({
+      success: false,
+      message: "Product already exists"
+    });
+
+  } catch (error) {
+    console.log("ERROR:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+module.exports = AddProductList;

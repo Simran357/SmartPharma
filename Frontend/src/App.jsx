@@ -81,7 +81,6 @@ const App = () => {
             <Route path="SingleMedicineInfo" element={<SingleMedicineInfo />} />
             <Route path="WhatsappTempelate" element={<WhatsappTempelate />} />
             <Route path="ReturnInvoice" element={<ReturnInvoice />} />
-            <Route path="Cart" element={<Cart />} />
             <Route path="FilterWholesaler" element={<FilterOutWholesaler />} />
              <Route path="FilterWholesaler" element={<FilterOutWholesaler />} />
              <Route path="OneMedicine" element={<OneMedicine />} />
@@ -92,6 +91,8 @@ const App = () => {
               <Route path="FilterOutWholesaler" element={<FilterOutWholesaler />} />
               <Route path="MixedWholesaler" element={<MixedWholesaler />} />
               <Route path=":id" element={<SingleWholesalerInfo />} />
+                          <Route path=":id/Cart" element={<Cart />} />
+
             </Route>
             <Route path="Courier" element={<Courier />} />
             <Route path="Connectcourier" element={<Connectcourier />} />

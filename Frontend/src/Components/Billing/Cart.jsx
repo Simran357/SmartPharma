@@ -2,15 +2,51 @@ import React from "react";
 import LocalShippingOutlined from '@mui/icons-material/LocalShippingOutlined';
 import AddShoppingCart from '@mui/icons-material/AddShoppingCart';
 import EditCalendarRounded from '@mui/icons-material/EditCalendarRounded';
-import SupportAgentRounded from '@mui/icons-material/SupportAgentRounded';
 import Download from '@mui/icons-material/Download';
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useState } from "react";
 const Cart = () => {
   const navigate = useNavigate()
-  return (
+const location = useLocation();
 
-  
+const cartItems = location.state?.cartProduct || [];
+const [cart, setCart] = useState(cartItems);
+console.log("cart page product", cartItems);
+const increaseQty = (id) => {
+  setCart((prev) =>
+    prev.map((item) =>
+      item._id === id
+        ? { ...item, qty: item.qty + 1 }
+        : item
+    )
+  );
+}; 
 
+const decreaseQty = (id) => {
+  setCart((prev) =>
+    prev
+      .map((item) =>
+        item._id === id
+          ? { ...item, qty: item.qty - 1 }
+          : item
+      )
+      .filter((item) => item.qty > 0)
+  );
+};
+
+const subtotal = cart.reduce(
+  (acc, item) => acc + item.qty * (item.price || 0),
+  0
+);
+const shipping = subtotal > 1000 ? 0 : 150;
+
+const tax = subtotal * 0.05; // 5% GST example
+
+const discount = subtotal > 2000 ? subtotal * 0.1 : 0; // 10% discount rule
+
+const total = subtotal + shipping + tax - discount;
+
+return (
     <div className="min-h-screen  p-6">
       <div className="max-w-7xl mx-auto">
 
@@ -53,78 +89,102 @@ const Cart = () => {
            </div>
 
         {/* MAIN GRID */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-
+<div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
           {/* LEFT SIDE */}
           <div className="lg:col-span-2 space-y-6">
 
             {/* CART */}
-            <div className="bg-white rounded-xl shadow-sm p-5">
-              <h2 className="font-semibold mb-4"><AddShoppingCart style={{ color: "green" }} /> Items in Cart (3)</h2>
+    <div className="bg-white rounded-xl shadow-sm p-5">
 
-              <div className="grid grid-cols-7 text-l text-gray-500 border-b pb-2">
-                <span>Medicine</span>
-                <span>Batch / Expiry</span>
-                <span>Qty</span>
-                <span>Unit Price</span>
-                <span>Scheme</span>
-                <span>Total</span>
-              </div>
+  <h2 className="font-semibold mb-4 flex items-center gap-2">
+    <AddShoppingCart style={{ color: "green" }} />
+    Items in Cart ({cartItems.length})
+  </h2>
 
-              {/* ITEM 1 */}
-              <div className="grid grid-cols-7 items-center py-4 border-b text-sm">
-                <div>
-                  <p className="font-medium ">Amoxicillin 500mg</p>
-                  <p className="text-xs text-gray-500">Broad-spectrum antibiotic</p>
-                </div>
-                <span>#B44201 <br /> Exp: 12/25</span>
-                <span className="flex gap-2 items-center">
-                  <button className="px-2 border rounded">-</button> 50
-                  <button className="px-2 border rounded">+</button>
-                </span>
-                <span>₹12.00</span>
-                <span className="text-green-600 text-xs bg-green-100 px-2 py-1 rounded-full w-fit">
-                  10+5 FREE
-                </span>
-                <span className="font-semibold">₹600.00</span>
-              </div>
+  {/* HEADER (desktop only) */}
+  <div className="hidden md:grid grid-cols-7 text-gray-500 pb-2 border-b text-sm">
+    <span>Medicine</span>
+    <span>Batch / Expiry</span>
+    <span>Qty</span>
+    <span>Unit Price</span>
+    <span>Scheme</span>
+    <span>Total</span>
+  </div>
 
-              {/* ITEM 2 */}
-              <div className="grid grid-cols-7 items-center py-4 border-b text-sm">
-                <div>
-                  <p className="font-medium">Paracetamol 650mg</p>
-                  <p className="text-xs text-gray-500">Analgesic & Antipyretic</p>
-                </div>
-                <span>#B99182 <br /> Exp: 10/24</span>
-                <span className="flex gap-2 items-center">
-                  <button className="px-2 border rounded">-</button> 100
-                  <button className="px-2 border rounded">+</button>
-                </span>
-                <span>₹2.50</span>
-                <span className="text-green-600 text-xs bg-green-100 px-2 py-1 rounded-full w-fit">
-                  20+1 FREE
-                </span>
-                <span className="font-semibold">₹250.00</span>
-              </div>
+  {/* EMPTY STATE */}
+  {cartItems.length === 0 ? (
+    <p className="text-gray-400 text-sm mt-4">Cart is empty</p>
+  ) : (
+    
+    <div className="space-y-4">
 
-              {/* ITEM 3 */}
-              <div className="grid grid-cols-7 items-center py-4 text-sm">
-                <div>
-                  <p className="font-medium">Paracetamol 650mg </p>
-                  <p className="text-xs text-gray-500">Antihistamine</p>
-                </div>
-                <span>#B11029 <br /> Exp: 08/26</span>
-                <span className="flex gap-2 items-center">
-                  <button className="px-2 border rounded">-</button> 20
-                  <button className="px-2 border rounded">+</button>
-                </span>
-                <span>₹5.00</span>
-                <span className="text-gray-400 text-xs">No scheme</span>
-                <span className="font-semibold">₹100.00</span>
-              </div>
-            </div>
+      {cartItems.map((item) => (
+        
+        <div
+          key={item._id}
+          className="
+            grid grid-cols-1 md:grid-cols-7 
+            gap-3 md:gap-0 
+            items-start md:items-center 
+            py-4 border-b text-sm
+          "
+        >
 
-            {/* COURIER + PICKUP */}
+          {/* NAME */}
+          <div>
+            <p className="font-medium">{item.ProductName}</p>
+            <p className="text-xs text-gray-500">{item.ProductCategory}</p>
+          </div>
+
+          {/* BATCH / EXPIRY */}
+          <div className="text-xs md:text-sm">
+            {item.ProductSku}
+            <br />
+            Exp: {new Date(item.ProductExpiryDate).toLocaleDateString()}
+          </div>
+
+          {/* QTY */}
+          <div className="flex items-center gap-2">
+            <button
+              className="px-2 py-1 border rounded"
+              onClick={() => decreaseQty(item._id)}
+            >
+              -
+            </button>
+
+            <span className="min-w-20px text-center">
+              {item.qty}
+            </span>
+
+            <button
+              className="px-2 py-1 border rounded"
+              onClick={() => increaseQty(item._id)}
+            >
+              +
+            </button>
+          </div>
+
+          {/* UNIT PRICE */}
+          <div>₹{item.price || 0}</div>
+
+          {/* SCHEME */}
+          <div>
+            <span className="text-green-600 text-xs bg-green-100 px-2 py-1 rounded-full w-fit">
+              No Scheme
+            </span>
+          </div>
+
+          {/* TOTAL */}
+          <div className="font-semibold">
+            ₹{item.qty * (item.price || 0)}
+          </div>
+
+        </div>
+      ))}
+
+    </div>
+  )}
+</div>     {/* COURIER + PICKUP */}
             <div className="grid md:grid-cols-2 gap-6">
 
               <div className="bg-white rounded-xl shadow-sm p-5">
@@ -177,98 +237,110 @@ const Cart = () => {
 
 {/* right */}
 {/* RIGHT SIDE */}
-<div className="flex flex-col gap-6">
+{/* RIGHT SIDE */}
+<div className="lg:col-span-1 space-y-6">
 
-    {/* <div className="max-w-sm bg-white rounded-2xl shadow-md p-6 border"> */}
-    <div className="max-w-sm bg-white rounded-2xl shadow-md p-6 border h-fit sticky top-6"> <h2 className="text-xl font-semibold mb-4">Order Summary</h2>
-      {/* Order Fulfillment */}
-      <div className="flex justify-between mb-2">
-        <span className="font-medium">Order Fulfillment</span>
-        <span className="text-green-600 font-semibold">100% Complete</span>
-      </div>
+  {/* ORDER SUMMARY */}
+  <div className="bg-white rounded-2xl shadow-md p-6 border h-fit sticky top-6">
+    
+    <h2 className="text-xl font-semibold mb-4">
+      Order Summary
+    </h2>
 
-      <div className="w-full bg-gray-200 rounded-full h-3 mb-2">
-        <div className="bg-green-500 h-3 rounded-full w-full"></div>
-      </div>
+    {/* Order Fulfillment */}
+    <div className="flex justify-between mb-2">
+      <span className="font-medium">Order Fulfillment</span>
+      <span className="text-green-600 font-semibold">100% Complete</span>
+    </div>
 
-      <p className="text-sm text-gray-500 mb-6">
-        All 3 products are ready to ship immediately.
-      </p>
+    <div className="w-full bg-gray-200 rounded-full h-3 mb-2">
+      <div className="bg-green-500 h-3 rounded-full w-full"></div>
+    </div>
 
-      {/* Price Details */}
-      <div className="space-y-3 text-gray-700">
-        <div className="flex justify-between">
-          <span>Subtotal (3 items)</span>
-          <span>$1,550.00</span>
-        </div>
+    <p className="text-sm text-gray-500 mb-6">
+      All items are ready to ship immediately.
+    </p>
 
-        <div className="flex justify-between">
-          <span>Est. Shipping</span>
-          <span>$25.00</span>
-        </div>
+    {/* Price */}
+   <div className="space-y-3 text-gray-700">
 
-        <div className="flex justify-between">
-          <span>Tax</span>
-          <span>$124.00</span>
-        </div>
+  {/* Subtotal */}
+  <div className="flex justify-between">
+    <span>Subtotal ({cart.length} items)</span>
+    <span>₹{subtotal.toFixed(2)}</span>
+  </div>
 
-        <div className="flex justify-between bg-green-50 text-green-700 px-2 py-1 rounded">
-          <span>Optimization Savings</span>
-          <span>-$45.00</span>
-        </div>
-      </div>
+  {/* Shipping */}
+  <div className="flex justify-between">
+    <span>Shipping</span>
+    <span className={shipping === 0 ? "text-green-600" : ""}>
+      {shipping === 0 ? "FREE" : `₹${shipping}`}
+    </span>
+  </div>
 
-      <hr className="my-5" />
+  {/* Tax */}
+  <div className="flex justify-between">
+    <span>GST (5%)</span>
+    <span>₹{tax.toFixed(2)}</span>
+  </div>
 
-      {/* Order Total */}
-      <div className="flex justify-between items-center mb-5">
-        <span className="text-lg font-semibold">Order Total</span>
-        <span className="text-orange-600 text-xl font-bold">$1,654.00</span>
-      </div>
+  {/* Discount */}
+  {discount > 0 && (
+    <div className="flex justify-between text-green-600">
+      <span>Discount</span>
+      <span>-₹{discount.toFixed(2)}</span>
+    </div>
+  )}
 
-      {/* Button */}
-      <button className="w-full bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-xl flex items-center justify-center gap-2 shadow-md">
-        
-        Proceed to Checkout
-      </button>
-
-      {/* Footer Info */}
-      <div className="mt-4 text-sm text-gray-500 space-y-1">
-        <p>✔ Secure B2B Payment Processing</p>
-        <p>🚚 Guaranteed delivery by Thursday</p>
-      </div>
 </div>
-{/* </div>  */}
-{/* NEXT BOX */}
-<div className="max-w-sm bg-white rounded-2xl shadow-md p-6 border h-fit sticky top-6"> 
-  <h2 className="text-xl font-semibold mb-4">SHIPMENT ORIGINS</h2>
 
-<div className="flex gap-4">
-  {/* map */}
-  <div className="w-28 h-28 bg-gray-100 rounded-lg flex items-center justify-center">
-            <span className="text-red-500 text-2xl">📍</span>
-          </div>
+    <hr className="my-5" />
 
-          {/* Text Section */}
-          <div className="flex flex-col justify-center">
-            
-            <p className="text-xs text-gray-500 font-semibold">
-              PRIMARY HUB
-            </p>
-            <p className="text-gray-800 font-medium mb-2">
-              Mumbai West DC
-            </p>
+    <div className="flex justify-between items-center mb-5">
+      <span className="text-lg font-semibold">Order Total</span>
+      <span className="text-orange-600 text-xl font-bold">
+  ₹{total.toFixed(2)}
+</span>
+    </div>
 
-            <p className="text-xs text-gray-500 font-semibold">
-              SECONDARY HUB
-            </p>
-            <p className="text-gray-800 font-medium">
-              Bangalore Logistics Park
-            </p>
+    <button className="w-full bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-xl">
+      Proceed to Checkout
+    </button>
+  </div>
 
-          </div>
-        </div>
-</div>
+  {/* SHIPMENT ORIGINS */}
+  <div className="bg-white rounded-2xl shadow-md p-6 border">
+    
+    <h2 className="text-xl font-semibold mb-4">
+      SHIPMENT ORIGINS
+    </h2>
+
+    <div className="flex gap-4">
+
+      <div className="w-28 h-28 bg-gray-100 rounded-lg flex items-center justify-center">
+        <span className="text-red-500 text-2xl">📍</span>
+      </div>
+
+      <div className="flex flex-col justify-center">
+
+        <p className="text-xs text-gray-500 font-semibold">
+          PRIMARY HUB
+        </p>
+        <p className="text-gray-800 font-medium mb-2">
+          Mumbai West DC
+        </p>
+
+        <p className="text-xs text-gray-500 font-semibold">
+          SECONDARY HUB
+        </p>
+        <p className="text-gray-800 font-medium">
+          Bangalore Logistics Park
+        </p>
+
+      </div>
+    </div>
+  </div>
+
 </div>
 </div>
         </div>
