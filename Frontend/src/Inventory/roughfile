@@ -18,12 +18,12 @@ function WhatsappTempelate() {
     return (
         <div className="grid grid-cols-[1.3fr_2fr_1.3fr] min-h-screen">
             {/* leftbar */}
-            <div className='flex flex-col gap-4 border-1 px-6 py-4'>
+            <div className='flex flex-col gap-4 border px-6 py-4'>
                 <h1 className='text-xl font-bold'>Message Tempelate</h1>
 
                 <div className='flex flex-col gap-1.5'>
                     <span className='font-semibold text-gray-700'>Template Category</span>
-                    <div className='px-2 py-1 border-1 rounded-sm bg-gray-300'>
+                    <div className='px-2 py-1 border rounded-sm bg-gray-300'>
                         <p className='text-sm'>Stock Back in Inventory</p>
                     </div>
                 </div>
@@ -31,12 +31,12 @@ function WhatsappTempelate() {
                 <div className='flex flex-col gap-1.5'>
                     <div className='flex items-end justify-between'>
                         <span className='font-semibold text-gray-700'>Content Editor</span>
-                        <span className='text-green-500 font-[500]'>Add Variable</span>
+                        <span className='text-green-500 font-500px'>Add Variable</span>
                     </div>
                     <div className='rounded-sm bg-gray-300'>
-                        <textarea value={text} onChange={(e) => {
-                            settext(e.target.value)
-                        }}
+                        <textarea value={text}
+                         onChange={(e) => {
+                            settext(e.target.value)}}
                             className="w-full border border-gray-300 p-2 rounded-md resize-y block"
                             placeholder="Enter Details Here"
                         />
@@ -134,7 +134,7 @@ function WhatsappTempelate() {
             {/* middlebar ends here */}
 
             {/* rightbar starts here */}
-            <div className=' border-1 px-8 pr-12 py-6'>
+            <div className=' border px-8 pr-12 py-6'>
                 <h1 className='text-xl font-semibold' >
                     Trigger Settings
                 </h1>

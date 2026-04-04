@@ -1,340 +1,273 @@
-import React from "react";
-import { useState, useEffect } from "react";
-import { Input, Button, Table, Card } from "antd";
-import axios from "axios";
+import React, { useState, useEffect } from "react";
+import axiosInstance from "../Components/Dashboard/Form/Utils/AxiosInstance";
 
+const StockEntry = ({ onClose }) => {
+  const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-const batchColumns = [
-  { title: "Batch #", dataIndex: "batch" },
-  { title: "Expiry", dataIndex: "expiry" },
-  { title: "Qty", dataIndex: "qty" },
-  { title: "MRP", dataIndex: "mrp" },
-  { title: "Ageing", dataIndex: "ageing" },
-];
-
-const data = [
-  {
-    key: "1",
-    name: "Paracetamol 500mg (Dolo)",
-    hsn: "3004",
-    batch: "BT9982",
-  },
-  {
-    key: "2",
-    name: "Amoxicillin 250mg",
-    hsn: "3004",
-    batch: "AX-011",
-  },
-];
-const batchData = [
-  {
-    key: "1",
-    batch: "BT8812",
-    expiry: "05/25",
-    qty: 400,
-    mrp: "18.00",
-    ageing: "120 days",
-  },
-  {
-    key: "2",
-    batch: "BT7701",
-    expiry: "12/23",
-    qty: 120,
-    mrp: "17.50",
-    ageing: "Expiring",
-  },
-];
-
-const StockEntry = () => {
-  //Medicine
- const [items, setItems] = useState([]);
-
- const handleItemChange = (value, index, field) => {
-    const updated = [...items];
-    updated[index][field] = value;
-    setItems(updated);
-  };
-const columns = [
-  { title: "#", dataIndex: "key" },
- 
-   {
-    title: "Medicine Name",
-    dataIndex: "name",
-    render: (text, record, index) => (
-      <Input
-        value={text}
-        onChange={(e) => handleItemChange(e.target.value, index, "name")}
-      />
-    )
-  },
-   {
-    title: "HSN",
-    dataIndex: "hsn",
-    render: (text, record, index) => (
-      <Input
-        value={text}
-        onChange={(e) => handleItemChange(e.target.value, index, "hsn")}
-      />
-    )
-  },
-   {
-    title: "Batch",
-    dataIndex: "batch",
-    render: (text, record, index) => (
-      <Input
-        value={text}
-        onChange={(e) => handleItemChange(e.target.value, index, "batch")}
-      />
-    )
-  },
-  
-    {
-  title: "Qty",
-  dataIndex: "qty",
-  render: (text, record, index) => (
-    <Input
-      value={text}
-      onChange={(e) => handleItemChange(e.target.value, index, "qty")}
-    />
-  )
-},
-{
-  title: "MRP",
-  dataIndex: "mrp",
-  render: (text, record, index) => (
-    <Input
-      value={text}
-      onChange={(e) => handleItemChange(e.target.value, index, "mrp")}
-    />
-  )
-},
-{
-  title: "Expiry",
-  dataIndex: "expiry",
-  render: (text, record, index) => (
-    <Input
-      value={text}
-      onChange={(e) => handleItemChange(e.target.value, index, "expiry")}
-    />
-  )
-},
-{
-  title: "Pack",
-  dataIndex: "pack",
-  render: (text, record, index) => (
-    <Input
-      value={text}
-      onChange={(e) => handleItemChange(e.target.value, index, "pack")}
-    />
-  )
-},
-{
-  title: "Rate",
-  dataIndex: "rate",
-  render: (text, record, index) => (
-    <Input
-      value={text}
-      onChange={(e) => handleItemChange(e.target.value, index, "rate")}
-    />
-  )
-},
-{
-  title: "Amount",
-  dataIndex: "amount",
-  render: (text, record, index) => (
-    <Input
-      value={text}
-      onChange={(e) => handleItemChange(e.target.value, index, "amount")}
-    />
-  )
-}
-];
-const addRow = () => {
-  const newRow = {
-    key: Date.now(),
-    name: "",
-    hsn: "",
-    batch: "",
-    qty: "",
-    mrp: "",
-    expiry: "",
-    pack: "",
-    rate: "",
-    amount: ""
-  };
-
-  setItems((prev) => [...prev, newRow]);
-};
-
-//Form
   const [formData, setFormData] = useState({
     supplierName: "",
     invoiceNumber: "",
     date: "",
     poRef: "",
+    gstin: "",
+    dlNo: "",
+    phone: "",
+    address: "",
+    dueDate: "",
   });
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+  const [totals, setTotals] = useState({
+    subTotal: 0,
+    gst: 0,
+    grandTotal: 0,
+  });
 
-  const handleSubmit = async() => {
-    console.log("Sending Data",formData);
+  useEffect(() => {
+    if (items.length === 0) addRow();
+  }, []);
 
-  try {
-    const res = await axios.post(
-      "http://localhost:5001/api/user/stock/add",
-      formData
+  useEffect(() => {
+    const subTotal = items.reduce(
+      (acc, item) => acc + (Number(item.amount) || 0),
+      0
     );
-    console.log("Success:", res.data);
+    const gst = subTotal * 0.12;
+    const grandTotal = subTotal + gst;
 
-    
+    setTotals({ subTotal, gst, grandTotal });
+  }, [items]);
 
-  } catch (error) {
-    console.log(error);
-  }
+  const addRow = () => {
+    setItems((prev) => [
+      ...prev,
+      {
+        id: crypto.randomUUID(),
+        name: "",
+        pack:"",
+        hsn: "",
+        batch: "",
+        qty: "",
+        rate: "",
+        mrp: "",
+        gst: 5,
+        amount: "",
+        expiry: "",
+      },
+    ]);
   };
-  //get 
-const [stockData, setStockData] = useState([]);
-useEffect(() => {
-  fetchStock();
-}, []);
 
-const fetchStock = async () => {
-  try {
-    const res = await axios.get("http://localhost:5001/api/user/stock");
-    setStockData(res.data);
-  } catch (error) {
-    console.log(error);
-  }
-};
+  const deleteRow = (id) => {
+    if (items.length === 1) return;
+    setItems(items.filter((item) => item.id !== id));
+  };
+
+  const handleItemChange = (id, field, value) => {
+    const updated = items.map((item) => {
+      if (item.id === id) {
+        const newItem = { ...item, [field]: value };
+        newItem.amount =
+          (Number(newItem.qty) || 0) * (Number(newItem.rate) || 0);
+        return newItem;
+      }
+      return item;
+    });
+    setItems(updated);
+  };
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+  console.log("fprm data",formData)
+console.log("items in firm",items)
+  const handleSubmit = async () => {
+    try {
+      setLoading(true);
+      await axiosInstance.post("/registerroute/addStock", {
+        ...formData,
+        date: formData.date ? new Date(formData.date) : null,
+        items,
+        totals,
+      });
+      alert("Stock Added ✅");
+      setItems([]);
+      onClose();
+    } catch {
+      alert("Error saving stock");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const inputStyle =
+    "w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500";
+
   return (
-     
-    <div className="p-6 bg-gray-100 min-h-screen">
-      <h1 className="text-2xl font-bold mb-4">New Stock Entry</h1>
+    <div className="max-w-6xl mx-auto p-4 space-y-6">
 
-      {/* Top Form */}
-      <Card className="mb-6">
-        <div className="grid grid-cols-4 gap-4">
-         <div className="flex flex-col">
-      <label className="text-sm text-gray-600 mb-1">Supplier Name</label>
-      <Input 
-      type="text"
-        name="supplierName"
-        placeholder="suppliername" 
-        onChange={handleChange}
-      />
-    </div>
-         
-    <div className="flex flex-col">
-      <label className="text-sm text-gray-600 mb-1">Invoice Number</label>
-       <Input 
-       type="text"
-        name="invoiceNumber"
-        placeholder="invoicenumber" 
-        onChange={handleChange}
-      />
-    </div>
+      {/* HEADER */}
+      <h2 className="text-2xl font-semibold">Stock Entry</h2>
 
-    <div className="flex flex-col">
-      <label className="text-sm text-gray-600 mb-1">Date</label>
-         <Input 
-        type="text"
-        name="date"
-        onChange={handleChange}
-      />
-    </div>
+      {/* SUPPLIER SECTION */}
+      <div className="bg-white p-5 rounded-xl shadow space-y-4">
+        <h3 className="text-lg font-medium border-b pb-2">
+          Supplier Details
+        </h3>
 
-    <div className="flex flex-col">
-      <label className="text-sm text-gray-600 mb-1">Purchase Order Ref</label>
-      <Input 
-        type="text"
-        name="poRef"
-        onChange={handleChange}
-      />
-    </div>
+        <div className="grid md:grid-cols-3 gap-4">
+
+          <div>
+            <label className="label">Supplier Name</label>
+            <input name="supplierName" onChange={handleChange} className={inputStyle} />
+          </div>
+
+          <div>
+            <label className="label">Invoice Number</label>
+            <input name="invoiceNumber" onChange={handleChange} className={inputStyle} />
+          </div>
+
+          <div>
+            <label className="label">Invoice Date</label>
+            <input type="date" name="date" onChange={handleChange} className={inputStyle} />
+          </div>
+
+          <div>
+            <label className="label">GSTIN</label>
+            <input name="gstin" onChange={handleChange} className={inputStyle} />
+          </div>
+
+          <div>
+            <label className="label">Drug License</label>
+            <input name="dlNo" onChange={handleChange} className={inputStyle} />
+          </div>
+
+          <div>
+            <label className="label">Phone</label>
+            <input name="phone" onChange={handleChange} className={inputStyle} />
+          </div>
+
+          <div className="md:col-span-3">
+            <label className="label">Address</label>
+            <input name="address" onChange={handleChange} className={inputStyle} />
+          </div>
+
+          <div>
+            <label className="label">Due Date</label>
+            <input type="date" name="dueDate" onChange={handleChange} className={inputStyle} />
+          </div>
+
+          <div>
+            <label className="label">PO Ref</label>
+            <input name="poRef" onChange={handleChange} className={inputStyle} />
+          </div>
+
         </div>
-          <Button 
-        type="primary" 
-        className="mt-4"
-        onClick={handleSubmit}
-      >
-        Save
-      </Button>
-      </Card>
-
-      {/* Table Section */}
-      <Card className="mb-6">
-        {/* <Table columns={columns} dataSource={stockData} pagination={false} /> */}
-        {/* <Button type="dashed" className="mt-3">+ Add New Row</Button> */}
-        <Table columns={columns} dataSource={items} pagination={false} />
-        <Button 
-  type="dashed" 
-  className="mt-3"
-  onClick={addRow}
->
-  + Add New Row
-</Button>
-      </Card>
-
-      <div className="grid grid-cols-3 gap-6">
-        {/* Inventory Card */}
-        <Card className="col-span-2">
-          <h2 className="font-semibold mb-4">Batch-wise Inventory</h2>
-          <div className="grid grid-cols-3 gap-4 text-center">
-            <div className="p-4 bg-gray-100 rounded">
-              <p className="text-gray-500">Current Stock</p>
-              <h3 className="text-xl font-bold">1,240</h3>
-            </div>
-            <div className="p-4 bg-gray-100 rounded">
-              <p className="text-gray-500">Last Purchase Price</p>
-              <h3 className="text-xl font-bold">₹12.10</h3>
-            </div>
-            <div className="p-4 bg-gray-100 rounded">
-              <p className="text-gray-500">Near Expiry</p>
-              <h3 className="text-xl font-bold text-red-500">210</h3>
-            </div>
-          </div>
-
-  {/* 🔥 NEW TABLE */}
-  <Table
-    columns={batchColumns}
-    dataSource={batchData}
-    pagination={false}
-  />
-        </Card>
-
-        {/* Summary */}
-        <Card>
-          <div className="space-y-2">
-            <div className="flex justify-between">
-              <span>Sub Total</span>
-              <span>₹3,920.00</span>
-            </div>
-            <div className="flex justify-between">
-              <span>Taxable Amount</span>
-              <span>₹3,500.00</span>
-            </div>
-            <div className="flex justify-between">
-              <span>GST (12%)</span>
-              <span className="text-blue-500">₹420.00</span>
-            </div>
-            <div className="flex justify-between font-bold text-lg mt-4">
-              <span>Grand Total</span>
-              <span className="text-blue-600">₹3,920.00</span>
-            </div>
-          </div>
-
-          <Button type="primary" block className="mt-8">
-            Save
-          </Button> 
-
-  
-        </Card>
       </div>
+
+      {/* ITEMS SECTION */}
+      <div className="bg-white p-5 rounded-xl shadow space-y-4">
+        <h3 className="text-lg font-medium border-b pb-2">
+          Items
+        </h3>
+
+        {items.map((item) => (
+          <div key={item.id} className="grid md:grid-cols-6 gap-3 border p-3 rounded">
+
+            <input placeholder="Medicine"
+              value={item.name}
+              onChange={(e) => handleItemChange(item.id, "name", e.target.value)}
+              className={inputStyle}
+            />
+
+            <input placeholder="HSN"
+              value={item.hsn}
+              onChange={(e) => handleItemChange(item.id, "hsn", e.target.value)}
+              className={inputStyle}
+            />
+
+            <input placeholder="Batch No"
+              value={item.batch}
+              onChange={(e) => handleItemChange(item.id, "batch", e.target.value)}
+              className={inputStyle}
+            />
+            
+            <input placeholder="Pack"
+              value={item.pack}
+              onChange={(e) => handleItemChange(item.id, "pack", e.target.value)}
+              className={inputStyle}
+            />
+            <input placeholder="Qty" type="number"
+              value={item.qty}
+              onChange={(e) => handleItemChange(item.id, "qty", e.target.value)}
+              className={inputStyle}
+            />
+
+            <input placeholder="Rate" type="number"
+              value={item.rate}
+              onChange={(e) => handleItemChange(item.id, "rate", e.target.value)}
+              className={inputStyle}
+            />
+
+            <input placeholder="MRP" type="number"
+              value={item.mrp}
+              onChange={(e) => handleItemChange(item.id, "mrp", e.target.value)}
+              className={inputStyle}
+            />
+
+            <input value={item.amount} disabled className={`${inputStyle} bg-gray-100`} />
+
+            <input type="date"
+              value={item.expiry}
+              onChange={(e) => handleItemChange(item.id, "expiry", e.target.value)}
+              className={inputStyle}
+            />
+
+            <button
+              onClick={() => deleteRow(item.id)}
+              className="bg-red-500 text-white rounded px-3 py-1"
+            >
+              Delete
+            </button>
+
+          </div>
+        ))}
+
+        <button
+          onClick={addRow}
+          className="bg-blue-600 text-white px-4 py-2 rounded"
+        >
+          + Add Item
+        </button>
+      </div>
+
+      {/* TOTALS */}
+      <div className="bg-white p-5 rounded-xl shadow space-y-2">
+        <h3 className="text-lg font-medium border-b pb-2">Summary</h3>
+
+        <div className="flex justify-between">
+          <span>Sub Total</span>
+          <span>₹{totals.subTotal.toFixed(2)}</span>
+        </div>
+
+        <div className="flex justify-between">
+          <span>GST (12%)</span>
+          <span>₹{totals.gst.toFixed(2)}</span>
+        </div>
+
+        <div className="flex justify-between font-semibold text-lg">
+          <span>Grand Total</span>
+          <span>₹{totals.grandTotal.toFixed(2)}</span>
+        </div>
+      </div>
+
+      {/* SUBMIT */}
+      <button
+        onClick={handleSubmit}
+        disabled={loading}
+        className="w-full bg-green-600 text-white py-3 rounded-lg text-lg"
+      >
+        {loading ? "Saving..." : "Save Stock"}
+      </button>
     </div>
   );
 };

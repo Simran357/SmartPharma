@@ -1,16 +1,11 @@
 import React from 'react'
-import { FaMedkit } from "react-icons/fa";
-import { FaBell } from "react-icons/fa";
-import { FaUser } from "react-icons/fa";
 import { FaCheck } from "react-icons/fa";
-import { FaRegClipboard } from "react-icons/fa6";
 import { FaRegFileAlt } from "react-icons/fa";
 import { FaEye } from "react-icons/fa";
 
 
 const data = [
     { BatchId: "#DL1120", Description: "Amoxicillin 500mg Capsules", Qty: "150 Units" },
-    
 ];
 
 function ReturnInvoice() {

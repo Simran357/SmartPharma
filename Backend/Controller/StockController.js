@@ -1,31 +1,73 @@
-const Stockmodel =   require("../model/Stock.model")
-export const addStock = (req, res) => {
+const StockModel = require("../model/Stock.model");
+const StockValidation = require("../Validation/StockValidation");
+
+// ✅ ADD STOCK
+const addStock = async (req, res) => {
   try {
-    const { supplierName, invoiceNumber, date, poRef } = req.body;
+    console.log("Incoming:", req.body);
 
-    console.log("Data received:", req.body);
+    // ✅ Joi validation
+    const { error, value } = StockValidation.validate(req.body);
 
-    // basic validation
-    if (!supplierName || !invoiceNumber) {
-      return res.status(400).json({ message: "Missing fields" });
+    if (error) {
+      return res.status(400).json({
+        success: false,
+        message: error.details[0].message,
+      });
     }
 
-    
-    res.status(201).json({
+    const {
+      supplierName,
+      gstin,
+      dlNo,
+      phone,
+      address,
+      invoiceNumber,
+      date,
+      dueDate,
+      poRef,
+      items,
+      totals,
+    } = value;
+
+    // ✅ Duplicate check
+    const existing = await StockModel.findOne({ invoiceNumber });
+    if (existing) {
+      return res.status(400).json({
+        success: false,
+        message: "Invoice already exists",
+      });
+    }
+
+    // ✅ Create stock
+    const newStock = await StockModel.create({
+      supplierName,
+      gstin,
+      dlNo,
+      phone,
+      address,
+      invoiceNumber,
+      date,
+      dueDate,
+      poRef,
+      items,
+      totals,
+    });
+
+    return res.status(201).json({
+      success: true,
       message: "Stock added successfully",
-      data: { supplierName, invoiceNumber, date, poRef }
+      data: newStock,
     });
 
   } catch (error) {
-    res.status(500).json({ message: "Server error" });
+    console.error("ADD STOCK ERROR:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Server error",
+    });
   }
 };
 
-export const getStock = async (req, res) => {
-  try {
-    const data = await Stock.find(); // DB se data
-    res.json(data);
-  } catch (error) {
-    res.status(500).json({ message: "Server error" });
-  }
-};
+module.exports = addStock;

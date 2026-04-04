@@ -42,7 +42,7 @@ const App = () => {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Index/>} />
+        <Route path="/" element={<Index />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         {/* Layout = Header + Outlet */}
@@ -56,7 +56,7 @@ const App = () => {
           {/* Default landing page */}
           <Route path='Wholesaler' >
             <Route index element={<WholeSaler />} />
-            <Route path="AdminRoleAssign" element={<AdminRoleAssign/>}/>
+            <Route path="AdminRoleAssign" element={<AdminRoleAssign />} />
             <Route path="Lowstock" element={<Lowstock />} />
             <Route path="Dailysales" element={<Dailysales />} />
             <Route path="AiAgent" element={<AiAgent />} />
@@ -64,8 +64,8 @@ const App = () => {
             <Route path="TempelateDesigner" element={<TempelateDesigner />} />
             <Route path="ProductOverview" element={<ProductOverview />} />
             <Route path="Retailors">
-              <Route index  element={<Retailors />}/>
-             <Route path=":id" element={<SingleRetailerDetails/>} />
+              <Route index element={<Retailors />} />
+              <Route path=":id" element={<SingleRetailerDetails />} />
             </Route>
             <Route path="Alert" element={<Actionable />} />
             <Route path="pendingorders" element={<PendingOrders />} />
@@ -82,26 +82,23 @@ const App = () => {
             <Route path="WhatsappTempelate" element={<WhatsappTempelate />} />
             <Route path="ReturnInvoice" element={<ReturnInvoice />} />
             <Route path="FilterWholesaler" element={<FilterOutWholesaler />} />
-             <Route path="FilterWholesaler" element={<FilterOutWholesaler />} />
-             <Route path="OneMedicine" element={<OneMedicine />} />
-             <Route path="ActionablePrevention" element={<ActionablePrevention />} />
-           
-      <Route path="Order">
-  <Route index element={<OrderWholesaler />} />
-  <Route path="FindWholesaler" element={<OneWholesaler />} />
-  <Route path="FilterOutWholesaler" element={<FilterOutWholesaler />} />
-  <Route path="MixedWholesaler" element={<MixedWholesaler />} />
-  <Route path=":id" element={<SingleWholesalerInfo />} />
+            <Route path="FilterWholesaler" element={<FilterOutWholesaler />} />
+            <Route path="OneMedicine" element={<OneMedicine />} />
+            <Route path="ActionablePrevention" element={<ActionablePrevention />} />
+            <Route path="Order">
+              <Route index element={<OrderWholesaler />} />
+              <Route path="FindWholesaler" element={<OneWholesaler />} />
+              <Route path="FilterOutWholesaler" element={<FilterOutWholesaler />} />
+              <Route path="MixedWholesaler" element={<MixedWholesaler />} />
+              <Route path=":id" element={<SingleWholesalerInfo />} />
+              {/* ✅ Correct flow */}
+              <Route path=":id/Cart" element={<Cart />} />
+              <Route path=":id/Billing" element={<Billing />} >
+                <Route path="OrderSuccess" element={<OrderSuccess />} />
+              </Route>
 
-  {/* ✅ Correct flow */}
-  <Route path=":id/Cart" element={<Cart />} />
-  
-  <Route path=":id/Billing" element={<Billing />} >
-    <Route path="OrderSuccess" element={<OrderSuccess />} />
-  </Route>
+            </Route>
 
-</Route>
-            
             <Route path="Courier" element={<Courier />} />
             <Route path="Connectcourier" element={<Connectcourier />} />
           </Route>
