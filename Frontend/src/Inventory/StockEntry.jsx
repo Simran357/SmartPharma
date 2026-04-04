@@ -186,7 +186,7 @@ const addRow = () => {
 
   try {
     const res = await axios.post(
-      "http://localhost:5000/api/user/stock/add",
+      "http://localhost:5001/api/user/stock/add",
       formData
     );
     console.log("Success:", res.data);
@@ -205,7 +205,7 @@ useEffect(() => {
 
 const fetchStock = async () => {
   try {
-    const res = await axios.get("http://localhost:5000/api/user/stock");
+    const res = await axios.get("http://localhost:5001/api/user/stock");
     setStockData(res.data);
   } catch (error) {
     console.log(error);
