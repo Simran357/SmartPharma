@@ -56,6 +56,14 @@ const Retailerlayout = () => {
       key: "/Dashboard/Retailer/OneMedicine",
       icon: <DeliveryDining />,
       label: "OneMedicine",
+    }, {
+      key: "/Dashboard/Retailer/InvoicePurchaseScan",
+      icon: <DeliveryDining />,
+      label: "InvoicePurchaseScan",
+    },{
+       key: "/Dashboard/Retailer/Courier",
+      icon: <DeliveryDining />,
+      label: "Courier",
     }
   ]
 
@@ -98,7 +106,6 @@ const Retailerlayout = () => {
 
               <NotificationMenu />
               <SettingsMenu />
-
               <UserProfileMenu
                 username="Wholesaler"
                 role="Admin"

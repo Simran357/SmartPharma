@@ -9,8 +9,12 @@ const SingleWholesalerInfo = () => {
   console.log("id",id)
   const {auth} = useContext(contextProvide)
   const [medicines, setMedicines] = useState([])
-  const [singleWholesaler,setSingleWholesaler] = useState({})
-  const [cartProduct,setCartProduct] = useState([])
+const [singleWholesaler, setSingleWholesaler] = useState({})
+const [cartProduct, setCartProduct] = useState(() => {
+  const storedCart = localStorage.getItem("cart");
+  return storedCart ? JSON.parse(storedCart) : [];
+});
+
   const navigate = useNavigate()
   console.log("singleWholesaler",singleWholesaler)
    const getUser = async () => {
@@ -49,11 +53,13 @@ const getMedicines = async () => {
     }, [id]);
 
 
+useEffect(() => {
+  localStorage.setItem("cart", JSON.stringify(cartProduct));
+}, [cartProduct]);
   const handleCartItem = (ProductId) => {
   const selectedProduct = medicines.find(
     (product) => product._id === ProductId
   );
-
   if (!selectedProduct) return;
 
   setCartProduct((prevCart) => {
@@ -83,7 +89,18 @@ const getMedicines = async () => {
     )
   );
 };
+useEffect(() => {
+  const storedWholesaler = localStorage.getItem("wholesalerId");
+  if (storedWholesaler && storedWholesaler !== id) {
+    setCartProduct([]);
+    localStorage.removeItem("cart");
+  }
+  localStorage.setItem("wholesalerId", id);
+}, [id]);
 
+const isInCart = (id) => {
+  return cartProduct.some(item => item._id === id);
+};
  const decreaseQty = (id) => {
   setCartProduct((prev) =>
     prev
@@ -95,6 +112,8 @@ const getMedicines = async () => {
       .filter((item) => item.qty > 0) // remove if qty = 0
   );
 };
+const totalItems = cartProduct.reduce((total, item) => total + item.qty, 0);
+
   // const navigate = useNavigate()
   return (
     <>
@@ -240,11 +259,14 @@ const getMedicines = async () => {
       {/* Content */}
       <div className="mt-3 space-y-1">
         <p className="text-gray-400 text-xs">{med.ProductSku}</p>
-
-        <h3 className="font-semibold text-base">
+   <span>
+        <h3 className="font-semibold text-base block">
           {med.ProductName}
         </h3>
-
+<p className="text-gray-400 text-xs">
+  Batch: {med.ProductBatchNo || "N/A"}
+</p>
+</span>
         <p className="text-gray-500 text-xs">
           Exp: {new Date(med.ProductExpiryDate).toLocaleDateString()}
         </p>
@@ -252,15 +274,21 @@ const getMedicines = async () => {
         {/* Price + Cart */}
         <div className="flex justify-between items-center mt-2">
           <p className="text-lg font-bold text-gray-800">
-            ₹ {med.price || 0}
+₹ {med.ProductPrice || 0}
             <span className="text-xs text-gray-400 ml-1">/ unit</span>
           </p>
 
-          <button className="bg-green-100 hover:bg-green-200 p-2 rounded-lg transition"
-          onClick={()=>handleCartItem(med._id)}
-          >
-            🛒
-          </button>
+        <button
+  disabled={isInCart(med._id)}
+  className={`p-2 rounded-lg transition ${
+    isInCart(med._id)
+      ? "bg-gray-200 cursor-not-allowed"
+      : "bg-green-100 hover:bg-green-200"
+  }`}
+  onClick={() => handleCartItem(med._id)}
+>
+  🛒
+</button>
         </div>
 
         {/* Optional Offer */}
@@ -293,10 +321,9 @@ const getMedicines = async () => {
         <ShoppingBag fontSize='medium' />
         <p className='text-md font-bold'>MY CART</p>
       </span>
-
-      <span className='bg-green-300/90 text-green-800/80 text-xs font-medium rounded-2xl px-2'>
-        {cartProduct.length} Items
-      </span>
+<span className='bg-green-300/90 text-green-800/80 text-xs font-medium rounded-2xl px-2'>
+  {totalItems} Items
+</span>
     </div>
 
     {/* CART ITEMS */}
@@ -343,7 +370,7 @@ const getMedicines = async () => {
 
   <span className='text-sm flex items-center font-medium'>
     <CurrencyRupee fontSize='small' />
-    {item.qty * (item.price || 0)}
+    {item.qty * (item.ProductPrice || 0)}
   </span>
 </div>
   </div>
@@ -362,7 +389,7 @@ const getMedicines = async () => {
         <p className='flex items-center font-bold'>
           <CurrencyRupee fontSize='small' />
           {cartProduct.reduce((total, item) => {
-  return total + (item.qty * item.price);
+  return total + (item.qty * item.ProductPrice);
 }, 0)}
         </p>
       </span>
@@ -370,7 +397,7 @@ const getMedicines = async () => {
       <span className='flex justify-between items-center mt-2'>
         <h1 className='text-gray-400 text-sm'>Bulk Discount</h1>
         <p className='flex items-center text-green-300/80 font-bold'>
-          - <CurrencyRupee fontSize='small' />450.00
+          - <CurrencyRupee fontSize='small' />50.00
         </p>
       </span>
 
@@ -382,14 +409,14 @@ const getMedicines = async () => {
         <p className='flex items-center font-bold text-lg'>
           <CurrencyRupee fontSize='small' />
           {cartProduct.reduce((total, item) => {
-  return total + (item.qty * item.price);
-}, 0) - 450}
+  return total + (item.qty *item.ProductPrice);
+}, 0) - 50}
         </p>
       </span>
 
       {/* CHECKOUT */}
       <button className='w-full p-2 bg-green-600/70 rounded-xl mt-3 whitespace-nowrap text-black text-lg font-bold'
-      onClick={()=>navigate("Cart",{ state: { cartProduct }})}
+      onClick={()=>navigate("Cart", { state: { cartProduct } })}
       >
         Proceed to Checkout
       </button>

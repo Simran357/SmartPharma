@@ -13,12 +13,11 @@ import {
     IconButton,
     Divider
 } from '@mui/material'
-
-import UserProfileMenu from "./UserProfileMenu"
 import { Bell, Settings } from "lucide-react"
 import MenuIcon from '@mui/icons-material/Menu'
 import SchoolIcon from '@mui/icons-material/School'
 import { useNavigate, useLocation } from 'react-router-dom'
+import UserProfileMenu from '../UserProfile'
 
 const Header = () => {
     const [open, setOpen] = useState(false)
@@ -72,7 +71,6 @@ const Header = () => {
                             </Typography>
                         </Box>
                     </Box>
-
                     <Box sx={{ flexGrow: 1 }} />
 
                     {/* DESKTOP MENU */}
