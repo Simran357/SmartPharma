@@ -19,11 +19,14 @@ router.get("/GetRegisterdata",GetRegisterdata)
 router.post("/auth/google",GoogleController)
 router.post("/createNewUser",createNewUser)
 router.post("/AddProductList",authMiddleware,AddProductList)
+router.post("/stock/add", addStock);
 router.get("/getSingleRetailor/:id",getSingleRetailor)
 router.get("/getProductList/:id",getProductList)
 router.get("/getsingleWholesaler/:id",getsingleWholesaler)
 router.get("/getuserController",getUsers)
 router.put("/updateRole/:id", updateRoleController)
+// GET 🔥
+router.get("/stock", getStock);
 router.get("/me",getMe)
 
 console.log("router.file")
