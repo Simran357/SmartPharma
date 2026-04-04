@@ -2,12 +2,8 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { Input, Button, Table, Card } from "antd";
 import axios from "axios";
-const columns = [
-  { title: "#", dataIndex: "key" },
-  { title: "Medicine Name", dataIndex: "name" },
-  { title: "HSN", dataIndex: "hsn" },
-  { title: "Batch", dataIndex: "batch" },
-];
+
+
 const batchColumns = [
   { title: "Batch #", dataIndex: "batch" },
   { title: "Expiry", dataIndex: "expiry" },
@@ -50,6 +46,127 @@ const batchData = [
 ];
 
 const StockEntry = () => {
+  //Medicine
+ const [items, setItems] = useState([]);
+
+ const handleItemChange = (value, index, field) => {
+    const updated = [...items];
+    updated[index][field] = value;
+    setItems(updated);
+  };
+const columns = [
+  { title: "#", dataIndex: "key" },
+ 
+   {
+    title: "Medicine Name",
+    dataIndex: "name",
+    render: (text, record, index) => (
+      <Input
+        value={text}
+        onChange={(e) => handleItemChange(e.target.value, index, "name")}
+      />
+    )
+  },
+   {
+    title: "HSN",
+    dataIndex: "hsn",
+    render: (text, record, index) => (
+      <Input
+        value={text}
+        onChange={(e) => handleItemChange(e.target.value, index, "hsn")}
+      />
+    )
+  },
+   {
+    title: "Batch",
+    dataIndex: "batch",
+    render: (text, record, index) => (
+      <Input
+        value={text}
+        onChange={(e) => handleItemChange(e.target.value, index, "batch")}
+      />
+    )
+  },
+  
+    {
+  title: "Qty",
+  dataIndex: "qty",
+  render: (text, record, index) => (
+    <Input
+      value={text}
+      onChange={(e) => handleItemChange(e.target.value, index, "qty")}
+    />
+  )
+},
+{
+  title: "MRP",
+  dataIndex: "mrp",
+  render: (text, record, index) => (
+    <Input
+      value={text}
+      onChange={(e) => handleItemChange(e.target.value, index, "mrp")}
+    />
+  )
+},
+{
+  title: "Expiry",
+  dataIndex: "expiry",
+  render: (text, record, index) => (
+    <Input
+      value={text}
+      onChange={(e) => handleItemChange(e.target.value, index, "expiry")}
+    />
+  )
+},
+{
+  title: "Pack",
+  dataIndex: "pack",
+  render: (text, record, index) => (
+    <Input
+      value={text}
+      onChange={(e) => handleItemChange(e.target.value, index, "pack")}
+    />
+  )
+},
+{
+  title: "Rate",
+  dataIndex: "rate",
+  render: (text, record, index) => (
+    <Input
+      value={text}
+      onChange={(e) => handleItemChange(e.target.value, index, "rate")}
+    />
+  )
+},
+{
+  title: "Amount",
+  dataIndex: "amount",
+  render: (text, record, index) => (
+    <Input
+      value={text}
+      onChange={(e) => handleItemChange(e.target.value, index, "amount")}
+    />
+  )
+}
+];
+const addRow = () => {
+  const newRow = {
+    key: Date.now(),
+    name: "",
+    hsn: "",
+    batch: "",
+    qty: "",
+    mrp: "",
+    expiry: "",
+    pack: "",
+    rate: "",
+    amount: ""
+  };
+
+  setItems((prev) => [...prev, newRow]);
+};
+
+//Form
   const [formData, setFormData] = useState({
     supplierName: "",
     invoiceNumber: "",
@@ -69,7 +186,7 @@ const StockEntry = () => {
 
   try {
     const res = await axios.post(
-      "http://localhost:5001/api/user/stock/add",
+      "http://localhost:5000/api/user/stock/add",
       formData
     );
     console.log("Success:", res.data);
@@ -88,7 +205,7 @@ useEffect(() => {
 
 const fetchStock = async () => {
   try {
-    const res = await axios.get("http://localhost:5001/api/user/stock");
+    const res = await axios.get("http://localhost:5000/api/user/stock");
     setStockData(res.data);
   } catch (error) {
     console.log(error);
@@ -151,8 +268,16 @@ const fetchStock = async () => {
 
       {/* Table Section */}
       <Card className="mb-6">
-        <Table columns={columns} dataSource={stockData} pagination={false} />
-        <Button type="dashed" className="mt-3">+ Add New Row</Button>
+        {/* <Table columns={columns} dataSource={stockData} pagination={false} /> */}
+        {/* <Button type="dashed" className="mt-3">+ Add New Row</Button> */}
+        <Table columns={columns} dataSource={items} pagination={false} />
+        <Button 
+  type="dashed" 
+  className="mt-3"
+  onClick={addRow}
+>
+  + Add New Row
+</Button>
       </Card>
 
       <div className="grid grid-cols-3 gap-6">
