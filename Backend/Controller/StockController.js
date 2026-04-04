@@ -1,3 +1,4 @@
+const Stockmodel =   require("../model/Stock.model")
 export const addStock = (req, res) => {
   try {
     const { supplierName, invoiceNumber, date, poRef } = req.body;
