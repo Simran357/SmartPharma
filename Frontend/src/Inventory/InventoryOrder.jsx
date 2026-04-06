@@ -45,7 +45,6 @@ const InventoryOrder = () => {
 
       {/* ===== ORDER COLUMNS ===== */}
       <div className="grid grid-cols-3 gap-6">
-
         {/* NEW ORDERS */}
         <OrderColumn title="New Orders" count="12" dotColor="bg-blue-500">
           <OrderCard

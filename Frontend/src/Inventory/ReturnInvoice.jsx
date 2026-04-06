@@ -89,10 +89,7 @@ function ReturnInvoice() {
                                     <div className="p-1 border-t border-gray-500">{item.Qty}</div>
                                 </React.Fragment>
                             ))}
-
-
                         </div>
-
                     </div>
                             <div className='flex flex-col text-right justify-end p-6 mt-5'>
                                 <p className='text-gray-500'>Total Return Value Est.</p>
