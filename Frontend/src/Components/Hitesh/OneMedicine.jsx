@@ -6,29 +6,30 @@ import {
   Headset,
 
 } from 'lucide-react';
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-function OneMedicine() {
-  const [batches, setBatches] = useState([
-  {
-    id: "DL2410",
-    entryDate: "Sep 12, 2023",
-    price: 18.4,
-    expiry: "Mar 2026",
-    stock: 158,
-    location: "Rack A-4, Shelf 2",
-   status: "ACTIVE"},
-     {
-    id: "DL2345",
-    entryDate: "Jun 05, 2023",
-    price: 19.1,
-    expiry: "Jan 2025",
-    stock: 250,
-    location: "Warehouse 1-B",
-    status: "ACTIVE",
-  },
+import { useState, useEffect } from 'react'
 
-  ])
+import axiosInstance from "../Dashboard/Form/Utils/AxiosInstance";
+function OneMedicine() {
+  const [batches, setBatches] = useState([])
+  // {
+  //   id: "DL2410",
+  //   entryDate: "Sep 12, 2023",
+  //   price: 18.4,
+  //   expiry: "Mar 2026",
+  //   stock: 158,
+  //   location: "Rack A-4, Shelf 2",
+  //  status: "ACTIVE"},
+  //    {
+  //   id: "DL2345",
+  //   entryDate: "Jun 05, 2023",
+  //   price: 19.1,
+  //   expiry: "Jan 2025",
+  //   stock: 250,
+  //   location: "Warehouse 1-B",
+  //   status: "ACTIVE",
+  // },
+
+  // ])
   // Expiry
   const getExpiryStyle = (expiry) => {
     const today = new Date();
@@ -57,7 +58,7 @@ function OneMedicine() {
 useEffect(() => {
   const fetchBatches = async () => {
     try {
-      const res = await axios.get("http://localhost:5001/api/batches");
+      const res = await axiosInstance.get("/registerroute/batches");
       setBatches(res.data);
     } catch (err) {
       console.log(err);
