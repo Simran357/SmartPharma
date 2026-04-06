@@ -6,8 +6,66 @@ import {
   Headset,
 
 } from 'lucide-react';
-
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 function OneMedicine() {
+  const [batches, setBatches] = useState([
+  {
+    id: "DL2410",
+    entryDate: "Sep 12, 2023",
+    price: 18.4,
+    expiry: "Mar 2026",
+    stock: 158,
+    location: "Rack A-4, Shelf 2",
+   status: "ACTIVE"},
+     {
+    id: "DL2345",
+    entryDate: "Jun 05, 2023",
+    price: 19.1,
+    expiry: "Jan 2025",
+    stock: 250,
+    location: "Warehouse 1-B",
+    status: "ACTIVE",
+  },
+
+  ])
+  // Expiry
+  const getExpiryStyle = (expiry) => {
+    const today = new Date();
+    const expDate = new Date(expiry);
+
+    if (expDate < today) return "text-red-500 bg-red-50";
+
+    const diff = (expDate - today) / (1000 * 60 * 60 * 24);
+    if (diff < 30) return "text-yellow-500 bg-yellow-50";
+
+    return "text-green-500 bg-green-50";
+  };
+
+  const getStatusStyle = (status) => {
+  switch (status) {
+    case "ACTIVE":
+      return "bg-green-100 text-green-700";
+    case "CRITICAL":
+      return "bg-red-100 text-red-600";
+    case "DEPLETED":
+      return "text-slate-300";
+    default:
+      return "";
+  }
+};
+useEffect(() => {
+  const fetchBatches = async () => {
+    try {
+      const res = await axios.get("http://localhost:5001/api/batches");
+      setBatches(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  fetchBatches();
+}, []);
   return (
     <div className="min-h-screen bg-[#f8fafc] font-sans text-slate-800 flex flex-col">
   
@@ -130,7 +188,7 @@ function OneMedicine() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100 text-slate-700 font-medium">
-                  {/* Row 1 */}
+                  {/* Row 1
                   <tr className="hover:bg-slate-50/50 transition-colors">
                     <td className="px-6 py-4 font-bold text-slate-900">DL2410</td>
                     <td className="px-6 py-4">Sep 12, 2023</td>
@@ -141,9 +199,45 @@ function OneMedicine() {
                     <td className="px-6 py-4">
                       <span className="px-2.5 py-1 bg-green-100 text-green-700 text-[9px] font-extrabold uppercase tracking-wider rounded-md">ACTIVE</span>
                     </td>
-                  </tr>
-                  
-                  {/* Row 2 */}
+                  </tr> */}
+                  {batches.map((batch, index) => (
+    <tr key={index} className="hover:bg-slate-50/50 transition-colors">
+      <td className="px-6 py-4 font-bold text-slate-900">
+        {batch.id}
+      </td>
+
+      <td className="px-6 py-4">{batch.entryDate}</td>
+
+      <td className="px-6 py-4 font-bold text-slate-900">
+        ₹{batch.price}
+      </td>
+
+     <td className={`px-6 py-4 font-bold ${getExpiryStyle(batch.expiry)}`}>
+  {batch.expiry}
+</td>
+
+      <td className="px-6 py-4 font-bold text-slate-900">
+        {batch.stock} Units
+      </td>
+
+      <td className="px-6 py-4 text-xs">{batch.location}</td>
+
+      <td className="px-6 py-4">
+        {/* <span className="px-2.5 py-1 bg-green-100 text-green-700 text-[9px] font-extrabold uppercase rounded-md">
+          {batch.status}
+        </span> */}
+        <span
+  className={`px-2.5 py-1 text-[9px] font-extrabold uppercase rounded-md ${getStatusStyle(batch.status)}`}
+>
+  {batch.status}
+</span>
+      </td>
+    </tr>
+  ))}
+</tbody>
+</table>
+{/*                   
+                  Row 2
                   <tr className="hover:bg-slate-50/50 transition-colors">
                     <td className="px-6 py-4 font-bold text-slate-900">DL2345</td>
                     <td className="px-6 py-4">Jun 05, 2023</td>
@@ -154,10 +248,10 @@ function OneMedicine() {
                     <td className="px-6 py-4">
                       <span className="px-2.5 py-1 bg-green-100 text-green-700 text-[9px] font-extrabold uppercase tracking-wider rounded-md">ACTIVE</span>
                     </td>
-                  </tr>
+                  </tr> */}
                   
                   {/* Row 3 */}
-                  <tr className="hover:bg-slate-50/50 transition-colors">
+                  {/* <tr className="hover:bg-slate-50/50 transition-colors">
                     <td className="px-6 py-4 font-bold text-slate-900">DL2201</td>
                     <td className="px-6 py-4">Jan 20, 2022</td>
                     <td className="px-6 py-4 font-bold text-slate-900">₹17.80</td>
@@ -168,9 +262,9 @@ function OneMedicine() {
                       <span className="px-2.5 py-1 bg-red-100 text-red-600 text-[9px] font-extrabold uppercase tracking-wider rounded-md">CRITICAL</span>
                     </td>
                   </tr>
-                  
+                   */}
                   {/* Row 4 (Disabled/Depleted style) */}
-                  <tr className="text-slate-300">
+                  {/* <tr className="text-slate-300">
                     <td className="px-6 py-4 font-bold"><strike>DL2105</strike></td>
                     <td className="px-6 py-4">May 15, 2021</td>
                     <td className="px-6 py-4">₹17.20</td>
@@ -182,7 +276,7 @@ function OneMedicine() {
                     </td>
                   </tr>
                 </tbody>
-              </table>
+              </table> */}
             </div>
           </div>
 

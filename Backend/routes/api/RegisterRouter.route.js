@@ -13,6 +13,8 @@ const getsingleWholesaler = require("../../Controller/getsingleWholesaler")
 const authMiddleware = require("../../MiddleWare/authMiddleware")
 const addStock = require("../../Controller/StockController")
 const getInventoryStock = require("../../Controller/getInventoryStock")
+// const BatchController= require("../../Controller/BatchController")
+const { getBatches } = require("../../Controller/BatchController")
 router.post("/registercontroller",RegisterController)
 router.post("/LoginController",LoginController)
 router.get("/GetRegisterdata",GetRegisterdata)
@@ -27,6 +29,7 @@ router.get("/getsingleWholesaler/:id",getsingleWholesaler)
 router.get("/getuserController",getUsers)
 router.get("/getInventoryStock",getInventoryStock)
 
+router.get("/batches", getBatches)
 router.put("/updateRole/:id", updateRoleController)
 // stock
 // router.get("/stock", getStock);
