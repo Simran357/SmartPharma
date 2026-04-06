@@ -46,8 +46,6 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         {/* Layout = Header + Outlet */}
-
-
         <Route path="Dashboard" element={
           <ProtectedRoute >
             <Layout />
@@ -96,9 +94,7 @@ const App = () => {
               <Route path=":id/Billing" element={<Billing />} >
                 <Route path="OrderSuccess" element={<OrderSuccess />} />
               </Route>
-
             </Route>
-
             <Route path="Courier" element={<Courier />} />
             <Route path="Connectcourier" element={<Connectcourier />} />
           </Route>
