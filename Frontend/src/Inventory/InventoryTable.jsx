@@ -1,22 +1,14 @@
 import { useEffect, useState } from "react"
 import axiosInstance from "../Components/Dashboard/Form/Utils/AxiosInstance";
-
 export default function InventoryTable() {
   const [inventoryStock, setInventoryStock] = useState([]);
   const [loading, setLoading] = useState(false);
 useEffect(() => {
   const fetchInventory = async () => {
     try {
-      console.log("🔥 API CALL STARTED");
-
-      setLoading(true);
-
-      const res = await axiosInstance.get("/registerroute/getInventoryStock");
-
+      console.log("🔥 API CALL STARTED");      const res = await axiosInstance.get("/registerroute/getInventoryStock");
       console.log("✅ inventory data", res?.data);
-
       setInventoryStock(res?.data?.data || []);
-
     } catch (error) {
       console.log("❌ error in inventory stock", error);
     } finally {
