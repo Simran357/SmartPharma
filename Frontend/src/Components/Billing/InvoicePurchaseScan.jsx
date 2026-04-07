@@ -21,37 +21,12 @@ const handleFileUpload = async (e) => {
   const formData = new FormData();
   formData.append("file", file);
 
-  const res = await axiosInstance.post("/ai-ocr", formData);
-
-  console.log(res.data); // JSON aa jayega
+  const res = await axiosInstance.post("/registerroute/ocrparse", formData);
+  console.log(res?.data); // JSON aa jayega
 };
 
   // ✅ OCR FUNCTION
-  const handleScan = async (file) => {
-    try {
-      setLoading(true);
-
-      const {
-        data: { text },
-      } = await Tesseract.recognize(file, "eng");
-
-      console.log("OCR TEXT:", text);
-
-      // Backend send
-      await axiosInstance.post("/registerroute/ocrparse", { text });
-
-      // Update workflow
-      setWorkflow((prev) => ({
-        ...prev,
-        verify: true,
-      }));
-
-    } catch (err) {
-      console.log("OCR error", err);
-    } finally {
-      setLoading(false);
-    }
-  };
+  
 
   // ✅ AUTO INVENTORY BUTTON
   const handleAutoInventory = () => {
