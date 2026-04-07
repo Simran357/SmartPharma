@@ -1,15 +1,25 @@
 import { useEffect, useState } from "react"
 import axiosInstance from "../Components/Dashboard/Form/Utils/AxiosInstance";
+import { useNavigate } from "react-router-dom";
 export default function InventoryTable() {
   const [inventoryStock, setInventoryStock] = useState([]);
   const [loading, setLoading] = useState(false);
+
+
+  const navigate = useNavigate()
 useEffect(() => {
   const fetchInventory = async () => {
     try {
-      console.log("🔥 API CALL STARTED");      const res = await axiosInstance.get("/registerroute/getInventoryStock");
+      console.log("🔥 API CALL STARTED");     
+       const res = await axiosInstance.get("/registerroute/getInventoryStock");
       console.log("✅ inventory data", res?.data);
-      setInventoryStock(res?.data?.data || []);
-    } catch (error) {
+setInventoryStock(
+  res?.data?.data?.flatMap((invoice) => invoice.items.map((item)=>({
+    ...item,
+    supplier: invoice.supplierName,
+      invoiceNumber: invoice.invoiceNumber,
+    }))) || []
+);    } catch (error) {
       console.log("❌ error in inventory stock", error);
     } finally {
       setLoading(false);
@@ -71,8 +81,10 @@ useEffect(() => {
     <div key={index} className="border-t py-4">
 
       {/* MAIN ROW */}
-      <div className="grid grid-cols-[2fr_1fr_1.2fr_1.6fr_1fr_40px] items-center">
-
+      <div className="grid grid-cols-[2fr_1fr_1.2fr_1.6fr_1fr_40px] items-center"
+      onClick={()=>navigate(`${item.name}`, { state: item })}
+      
+      >
         {/* PRODUCT */}
         <div>
           <p className="font-semibold">{item.name}</p>

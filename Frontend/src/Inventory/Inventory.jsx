@@ -41,6 +41,7 @@ export default function Inventory() {
           </Modal>
         </main>
       </div>
+    
     </div>
   );
 }

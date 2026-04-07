@@ -7,7 +7,7 @@ const RegisterController = async (req,res,next)=>{
     //extract data
     const {username,password,email} = registerData
      //validation
-    const registerDataCheck =  await RegisterModel.findOne({
+    const registerDataCheck =  await RegisterModel.createIndex({
         email:email
     })
 

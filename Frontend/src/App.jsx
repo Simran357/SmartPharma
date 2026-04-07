@@ -72,6 +72,8 @@ const App = () => {
           <Route path="Retailer">
             <Route index element={<Retailer />} />
             <Route path="Inventory" element={<Inventory />} />
+            <Route path="Inventory/:id" element={<OneMedicine />} />
+          
             <Route path="TempelateDesigner" element={<TempelateDesigner />} />
             <Route path="InvoicePurchaseScan" element={<InvoicePurchaseScan />} />
             <Route path="AiAgent" element={<AiAgent />} />
@@ -81,7 +83,6 @@ const App = () => {
             <Route path="ReturnInvoice" element={<ReturnInvoice />} />
             <Route path="FilterWholesaler" element={<FilterOutWholesaler />} />
             <Route path="FilterWholesaler" element={<FilterOutWholesaler />} />
-            <Route path="OneMedicine" element={<OneMedicine />} />
             <Route path="ActionablePrevention" element={<ActionablePrevention />} />
             <Route path="Order">
               <Route index element={<OrderWholesaler />} />
