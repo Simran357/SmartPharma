@@ -15,23 +15,16 @@ const InvoicePurchaseScan = () => {
   });
 
   // ✅ FILE UPLOAD HANDLER
-  const handleFileUpload = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
+const handleFileUpload = async (e) => {
+  const file = e.target.files[0];
 
-    // Preview
-    setImage(URL.createObjectURL(file));
+  const formData = new FormData();
+  formData.append("file", file);
 
-    // Update workflow
-    setWorkflow((prev) => ({
-      ...prev,
-      upload: true,
-      viewer: true,
-    }));
+  const res = await axiosInstance.post("/ai-ocr", formData);
 
-    // OCR scan
-    await handleScan(file);
-  };
+  console.log(res.data); // JSON aa jayega
+};
 
   // ✅ OCR FUNCTION
   const handleScan = async (file) => {
