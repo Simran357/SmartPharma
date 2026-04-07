@@ -131,7 +131,7 @@ function OneMedicine() {
           {/* SALES PLACEHOLDER */}
           <div className="lg:col-span-2 bg-white p-6 rounded-xl border">
             <h2 className="font-bold mb-2">Sales Trend</h2>
-            <div className="h-[160px] flex items-center justify-center text-slate-400">
+            <div className="h-160px flex items-center justify-center text-slate-400">
               Chart coming soon...
             </div>
           </div>
