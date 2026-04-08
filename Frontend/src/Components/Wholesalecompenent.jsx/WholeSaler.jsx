@@ -8,7 +8,6 @@ import ElectricBoltIcon from '@mui/icons-material/ElectricBolt';
 import AddIcon from '@mui/icons-material/Add';
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
-// import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 import DoneIcon from '@mui/icons-material/Done';
 import PrintIcon from '@mui/icons-material/Print';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
@@ -273,7 +272,7 @@ const WholeSaler = () => {
                         strokeDasharray="15, 100" strokeDashoffset="-70" strokeLinecap="round"
                         strokeWidth="4"></circle>
                       <circle cx="18" cy="18" fill="none" r="16" stroke="#ef4444"
-                        strokeDasharray="15, 100" strokeDashoffsett="-85" strokeLinecap="round"
+                        strokeDasharray="15, 100" strokeDashoffset="-85" strokeLinecap="round"
                         strokeWidth="4"></circle>
                     </svg>
                   </div>
@@ -287,8 +286,9 @@ const WholeSaler = () => {
                         className="text-slate-500">Low Stock (15%)</span></div>
                     <div className="flex items-center gap-2">
                       <span
-                        className="w-2 h-2 rounded-full bg-red-500"></span> <span class="text-slate-500">Out
-                          of Stock (15%)</span></div>
+                        className="w-2 h-2 rounded-full bg-red-500"></span>
+                         <span className="text-slate-500">
+                          Out of Stock (15%)</span></div>
                   </div>
                 </div>
               </section>

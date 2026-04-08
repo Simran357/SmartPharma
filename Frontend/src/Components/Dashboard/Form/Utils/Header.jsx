@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
-  AppBar,
+    AppBar,
     Toolbar,
     Typography,
     Button,
@@ -11,31 +11,31 @@ import {
     ListItemButton,
     ListItemText,
     IconButton,
-    Divider 
-
+    Divider
 } from '@mui/material'
-
+import { Bell, Settings } from "lucide-react"
 import MenuIcon from '@mui/icons-material/Menu'
-
 import SchoolIcon from '@mui/icons-material/School'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { useState } from 'react'
+import UserProfileMenu from '../UserProfile'
 
 const Header = () => {
     const [open, setOpen] = useState(false)
     const navigate = useNavigate()
     const location = useLocation()
- const menuItems = [
- { text:'Retailer', path:'/Dashboard/Retailer' },
- { text:'Inventory', path:'/Dashboard/Retailer/Inventory' },
- { text:'Billing', path:'/Dashboard/Retailer/Billing' },
- { text:'Cart', path:'/Dashboard/Retailer/Cart' },
- { text:'Wholesalers', path:'/Dashboard/Retailer/Order' },
- { text:'Role Control', path:'/Dashboard/Wholesaler/AdminRoleAssign' },
- { text:'Wholesaler Panel', path:'/Dashboard/Wholesaler' }
-]
 
-    const isActive = (path) =>location.pathname.startsWith(path)
+    const menuItems = [
+        { text: 'Retailer', path: '/Dashboard/Retailer' },
+        { text: 'Inventory', path: '/Dashboard/Retailer/Inventory' },
+        { text: 'Billing', path: '/Dashboard/Retailer/Billing' },
+        { text: 'Cart', path: '/Dashboard/Retailer/Cart' },
+        { text: 'Wholesalers', path: '/Dashboard/Retailer/Order' },
+        { text: 'Role Control', path: '/Dashboard/Wholesaler/AdminRoleAssign' },
+        { text: 'Wholesaler Panel', path: '/Dashboard/Wholesaler' }
+    ]
+
+    const isActive = (path) => location.pathname.startsWith(path)
+
     const handleNavigate = (path) => {
         navigate(path)
         setOpen(false)
@@ -43,6 +43,7 @@ const Header = () => {
 
     return (
         <>
+            {/* HEADER */}
             <AppBar
                 position="static"
                 elevation={0}
@@ -54,6 +55,8 @@ const Header = () => {
                 }}
             >
                 <Toolbar>
+
+                    {/* LOGO */}
                     <Box
                         sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
                         onClick={() => navigate('/')}
@@ -68,14 +71,9 @@ const Header = () => {
                             </Typography>
                         </Box>
                     </Box>
-
-
                     <Box sx={{ flexGrow: 1 }} />
-                    <IconButton
-                        sx={{ display: { md: 'none' } }}
-                        onClick={() => setOpen(true)}>
-                        <MenuIcon />
-                    </IconButton>
+
+                    {/* DESKTOP MENU */}
                     <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 1 }}>
                         {menuItems.map((item) => (
                             <Button
@@ -89,16 +87,57 @@ const Header = () => {
                                         : '2px solid transparent',
                                     borderRadius: 0
                                 }}
-
                             >
                                 {item.text}
-
                             </Button>
                         ))}
                     </Box>
+
+                    <Box sx={{ flexGrow: 1 }} />
+
+                    {/* RIGHT ACTIONS */}
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+
+                        {/* NOTIFICATION */}
+                        <IconButton sx={{ position: "relative" }}>
+                            <Bell size={18} />
+                            <span style={{
+                                position: "absolute",
+                                top: 6,
+                                right: 6,
+                                width: 8,
+                                height: 8,
+                                background: "red",
+                                borderRadius: "50%"
+                            }} />
+                        </IconButton>
+
+                        {/* SETTINGS */}
+                        <IconButton sx={{ color: "gray", "&:hover": { color: "#1976d2" } }}>
+                            <Settings size={18} />
+                        </IconButton>
+
+                        {/* PROFILE MENU */}
+                        <UserProfileMenu
+                            username="Wholesaler"
+                            role="Admin"
+                        />
+
+                    </Box>
+
+                    {/* MOBILE MENU ICON */}
+                    <IconButton
+                        sx={{ ml: 2, display: { md: 'none' }, color: "gray" }}
+                        onClick={() => setOpen(true)}
+                        aria-label="open menu"
+                    >
+                        <MenuIcon />
+                    </IconButton>
+
                 </Toolbar>
             </AppBar>
 
+            {/* DRAWER (MOBILE) */}
             <Drawer
                 open={open}
                 onClose={() => setOpen(false)}
@@ -108,11 +147,11 @@ const Header = () => {
                         width: 260,
                         backgroundColor: '#fff'
                     }
-
                 }}
-
             >
                 <Box sx={{ p: 2 }}>
+
+                    {/* LOGO */}
                     <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
                         <SchoolIcon sx={{ mr: 1 }} />
                         <Box>
@@ -120,8 +159,10 @@ const Header = () => {
                             <Typography variant="caption">Admin Portal</Typography>
                         </Box>
                     </Box>
+
                     <Divider />
 
+                    {/* MENU ITEMS */}
                     <List>
                         {menuItems.map((item) => (
                             <ListItem key={item.text} disablePadding>
@@ -129,10 +170,13 @@ const Header = () => {
                                     <ListItemText
                                         primary={item.text}
                                         primaryTypographyProps={{
-                                            color: isActive(item.path) ? 'primary' : 'text.primary',
-                                            fontWeight: isActive(item.path) ? 'bold' : 'normal'
+                                            color: isActive(item.path)
+                                                ? 'primary'
+                                                : 'text.primary',
+                                            fontWeight: isActive(item.path)
+                                                ? 'bold'
+                                                : 'normal'
                                         }}
-
                                     />
                                 </ListItemButton>
                             </ListItem>
@@ -144,9 +188,4 @@ const Header = () => {
     )
 }
 
-
-
 export default Header
-
-
-

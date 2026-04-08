@@ -1,175 +1,212 @@
 import { CurrencyRupee } from "@mui/icons-material";
+import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
 const Billing = () => {
-  const open = true;
+  const location = useLocation();
+  const cart = location.state?.cart || [];
+  const [paymentMethod, setPaymentMethod] = useState("");
+  // calculations
+  const subtotal = cart.reduce(
+    (acc, item) => acc + item.qty * (item.ProductPrice || 0),
+    0
+  );
+
+  const shipping = subtotal > 1000 ? 0 : 150;
+  const cgst = subtotal * 0.025;
+  const sgst = subtotal * 0.025;
+  const discount = subtotal > 2000 ? subtotal * 0.1 : 0;
+
+  const total = subtotal + shipping + cgst + sgst - discount;
+
+  const totalItems = cart.reduce((acc, item) => acc + item.qty, 0);
+
+
+  const navigate = useNavigate();
+
+  const handleCheckout = () => {
+    if (cart.length === 0) {
+      alert("Cart is empty");
+      return;
+    }
+
+    if (!paymentMethod) {
+      alert("Please select payment method");
+      return;
+    }
+
+    const orderData = {
+      id: Date.now(), // simple order id
+      items: cart,
+      subtotal,
+      shipping,
+      cgst,
+      sgst,
+      discount,
+      total,
+      paymentMethod,
+      date: new Date().toLocaleString()
+    };
+
+    // Navigate to success page with data
+    navigate("OrderSuccess", {
+      state: { order: orderData }
+    })
+  };
 
   return (
-    <div className="flex flex-col lg:flex-row gap-6 items-start m-4 lg:m-8">
+    <>
 
-      {/* LEFT SIDEBAR */}
-      <div className="w-full lg:w-[20%] flex flex-col gap-4 lg:sticky lg:top-4">
-        <div className="bg-gray-50 rounded-xl shadow-sm p-4 flex flex-col gap-4 border">
-          <h2 className="font-semibold text-lg flex items-center gap-2">
-            <span className="text-green-600 text-xl">💊</span>
-            SmartPharm POS
-          </h2>
+      <div className="flex flex-col lg:flex-row gap-6 m-4 lg:m-8">
 
-          <div className="flex flex-col gap-3 mt-4 text-gray-700">
-            <div className="font-medium">Main Store</div>
-            <div className="text-sm text-green-600 flex items-center gap-1">
-              • COUNTER 01 ONLINE
+        {/* LEFT SIDEBAR */}
+        <div className="w-full lg:w-[20%]">
+          <div className="bg-gray-50 rounded-xl shadow-sm p-4 border space-y-4">
+            <h2 className="font-semibold text-lg flex items-center gap-2">
+              💊 SmartPharm POS
+            </h2>
+
+            <div className="text-sm text-gray-600">
+              Main Store <br />
+              <span className="text-green-600">• COUNTER 01 ONLINE</span>
             </div>
 
             <button className="bg-green-100 text-green-700 px-3 py-2 rounded-md font-medium flex items-center gap-2">
               <CurrencyRupee /> New Billing
             </button>
-
-            <button className="px-3 py-2 rounded-md hover:bg-gray-100 flex items-center gap-2">
-              ⏱ Recent Sales
-            </button>
-
-            <button className="px-3 py-2 rounded-md hover:bg-gray-100 flex items-center gap-2">
-              📦 Stock Check
-            </button>
-
-            <button className="px-3 py-2 rounded-md hover:bg-gray-100 flex items-center gap-2">
-              ➕ Add Patient
-            </button>
-          </div>
-
-          <div className="text-red-600 text-sm mt-4 border-t pt-2">
-            ⚠ LOSS PREVENTION <br />
-            5 items Near Expiry detected in Shelf B-12
           </div>
         </div>
-      </div>
 
-      {/* MIDDLE COLUMN */}
-      <div className="w-full lg:w-[40%]">
-        {open && (
-          <div className="bg-white rounded-xl shadow-sm border">
+        {/* MIDDLE - ORDER TABLE */}
+        <div className="w-full lg:w-[45%]">
+          <div className="bg-white rounded-xl shadow border">
 
-            {/* HEADER */}
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center px-5 py-3 border-b gap-3">
+            <div className="px-5 py-3 border-b flex justify-between">
               <h2 className="font-semibold text-lg">Current Order</h2>
+              <span className="text-sm text-gray-500">
+                {totalItems} items
+              </span>
+            </div>
 
-              <div className="flex items-center gap-3 text-sm">
-                <div className="px-4 py-1.5 border rounded-full text-gray-600 hover:text-green-600 hover:border-green-500 hover:bg-green-50 transition cursor-pointer">
-                  Recent
-                </div>
+            <div className="p-5 overflow-x-auto">
+              {cart.length === 0 ? (
+                <p className="text-gray-400">No items in cart</p>
+              ) : (
+                <table className="w-full text-sm">
+                  <thead className="border-b text-gray-500">
+                    <tr>
+                      <th className="text-left py-2">Product</th>
+                      <th className="text-center">Qty</th>
+                      <th className="text-right">Price</th>
+                      <th className="text-right">Total</th>
+                    </tr>
+                  </thead>
 
-                <div className="px-4 py-1.5 border rounded-full text-gray-600 hover:text-red-600 hover:border-red-500 hover:bg-red-50 transition cursor-pointer">
-                  Delete
+                  <tbody>
+                    {cart.map((item) => (
+                      <tr key={item._id} className="border-b">
+                        <td className="py-2">{item.ProductName}</td>
+                        <td className="text-center">{item.qty}</td>
+                        <td className="text-right">₹{item.ProductPrice}</td>
+                        <td className="text-right font-medium">
+                          ₹{(item.qty * item.ProductPrice).toFixed(2)}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* RIGHT - SUMMARY */}
+        <div className="w-full lg:w-[35%]">
+          <div className="bg-white rounded-2xl shadow p-5 space-y-5">
+
+            {/* SUMMARY */}
+            <div className="space-y-2 text-sm">
+              <h2 className="font-semibold text-lg mb-2">Summary</h2>
+
+              <div className="flex justify-between">
+                <span>Subtotal ({totalItems} items)</span>
+                <span>₹{subtotal.toFixed(2)}</span>
+              </div>
+
+              <div className="flex justify-between">
+                <span>Shipping</span>
+                <span className={shipping === 0 ? "text-green-600" : ""}>
+                  {shipping === 0 ? "FREE" : `₹${shipping}`}
+                </span>
+              </div>
+
+              <div className="flex justify-between">
+                <span>CGST (2.5%)</span>
+                <span>₹{cgst.toFixed(2)}</span>
+              </div>
+
+              <div className="flex justify-between">
+                <span>SGST (2.5%)</span>
+                <span>₹{sgst.toFixed(2)}</span>
+              </div>
+
+              {discount > 0 && (
+                <div className="flex justify-between text-green-600">
+                  <span>Discount</span>
+                  <span>-₹{discount.toFixed(2)}</span>
                 </div>
+              )}
+
+              <hr />
+
+              <div className="flex justify-between font-bold text-lg">
+                <span>Total Payment</span>
+                <span className="text-green-600">
+                  ₹{total.toFixed(2)}
+                </span>
               </div>
             </div>
 
-            {/* TABLE */}
-            <div className="p-5 overflow-x-auto">
-              <table className="w-full text-sm min-w-600px">
-                <thead className="border-b text-green-600">
-                  <tr>
-                    <th className="text-left py-2">Product</th>
-                    <th className="text-center">Qty</th>
-                    <th className="text-right">Unit Price</th>
-                    <th className="text-right">Subtotal</th>
-                    <th className="text-center">Action</th>
-                  </tr>
-                </thead>
+            {/* PAYMENT */}
+            <div className="space-y-3">
+              <h3 className="font-semibold text-sm">
+                SELECT PAYMENT METHOD
+              </h3>
 
-                <tbody>
-                  {[1, 2, 3].map((_, index) => (
-                    <tr key={index} className="border-b last:border-none">
-                      <td className="py-2">Paracetamol</td>
-                      <td className="text-center">2</td>
-                      <td className="text-right">₹100</td>
-                      <td className="text-right font-medium">₹200</td>
-                      <td className="text-center text-red-500 cursor-pointer hover:underline">
-                        Remove
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+              <div className="grid grid-cols-3 gap-3">
+                {["UPI", "Card", "Cash"].map((method) => (
+                  <div
+                    key={method}
+                    onClick={() => setPaymentMethod(method)}
+                    className={`border rounded-xl py-3 text-center cursor-pointer 
+      ${paymentMethod === method
+                        ? "bg-green-100 border-green-500"
+                        : "hover:bg-green-50"}`}
+                  >
+                    {method}
+                  </div>
+                ))}
+              </div>
+
+              <button
+                onClick={handleCheckout}
+                className="w-full bg-green-500 text-white py-3 rounded-xl font-semibold hover:bg-green-600"
+              >
+                ✔ Complete Checkout
+              </button>
+
+              <button className="w-full text-sm text-gray-500 hover:underline">
+                🖨 Print Quotation Only
+              </button>
             </div>
 
           </div>
-        )}
-      </div>
-
-      {/* RIGHT COLUMN */}
-      <div className="w-full lg:w-[40%] flex flex-col gap-4">
-
-        <div className="bg-white rounded-2xl shadow p-5 flex flex-col gap-5">
-
-          {/* SUMMARY */}
-          <div className="text-sm space-y-2">
-            <h2 className="font-semibold text-lg mb-2">Summary</h2>
-
-            <div className="flex justify-between">
-              <span>Subtotal (3 items)</span>
-              <span>₹495.00</span>
-            </div>
-
-            <div className="flex justify-between">
-              <span>CGST (2.5%)</span>
-              <span>₹12.37</span>
-            </div>
-
-            <div className="flex justify-between">
-              <span>SGST (2.5%)</span>
-              <span>₹12.37</span>
-            </div>
-
-            <div className="flex justify-between text-red-500">
-              <span>Discount</span>
-              <span>-₹0.00</span>
-            </div>
-
-            <hr className="border-gray-300" />
-
-            <div className="flex justify-between font-semibold text-lg mt-2">
-              <span>Total Payment</span>
-              <span className="text-green-600">₹519.74</span>
-            </div>
-          </div>
-
-          {/* PAYMENT */}
-          <div className="text-sm space-y-3">
-            <hr className="border-gray-300" />
-            <h3 className="font-semibold text-sm">SELECT PAYMENT METHOD</h3>
-
-            <div className="grid grid-cols-1 mt-2 sm:grid-cols-3 gap-3">
-              {[
-                { icon: "📱", label: "UPI" },
-                { icon: "💳", label: "Card" },
-                { icon: "💵", label: "Cash" },
-              ].map((item, i) => (
-                <div
-                  key={i}
-                  className="border rounded-xl py-4 text-center font-medium shadow-sm flex flex-col items-center gap-1 transition-all duration-200 hover:border-green-500 hover:bg-green-50 hover:shadow-md cursor-pointer"
-                >
-                  <span className="text-2xl">{item.icon}</span>
-                  <span>{item.label}</span>
-                </div>
-              ))}
-            </div>
-
-            <button className="w-full bg-green-500 text-white py-4 mb-6 rounded-xl 
-            font-semibold hover:bg-green-600 transition">
-              ✔ Complete Checkout
-            </button>
-
-            <button className="w-full text-sm text-gray-500 hover:underline">
-              🖨 Print Quotation Only
-            </button>
-          </div>
-
         </div>
-      </div>
 
-    </div>
-  );
+      </div>
+      <Outlet />
+    </>);
 };
 
 export default Billing;

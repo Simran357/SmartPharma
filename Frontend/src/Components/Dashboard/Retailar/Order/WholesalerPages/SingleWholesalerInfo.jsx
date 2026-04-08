@@ -9,8 +9,17 @@ const SingleWholesalerInfo = () => {
   console.log("id", id)
   const { auth } = useContext(contextProvide)
   const [medicines, setMedicines] = useState([])
+<<<<<<< HEAD
   const [singleWholesaler, setSingleWholesaler] = useState({})
   const [cartProduct, setCartProduct] = useState([])
+=======
+const [singleWholesaler, setSingleWholesaler] = useState({})
+const [cartProduct, setCartProduct] = useState(() => {
+  const storedCart = localStorage.getItem("cart");
+  return storedCart ? JSON.parse(storedCart) : [];
+});
+
+>>>>>>> 660ac708c050f5f0a0e5ab1dc3a9dc826a6ba620
   const navigate = useNavigate()
   console.log("singleWholesaler", singleWholesaler)
   const getUser = async () => {
@@ -49,9 +58,23 @@ const SingleWholesalerInfo = () => {
   }, [id]);
 
 
+useEffect(() => {
+  localStorage.setItem("cart", JSON.stringify(cartProduct));
+}, [cartProduct]);
   const handleCartItem = (ProductId) => {
+<<<<<<< HEAD
     const selectedProduct = medicines.find(
       (product) => product._id === ProductId
+=======
+  const selectedProduct = medicines.find(
+    (product) => product._id === ProductId
+  );
+  if (!selectedProduct) return;
+
+  setCartProduct((prevCart) => {
+    const existingItem = prevCart.find(
+      (item) => item._id === ProductId
+>>>>>>> 660ac708c050f5f0a0e5ab1dc3a9dc826a6ba620
     );
 
     if (!selectedProduct) return;
@@ -80,6 +103,7 @@ const SingleWholesalerInfo = () => {
         item._id === id
           ? { ...item, qty: item.qty + 1 }
           : item
+<<<<<<< HEAD
       )
     );
   };
@@ -95,6 +119,50 @@ const SingleWholesalerInfo = () => {
         .filter((item) => item.qty > 0) // remove if qty = 0
     );
   };
+=======
+      );
+    }
+
+    return [...prevCart, { ...selectedProduct, qty: 1 }];
+  });
+};
+ console.log("medicines",medicines)
+
+ const increaseQty = (id) => {
+  setCartProduct((prev) =>
+    prev.map((item) =>
+      item._id === id
+        ? { ...item, qty: item.qty + 1 }
+        : item
+    )
+  );
+};
+useEffect(() => {
+  const storedWholesaler = localStorage.getItem("wholesalerId");
+  if (storedWholesaler && storedWholesaler !== id) {
+    setCartProduct([]);
+    localStorage.removeItem("cart");
+  }
+  localStorage.setItem("wholesalerId", id);
+}, [id]);
+
+const isInCart = (id) => {
+  return cartProduct.some(item => item._id === id);
+};
+ const decreaseQty = (id) => {
+  setCartProduct((prev) =>
+    prev
+      .map((item) =>
+        item._id === id
+          ? { ...item, qty: item.qty - 1 }
+          : item
+      )
+      .filter((item) => item.qty > 0) // remove if qty = 0
+  );
+};
+const totalItems = cartProduct.reduce((total, item) => total + item.qty, 0);
+
+>>>>>>> 660ac708c050f5f0a0e5ab1dc3a9dc826a6ba620
   // const navigate = useNavigate()
   return (
     <>
@@ -231,6 +299,7 @@ const SingleWholesalerInfo = () => {
                           {med.ProductQuantity > 10 ? "IN STOCK" : "LOW STOCK"}
                         </span>
 
+<<<<<<< HEAD
                         {/* Category Tag */}
                         <span className="absolute bottom-2 left-2 bg-blue-100 text-blue-600 px-2 py-0.5 rounded text-xs">
                           {med.ProductCategory}
@@ -255,6 +324,42 @@ const SingleWholesalerInfo = () => {
                             ₹ {med.price || 0}
                             <span className="text-xs text-gray-400 ml-1">/ unit</span>
                           </p>
+=======
+      {/* Content */}
+      <div className="mt-3 space-y-1">
+        <p className="text-gray-400 text-xs">{med.ProductSku}</p>
+   <span>
+        <h3 className="font-semibold text-base block">
+          {med.ProductName}
+        </h3>
+<p className="text-gray-400 text-xs">
+  Batch: {med.ProductBatchNo || "N/A"}
+</p>
+</span>
+        <p className="text-gray-500 text-xs">
+          Exp: {new Date(med.ProductExpiryDate).toLocaleDateString()}
+        </p>
+
+        {/* Price + Cart */}
+        <div className="flex justify-between items-center mt-2">
+          <p className="text-lg font-bold text-gray-800">
+₹ {med.ProductPrice || 0}
+            <span className="text-xs text-gray-400 ml-1">/ unit</span>
+          </p>
+
+        <button
+  disabled={isInCart(med._id)}
+  className={`p-2 rounded-lg transition ${
+    isInCart(med._id)
+      ? "bg-gray-200 cursor-not-allowed"
+      : "bg-green-100 hover:bg-green-200"
+  }`}
+  onClick={() => handleCartItem(med._id)}
+>
+  🛒
+</button>
+        </div>
+>>>>>>> 660ac708c050f5f0a0e5ab1dc3a9dc826a6ba620
 
                           <button className="bg-green-100 hover:bg-green-200 p-2 rounded-lg transition"
                             onClick={() => handleCartItem(med._id)}
@@ -283,6 +388,7 @@ const SingleWholesalerInfo = () => {
             </section>
           </div>
           {/* my cart */}
+<<<<<<< HEAD
           {/* MY CART (OLD DESIGN + NEW LOGIC) */}
           <div className="col-span-12 lg:col-span-3 flex flex-col gap-6">
             <section className='bg-white border shadow-xl w-full mt-8 border-gray-300 p-6 rounded-xl'>
@@ -293,6 +399,22 @@ const SingleWholesalerInfo = () => {
                   <ShoppingBag fontSize='medium' />
                   <p className='text-md font-bold'>MY CART</p>
                 </span>
+=======
+    {/* MY CART (OLD DESIGN + NEW LOGIC) */}
+<div className="col-span-12 lg:col-span-3 flex flex-col gap-6">
+  <section className='bg-white border shadow-xl w-full mt-8 border-gray-300 p-6 rounded-xl'>
+    
+    {/* Header */}
+    <div className='flex justify-between items-center'>
+      <span className='flex gap-2 items-center'>
+        <ShoppingBag fontSize='medium' />
+        <p className='text-md font-bold'>MY CART</p>
+      </span>
+<span className='bg-green-300/90 text-green-800/80 text-xs font-medium rounded-2xl px-2'>
+  {totalItems} Items
+</span>
+    </div>
+>>>>>>> 660ac708c050f5f0a0e5ab1dc3a9dc826a6ba620
 
                 <span className='bg-green-300/90 text-green-800/80 text-xs font-medium rounded-2xl px-2'>
                   {cartProduct.length} Items
@@ -328,9 +450,21 @@ const SingleWholesalerInfo = () => {
                               -
                             </button>
 
+<<<<<<< HEAD
                             <span className="text-sm font-medium">
                               {item.qty}
                             </span>
+=======
+  <span className='text-sm flex items-center font-medium'>
+    <CurrencyRupee fontSize='small' />
+    {item.qty * (item.ProductPrice || 0)}
+  </span>
+</div>
+  </div>
+        ))
+      )}
+    </div>
+>>>>>>> 660ac708c050f5f0a0e5ab1dc3a9dc826a6ba620
 
                             <button
                               onClick={() => increaseQty(item._id)}
@@ -351,11 +485,30 @@ const SingleWholesalerInfo = () => {
                 )}
               </div>
 
+<<<<<<< HEAD
               {/* DIVIDER */}
               <div className='border border-t-gray-50 mt-4'></div>
 
               {/* TOTAL SECTION */}
               <div className='mt-3'>
+=======
+      <span className='flex justify-between items-center'>
+        <h1 className='text-gray-400 text-sm'>Sub Total</h1>
+        <p className='flex items-center font-bold'>
+          <CurrencyRupee fontSize='small' />
+          {cartProduct.reduce((total, item) => {
+  return total + (item.qty * item.ProductPrice);
+}, 0)}
+        </p>
+      </span>
+
+      <span className='flex justify-between items-center mt-2'>
+        <h1 className='text-gray-400 text-sm'>Bulk Discount</h1>
+        <p className='flex items-center text-green-300/80 font-bold'>
+          - <CurrencyRupee fontSize='small' />50.00
+        </p>
+      </span>
+>>>>>>> 660ac708c050f5f0a0e5ab1dc3a9dc826a6ba620
 
                 <span className='flex justify-between items-center'>
                   <h1 className='text-gray-400 text-sm'>Sub Total</h1>
@@ -367,6 +520,7 @@ const SingleWholesalerInfo = () => {
                   </p>
                 </span>
 
+<<<<<<< HEAD
                 <span className='flex justify-between items-center mt-2'>
                   <h1 className='text-gray-400 text-sm'>Bulk Discount</h1>
                   <p className='flex items-center text-green-300/80 font-bold'>
@@ -378,6 +532,24 @@ const SingleWholesalerInfo = () => {
                   <h1 className='text-gray-800 text-lg font-bold'>
                     Total Amount
                   </h1>
+=======
+        <p className='flex items-center font-bold text-lg'>
+          <CurrencyRupee fontSize='small' />
+          {cartProduct.reduce((total, item) => {
+  return total + (item.qty *item.ProductPrice);
+}, 0) - 50}
+        </p>
+      </span>
+
+      {/* CHECKOUT */}
+      <button className='w-full p-2 bg-green-600/70 rounded-xl mt-3 whitespace-nowrap text-black text-lg font-bold'
+      onClick={()=>navigate("Cart", { state: { cartProduct } })}
+      >
+        Proceed to Checkout
+      </button>
+    </div>
+  </section>
+>>>>>>> 660ac708c050f5f0a0e5ab1dc3a9dc826a6ba620
 
                   <p className='flex items-center font-bold text-lg'>
                     <CurrencyRupee fontSize='small' />

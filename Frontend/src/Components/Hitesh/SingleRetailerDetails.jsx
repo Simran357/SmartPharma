@@ -164,7 +164,7 @@ return(
 
 
           <h1 className="text-xl font-bold">
- {singleRetailer && singleRetailer.pharmacyname ? singleRetailer.pharmacyname : "Loading..."}
+ {singleRetailer && singleRetailer.pharmacyname ? singleRetailer.pharmacyname : "Pharmacy"}
 </h1>
             <span className="bg-green-100 text-green-600 text-xs px-3 py-1 rounded-full font-semibold">
               ACTIVE

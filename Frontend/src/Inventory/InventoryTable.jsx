@@ -1,4 +1,34 @@
+import { useEffect, useState } from "react"
+import axiosInstance from "../Components/Dashboard/Form/Utils/AxiosInstance";
+import { useNavigate } from "react-router-dom";
 export default function InventoryTable() {
+  const [inventoryStock, setInventoryStock] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+
+  const navigate = useNavigate()
+useEffect(() => {
+  const fetchInventory = async () => {
+    try {
+      console.log("🔥 API CALL STARTED");     
+       const res = await axiosInstance.get("/registerroute/getInventoryStock");
+      console.log("✅ inventory data", res?.data);
+setInventoryStock(
+  res?.data?.data?.flatMap((invoice) => invoice.items.map((item)=>({
+    ...item,
+    supplier: invoice.supplierName,
+      invoiceNumber: invoice.invoiceNumber,
+    }))) || []
+);    } catch (error) {
+      console.log("❌ error in inventory stock", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchInventory();
+}, []);
+  console.log("inventoryStock",inventoryStock)
   return (
     <div className="bg-white rounded-xl p-6 shadow-sm">
 
@@ -22,137 +52,92 @@ export default function InventoryTable() {
         <span></span>
       </div>
 
-      {/* ROW 1 — Amoxicillin */}
-      <div className="grid grid-cols-[2fr_1fr_1.2fr_1.6fr_1fr_40px] items-center py-4 border-t">
+  {inventoryStock.map((item, index) => {
+  const today = new Date();
+  const expDate = item.expiry ? new Date(item.expiry) : null;
+
+  let status = "Stable";
+  let statusColor = "text-green-600";
+  let badge = "bg-green-100 text-green-700";
+  let progress = "bg-green-500 w-full";
+
+  if (expDate) {
+    const diffDays = (expDate - today) / (1000 * 60 * 60 * 24);
+
+    if (diffDays < 30) {
+      status = "High Risk";
+      statusColor = "text-red-600";
+      badge = "bg-red-100 text-red-600";
+      progress = "bg-red-500 w-1/4";
+    } else if (diffDays < 90) {
+      status = "Monitor";
+      statusColor = "text-orange-500";
+      badge = "bg-orange-100 text-orange-600";
+      progress = "bg-orange-400 w-2/3";
+    }
+  }
+
+  return (
+    <div key={index} className="border-t py-4">
+
+      {/* MAIN ROW */}
+      <div className="grid grid-cols-[2fr_1fr_1.2fr_1.6fr_1fr_40px] items-center"
+      onClick={()=>navigate(`${item.name}`, { state: item })}
+      
+      >
+        {/* PRODUCT */}
         <div>
-          <p className="font-semibold">Amoxicillin 500mg</p>
-          <p className="text-xs text-gray-500">SKU: AMX-500-CP</p>
+          <p className="font-semibold">{item.name}</p>
+          <p className="text-xs text-gray-500">
+            Batch: {item.batch || "N/A"}
+          </p>
         </div>
 
+        {/* CATEGORY */}
         <span className="text-xs px-3 py-1 rounded-full bg-green-50 text-green-700 w-fit">
-          Antibiotics
+          General
         </span>
 
+        {/* STOCK */}
         <div>
-          <p className="font-semibold">1,240 Units</p>
-          <span className="text-xs px-2 py-1 rounded bg-orange-50 text-orange-700">
-            Overstock (1.5x)
+          <p className="font-semibold">{item.qty} Units</p>
+          <span className={`text-xs px-2 py-1 rounded ${badge}`}>
+            {item.qty > 1000 ? "Overstock" : item.qty < 20 ? "Low Stock" : "Optimal"}
           </span>
         </div>
 
+        {/* EXPIRY PROGRESS */}
         <div>
-          <div className="h-2 rounded-full bg-gray-200 mb-1 w-44">
-            <div className="h-full w-1/4 bg-red-500 rounded-full"></div>
+          <div className="h-2 bg-gray-200 rounded-full w-44 mb-1">
+            <div className={`h-full rounded-full ${progress}`}></div>
           </div>
-          <p className="text-xs text-red-500">Exp: 18 Days</p>
-          <p className="text-xs text-gray-400">12 Months left</p>
-        </div>
 
-        <div className="flex items-center gap-2 text-red-600 font-medium">
-          <span className="w-2 h-2 rounded-full bg-red-600"></span>
-          High Risk
-        </div>
-
-        <button className="text-xl text-gray-400">⋮</button>
-      </div>
-
-      {/* Risk Management Section */}
-      <div className="grid grid-cols-3 gap-6 bg-gray-50 p-4 rounded-lg mt-2">
-        <div className="col-span-2">
-          <p className="text-sm font-semibold mb-2">Batch Breakdown</p>
-          <p className="text-sm">
-            #BCH-9923 (Aisle 4B)
-            <span className="text-red-500 ml-2">
-              240 units · Exp: Oct 24, 2024
-            </span>
-          </p>
-          <p className="text-sm text-gray-500">
-            #BCH-1045 (Aisle 4B)
-            <span className="ml-2">
-              1,000 units · Exp: Jan 12, 2026
-            </span>
+          <p className={`text-xs ${statusColor}`}>
+            {item.expiry
+              ? `Exp: ${new Date(item.expiry).toLocaleDateString()}`
+              : "No Expiry"}
           </p>
         </div>
 
-        <div className="border-l pl-4">
-          <p className="text-sm font-semibold mb-2">Risk Assessment</p>
-          <p className="text-sm text-gray-600 mb-3">
-            Current burn rate is 200 units/mo. High probability of loss for batch
-            #9923.
-          </p>
-          <button className="bg-gray-900 text-white text-sm px-4 py-2 rounded-lg">
-            Mark for Return
-          </button>
-        </div>
-      </div>
-
-      {/* ROW 2 — Lisinopril */}
-      <div className="grid grid-cols-[2fr_1fr_1.2fr_1.6fr_1fr_40px] items-center py-4 border-t mt-4">
-        <div>
-          <p className="font-semibold">Lisinopril 10mg</p>
-          <p className="text-xs text-gray-500">SKU: LIS-10-TAB</p>
+        {/* STATUS */}
+        <div className={`flex items-center gap-2 font-medium ${statusColor}`}>
+          <span className={`w-2 h-2 rounded-full ${progress.replace("w-full", "bg-green-500")}`}></span>
+          {status}
         </div>
 
-        <span className="text-xs px-3 py-1 rounded-full bg-blue-50 text-blue-700 w-fit">
-          Hypertension
-        </span>
-
-        <div>
-          <p className="font-semibold">45 Units</p>
-          <span className="text-xs px-2 py-1 rounded bg-gray-200 text-gray-700">
-            Dead Stock (90d+)
-          </span>
-        </div>
-
-        <div>
-          <div className="h-2 rounded-full bg-gray-200 mb-1 w-44">
-            <div className="h-full w-2/3 bg-orange-400 rounded-full"></div>
-          </div>
-          <p className="text-xs text-orange-500">Exp: 84 Days</p>
-          <p className="text-xs text-gray-400">18 Months left</p>
-        </div>
-
-        <div className="flex items-center gap-2 text-orange-500 font-medium">
-          <span className="w-2 h-2 rounded-full bg-orange-500"></span>
-          Monitor
-        </div>
-
+        {/* ACTION */}
         <button className="text-xl text-gray-400">⋮</button>
       </div>
 
-      {/* ROW 3 — Paracetamol */}
-      <div className="grid grid-cols-[2fr_1fr_1.2fr_1.6fr_1fr_40px] items-center py-4 border-t">
-        <div>
-          <p className="font-semibold">Paracetamol 500mg</p>
-          <p className="text-xs text-gray-500">SKU: PCM-500-GEN</p>
-        </div>
-
-        <span className="text-xs px-3 py-1 rounded-full bg-green-50 text-green-700 w-fit">
-          Analgesics
-        </span>
-
-        <div>
-          <p className="font-semibold">5,000 Units</p>
-          <span className="text-xs px-2 py-1 rounded bg-green-100 text-green-700">
-            Optimal
-          </span>
-        </div>
-
-        <div>
-          <div className="h-2 rounded-full bg-gray-200 mb-1 w-44">
-            <div className="h-full w-full bg-green-500 rounded-full"></div>
-          </div>
-          <p className="text-xs text-green-600">Exp: 2.4 Years</p>
-          <p className="text-xs text-gray-400">Healthy</p>
-        </div>
-
-        <div className="flex items-center gap-2 text-green-600 font-medium">
-          <span className="w-2 h-2 rounded-full bg-green-600"></span>
-          Stable
-        </div>
-
-        <button className="text-xl text-gray-400">⋮</button>
+      {/* 🔥 OPTIONAL: BATCH DETAILS (like your UI) */}
+      <div className="bg-gray-50 mt-3 p-3 rounded-lg text-sm text-gray-600">
+        Supplier: <span className="font-medium">{item.supplier}</span> | Invoice:{" "}
+        <span className="font-medium">{item.invoiceNumber}</span>
       </div>
+
+    </div>
+  );
+})}
 
       {/* Footer */}
       <div className="flex justify-between items-center mt-6 text-sm text-gray-500">

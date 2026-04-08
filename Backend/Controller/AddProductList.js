@@ -5,35 +5,45 @@ const AddProductList = async (req, res) => {
     const userId = req?.user?.id;
     console.log("USER ID:", userId);
     console.log("BODY:", req.body);
+const {
+  ProductName,
+  ProductSku,
+  ProductQuantity,
+  ProductCategory,
+  ProductExpiryDate,
+  ProductBatchNo,     // ✅ NEW
+  ProductPrice,       // ✅ NEW
+  ProductMfgDate      // ✅ OPTIONAL
+} = req.body;
 
-    const {
-      ProductName,
-      ProductSku,
-      ProductQuantity,
-      ProductCategory,
-      ProductExpiryDate
-    } = req.body;
-
-    if (!ProductName || !ProductSku || !ProductCategory || !ProductQuantity || !ProductExpiryDate) {
-      return res.status(400).json({ message: "All fields required" });
-    }
-
-    let ProductCheck = await ProductModel.findOne({
-      ProductSku,
-      ProductExpiryDate,
-        userId
-
-    });
+  if (
+  !ProductName ||
+  !ProductSku ||
+  !ProductCategory ||
+  !ProductQuantity ||
+  !ProductExpiryDate ||
+  !ProductBatchNo ||
+  !ProductPrice
+) {
+  return res.status(400).json({ message: "All required fields missing" });
+}
+   let ProductCheck = await ProductModel.findOne({
+  ProductSku,
+  userId
+});
 
     if (!ProductCheck) {
       const newProduct = await ProductModel.create({
-        userId,
-        ProductName,
-        ProductSku,
-        ProductQuantity,
-        ProductCategory,
-        ProductExpiryDate
-      });
+  userId,
+  ProductName,
+  ProductSku,
+  ProductQuantity,
+  ProductCategory,
+  ProductExpiryDate,
+  ProductBatchNo,   // ✅ NEW
+  ProductPrice,     // ✅ NEW
+  ProductMfgDate    // ✅ OPTIONAL
+});
 
       return res.status(200).json({
         success: true,

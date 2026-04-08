@@ -1,20 +1,21 @@
 import React, { useState } from "react";
 import axiosInstance from "../Dashboard/Form/Utils/AxiosInstance";
-
 const Addstock = ({ close }) => {
-  const [formData, setFormData] = useState({
-    ProductName: "",
-    ProductSku: "",
-    ProductCategory: "",
-    ProductQuantity: "",
-    ProductExpiryDate: ""
-  });
+const [formData, setFormData] = useState({
+  ProductName: "",
+  ProductSku: "",
+  ProductCategory: "",
+  ProductQuantity: "",
+  ProductExpiryDate: "",
+  ProductBatchNo: "",      // ✅ NEW
+  ProductPrice: "",        // ✅ NEW
+  ProductMfgDate: ""       // ✅ OPTIONAL
+});
   console.log("auth id in add stock",)
   const handleSubmit = async () => {
     console.log("form data in frontend",formData);
     close();
-
-    try {
+      try {
       await axiosInstance.post("/registerroute/AddProductList",formData).then((res) => {
         if (res?.data?.success) {
           alert("product is added to db successfully")
@@ -34,7 +35,8 @@ const Addstock = ({ close }) => {
       ...prev,
       [name]: value
     }));
-  }; return (
+  }
+   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/40 z-50">
 
       <div className="bg-white w-600px rounded-xl shadow-lg p-6">
@@ -106,8 +108,43 @@ const Addstock = ({ close }) => {
               onChange={handleChange}
             />
           </div>
+  {/* Batch Number */}
+<div>
+  <label className="text-sm font-medium">Batch No *</label>
+  <input
+    className="w-full border rounded-lg p-2 mt-1"
+    type="text"
+    name="ProductBatchNo"
+    value={formData.ProductBatchNo}
+    onChange={handleChange}
+  />
+</div>
 
+{/* Unit Price */}
+<div>
+  <label className="text-sm font-medium">Unit Price (₹) *</label>
+  <input
+    className="w-full border rounded-lg p-2 mt-1"
+    type="number"
+    name="ProductPrice"
+    value={formData.ProductPrice}
+    onChange={handleChange}
+  />
+</div>
+{/* Manufacturing Date */}
+<div>
+  <label className="text-sm font-medium">MFG Date</label>
+  <input
+    type="date"
+    className="w-full border rounded-lg p-2 mt-1"
+    name="ProductMfgDate"
+    value={formData.ProductMfgDate}
+    onChange={handleChange}
+  />
+</div>
         </div>
+
+
 
         {/* Buttons */}
         <div className="flex justify-end gap-3 mt-6">

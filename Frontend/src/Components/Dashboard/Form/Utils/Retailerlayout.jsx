@@ -4,10 +4,13 @@ import {
   MenuUnfoldOutlined,
   RobotFilled,   
 } from '@ant-design/icons';
-import { Bell, Settings, User } from "lucide-react";
+
 import { Button, Layout, Menu, theme } from 'antd';
 import { DashboardCustomize, DeliveryDining, Inventory2, SubjectOutlined } from '@mui/icons-material';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import UserProfileMenu from '../UserProfile';
+import { SettingsMenu } from './Setting';
+import { NotificationMenu } from './Notifications';
 const { Header, Sider, Content } = Layout;
 const Retailerlayout = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -53,6 +56,14 @@ const Retailerlayout = () => {
       key: "/Dashboard/Retailer/OneMedicine",
       icon: <DeliveryDining />,
       label: "OneMedicine",
+    }, {
+      key: "/Dashboard/Retailer/InvoicePurchaseScan",
+      icon: <DeliveryDining />,
+      label: "InvoicePurchaseScan",
+    },{
+       key: "/Dashboard/Retailer/Courier",
+      icon: <DeliveryDining />,
+      label: "Courier",
     }
   ]
 
@@ -66,6 +77,7 @@ const Retailerlayout = () => {
             theme="dark"
             mode="inline"
             selectedKeys={[location.pathname]}
+            defaultSelectedKeys={[location.pathname]}
             items={items}
             onClick={(e) => {
               navigate(e.key)
@@ -91,18 +103,20 @@ const Retailerlayout = () => {
 
             {/* RIGHT SIDE */}
             <div className="flex items-center gap-3">
-              <button className="relative p-2 text-slate-500 hover:text-slate-700 hover:bg-slate-100 rounded-full transition-colors">
-                <Bell size={18} />
-                <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
-              </button>
 
-              <button className="p-2 text-slate-500 hover:text-slate-700 hover:bg-slate-100 rounded-full transition-colors">
-                <Settings size={18} />
-              </button>
+              <NotificationMenu />
+              <SettingsMenu />
+              <UserProfileMenu
+                username="Wholesaler"
+                role="Admin"
+              />
 
+<<<<<<< HEAD
               <button className="w-9 h-9 rounded-full bg-orange-100 flex items-center justify-center text-orange-400 border border-orange-200">
                 <User size={20} />
               </button>  
+=======
+>>>>>>> 660ac708c050f5f0a0e5ab1dc3a9dc826a6ba620
             </div>
           </Header>
           <Content className="p-6 bg-gray-50" >

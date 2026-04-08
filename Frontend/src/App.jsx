@@ -34,18 +34,18 @@ import ActionablePrevention from './Components/Hitesh/ActionablePrevention'
 import SingleRetailerDetails from './Components/Hitesh/SingleRetailerDetails'
 import AdminRoleAssign from './Components/Dashboard/Retailar/AdminRoleAssign'
 import Addstock from './Components/Wholesalecompenent.jsx/Addstock'
+import InvoicePurchaseScan from './Components/Billing/InvoicePurchaseScan'
+import OrderSuccess from './Components/Billing/OrderSuccess'
 
 const App = () => {
 
   return (
     <>
       <Routes>
-        <Route path="/" element={<Index/>} />
+        <Route path="/" element={<Index />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         {/* Layout = Header + Outlet */}
-
-
         <Route path="Dashboard" element={
           <ProtectedRoute >
             <Layout />
@@ -54,7 +54,7 @@ const App = () => {
           {/* Default landing page */}
           <Route path='Wholesaler' >
             <Route index element={<WholeSaler />} />
-            <Route path="AdminRoleAssign" element={<AdminRoleAssign/>}/>
+            <Route path="AdminRoleAssign" element={<AdminRoleAssign />} />
             <Route path="Lowstock" element={<Lowstock />} />
             <Route path="Dailysales" element={<Dailysales />} />
             <Route path="AiAgent" element={<AiAgent />} />
@@ -62,11 +62,9 @@ const App = () => {
             <Route path="TempelateDesigner" element={<TempelateDesigner />} />
             <Route path="ProductOverview" element={<ProductOverview />} />
             <Route path="Retailors">
-              <Route index  element={<Retailors />}/>
-             <Route path=":id" element={<SingleRetailerDetails/>} />
+              <Route index element={<Retailors />} />
+              <Route path=":id" element={<SingleRetailerDetails />} />
             </Route>
-             
-
             <Route path="Alert" element={<Actionable />} />
             <Route path="pendingorders" element={<PendingOrders />} />
             <Route path="ExpiryMedicine" element={<ExpiryMedicine />} />
@@ -74,25 +72,29 @@ const App = () => {
           <Route path="Retailer">
             <Route index element={<Retailer />} />
             <Route path="Inventory" element={<Inventory />} />
+            <Route path="Inventory/:id" element={<OneMedicine />} />
+          
             <Route path="TempelateDesigner" element={<TempelateDesigner />} />
-            <Route path="Billing" element={<Billing />} />
+            <Route path="InvoicePurchaseScan" element={<InvoicePurchaseScan />} />
             <Route path="AiAgent" element={<AiAgent />} />
             <Route path="AddStock" element={<Addstock />} />
             <Route path="SingleMedicineInfo" element={<SingleMedicineInfo />} />
             <Route path="WhatsappTempelate" element={<WhatsappTempelate />} />
             <Route path="ReturnInvoice" element={<ReturnInvoice />} />
             <Route path="FilterWholesaler" element={<FilterOutWholesaler />} />
-             <Route path="FilterWholesaler" element={<FilterOutWholesaler />} />
-             <Route path="OneMedicine" element={<OneMedicine />} />
-             <Route path="ActionablePrevention" element={<ActionablePrevention />} />
+            <Route path="FilterWholesaler" element={<FilterOutWholesaler />} />
+            <Route path="ActionablePrevention" element={<ActionablePrevention />} />
             <Route path="Order">
               <Route index element={<OrderWholesaler />} />
               <Route path="FindWholesaler" element={<OneWholesaler />} />
               <Route path="FilterOutWholesaler" element={<FilterOutWholesaler />} />
               <Route path="MixedWholesaler" element={<MixedWholesaler />} />
               <Route path=":id" element={<SingleWholesalerInfo />} />
-                          <Route path=":id/Cart" element={<Cart />} />
-
+              {/* ✅ Correct flow */}
+              <Route path=":id/Cart" element={<Cart />} />
+              <Route path=":id/Billing" element={<Billing />} >
+                <Route path="OrderSuccess" element={<OrderSuccess />} />
+              </Route>
             </Route>
             <Route path="Courier" element={<Courier />} />
             <Route path="Connectcourier" element={<Connectcourier />} />

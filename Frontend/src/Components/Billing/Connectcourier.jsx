@@ -60,9 +60,7 @@ const Courier = () => {
       {/* Connected Partners */}
       <div className="bg-white rounded-xl shadow p-6 mb-10">
         <h2 className="text-xl font-semibold mb-4">Connected Partners</h2>
-
         <div className="divide-y">
-
            <div className="bg-white rounded-xl border overflow-hidden">
 
              {/* Table Header */}

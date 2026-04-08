@@ -10,7 +10,7 @@ const getMe = (req, res, next) => {
     })
   }
   const decoded = jwt.verify(token, "simran")
-  console.log(decoded)
+  console.log("me api",decoded)
   res.json({
     user: decoded
   })
