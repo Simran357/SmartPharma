@@ -9,22 +9,22 @@ const SingleWholesalerInfo = () => {
   console.log("id", id)
   const { auth } = useContext(contextProvide)
   const [medicines, setMedicines] = useState([])
-<<<<<<< HEAD
+
   const [singleWholesaler, setSingleWholesaler] = useState({})
   const [cartProduct, setCartProduct] = useState([])
-=======
+
 const [singleWholesaler, setSingleWholesaler] = useState({})
 const [cartProduct, setCartProduct] = useState(() => {
   const storedCart = localStorage.getItem("cart");
   return storedCart ? JSON.parse(storedCart) : [];
 });
 
->>>>>>> 660ac708c050f5f0a0e5ab1dc3a9dc826a6ba620
+
   const navigate = useNavigate()
   console.log("singleWholesaler", singleWholesaler)
   const getUser = async () => {
     console.log("getUser called ");
-    try {
+    try {   
       const res = await axiosInstance.get(`/registerroute/getsingleWholesaler/${id}`)
       if (res?.data) {
         console.log("wholesaler single", res?.data)
@@ -34,7 +34,7 @@ const [cartProduct, setCartProduct] = useState(() => {
     } catch (error) {
       console.log("Error fetching user data:", error);
     }
-  }
+  }  
   console.log("auth in frontend", auth)
   const getMedicines = async () => {
     console.log("getMedicines called");
@@ -62,10 +62,10 @@ useEffect(() => {
   localStorage.setItem("cart", JSON.stringify(cartProduct));
 }, [cartProduct]);
   const handleCartItem = (ProductId) => {
-<<<<<<< HEAD
+
     const selectedProduct = medicines.find(
       (product) => product._id === ProductId
-=======
+
   const selectedProduct = medicines.find(
     (product) => product._id === ProductId
   );
@@ -74,7 +74,7 @@ useEffect(() => {
   setCartProduct((prevCart) => {
     const existingItem = prevCart.find(
       (item) => item._id === ProductId
->>>>>>> 660ac708c050f5f0a0e5ab1dc3a9dc826a6ba620
+
     );
 
     if (!selectedProduct) return;
@@ -83,7 +83,7 @@ useEffect(() => {
       const existingItem = prevCart.find(
         (item) => item._id === ProductId
       );
-
+  
       if (existingItem) {
         return prevCart.map((item) =>
           item._id === ProductId
@@ -103,7 +103,7 @@ useEffect(() => {
         item._id === id
           ? { ...item, qty: item.qty + 1 }
           : item
-<<<<<<< HEAD
+
       )
     );
   };
@@ -119,9 +119,8 @@ useEffect(() => {
         .filter((item) => item.qty > 0) // remove if qty = 0
     );
   };
-=======
-      );
-    }
+
+     
 
     return [...prevCart, { ...selectedProduct, qty: 1 }];
   });
@@ -162,7 +161,7 @@ const isInCart = (id) => {
 };
 const totalItems = cartProduct.reduce((total, item) => total + item.qty, 0);
 
->>>>>>> 660ac708c050f5f0a0e5ab1dc3a9dc826a6ba620
+
   // const navigate = useNavigate()
   return (
     <>
@@ -299,7 +298,7 @@ const totalItems = cartProduct.reduce((total, item) => total + item.qty, 0);
                           {med.ProductQuantity > 10 ? "IN STOCK" : "LOW STOCK"}
                         </span>
 
-<<<<<<< HEAD
+
                         {/* Category Tag */}
                         <span className="absolute bottom-2 left-2 bg-blue-100 text-blue-600 px-2 py-0.5 rounded text-xs">
                           {med.ProductCategory}
@@ -324,7 +323,7 @@ const totalItems = cartProduct.reduce((total, item) => total + item.qty, 0);
                             ₹ {med.price || 0}
                             <span className="text-xs text-gray-400 ml-1">/ unit</span>
                           </p>
-=======
+
       {/* Content */}
       <div className="mt-3 space-y-1">
         <p className="text-gray-400 text-xs">{med.ProductSku}</p>
@@ -388,7 +387,7 @@ const totalItems = cartProduct.reduce((total, item) => total + item.qty, 0);
             </section>
           </div>
           {/* my cart */}
-<<<<<<< HEAD
+
           {/* MY CART (OLD DESIGN + NEW LOGIC) */}
           <div className="col-span-12 lg:col-span-3 flex flex-col gap-6">
             <section className='bg-white border shadow-xl w-full mt-8 border-gray-300 p-6 rounded-xl'>
@@ -399,7 +398,7 @@ const totalItems = cartProduct.reduce((total, item) => total + item.qty, 0);
                   <ShoppingBag fontSize='medium' />
                   <p className='text-md font-bold'>MY CART</p>
                 </span>
-=======
+
     {/* MY CART (OLD DESIGN + NEW LOGIC) */}
 <div className="col-span-12 lg:col-span-3 flex flex-col gap-6">
   <section className='bg-white border shadow-xl w-full mt-8 border-gray-300 p-6 rounded-xl'>
@@ -414,7 +413,7 @@ const totalItems = cartProduct.reduce((total, item) => total + item.qty, 0);
   {totalItems} Items
 </span>
     </div>
->>>>>>> 660ac708c050f5f0a0e5ab1dc3a9dc826a6ba620
+
 
                 <span className='bg-green-300/90 text-green-800/80 text-xs font-medium rounded-2xl px-2'>
                   {cartProduct.length} Items
@@ -450,11 +449,11 @@ const totalItems = cartProduct.reduce((total, item) => total + item.qty, 0);
                               -
                             </button>
 
-<<<<<<< HEAD
+
                             <span className="text-sm font-medium">
                               {item.qty}
                             </span>
-=======
+
   <span className='text-sm flex items-center font-medium'>
     <CurrencyRupee fontSize='small' />
     {item.qty * (item.ProductPrice || 0)}
@@ -464,7 +463,7 @@ const totalItems = cartProduct.reduce((total, item) => total + item.qty, 0);
         ))
       )}
     </div>
->>>>>>> 660ac708c050f5f0a0e5ab1dc3a9dc826a6ba620
+
 
                             <button
                               onClick={() => increaseQty(item._id)}
@@ -485,13 +484,13 @@ const totalItems = cartProduct.reduce((total, item) => total + item.qty, 0);
                 )}
               </div>
 
-<<<<<<< HEAD
+
               {/* DIVIDER */}
               <div className='border border-t-gray-50 mt-4'></div>
 
               {/* TOTAL SECTION */}
               <div className='mt-3'>
-=======
+
       <span className='flex justify-between items-center'>
         <h1 className='text-gray-400 text-sm'>Sub Total</h1>
         <p className='flex items-center font-bold'>
@@ -508,7 +507,7 @@ const totalItems = cartProduct.reduce((total, item) => total + item.qty, 0);
           - <CurrencyRupee fontSize='small' />50.00
         </p>
       </span>
->>>>>>> 660ac708c050f5f0a0e5ab1dc3a9dc826a6ba620
+
 
                 <span className='flex justify-between items-center'>
                   <h1 className='text-gray-400 text-sm'>Sub Total</h1>
@@ -520,7 +519,7 @@ const totalItems = cartProduct.reduce((total, item) => total + item.qty, 0);
                   </p>
                 </span>
 
-<<<<<<< HEAD
+
                 <span className='flex justify-between items-center mt-2'>
                   <h1 className='text-gray-400 text-sm'>Bulk Discount</h1>
                   <p className='flex items-center text-green-300/80 font-bold'>
@@ -532,7 +531,7 @@ const totalItems = cartProduct.reduce((total, item) => total + item.qty, 0);
                   <h1 className='text-gray-800 text-lg font-bold'>
                     Total Amount
                   </h1>
-=======
+
         <p className='flex items-center font-bold text-lg'>
           <CurrencyRupee fontSize='small' />
           {cartProduct.reduce((total, item) => {
@@ -549,7 +548,7 @@ const totalItems = cartProduct.reduce((total, item) => total + item.qty, 0);
       </button>
     </div>
   </section>
->>>>>>> 660ac708c050f5f0a0e5ab1dc3a9dc826a6ba620
+
 
                   <p className='flex items-center font-bold text-lg'>
                     <CurrencyRupee fontSize='small' />
