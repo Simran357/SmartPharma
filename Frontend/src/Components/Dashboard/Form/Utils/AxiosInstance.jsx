@@ -14,10 +14,10 @@ axiosInstance.interceptors.request.use(
     if (jwtToken) {
       config.headers.Authorization = `Bearer ${jwtToken}`; // Standard header key
       console.log("JWT token attached to request");
-    }
+    }   
     return config;
-  },
-  (error) => {
+  },  
+  (error) => {     
     // Handle request errors
     console.error("Axios request error:", error);
     return Promise.reject(error);
@@ -29,7 +29,7 @@ axiosInstance.interceptors.response.use(
   (response) => {
     console.log("Axios response:", response);
     return response;
-  },
+  },  
   (error) => {
     // Handle response errors
     if (error.response) {

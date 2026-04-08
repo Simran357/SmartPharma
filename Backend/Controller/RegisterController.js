@@ -10,11 +10,11 @@ const RegisterController = async (req,res,next)=>{
     const registerDataCheck =  await RegisterModel.findOne({
         email:email
     })
-
-    if(registerDataCheck){
+                                                    
+    if(registerDataCheck){        
         return res.status(400).json({
-            success:false, 
-            message:"email already exists"})
+            success:false,                      
+            message:"email already exists"})          
     }
 
     const hashedPassword = await bcrypt.hash(password,10)
@@ -31,8 +31,5 @@ const RegisterController = async (req,res,next)=>{
 return res.status(200).json({
     success:true,
     message:"registration successfull"
-});
-
-
-}
-    module.exports = RegisterController;
+});}
+module.exports = RegisterController;       
