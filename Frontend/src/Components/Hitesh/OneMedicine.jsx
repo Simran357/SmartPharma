@@ -58,9 +58,9 @@ function OneMedicine() {
         setLoading(false);
       }
     };
-
     if (state?.name) fetchBatches();
   }, [state?.name]);
+console.log("batches",batches)
 
   // 🔥 STATS
   const totalStock = batches.reduce((sum, b) => sum + (b.qty || 0), 0);

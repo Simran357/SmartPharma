@@ -8,6 +8,7 @@ const openai = new OpenAI({
 const aiOCRController = async (req, res) => {
     try {
         const filePath = req.file.path;
+        console.log("file",filePath)
         // ✅ image → base64
         const base64Image = fs.readFileSync(filePath, {
             encoding: "base64",
