@@ -11,6 +11,7 @@ import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import UserProfileMenu from '../UserProfile';
 import { SettingsMenu } from './Setting';
 import { NotificationMenu } from './Notifications';
+import { User } from 'lucide-react';
 const { Header, Sider, Content } = Layout;
 const Retailerlayout = () => {
   const [collapsed, setCollapsed] = useState(false);
