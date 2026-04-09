@@ -14,7 +14,6 @@ import SingleWholesalerInfo from './Components/Dashboard/Retailar/Order/Wholesal
 import Lowstock from './Components/Wholesalecompenent.jsx/Lowstock'
 import Dailysales from './Components/Wholesalecompenent.jsx/Dailysales'
 import ProductOverview from './Inventory/ProductOverview'
-import SingleMedicineInfo from './Inventory/medicine/SingleMedicineInfo'
 import Courier from './Components/Billing/Courier'
 import TempelateDesigner from './Inventory/TempelateDesigner'
 import ProtectedRoute from './Components/Dashboard/Form/ProtectedRoute'
@@ -78,7 +77,6 @@ const App = () => {
             <Route path="InvoicePurchaseScan" element={<InvoicePurchaseScan />} />
             <Route path="AiAgent" element={<AiAgent />} />
             <Route path="AddStock" element={<Addstock />} />
-            <Route path="SingleMedicineInfo" element={<SingleMedicineInfo />} />
             <Route path="WhatsappTempelate" element={<WhatsappTempelate />} />
             <Route path="ReturnInvoice" element={<ReturnInvoice />} />
             <Route path="FilterWholesaler" element={<FilterOutWholesaler />} />

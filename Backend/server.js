@@ -7,7 +7,7 @@ const express = require("express")
 const chief = express()
 const cors = require("cors")
 const cookieParser = require("cookie-parser")
-
+require("dotenv").config();
 const routes = require("./routes/index")
 
 

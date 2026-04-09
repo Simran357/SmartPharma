@@ -2,12 +2,9 @@ const mongoose = require("mongoose")
 const stockSchema = new mongoose.Schema({
   supplierName: { type: String, required: true },
   invoiceNumber: { type: String, required: true },
-
   date: { type: Date },
   dueDate: { type: Date },
-
   poRef: String,
-
   gstin: String,
   dlNo: String,
   phone: String,
