@@ -29,6 +29,7 @@ const GoogleController = async (req, res, next) => {
         avatar: picture,
       });
     }
+    
 
     const token = jwt.sign({
       userId: user._id,

@@ -11,7 +11,8 @@ const authMiddleware = (req, res, next) => {
     const decoded = jwt.verify(token, "simran");
     req.user = decoded; // ✅ yaha set karo
     next();
-  } catch {
+  } catch(error){
+    console.log("error in auth middleware",error)
     return res.status(401).json({ message: "Invalid token" });
   }
 };

@@ -2,7 +2,9 @@ const StockModel = require("../model/Stock.model");
 
 const getInventoryStock = async (req, res) => {
   try {
-    const stocks = await StockModel.find();
+        const userId = req?.user?.id;
+
+    const stocks = await StockModel.find({userId:userId});
 console.log("api getting hit of stock",stocks)
     // 🔥 Flatten all items
    
