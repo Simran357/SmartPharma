@@ -15,6 +15,8 @@ const addStock = require("../../Controller/StockController")
 const getInventoryStock = require("../../Controller/getInventoryStock")
 // const BatchController= require("../../Controller/BatchController")
 const  getBatches  = require("../../Controller/BatchController")
+const billController = require("../../Controller/bill")
+
 router.post("/registercontroller",RegisterController)
 router.post("/LoginController",LoginController)
 router.get("/GetRegisterdata",GetRegisterdata)
@@ -31,6 +33,9 @@ router.get("/getInventoryStock",getInventoryStock)
 
 router.get("/batches/:name", getBatches)
 router.put("/updateRole/:id", updateRoleController)
+
+//bill 
+router.post("/bill",billController)
 
 router.get("/me",getMe)
 

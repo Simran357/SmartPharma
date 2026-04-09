@@ -82,7 +82,7 @@ const Retailerlayout = () => {
             onClick={(e) => {
               navigate(e.key)
             }}
-          />
+          /> 
         </Sider>
         <Layout>
           <Header
@@ -111,12 +111,11 @@ const Retailerlayout = () => {
                 role="Admin"
               />
 
-<<<<<<< HEAD
+
               <button className="w-9 h-9 rounded-full bg-orange-100 flex items-center justify-center text-orange-400 border border-orange-200">
-                <User size={20} />
+                <UserProfileMenu size={20} />
               </button>  
-=======
->>>>>>> 660ac708c050f5f0a0e5ab1dc3a9dc826a6ba620
+
             </div>
           </Header>
           <Content className="p-6 bg-gray-50" >
@@ -130,4 +129,4 @@ const Retailerlayout = () => {
   )
 }
 
-export default Retailerlayout
+export default Retailerlayout 

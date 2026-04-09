@@ -18,7 +18,7 @@ const OrderWholesaler = () => {
             Wholesale Bonanza:
             <br />
             Extra 15% Off Generics
-          </h1>
+          </h1>   
           <button className="mt-4 bg-white text-black px-6 py-2 rounded-lg font-medium hover:bg-gray-200 transition">
             Order Now
           </button>
