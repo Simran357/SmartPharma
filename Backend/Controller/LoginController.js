@@ -11,14 +11,14 @@ const LoginController = async (req,res,next)=>{
     const user = await RegisterModel.findOne({
        email:email
     })
-
+                           
     if(!user){
         return res.status(400).json({
             success:true,
             message:"user does not exist"
         })
     } 
-const isMatch = await bcrypt.compare(password, user?.password)
+const isMatch = await bcrypt.compare(password, user?.password)  
 
    if (!isMatch) {
       return res.status(400).json({

@@ -11,13 +11,13 @@ import {
   YAxis,
   Tooltip,
   ResponsiveContainer,
-  CartesianGrid,
+  CartesianGrid,  
   Legend,
 } from "recharts";
 import { CheckCircle, AlertTriangle, Info,FileText,Upload,Banknote,ShoppingBag, BarChart, Building2 } from "lucide-react";
 import { useParams } from "react-router-dom";
 const SingleRetailerDetails = () => {
-   const {id} = useParams()
+   const {id} = useParams()   
    console.log(id)
     console.log(id)
      const [singleRetailer,setSingleRetailer] = useState({})
