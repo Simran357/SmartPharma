@@ -1,6 +1,6 @@
 import { Check, AlertCircle, Upload } from "lucide-react";
 import { useState } from "react";
-import Tesseract from "tesseract.js";
+// import Tesseract from "tesseract.js";
 import axiosInstance from "../Dashboard/Form/Utils/AxiosInstance";
 
 const InvoicePurchaseScan = () => {
