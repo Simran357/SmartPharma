@@ -15,7 +15,7 @@ const Register = () => {
         "/registerroute/registercontroller",
         values
       );
-
+    
       if (res?.data?.success) {
         const data = await axiosInstance.get(
           "/registerroute/GetRegisterdata"

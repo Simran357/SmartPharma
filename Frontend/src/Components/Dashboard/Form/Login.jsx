@@ -36,27 +36,27 @@ const Login = () => {
   })   
   const onFinish = async (values) => {
     console.log("Success:", values);
-    try {    
+    try {      
       setLoading(true); 
       const res = await axiosInstance.post("/registerroute/LoginController", values);
       if (res?.data?.success) {
-        const setToken = res?.data?.jwtToken
+        const setToken = res?.data?.jwtToken  
         console.log(setToken) 
         localStorage.setItem("jwtToken", setToken)
         alert("Login Successful");
         setState(res?.data?.message)
         navigate("/Dashboard")
-      }
+      }    
     } catch (err) {
       setLoading(false);
       console.log("ERROR MESSAGE:", err);
       setState(err?.response?.data?.message);
     }
   };
-
+  
   const onFinishFailed = errorInfo => {
     console.log('Failed:', errorInfo);
-  };
+  };            
   return (
     <>
       <div className="w-full flex justify-center items-center">
