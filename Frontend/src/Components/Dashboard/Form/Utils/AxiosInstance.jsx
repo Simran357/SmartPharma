@@ -18,10 +18,10 @@ axiosInstance.interceptors.request.use(
     }   
 
       console.log("JWT token attached to request",jwtToken);
-    }
-
-    return config;
-  },  
+    
+  
+      return config;
+    },
   (error) => {     
     // Handle request errors
     console.error("Axios request error:", error);
