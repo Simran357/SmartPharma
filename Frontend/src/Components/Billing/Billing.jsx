@@ -2,7 +2,6 @@ import { CurrencyRupee } from "@mui/icons-material";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Outlet } from "react-router-dom";
-import axiosInstance from "../Dashboard/Form/Utils/AxiosInstance";
 
 const Billing = () => {
   const location = useLocation();
@@ -26,11 +25,10 @@ const Billing = () => {
 
   const navigate = useNavigate();
 
-  const handleStripePayment = async () => {
+  const handleCheckout = () => {
     if (cart.length === 0) {
       alert("Cart is empty");
       return;
-
     }
 
     if (!paymentMethod) {
@@ -38,45 +36,28 @@ const Billing = () => {
       return;
     }
 
-    try {
-      const orderData = {
-        id: Date.now(), // simple order id
-        items: cart,
-        subtotal,
-        shipping,
-        cgst,
-        sgst,
-        discount,
-        total,
-        paymentMethod,
-        date: new Date().toLocaleString()
-      };
+    const orderData = {
+      id: Date.now(), // simple order id
+      items: cart,
+      subtotal,
+      shipping,
+      cgst,
+      sgst,
+      discount,
+      total,
+      paymentMethod,
+      date: new Date().toLocaleString()
+    };
 
-      localStorage.setItem("order", JSON.stringify(orderData));
+    // Navigate to success page with data
+    navigate("OrderSuccess", {
+      state: { order: orderData }
+    })
+  };
 
-      const finalAmount = Math.round(Number(total) * 100);
-      console.log("Sending amount:", finalAmount);
-
-      const res = await axiosInstance.post("/registerroute/bill",{amount: finalAmount});
-      console.log("stripe res " , res.data)
-         window.location.href = res.data.url;
-   
-    } catch (error) {
-      console.log(error);
-      alert("Payment failed");
-    }
-
-          
-
-  //   // Navigate to success page with data
-  //   navigate("OrderSuccess", {
-  //     state: { order: orderData }
-  //   })
-  
-  };                                              
   return (
     <>
-   
+
       <div className="flex flex-col lg:flex-row gap-6 m-4 lg:m-8">
 
         {/* LEFT SIDEBAR */}
@@ -208,7 +189,7 @@ const Billing = () => {
               </div>
 
               <button
-                onClick={handleStripePayment}
+                onClick={handleCheckout}
                 className="w-full bg-green-500 text-white py-3 rounded-xl font-semibold hover:bg-green-600"
               >
                 ✔ Complete Checkout
@@ -227,4 +208,4 @@ const Billing = () => {
     </>);
 };
 
-export default Billing; 
+export default Billing;

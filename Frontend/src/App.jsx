@@ -48,10 +48,10 @@ const App = () => {
         <Route path="Dashboard" element={
           <ProtectedRoute >
             <Layout />
-          </ProtectedRoute>}> 
+          </ProtectedRoute>}>
           <Route index element={<Navigate to="Retailer" replace />} />
           {/* Default landing page */}
-          <Route path='Wholesaler' >  
+          <Route path='Wholesaler' >
             <Route index element={<WholeSaler />} />
             <Route path="AdminRoleAssign" element={<AdminRoleAssign />} />
             <Route path="Lowstock" element={<Lowstock />} />
@@ -92,7 +92,7 @@ const App = () => {
               <Route path=":id/Cart" element={<Cart />} />
               <Route path=":id/Billing" element={<Billing />} >
                 <Route path="OrderSuccess" element={<OrderSuccess />} />
-              </Route>  
+              </Route>
             </Route>
             <Route path="Courier" element={<Courier />} />
             <Route path="Connectcourier" element={<Connectcourier />} />

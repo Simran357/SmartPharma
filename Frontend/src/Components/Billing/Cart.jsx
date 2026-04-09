@@ -8,7 +8,7 @@ import { useState } from "react";
 const Cart = () => {
   const navigate = useNavigate()
   const location = useLocation();
-  const { id } = useParams();
+const { id } = useParams();
   const cartItems = location.state?.cartProduct || [];
   const [cart, setCart] = useState(cartItems);
 
@@ -44,7 +44,7 @@ const Cart = () => {
   const discount = subtotal > 2000 ? subtotal * 0.1 : 0; // 10% discount rule
   const total = subtotal + shipping + tax - discount;
 
-  return (<>
+  return (<>  
     <div className="min-h-screen  p-6">
       <div className="max-w-7xl mx-auto">
 
@@ -224,7 +224,7 @@ const Cart = () => {
             </div>
           </div>
 
-
+     
           {/* RIGHT SIDE */}
           <div className="lg:col-span-1 space-y-6">
 
@@ -291,16 +291,16 @@ const Cart = () => {
                 </span>
               </div>
 
-              <button
-                className="w-full bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-xl"
-                onClick={() =>
-                  navigate(`/Dashboard/Retailer/Order/${id}/Billing`, {
-                    state: { cart }
-                  })
-                }
-              >   
-                Proceed to Checkout
-              </button>
+            <button
+  className="w-full bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-xl"
+  onClick={() =>
+  navigate(`/Dashboard/Retailer/Order/${id}/Billing`, {
+  state: { cart }
+})
+  }
+>
+  Proceed to Checkout
+</button>
             </div>
 
             {/* SHIPMENT ORIGINS */}
@@ -338,9 +338,9 @@ const Cart = () => {
           </div>
         </div>
       </div>
-
+     
     </div>
-    <Outlet /> </>
+ <Outlet /> </>
   );
 };
 

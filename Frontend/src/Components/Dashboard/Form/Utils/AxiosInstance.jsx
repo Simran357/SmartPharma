@@ -13,8 +13,13 @@ axiosInstance.interceptors.request.use(
     const jwtToken = localStorage.getItem("jwtToken");
     if (jwtToken) {
       config.headers.Authorization = `Bearer ${jwtToken}`; // Standard header key
+<<<<<<< HEAD
+      console.log("JWT token attached to request");
+    }   
+=======
       console.log("JWT token attached to request",jwtToken);
     }
+>>>>>>> 660ac708c050f5f0a0e5ab1dc3a9dc826a6ba620
     return config;
   },  
   (error) => {     

@@ -35,9 +35,6 @@ router.get("/getInventoryStock",getInventoryStock)
 router.get("/batches/:name", getBatches)
 router.put("/updateRole/:id", updateRoleController)
 
-//bill 
-router.post("/bill",billController)
-
 router.get("/me",getMe)
 console.log("router.file")
 module.exports = router  

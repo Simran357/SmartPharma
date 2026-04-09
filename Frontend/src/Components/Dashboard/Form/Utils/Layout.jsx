@@ -23,7 +23,7 @@ useEffect(() => {
       setLoading(false);
     });
 
-}, []);   
+}, []);
 
  useEffect(() => {
   if (!loading && role) {
