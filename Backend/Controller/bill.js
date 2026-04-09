@@ -2,7 +2,7 @@ const express = require("express");
 const Stripe = require("stripe");
 
 const app = express();
-const stripe = new Stripe("sk_test_51OAwiVSJsOEdFzx3aHIIKWr7M6oLA4mbt1NbDILpTEBe7dJ8FSeKZxgERfDjf9iXj0ADPqKM8tDe8yZ6Jn3uLbZA00rnZelOse");
+const stripe = new Stripe("");
 
 
 
