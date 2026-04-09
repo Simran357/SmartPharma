@@ -100,7 +100,6 @@ const Billing = () => {
         {/* MIDDLE - ORDER TABLE */}
         <div className="w-full lg:w-[45%]">
           <div className="bg-white rounded-xl shadow border">
-
             <div className="px-5 py-3 border-b flex justify-between">
               <h2 className="font-semibold text-lg">Current Order</h2>
               <span className="text-sm text-gray-500">
