@@ -13,19 +13,16 @@ axiosInstance.interceptors.request.use(
     const jwtToken = localStorage.getItem("jwtToken");
     if (jwtToken) {
       config.headers.Authorization = `Bearer ${jwtToken}`; // Standard header key
-
-      console.log("JWT token attached to request");
-    }   
-
       console.log("JWT token attached to request",jwtToken);
-    return config ,
-  
+    }
+    return config;
+  },  
   (error) => {     
     // Handle request errors
     console.error("Axios request error:", error);
     return Promise.reject(error);
   }
-}
+
 )
 
 
@@ -41,9 +38,7 @@ axiosInstance.interceptors.response.use(
       console.error("Axios response error:", error.response.status, error.response.data);
       if (error.response.status === 401) {
         console.warn("Unauthorized! Token might be invalid or expired.");
-        // Optionally, redirect to login page or clear localStorage
-        // localStorage.removeItem("jwtToken");
-        // window.location.href = "/login";
+     
       }
     } else {
       console.error("Axios network/error:", error.message);

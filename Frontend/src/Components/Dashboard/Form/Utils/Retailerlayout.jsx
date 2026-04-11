@@ -11,6 +11,7 @@ import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import UserProfileMenu from '../UserProfile';
 import { SettingsMenu } from './Setting';
 import { NotificationMenu } from './Notifications';
+import { User } from 'lucide-react';
 const { Header, Sider, Content } = Layout;
 const Retailerlayout = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -100,14 +101,11 @@ const Retailerlayout = () => {
               <UserProfileMenu
                 username="Wholesaler"
                 role="Admin"
-              />
-
+              /> 
 
               <button className="w-9 h-9 rounded-full bg-orange-100 flex items-center justify-center text-orange-400 border border-orange-200">
                 <User size={20} />
               </button>  
-
-
             </div>
           </Header>
           <Content className="p-6 bg-gray-50" >

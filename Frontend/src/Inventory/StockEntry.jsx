@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axiosInstance from "../Components/Dashboard/Form/Utils/AxiosInstance";
+import { useContext } from "react";
+import { contextProvide } from "../Components/Dashboard/Form/Utils/Context/CommonContext";
 
 const StockEntry = ({ onClose }) => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
-
+const {auth} = useContext(contextProvide)
   const [formData, setFormData] = useState({
     supplierName: "",
     invoiceNumber: "",
@@ -83,7 +85,7 @@ console.log("items in firm",items)
   const handleSubmit = async () => {
     try {
       setLoading(true);
-      await axiosInstance.post("/registerroute/addStock", {
+      await axiosInstance.post(`/registerroute/addStock/${auth}`, {
         ...formData,
         date: formData.date ? new Date(formData.date) : null,
         items,

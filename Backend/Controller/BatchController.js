@@ -1,6 +1,6 @@
 const StockModel = require("../model/Stock.model");
 
-const getBatches = async (req, res) => {
+const getBatches = async (req, res,next) => {
   try {
     const { name } = req.params;
 
