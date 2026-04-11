@@ -62,4 +62,4 @@ const stripePayment= async (req, res) => {
   }
 }
 
-module.exports = stripePayment
+module.exports = {stripePayment}

@@ -11,8 +11,8 @@ export default function Layout() {
   const [loading, setLoading] = useState(true);
 console.log("ROLE:", role)
 const navigate = useNavigate()
-useEffect(() => {
-  axiosInstance.get("/registerroute/me")
+useEffect(async () => {
+  await axiosInstance.get("/registerroute/me")
     .then(res => {
       setRole(res?.data?.user?.role);
     })

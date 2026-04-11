@@ -1,22 +1,22 @@
 const router = require("express").Router()
 
-const {RegisterController} = require("../../Controller/RegisterController")
-const {GetRegisterdata} = require("../../Controller/GetRegisterdata")
-const {LoginController} = require("../../Controller/LoginController")
-const {GoogleController} = require("../../Controller/GoogleController")
-const {getMe}= require("../../Controller/getMe")
-const { getUsers, updateRoleController , createNewUser } = require("../../Controller/getUsers")
-const {AddProductList} = require("../../Controller/AddProductList")
-const {getProductList} =  require("../../Controller/getProductlist")
-const {getSingleRetailor}=require("../../Controller/getSingleRetailorInfo")
-const {getsingleWholesaler} = require("../../Controller/getsingleWholesaler")
-const {authMiddleware} = require("../../MiddleWare/authMiddleware")
+const RegisterController = require("../../Controller/RegisterController")
+const GetRegisterdata = require("../../Controller/GetRegisterdata")
+const LoginController = require("../../Controller/LoginController")
+const GoogleController = require("../../Controller/GoogleController")
+const getMe = require("../../Controller/getMe")
+const {getUsers, updateRoleController , createNewUser}  = require("../../Controller/getUsers")
+const AddProductList = require("../../Controller/AddProductList")
+const  getProductList =  require("../../Controller/getProductlist")
+const getSingleRetailor =require("../../Controller/getSingleRetailorInfo")
+const getsingleWholesaler = require("../../Controller/getsingleWholesaler")
+const authMiddleware = require("../../MiddleWare/authMiddleware")
 const addStock = require("../../Controller/StockController")
-const {getInventoryStock} = require("../../Controller/getInventoryStock")
+const getInventoryStock = require("../../Controller/getInventoryStock")
 const  getBatches  = require("../../Controller/BatchController")
-const {uploadInvoice} = require("../../MiddleWare/uploadInvoice")
-const aiOCRController = require("../../Controller/ocrParseControler")
-const billController = require("../../Controller/bill")
+// const uploadInvoice = require("../../MiddleWare/uploadInvoice")
+// const aiOCRController = require("../../Controller/ocrParseControler")
+const {stripePayment} = require("../../Controller/bill")
 
 router.post("/registercontroller",RegisterController)
 router.post("/LoginController",LoginController)
@@ -26,9 +26,9 @@ router.post("/createNewUser",createNewUser)
 router.post("/AddProductList",authMiddleware,AddProductList)
 //stock
 router.post("/addStock", addStock);
-router.post("/billController", billController);
+router.post("/billController", stripePayment);
 
-router.post("/ocrparse",uploadInvoice.single("file"), aiOCRController);
+// router.post("/ocrparse",uploadInvoice.single("file"), aiOCRController);
 router.get("/getSingleRetailor/:id",getSingleRetailor)
 router.get("/getProductList/:id",getProductList)
 router.get("/getsingleWholesaler/:id",getsingleWholesaler)
