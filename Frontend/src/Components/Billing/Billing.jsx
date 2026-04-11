@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 
-const Billing = () => {
+const Billing = () => { 
   const location = useLocation();
   const cart = location.state?.cart || [];
   const [paymentMethod, setPaymentMethod] = useState("");

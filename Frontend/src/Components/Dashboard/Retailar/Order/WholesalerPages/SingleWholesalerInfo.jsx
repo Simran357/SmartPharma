@@ -10,8 +10,8 @@ const SingleWholesalerInfo = () => {
   const { auth } = useContext(contextProvide)
   const [medicines, setMedicines] = useState([])
 
-  const [singleWholesaler, setSingleWholesaler] = useState({})
-  const [cartProduct, setCartProduct] = useState([])
+  
+  
 
 const [singleWholesaler, setSingleWholesaler] = useState({})
 const [cartProduct, setCartProduct] = useState(() => {
@@ -63,8 +63,7 @@ useEffect(() => {
 }, [cartProduct]);
   const handleCartItem = (ProductId) => {
 
-    const selectedProduct = medicines.find(
-      (product) => product._id === ProductId
+    const selectedProduct = medicines.find((product) => product._id === ProductId)
 
   const selectedProduct = medicines.find(
     (product) => product._id === ProductId
@@ -75,7 +74,7 @@ useEffect(() => {
     const existingItem = prevCart.find(
       (item) => item._id === ProductId
 
-    );
+    );})
 
     if (!selectedProduct) return;
 
@@ -160,7 +159,6 @@ const isInCart = (id) => {
   );
 };
 const totalItems = cartProduct.reduce((total, item) => total + item.qty, 0);
-
 
   // const navigate = useNavigate()
   return (

@@ -47,8 +47,8 @@ const App = () => {
         {/* Layout = Header + Outlet */}
         <Route path="Dashboard" element={
           <ProtectedRoute >
-            <Layout />
-          </ProtectedRoute>}>
+            <Layout />    
+          </ProtectedRoute>}>             
           <Route index element={<Navigate to="Retailer" replace />} />
           {/* Default landing page */}
           <Route path='Wholesaler' >

@@ -55,7 +55,7 @@ const Wholesalerlayout = () => {
     },
 
   ];
-
+                             
   return (
     <>
       <Layout className='min-h-screen'>

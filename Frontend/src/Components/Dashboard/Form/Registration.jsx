@@ -64,7 +64,7 @@ const Register = () => {
           <Form.Item label="Username" name="username">
             <Input placeholder="Enter username" />
           </Form.Item>
-
+                   
           <Form.Item label="Email" name="email">
             <Input placeholder="Enter email" />
           </Form.Item>
