@@ -36,9 +36,7 @@ axiosInstance.interceptors.response.use(
       console.error("Axios response error:", error.response.status, error.response.data);
       if (error.response.status === 401) {
         console.warn("Unauthorized! Token might be invalid or expired.");
-        // Optionally, redirect to login page or clear localStorage
-        // localStorage.removeItem("jwtToken");
-        // window.location.href = "/login";
+     
       }
     } else {
       console.error("Axios network/error:", error.message);

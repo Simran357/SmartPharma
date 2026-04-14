@@ -5,6 +5,7 @@ const LoginValidation = require("../Validation/LoginValidation")
 
 const LoginController = async (req,res,next)=>{
     console.log("login controller hit")
+    try{
     const loginData = await LoginValidation.validateAsync(req.body)
     const {email , password} = loginData
      console.log("email:", email);
@@ -13,8 +14,8 @@ const LoginController = async (req,res,next)=>{
     })
                            
     if(!user){
-        return res.status(400).json({
-            success:true,
+        return res.status(404).json({
+            success:false,
             message:"user does not exist"
         })
     } 
@@ -33,12 +34,12 @@ const isMatch = await bcrypt.compare(password, user?.password)
     id: user._id,
     role: user.role
   },
-  "simran",
+  process.env.JWT_SECRET,
   { expiresIn: "1d" }
 )
 
     res.cookie("jwtToken",jwtToken,
-      { maxAge:36000,
+      { maxAge:86400000,
          httpOnly:true,
 secure: false    })
     return res.status(200).json({
@@ -46,7 +47,10 @@ secure: false    })
         message:"Login successfull",
          jwtToken:jwtToken
     })
-
+  }catch(error){
+    console.log("error in login controller",error)
+    res.status(400).json({message:"error in login controller "})
+  }
 }
 
 module.exports = LoginController

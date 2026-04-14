@@ -101,12 +101,7 @@ const Retailerlayout = () => {
               <UserProfileMenu
                 username="Wholesaler"
                 role="Admin"
-              />
-
-
-              <button className="w-9 h-9 rounded-full bg-orange-100 flex items-center justify-center text-orange-400 border border-orange-200">
-                <User size={20} />
-              </button>  
+              /> 
 
             </div>
           </Header>

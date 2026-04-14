@@ -12,7 +12,8 @@ export default function Layout() {
 console.log("ROLE:", role)
 const navigate = useNavigate()
 useEffect(() => {
-  axiosInstance.get("/registerroute/me")
+  const fetchMeApi = async ()=>{
+  await axiosInstance.get("/registerroute/me")
     .then(res => {
       setRole(res?.data?.user?.role);
     })
@@ -22,7 +23,8 @@ useEffect(() => {
     .finally(() => {
       setLoading(false);
     });
-
+  }
+  fetchMeApi()
 }, []);
 
  useEffect(() => {
