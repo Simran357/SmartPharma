@@ -4,7 +4,7 @@ const StockValidation = require("../Validation/StockValidation");
 // ✅ ADD STOCK
 const addStock = async (req, res) => {
   try {
-    const {id} = req.params
+const userId = req.user.id; 
     console.log("Incoming:", req.body);
 
     // ✅ Joi validation
@@ -42,7 +42,7 @@ const addStock = async (req, res) => {
 
     // ✅ Create stock
     const newStock = await StockModel.create({
-      id,
+      userId,
       supplierName,
       gstin,
       dlNo,

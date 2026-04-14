@@ -23,7 +23,7 @@ router.post("/LoginController",LoginController)
 router.get("/GetRegisterdata",GetRegisterdata)
 router.post("/auth/google",GoogleController)
 router.post("/createNewUser",createNewUser)
-router.post("/AddProductList",authMiddleware,AddProductList)
+router.post("/AddProductList/:id",authMiddleware,AddProductList)
 //stock
 router.post("/addStock", addStock);
 router.post("/billController", stripePayment);

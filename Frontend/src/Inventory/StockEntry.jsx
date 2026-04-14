@@ -1,29 +1,29 @@
 import React, { useState, useEffect } from "react";
 import axiosInstance from "../Components/Dashboard/Form/Utils/AxiosInstance";
-import { useContext } from "react";
-import { contextProvide } from "../Components/Dashboard/Form/Utils/Context/CommonContext";
 
 const StockEntry = ({ onClose }) => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
-const {auth} = useContext(contextProvide)
-  const [formData, setFormData] = useState({
-    supplierName: "",
-    invoiceNumber: "",
-    date: "",
-    poRef: "",
-    gstin: "",
-    dlNo: "",
-    phone: "",
-    address: "",
-    dueDate: "",
-  });
+const initialFormState = {
+  supplierName: "",
+  invoiceNumber: "",
+  date: "",
+  poRef: "",
+  gstin: "",
+  dlNo: "",
+  phone: "",
+  address: "",
+  dueDate: "",
+};
 
-  const [totals, setTotals] = useState({
-    subTotal: 0,
-    gst: 0,
-    grandTotal: 0,
-  });
+const initialTotals = {
+  subTotal: 0,
+  gst: 0,
+  grandTotal: 0,
+};
+  const [formData, setFormData] = useState(initialFormState);
+
+  const [totals, setTotals] = useState(initialTotals);
 
   useEffect(() => {
     if (items.length === 0) addRow();
@@ -85,15 +85,20 @@ console.log("items in firm",items)
   const handleSubmit = async () => {
     try {
       setLoading(true);
-      await axiosInstance.post(`/registerroute/addStock/${auth}`, {
+      await axiosInstance.post('/registerroute/addStock/', {
         ...formData,
         date: formData.date ? new Date(formData.date) : null,
         items,
         totals,
       });
       alert("Stock Added ✅");
-      setItems([]);
-      onClose();
+   setFormData(initialFormState);
+    setItems([]);
+    setTotals(initialTotals);
+   setTimeout(() => {
+  addRow();
+}, 0);
+ onClose && onClose()
     } catch {
       alert("Error saving stock");
     } finally {
@@ -120,60 +125,73 @@ console.log("items in firm",items)
 
           <div>
             <label className="label">Supplier Name</label>
-            <input name="supplierName" onChange={handleChange} className={inputStyle} />
+            <input name="supplierName"  value={formData.supplierName} onChange={handleChange} className={inputStyle} />
           </div>
 
           <div>
             <label className="label">Invoice Number</label>
-            <input name="invoiceNumber" onChange={handleChange} className={inputStyle} />
+            <input name="invoiceNumber"   value={formData.invoiceNumber} onChange={handleChange} className={inputStyle} />
           </div>
 
           <div>
             <label className="label">Invoice Date</label>
-            <input type="date" name="date" onChange={handleChange} className={inputStyle} />
+            <input type="date" name="date" value={formData.date} onChange={handleChange} className={inputStyle} />
           </div>
 
           <div>
             <label className="label">GSTIN</label>
-            <input name="gstin" onChange={handleChange} className={inputStyle} />
+            <input name="gstin"  value={formData.gstin} onChange={handleChange} className={inputStyle} />
           </div>
 
           <div>
             <label className="label">Drug License</label>
-            <input name="dlNo" onChange={handleChange} className={inputStyle} />
+            <input name="dlNo"  value={formData.dlNo} onChange={handleChange} className={inputStyle} />
           </div>
 
           <div>
             <label className="label">Phone</label>
-            <input name="phone" onChange={handleChange} className={inputStyle} />
+            <input name="phone"  value={formData.phone} onChange={handleChange} className={inputStyle} />
           </div>
 
           <div className="md:col-span-3">
             <label className="label">Address</label>
-            <input name="address" onChange={handleChange} className={inputStyle} />
+            <input name="address"  value={formData.address} onChange={handleChange} className={inputStyle} />
           </div>
 
           <div>
             <label className="label">Due Date</label>
-            <input type="date" name="dueDate" onChange={handleChange} className={inputStyle} />
+            <input type="date" name="dueDate"  value={formData.dueDate} onChange={handleChange} className={inputStyle} />
           </div>
 
           <div>
             <label className="label">PO Ref</label>
-            <input name="poRef" onChange={handleChange} className={inputStyle} />
+            <input name="poRef"  value={formData.poRef} onChange={handleChange} className={inputStyle} />
           </div>
 
         </div>
       </div>
 
       {/* ITEMS SECTION */}
+   
       <div className="bg-white p-5 rounded-xl shadow space-y-4">
         <h3 className="text-lg font-medium border-b pb-2">
           Items
         </h3>
+           <div className="hidden md:grid grid-cols-10 gap-3 text-xs font-semibold text-gray-500 px-2 whitespace-nowrap ✅">
+  <span>Medicine</span>
+  <span>HSN</span>
+  <span>Batch</span>
+  <span>Pack</span>
+  <span>Qty</span>
+  <span>Rate</span>
+  <span>MRP</span>
+  <span>Amount</span>
+  <span>Expiry</span>
+  <span>Action</span>
+</div>
 
         {items.map((item) => (
-          <div key={item.id} className="grid md:grid-cols-6 gap-3 border p-3 rounded">
+          <div key={item.id} className="grid md:grid-cols-10 gap-3 border p-3 rounded">
 
             <input placeholder="Medicine"
               value={item.name}

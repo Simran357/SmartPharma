@@ -14,12 +14,19 @@ useEffect(() => {
        const res = await axiosInstance.get("/registerroute/getInventoryStock");
       console.log("✅ inventory data", res?.data);
 setInventoryStock(
-  res?.data?.data?.flatMap((invoice) => invoice.items.map((item)=>({
-    ...item,
-    supplier: invoice.supplierName,
+  res?.data?.data?.flatMap((invoice) =>
+    invoice.items.map((item) => ({
+      name: item.name || item.ProductName,   // ✅ FIX
+      qty: item.qty || item.ProductQuantity, // ✅ FIX
+      batch: item.batch || item.ProductBatchNo,
+      expiry: item.expiry || item.ProductExpiryDate,
+
+      supplier: invoice.supplierName,
       invoiceNumber: invoice.invoiceNumber,
-    }))) || []
-);    } catch (error) {
+    }))
+  ) || []
+    )
+      } catch (error) {
       console.log("❌ error in inventory stock", error);
     } finally {
       setLoading(false);
