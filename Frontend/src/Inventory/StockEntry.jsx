@@ -85,7 +85,7 @@ console.log("items in firm",items)
   const handleSubmit = async () => {
     try {
       setLoading(true);
-      await axiosInstance.post('/registerroute/addStock/', {
+      await axiosInstance.post('/registerroute/addStock', {
         ...formData,
         date: formData.date ? new Date(formData.date) : null,
         items,
