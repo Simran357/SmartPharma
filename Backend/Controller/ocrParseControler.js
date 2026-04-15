@@ -1,6 +1,28 @@
+// const vision = require("@google-cloud/vision");
 
-const aiOCRController = async (req, res,next) => {
-  console.log("aiocr" , req.body)
-};
+// // ✅ ADD HERE (top of file)
+// const client = new vision.ImageAnnotatorClient({
+// keyFilename: "C:/Users/lovel/Desktop/gitSmartRepo/SmartPharma/Backend/key.json"});
 
-module.exports = aiOCRController;
+// const aiOCRController = async (req, res) => {
+//   try {
+//     if (!req.file) {
+//       return res.status(400).json({ message: "No file uploaded" });
+//     }
+
+//     const [result] = await client.textDetection(req.file.path);
+
+//     const text = result.fullTextAnnotation?.text || "";
+
+//     res.json({
+//       success: true,
+//       text,
+//     });
+
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ error: err.message });
+//   }
+// };
+
+// module.exports = aiOCRController;

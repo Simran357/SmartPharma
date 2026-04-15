@@ -17,7 +17,7 @@ const  getBatches  = require("../../Controller/BatchController")
 const uploadInvoice = require("../../MiddleWare/uploadInvoice")
 const aiOCRController = require("../../Controller/ocrParseControler")
 const {stripePayment} = require("../../Controller/bill")
-const order=require("../../Controller/orderController")
+const order = require("../../Controller/orderController")
 
 router.post("/registercontroller",RegisterController)
 router.post("/LoginController",LoginController)

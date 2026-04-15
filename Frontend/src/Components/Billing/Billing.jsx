@@ -1,12 +1,12 @@
 import { CurrencyRupee } from "@mui/icons-material";
 import {  useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import axiosInstance from '../Dashboard/Form/Utils/AxiosInstance';
 
 const Billing = () => {   
   const location = useLocation();
-
+ const {id} = useParams()
   const cart = location.state?.cart || [];
   const [paymentMethod, setPaymentMethod] = useState("");
   // calculations
@@ -63,6 +63,7 @@ const Billing = () => {
   discount,
   total,
   paymentMethod,
+  wholesalerId:id,
   date: new Date().toLocaleString()
 };
 
@@ -70,7 +71,7 @@ const Billing = () => {
 localStorage.setItem("orderData", JSON.stringify(orderData));
 
    //  IMPORTANT LINE
-    window.location.href = res.data.url;
+    window.location.href = res?.data?.url;
    }catch (error){
         console.log("Payment error:", error);
     alert("Payment failed");
@@ -79,7 +80,7 @@ localStorage.setItem("orderData", JSON.stringify(orderData));
    
  
     navigate("/Billing/OrderSuccess", {
-      state: { order: orderData }
+      state: { cart:cart , order: orderData }
     })
   };
 
