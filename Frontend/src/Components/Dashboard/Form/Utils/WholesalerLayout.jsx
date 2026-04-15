@@ -5,7 +5,6 @@ import {
   RobotFilled,
 
 } from '@ant-design/icons';
-import { Bell, Settings, User } from "lucide-react";
 
 import { Button, Layout, Menu, theme } from 'antd';
 import { DashboardCustomize, Inventory2 } from '@mui/icons-material';
