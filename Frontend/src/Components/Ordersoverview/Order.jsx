@@ -7,7 +7,7 @@ import Inventory2Icon from "@mui/icons-material/Inventory2";
 import MovingIcon from '@mui/icons-material/Moving';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
-export default function OrdersOverview() {
+const OrdersOverview=()=> {
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
 
@@ -471,3 +471,4 @@ export default function OrdersOverview() {
     </div>
   );
 }
+export default OrdersOverview

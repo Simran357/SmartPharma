@@ -52,6 +52,10 @@ const Wholesalerlayout = () => {
       key: "/Dashboard/Wholesaler/Retailors",
       icon: <RobotFilled />,
       label: "Retailors",
+    },{
+      key: "/Dashboard/Wholesaler/OrdersOverview",
+      icon: <RobotFilled />,
+      label: "OrdersOverview",
     },
 
   ];

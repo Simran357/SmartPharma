@@ -43,17 +43,17 @@ const addStock = async (req, res, next) => {
     // ✅ Create stock
     const newStock = await StockModel.create({
       userId,
-      supplierName,
-      gstin,
-      dlNo,
-      phone,
+   supplierName,
+   gstin,
+     dlNo,
+    phone,
       address,
-      invoiceNumber,
+    invoiceNumber,
       date,
-      dueDate,
-      poRef,
-      items,
-      totals,
+    dueDate,
+  poRef,
+    items,
+     totals,
     });
 
     console.log("new stock", newStock)
