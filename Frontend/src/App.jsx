@@ -35,6 +35,7 @@ import AdminRoleAssign from './Components/Dashboard/Retailar/AdminRoleAssign'
 import Addstock from './Components/Wholesalecompenent.jsx/Addstock'
 import InvoicePurchaseScan from './Components/Billing/InvoicePurchaseScan'
 import OrderSuccess from './Components/Billing/OrderSuccess'
+import OrdersOverview from './Components/Ordersoverview/Order'
 
 const App = () => {
 
@@ -60,6 +61,8 @@ const App = () => {
             <Route path="Inventory" element={<Inventory />} />
             <Route path="TempelateDesigner" element={<TempelateDesigner />} />
             <Route path="ProductOverview" element={<ProductOverview />} />
+            <Route path="OrdersOverview" element={<OrdersOverview />} />
+
             <Route path="Retailors">
               <Route index element={<Retailors />} />
               <Route path=":id" element={<SingleRetailerDetails />} />
