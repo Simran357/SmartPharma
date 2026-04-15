@@ -2,11 +2,11 @@ const StockModel = require("../model/Stock.model");
 const StockValidation = require("../Validation/StockValidation");
 
 // ✅ ADD STOCK
-const addStock = async (req, res) => {
+const addStock = async (req, res, next) => {
   try {
-    const {id} = req.params
-    console.log("Incoming:", req.body);
-
+    console.log("add stock controller")
+    const userId = req?.user?.id;
+    console.log("Incoming:", req?.user?.id);
     // ✅ Joi validation
     const { error, value } = StockValidation.validate(req.body);
 
@@ -32,7 +32,7 @@ const addStock = async (req, res) => {
     } = value;
 
     // ✅ Duplicate check
-    const existing = await StockModel.findOne({ invoiceNumber });
+    const existing = await StockModel.findOne({ invoiceNumber ,userId});
     if (existing) {
       return res.status(400).json({
         success: false,
@@ -42,7 +42,7 @@ const addStock = async (req, res) => {
 
     // ✅ Create stock
     const newStock = await StockModel.create({
-      id,
+      userId,
       supplierName,
       gstin,
       dlNo,
@@ -56,6 +56,7 @@ const addStock = async (req, res) => {
       totals,
     });
 
+    console.log("new stock", newStock)
     return res.status(200).json({
       success: true,
       message: "Stock added successfully",
@@ -72,4 +73,4 @@ const addStock = async (req, res) => {
   }
 };
 
-module.exports = addStock;
+module.exports = { addStock };

@@ -14,5 +14,6 @@ const getMe = (req, res, next) => {
   res.json({
     user: decoded
   })
+  next()
 }
 module.exports = getMe 

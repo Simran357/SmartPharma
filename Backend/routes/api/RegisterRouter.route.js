@@ -11,7 +11,7 @@ const  getProductList =  require("../../Controller/getProductlist")
 const getSingleRetailor =require("../../Controller/getSingleRetailorInfo")
 const getsingleWholesaler = require("../../Controller/getsingleWholesaler")
 const authMiddleware = require("../../MiddleWare/authMiddleware")
-const addStock = require("../../Controller/StockController")
+const {addStock} = require("../../Controller/StockController")
 const getInventoryStock = require("../../Controller/getInventoryStock")
 const  getBatches  = require("../../Controller/BatchController")
 // const uploadInvoice = require("../../MiddleWare/uploadInvoice")
@@ -23,9 +23,9 @@ router.post("/LoginController",LoginController)
 router.get("/GetRegisterdata",GetRegisterdata)
 router.post("/auth/google",GoogleController)
 router.post("/createNewUser",createNewUser)
-router.post("/AddProductList",authMiddleware,AddProductList)
+router.post("/AddProductList/:id",authMiddleware,AddProductList)
 //stock
-router.post("/addStock", addStock);
+router.post("/addStock",authMiddleware, addStock);
 router.post("/billController", stripePayment);
 
 // router.post("/ocrparse",uploadInvoice.single("file"), aiOCRController);
@@ -37,6 +37,6 @@ router.get("/getInventoryStock",authMiddleware,getInventoryStock)
 router.get("/batches/:name", getBatches)
 router.put("/updateRole/:id", updateRoleController)
 
-router.get("/me",getMe)
+router.get("/me",authMiddleware,getMe)
 console.log("router.file")
 module.exports = router  
