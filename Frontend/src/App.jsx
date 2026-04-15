@@ -97,7 +97,7 @@ const App = () => {
               {/* ✅ Correct flow */}
               <Route path=":id/Cart" element={<Cart />} />
               <Route path=":id/Billing" element={<Billing />} />
-                             <Route path=":id/OrderSuccess" element={<OrderSuccess />} />
+              <Route path=":id/Billing/OrderSuccess" element={<OrderSuccess />} />
 
             </Route>
             <Route path="Courier" element={<Courier />} />

@@ -78,7 +78,7 @@ localStorage.setItem("orderData", JSON.stringify(orderData));
 
    
  
-    navigate("OrderSuccess", {
+    navigate("/Billing/OrderSuccess", {
       state: { order: orderData }
     })
   };
