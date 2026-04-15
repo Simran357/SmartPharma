@@ -3,7 +3,7 @@ import { Button, Form, Input, Divider } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from './Utils/AxiosInstance';
 import { contextProvide } from './Utils/Context/CommonContext';
-import { useGoogleLogin } from '@react-oauth/google';
+import { useGoogleLogin } from '@react-oauth/google';   
 const Login = () => {                
   const navigate = useNavigate()   
  
@@ -53,7 +53,7 @@ const Login = () => {
       setState(err?.response?.data?.message);
     }
   };
-  
+   
   const onFinishFailed = errorInfo => {
     console.log('Failed:', errorInfo);
   };            
@@ -78,17 +78,17 @@ const Login = () => {
             layout="vertical"
             onFinish={onFinish}
             autoComplete="off"
-          >
-            <Form.Item
+          >                                          
+            <Form.Item  
               label="Email"
               name="email"
               rules={[{ required: true, message: "Please enter email" }]}
-            >   
+            >                       
               <Input
                 size="large"
                 placeholder="Enter your email"
                 className="rounded-lg"
-              />
+              />            
             </Form.Item>
             <Form.Item
               label="Password"
@@ -99,7 +99,7 @@ const Login = () => {
                 size="large"
                 placeholder="Enter password"
                 className="rounded-lg"
-              />
+              /> 
             </Form.Item>
 
             {/* LOGIN BUTTON */}
@@ -121,7 +121,7 @@ const Login = () => {
                   Register
                 </span>
               </Button>
-            </Form.Item>
+            </Form.Item>        
           </Form>
 
           {/* DIVIDER */}
@@ -135,7 +135,7 @@ const Login = () => {
           >
             Continue with Google
           </Button>       
-                                           
+                                                                 
           {/* MESSAGE */}                                  
           {state && ( 
             <p className="text-center mt-4 text-sm text-red-500">
@@ -146,4 +146,4 @@ const Login = () => {
       </div>
     </>)
 }
-export default Login;
+export default Login; 

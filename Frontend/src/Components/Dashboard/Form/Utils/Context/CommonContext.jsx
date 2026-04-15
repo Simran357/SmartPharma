@@ -18,11 +18,11 @@ console.log("userrole in sontext", userRoles)
         setUserRoles("")
       });
   }, []);
-
-   return (
+                          
+   return (    
     <contextProvide.Provider value={{auth ,setAuth,userRoles,setUserRoles}}>
       {children}
     </contextProvide.Provider>
   )
 }
-export default CommonContext
+export default CommonContext  

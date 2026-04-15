@@ -4,12 +4,12 @@ const RegisterModel = new mongoose.Schema({
   username: {
     type: String,
   },
-
+               
   email: {
     type: String,
     required: true,
   },
-
+                        
   password: {
     type: String,
   },
@@ -31,7 +31,7 @@ const RegisterModel = new mongoose.Schema({
     enum: ["local", "google"],
     default: "local",
   },
-
+  
   avatar: {
     type: String,
   },
@@ -43,6 +43,4 @@ const RegisterModel = new mongoose.Schema({
 
 }, { timestamps: true })
 
-
-
-module.exports = mongoose.model("RegisterModel", RegisterModel)
+module.exports = mongoose.model("RegisterModel", RegisterModel)  

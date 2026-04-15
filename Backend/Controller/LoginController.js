@@ -12,7 +12,7 @@ const LoginController = async (req,res,next)=>{
     const user = await RegisterModel.findOne({
        email:email
     })
-                           
+                          
     if(!user){
         return res.status(404).json({
             success:false,

@@ -11,9 +11,9 @@ const checkToken = (req, res, next) => {
         return verifyToken
     }
     catch {
-        (error) => {
+        (error) => {  
             next(error)
         }
     }
 }
-module.exports = checkToken 
+module.exports = checkToken    

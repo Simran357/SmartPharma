@@ -57,6 +57,9 @@ useEffect(() => {
   localStorage.setItem("cart", JSON.stringify(cartProduct));
 }, [cartProduct]);
   const handleCartItem = (ProductId) => {
+
+   
+
   const selectedProduct = medicines.find(
     (product) => product._id === ProductId
   );

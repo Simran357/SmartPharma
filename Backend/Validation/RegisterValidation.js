@@ -13,5 +13,4 @@ const RegisterValidation =  Joi.object({
     .required(),
 
 });
-
-module.exports = RegisterValidation
+module.exports = RegisterValidation 
