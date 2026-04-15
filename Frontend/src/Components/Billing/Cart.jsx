@@ -8,7 +8,7 @@ import { useState } from "react";
 const Cart = () => {
   const navigate = useNavigate()
   const location = useLocation();
-const { id } = useParams();
+  const { id } = useParams();
   const cartItems = location.state?.cartProduct || [];
   const [cart, setCart] = useState(cartItems);
 

@@ -63,11 +63,11 @@ const App = () => {
             <Route path="Retailors">
               <Route index element={<Retailors />} />
               <Route path=":id" element={<SingleRetailerDetails />} />
-            </Route>
+            </Route>      
             <Route path="Alert" element={<Actionable />} />
             <Route path="pendingorders" element={<PendingOrders />} />
             <Route path="ExpiryMedicine" element={<ExpiryMedicine />} />
-          </Route>
+          </Route>               
           <Route path="Retailer">
             <Route index element={<Retailer />} />
             <Route path="Inventory" element={<Inventory />} />
@@ -82,7 +82,7 @@ const App = () => {
             <Route path="FilterWholesaler" element={<FilterOutWholesaler />} />
             <Route path="FilterWholesaler" element={<FilterOutWholesaler />} />
             <Route path="ActionablePrevention" element={<ActionablePrevention />} />
-            <Route path="Order">
+            <Route path="Order">   
               <Route index element={<OrderWholesaler />} />
               <Route path="FindWholesaler" element={<OneWholesaler />} />
               <Route path="FilterOutWholesaler" element={<FilterOutWholesaler />} />
@@ -91,7 +91,7 @@ const App = () => {
               {/* ✅ Correct flow */}
               <Route path=":id/Cart" element={<Cart />} />
               <Route path=":id/Billing" element={<Billing />} >
-                <Route path="OrderSuccess" element={<OrderSuccess />} />
+                <Route path="OrderSuccess" element={<OrderSuccess />} />   
               </Route>
             </Route>
             <Route path="Courier" element={<Courier />} />

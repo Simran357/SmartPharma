@@ -18,7 +18,7 @@ console.log("userrole in sontext", userRoles)
         setUserRoles("")
       });
   }, []);
-                          
+                                                        
    return (    
     <contextProvide.Provider value={{auth ,setAuth,userRoles,setUserRoles}}>
       {children}
