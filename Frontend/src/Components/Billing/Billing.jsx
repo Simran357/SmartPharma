@@ -1,10 +1,12 @@
 import { CurrencyRupee } from "@mui/icons-material";
-import { useState } from "react";
+import {  useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Outlet } from "react-router-dom";
+import axiosInstance from '../Dashboard/Form/Utils/AxiosInstance';
 
-const Billing = () => { 
+const Billing = () => {   
   const location = useLocation();
+
   const cart = location.state?.cart || [];
   const [paymentMethod, setPaymentMethod] = useState("");
   // calculations
@@ -12,7 +14,7 @@ const Billing = () => {
     (acc, item) => acc + item.qty * (item.ProductPrice || 0),
     0
   );
-
+ 
   const shipping = subtotal > 1000 ? 0 : 150;
   const cgst = subtotal * 0.025;
   const sgst = subtotal * 0.025;
@@ -25,7 +27,7 @@ const Billing = () => {
 
   const navigate = useNavigate();
 
-  const handleCheckout = () => {
+  const handleCheckout =async () => {
     if (cart.length === 0) {
       alert("Cart is empty");
       return;
@@ -35,21 +37,47 @@ const Billing = () => {
       alert("Please select payment method");
       return;
     }
+    //  Stripe only for card
+  if (paymentMethod !== "Card") {
+    alert("Only Card payment supported for now");
+    return;
+  }
+    // api calling for stripe
+   try{
+    const orderId = Date.now();
 
-    const orderData = {
-      id: Date.now(), // simple order id
-      items: cart,
-      subtotal,
-      shipping,
-      cgst,
-      sgst,
-      discount,
-      total,
-      paymentMethod,
-      date: new Date().toLocaleString()
-    };
+    const res = await axiosInstance.post("/registerroute/billController", {
+      amount: total,
+      id: orderId,
+      });
 
-    // Navigate to success page with data
+    console.log("Stripe response:", res?.data);
+           
+ const orderData = {
+  id: Date.now(),
+  items: cart,
+  subtotal,
+  shipping,
+  cgst,
+  sgst,
+  discount,
+  total,
+  paymentMethod,
+  date: new Date().toLocaleString()
+};
+
+// ✅ SAVE IN LOCALSTORAGE
+localStorage.setItem("orderData", JSON.stringify(orderData));
+
+   //  IMPORTANT LINE
+    window.location.href = res.data.url;
+   }catch (error){
+        console.log("Payment error:", error);
+    alert("Payment failed");
+   }
+
+   
+ 
     navigate("OrderSuccess", {
       state: { order: orderData }
     })
@@ -193,7 +221,7 @@ const Billing = () => {
                 className="w-full bg-green-500 text-white py-3 rounded-xl font-semibold hover:bg-green-600"
               >
                 ✔ Complete Checkout
-              </button>
+              </button>  
 
               <button className="w-full text-sm text-gray-500 hover:underline">
                 🖨 Print Quotation Only

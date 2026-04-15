@@ -47,8 +47,8 @@ const App = () => {
         {/* Layout = Header + Outlet */}
         <Route path="Dashboard" element={
           <ProtectedRoute >
-            <Layout />    
-          </ProtectedRoute>}>             
+            <Layout />
+          </ProtectedRoute>}>
           <Route index element={<Navigate to="Retailer" replace />} />
           {/* Default landing page */}
           <Route path='Wholesaler' >
@@ -63,16 +63,16 @@ const App = () => {
             <Route path="Retailors">
               <Route index element={<Retailors />} />
               <Route path=":id" element={<SingleRetailerDetails />} />
-            </Route>      
+            </Route>
             <Route path="Alert" element={<Actionable />} />
             <Route path="pendingorders" element={<PendingOrders />} />
             <Route path="ExpiryMedicine" element={<ExpiryMedicine />} />
-          </Route>               
+          </Route>
           <Route path="Retailer">
             <Route index element={<Retailer />} />
             <Route path="Inventory" element={<Inventory />} />
             <Route path="Inventory/:id" element={<OneMedicine />} />
-          
+
             <Route path="TempelateDesigner" element={<TempelateDesigner />} />
             <Route path="InvoicePurchaseScan" element={<InvoicePurchaseScan />} />
             <Route path="AiAgent" element={<AiAgent />} />
@@ -82,7 +82,10 @@ const App = () => {
             <Route path="FilterWholesaler" element={<FilterOutWholesaler />} />
             <Route path="FilterWholesaler" element={<FilterOutWholesaler />} />
             <Route path="ActionablePrevention" element={<ActionablePrevention />} />
-            <Route path="Order">   
+
+
+
+            <Route path="Order">
               <Route index element={<OrderWholesaler />} />
               <Route path="FindWholesaler" element={<OneWholesaler />} />
               <Route path="FilterOutWholesaler" element={<FilterOutWholesaler />} />
@@ -90,9 +93,9 @@ const App = () => {
               <Route path=":id" element={<SingleWholesalerInfo />} />
               {/* ✅ Correct flow */}
               <Route path=":id/Cart" element={<Cart />} />
-              <Route path=":id/Billing" element={<Billing />} >
-                <Route path="OrderSuccess" element={<OrderSuccess />} />   
-              </Route>
+              <Route path=":id/Billing" element={<Billing />} />
+                             <Route path=":id/OrderSuccess" element={<OrderSuccess />} />
+
             </Route>
             <Route path="Courier" element={<Courier />} />
             <Route path="Connectcourier" element={<Connectcourier />} />
