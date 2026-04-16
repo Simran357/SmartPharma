@@ -19,7 +19,10 @@ const aiOCRController = require("../../Controller/ocrParseControler")
 const uploadInvoice = require("../../MiddleWare/uploadInvoice")
 const aiOCRController = require("../../Controller/ocrParseControler")
 const {stripePayment} = require("../../Controller/bill")
-const order = require("../../Controller/orderController")
+const getDistance = require("../../Controller/getCalcuateDistance")
+const order=require("../../Controller/orderController")
+const getShippingRates = require("../../Controller/getShippingRates")
+
 const getWholesalerOrders = require("../../Controller/getWholesalerOrders")
 
 router.post("/registercontroller",RegisterController)
@@ -31,6 +34,9 @@ router.post("/AddProductList/:id",authMiddleware,AddProductList)
 //stock
 router.post("/addStock",authMiddleware, addStock);
 router.post("/billController", stripePayment);
+router.post("/getDistance", getDistance);
+router.post("/ShippingRate", getShippingRates);
+
 
 router.post("/ocrparse",uploadInvoice.single("file"), aiOCRController);
 router.post("/ocrparse",uploadInvoice.single("file"), aiOCRController);

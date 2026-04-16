@@ -2,7 +2,7 @@ const orderModel=require("../model/order.model")
 const order = async (req,res, next) => {
     try {
         const orderData = req.body;
-console.log("order",req.body)
+        console.log("order",req.body)
         const newOrder = new orderModel({
            orderId: orderData.id,
             wholesalerId:orderData.wholesalerId,
