@@ -10,6 +10,7 @@ const aiOCRController = async (req, res) => {
     const base64 = req.file.buffer.toString("base64");
 
     const imageData = `data:${req.file.mimetype};base64,${base64}`;
+    console.log("imageData",imageData)
 
     // ✅ Upload to Cloudinary
     const result = await cloudinary.uploader.upload(imageData, {
