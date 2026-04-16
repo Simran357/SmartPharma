@@ -16,16 +16,12 @@ const [invoiceData, setInvoiceData] = useState(null);
     sync: false,
   });
 
-
 const handleFileUpload = async (e) => {
   try {
     const file = e.target.files[0];
     if (!file) return;
 
-    // ✅ show preview
     setImage(URL.createObjectURL(file));
-
-    // ✅ loading start
     setLoading(true);
 
     const formData = new FormData();
@@ -33,18 +29,19 @@ const handleFileUpload = async (e) => {
 
     const res = await axiosInstance.post(
       "/registerroute/ocrparse",
-       formData,
-  {
-    timeout: 30000, // 30 seconds
-  }
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        timeout: 30000,
+      }
     );
 
-    console.log(res?.data);
+    console.log(res.data);
 
-    // ✅ store OCR text
-    setInvoiceData(res.data.text);
-
-    // ✅ workflow update
+    // ✅ FIX: safe access
+setImage(res.data.imageUrl); // instead of local preview
     setWorkflow({
       upload: true,
       viewer: true,
@@ -54,6 +51,7 @@ const handleFileUpload = async (e) => {
 
   } catch (err) {
     console.error(err);
+    setInvoiceData("❌ OCR failed. Try again.");
   } finally {
     setLoading(false);
   }
@@ -152,26 +150,28 @@ const handleFileUpload = async (e) => {
         </div>
 
         {/* CENTER PREVIEW */}
-        <div className="flex-1">
-          <div className="bg-white rounded-xl shadow-sm border h-full flex items-center justify-center overflow-hidden">
-            {image ? (
-              <img
-                src={image}
-                alt="preview"
-                className="max-h-full object-contain"
-              />
-            ) : (
-              <p className="text-gray-400">Invoice Preview</p>
-            )}
-          </div>
-        </div>
+        <div className="bg-white rounded-xl shadow-sm border h-full flex items-center justify-center overflow-hidden">
+  {loading ? (
+    <p className="text-blue-500 animate-pulse">Processing OCR...</p>
+  ) : image ? (
+    <img
+      src={image}
+      alt="preview"
+      className="max-h-full object-contain"
+    />
+  ) : (
+    <p className="text-gray-400">Invoice Preview</p>
+  )}
+</div>
 
        {workflow.verify && (
   <div className="bg-white rounded-xl border p-4 max-h-96 overflow-auto">
     <p className="text-xs text-gray-500 mb-2">OCR TEXT</p>
-    <pre className="text-xs whitespace-pre-wrap">
-      {invoiceData}
-    </pre>
+    <div className="text-xs text-gray-700 space-y-1">
+  {invoiceData?.split("\n").map((line, i) => (
+    <p key={i}>{line}</p>
+  ))}
+</div>
   </div>
 )}
       </div>

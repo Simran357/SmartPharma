@@ -19,12 +19,8 @@ const Billing = () => {
   const cgst = subtotal * 0.025;
   const sgst = subtotal * 0.025;
   const discount = subtotal > 2000 ? subtotal * 0.1 : 0;
-
   const total = subtotal + shipping + cgst + sgst - discount;
-
   const totalItems = cart.reduce((acc, item) => acc + item.qty, 0);
-
-
   const navigate = useNavigate();
 
   const handleCheckout =async () => {
@@ -54,7 +50,7 @@ const Billing = () => {
     console.log("Stripe response:", res?.data);
            
  const orderData = {
-  id: Date.now(),
+      id: orderId,
   items: cart,
   subtotal,
   shipping,
@@ -70,8 +66,8 @@ const Billing = () => {
 // ✅ SAVE IN LOCALSTORAGE
 localStorage.setItem("orderData", JSON.stringify(orderData));
 
-   //  IMPORTANT LINE
-    window.location.href = res?.data?.url;
+window.location.href = res?.data?.url;
+return; // IMPORTANT
    }catch (error){
         console.log("Payment error:", error);
     alert("Payment failed");

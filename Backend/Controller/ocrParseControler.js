@@ -1,28 +1,40 @@
-// const vision = require("@google-cloud/vision");
+const cloudinary = require("../config/Cloudnary");
 
-// // ✅ ADD HERE (top of file)
-// const client = new vision.ImageAnnotatorClient({
-// keyFilename: "C:/Users/lovel/Desktop/gitSmartRepo/SmartPharma/Backend/key.json"});
+const aiOCRController = async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ message: "No file uploaded" });
+    }
 
-// const aiOCRController = async (req, res) => {
-//   try {
-//     if (!req.file) {
-//       return res.status(400).json({ message: "No file uploaded" });
-//     }
+    // ✅ Convert buffer → base64 (ONLY ONCE)
+    const base64 = req.file.buffer.toString("base64");
 
-//     const [result] = await client.textDetection(req.file.path);
+    const imageData = `data:${req.file.mimetype};base64,${base64}`;
 
-//     const text = result.fullTextAnnotation?.text || "";
+    // ✅ Upload to Cloudinary
+    const result = await cloudinary.uploader.upload(imageData, {
+      folder: "invoices",
+    });
 
-//     res.json({
-//       success: true,
-//       text,
-//     });
+    // ✅ TODO: Replace with real OCR
+    const extractedText = `
+    ABC Pharma
+    Paracetamol 10 50
+    Crocin 5 30
+    Total 650
+    `;
 
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({ error: err.message });
-//   }
-// };
+    res.json({
+      success: true,
+      text: extractedText,
+      imageUrl: result.secure_url,   // ✅ IMPORTANT
+      public_id: result.public_id,  // optional
+    });
 
-// module.exports = aiOCRController;
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "OCR failed" });
+  }
+};
+
+module.exports = aiOCRController;

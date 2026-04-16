@@ -18,6 +18,7 @@ const uploadInvoice = require("../../MiddleWare/uploadInvoice")
 const aiOCRController = require("../../Controller/ocrParseControler")
 const {stripePayment} = require("../../Controller/bill")
 const order = require("../../Controller/orderController")
+const getWholesalerOrders = require("../../Controller/getWholesalerOrders")
 
 router.post("/registercontroller",RegisterController)
 router.post("/LoginController",LoginController)
@@ -37,6 +38,8 @@ router.get("/getuserController",getUsers)
 router.get("/getInventoryStock",authMiddleware,getInventoryStock)
 router.get("/batches/:name", getBatches)
 router.put("/updateRole/:id", updateRoleController)
+router.get("/getWholesalerOrders",getWholesalerOrders)
+
 //order
 router.post('/orderController',order)
 router.get("/me",authMiddleware,getMe)
