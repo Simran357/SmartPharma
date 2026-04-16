@@ -3,7 +3,6 @@ import {  useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import axiosInstance from '../Dashboard/Form/Utils/AxiosInstance';
-import axiosInstance from '../Dashboard/Form/Utils/AxiosInstance';
 
 const Billing = () => {   
   const location = useLocation();
