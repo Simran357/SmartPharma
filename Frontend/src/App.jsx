@@ -36,6 +36,7 @@ import Addstock from './Components/Wholesalecompenent.jsx/Addstock'
 import InvoicePurchaseScan from './Components/Billing/InvoicePurchaseScan'
 import OrderSuccess from './Components/Billing/OrderSuccess'
 import OrdersOverview from './Components/Ordersoverview/Order'
+import OrdersOverview from './Components/Ordersoverview/Order'
 
 const App = () => {
 
@@ -50,6 +51,7 @@ const App = () => {
           <ProtectedRoute >
             <Layout />
           </ProtectedRoute>}>
+      
           <Route index element={<Navigate to="Retailer" replace />} />
           {/* Default landing page */}
           <Route path='Wholesaler' >
@@ -61,6 +63,8 @@ const App = () => {
             <Route path="Inventory" element={<Inventory />} />
             <Route path="TempelateDesigner" element={<TempelateDesigner />} />
             <Route path="ProductOverview" element={<ProductOverview />} />
+            <Route path="OrdersOverview" element={<OrdersOverview />} />
+
             <Route path="OrdersOverview" element={<OrdersOverview />} />
 
             <Route path="Retailors">
@@ -76,6 +80,7 @@ const App = () => {
             <Route path="Inventory" element={<Inventory />} />
             <Route path="Inventory/:id" element={<OneMedicine />} />
 
+
             <Route path="TempelateDesigner" element={<TempelateDesigner />} />
             <Route path="InvoicePurchaseScan" element={<InvoicePurchaseScan />} />
             <Route path="AiAgent" element={<AiAgent />} />
@@ -88,6 +93,9 @@ const App = () => {
 
 
 
+
+
+
             <Route path="Order">
               <Route index element={<OrderWholesaler />} />
               <Route path="FindWholesaler" element={<OneWholesaler />} />
@@ -96,9 +104,9 @@ const App = () => {
               <Route path=":id" element={<SingleWholesalerInfo />} />
               {/* ✅ Correct flow */}
               <Route path=":id/Cart" element={<Cart />} />
-              <Route path=":id/Billing" element={<Billing />} />
-              <Route path=":id/Billing/OrderSuccess" element={<OrderSuccess />} />
-
+              <Route path=":id/Billing" element={<Billing />} >
+                <Route path="OrderSuccess" element={<OrderSuccess />} />
+              </Route>
             </Route>
             <Route path="Courier" element={<Courier />} />
             <Route path="Connectcourier" element={<Connectcourier />} />

@@ -3,6 +3,7 @@ import {  useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import axiosInstance from '../Dashboard/Form/Utils/AxiosInstance';
+import axiosInstance from '../Dashboard/Form/Utils/AxiosInstance';
 
 const Billing = () => {   
   const location = useLocation();
@@ -14,6 +15,7 @@ const Billing = () => {
     (acc, item) => acc + item.qty * (item.ProductPrice || 0),
     0
   );
+ 
  
   const shipping = subtotal > 1000 ? 0 : 150;
   const cgst = subtotal * 0.025;
@@ -219,6 +221,7 @@ return; // IMPORTANT
               >
                 ✔ Complete Checkout
               </button>  
+          
 
               <button className="w-full text-sm text-gray-500 hover:underline">
                 🖨 Print Quotation Only
