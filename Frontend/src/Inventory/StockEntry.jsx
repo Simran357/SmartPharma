@@ -90,7 +90,7 @@ console.log("items in firm",items)
         date: formData.date ? new Date(formData.date) : null,
         items,
         totals,
-      });
+      }); 
       alert("Stock Added ✅");
    setFormData(initialFormState);
     setItems([]);
@@ -292,4 +292,4 @@ console.log("items in firm",items)
   );
 };
 
-export default StockEntry;
+export default StockEntry;  

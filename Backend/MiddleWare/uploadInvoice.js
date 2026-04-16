@@ -1,14 +1,10 @@
+const multer = require("multer");
 
-const multer = require("multer")
+const upload = multer({
+  storage: multer.memoryStorage(), // ✅ no file saved on disk
+  limits: {
+    fileSize: 5 * 1024 * 1024, // optional: 5MB limit
+  },
+});
 
-const storage = multer.diskStorage({
-    destination: function(req,file,cb){
-        cb(null,'InvoiceUpload/')
-    },
-    filename: function(req,file,cb){
-        cb(null, Date.now() + "-" + file.originalname)
-    }
-})
-
-const upload = multer({storage})
-module.exports = upload
+module.exports = upload;

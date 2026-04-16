@@ -16,7 +16,6 @@ import ApartmentIcon from '@mui/icons-material/Apartment';
 import { Outlet, useNavigate } from "react-router-dom";
 import GroupsIcon from '@mui/icons-material/Groups';
 import DetailsIcon from '@mui/icons-material/Details';
-import { IndianRupee } from "lucide-react";
 // import PendingOrders from './PendingOrders';
 import Addstock from './Addstock';
 const WholeSaler = () => {
@@ -57,12 +56,12 @@ const WholeSaler = () => {
               <div >
                 <p className='font-medium text-slate-500'>Daily Sales</p>
               </div>
-              <div className='bg-blue-50 rounded-lg p-2 text-blue-600 text-xl'>
-                ₹
+              <div className='bg-blue-50 rounded-lg p-2 text-blue-600'>
+                <AttachMoneyIcon />
               </div>
             </div>
             <div className="mt-4">
-              <h2 className="text-3xl font-bold text-slate-800"> Rs12,450.00</h2>
+              <h2 className="text-3xl font-bold text-slate-800">Rs12,450.00</h2>
               <span className="text-green-500 text-sm font-semibold flex items-center gap-1 mt-1">
                 +12.5% vs yesterday
               </span>
@@ -209,13 +208,7 @@ const WholeSaler = () => {
                         <p className="text-sm font-bold text-slate-800 leading-tight">City Care Pharma</p>
                         <p className="text-xs text-slate-400">Nagpur, MH</p>
                       </td>
-                      <td className="px-6 py-5 text-sm font-bold text-slate-800"> 
-                             <td className="px-6 py-5 text-sm font-bold text-slate-800"> 
-                            
-                                        ₹1,240.00
-                                        
-                              </td>
-                        </td>
+                      <td className="px-6 py-5 text-sm font-bold text-slate-800">Rs1,240.00</td>
                       <td className="px-6 py-5">
                         <span className="status-pill status-pending"><span
                           className="inline-block w-2 h-2 rounded-full mr-2 bg-current shadow-[0_0_8px_rgba(0,0,0,0.2)]"></span></span>
@@ -232,11 +225,7 @@ const WholeSaler = () => {
                         <p className="text-sm font-bold text-slate-800 leading-tight">HealthLine Meds</p>
                         <p className="text-xs text-slate-400">Pune, MH</p>
                       </td>
-                      <td className="px-6 py-5 text-sm font-bold text-slate-800">
-                              
-                                        ₹8,550.00
-                                                           
-                        </td>
+                      <td className="px-6 py-5 text-sm font-bold text-slate-800">Rs850.50</td>
                       <td className="px-6 py-5">
                         <span className="status-pill status-packed"><span
                           className="inline-block w-2 h-2 rounded-full mr-2 bg-current shadow-xl]"></span></span>
@@ -253,12 +242,7 @@ const WholeSaler = () => {
                         <p className="text-sm font-bold text-slate-800 leading-tight">Apex Medicos</p>
                         <p className="text-xs text-slate-400">Mumbai, MH</p>
                       </td>
-                      <td className="px-6 py-5 text-sm font-bold text-slate-800">
-                        
-                         
-                                        ₹2,550.00
-                                      
-                        </td>
+                      <td className="px-6 py-5 text-sm font-bold text-slate-800">Rs2,100.00</td>
                       <td className="px-6 py-5">
                         <span className="status-pill status-dispatched"><span
                           className="inline-block w-2 h-2 rounded-full mr-2 bg-current shadow-xl]"></span></span>
@@ -400,8 +384,8 @@ const WholeSaler = () => {
                 <div className="space-y-4">
                   <div>
                     <p className='text-xs mb-1 text-slate-400 '>Available Credit Limit</p>
-                    <p className='text-white font-semibold  text-1xl'> ₹45,000.00<span
-                      className='text-xs font-normal  text-slate-400 ml-1'>/  ₹100k</span></p>
+                    <p className='text-white font-semibold  text-1xl'>Rs45,000.00<span
+                      className='text-xs font-normal  text-slate-400 ml-1'>/ Rs100k</span></p>
                     <div className="w-full h-1 bg-slate-800 rounded-full mt-2">
                       <div className="w-[45%] h-full bg-blue-500 rounded-full"></div>
                     </div>
@@ -409,9 +393,7 @@ const WholeSaler = () => {
 
                   <div className="pt-2">
                     <p className="text-slate-400 text-xs mb-1">Outstanding Payments</p>
-                    <p className="text-xl font-bold text-rose-400"> 
-                ₹
-               12,340.50</p>
+                    <p className="text-xl font-bold text-rose-400">Rs 12,340.50</p>
                   </div>
                 </div>
 
