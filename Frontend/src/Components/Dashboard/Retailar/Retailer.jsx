@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import { Upload, ReceiptLong, Verified, CloudOutlined, Error, LocalFireDepartment, AddShoppingCart, EventBusy, TrendingUp, Assessment, AutoAwesome, AssignmentTurnedIn, CurrencyRupee, Inventory, WarningAmber } from '@mui/icons-material';
-import MedicineSalesChart from './SubComponent/MedicineSalesChart';
+import MedicineSalesChart from './SubComponent/MedicineSalesChart'; 
 const stats = [
   {
     id: 1,
@@ -65,8 +65,8 @@ const stats = [
 ];
 const Retailer = () => {
   const navigate = useNavigate()
-  return (
-    <>
+  return (           
+    <>                  
       <section className="p-4 md:p-6 space-y-6">
         <section className="mt-2">
           <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 ">
@@ -364,7 +364,7 @@ const Retailer = () => {
                       <h1 className="text-green-800 font-medium">GST Ready</h1>
                       <span className="text-green-600 font-medium">Quarter fillings done</span>
                     </span>
-                  </span>
+                  </span>  
 
                 </div>
                 <div className="flex  rounded-xl border-2 gap-2 border-[#efd5132f] p-2 bg-[#efd5132f]">

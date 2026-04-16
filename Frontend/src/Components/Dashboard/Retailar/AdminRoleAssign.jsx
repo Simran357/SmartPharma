@@ -7,6 +7,7 @@ const AdminRoleAssign = () => {
   const [users, setUser] = useState([])
   const [selectedRole, setSelectedRole] = useState("All")
 const [openModel, setModel] = useState(false)
+
   
  const filteredUsers =
     selectedRole === "All"
@@ -89,8 +90,8 @@ const [openModel, setModel] = useState(false)
             <p className=" text-sm font-medium">Define, assign, and audit access permissions across your organization.</p>
           </div>  
           <div className="flex space-x-3">
-            <button className="px-6 py-2.5  text-sm font-semibold rounded-lg  transition-colors">
-              Export Report
+            <button className="px-6 py-2.5  text-sm font-bold rounded-lg shadow-sm  transition-all flex items-center space-x-2">
+             Connect  Delivery Partner
             </button>
             <button className="px-6 py-2.5  text-sm font-bold rounded-lg shadow-sm  transition-all flex items-center space-x-2" onClick={() => setModel(true)}>
               <span className="material-symbols-outlined text-sm">add_circle</span>
