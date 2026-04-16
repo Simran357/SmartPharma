@@ -10,7 +10,6 @@ const cookieParser = require("cookie-parser")
 require("dotenv").config();
 const routes = require("./routes/index")
 
-
 chief.use(express.json())
 chief.use(cookieParser())
 chief.use(cors({

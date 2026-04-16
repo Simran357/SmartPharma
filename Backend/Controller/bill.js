@@ -2,16 +2,21 @@ const express = require("express");
 const Stripe = require("stripe");
 
 const app = express();
-const stripe = new Stripe(process.env.Strip_Key);
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 
 
-const stripePayment= async (req, res) => {
+const stripePayment= async (req, res,next) => {
   try {
+    const id = req?.user?.id
+        const role = req?.user?.role
+
     const { amount} = req.body;
       console.log(req.body.amount)
 
     const customer = await stripe.customers.create({
+       userRole: role,
+         userId:id,
         email: "client@gmail.com",
         name: "John Doe",
         address: {
@@ -41,20 +46,21 @@ const stripePayment= async (req, res) => {
             product_data: {
               name: "Your Service / Product Name",
             },
-            unit_amount: amount * 100, // ₹ → paise
+           unit_amount: Math.round(amount * 100) // ₹ → paise
           },
           quantity: 1,
         },
       ],
 
-     success_url: `http://localhost:5173/Dashboard/Retailer/Order/${req.body.id}/Billing/OrderSuccess`,
+success_url: `http://localhost:5173/Dashboard/Retailer/Order/${id}/OrderSuccess`,
       cancel_url: "http://localhost:5173/Cart",
     });
 
   
-    res.json({
+    res.status(200).json({
       url: session.url,
       sessionId: session.id,
+      
     });
 
   } catch (error) {

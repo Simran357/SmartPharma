@@ -27,23 +27,27 @@ useEffect(() => {
   fetchMeApi()
 }, []);
 
- useEffect(() => {
-  if (!loading && role) {
-    if (role === "Retailer") {
-      navigate("/Dashboard/Retailer", { replace: true });
-    }
-    if (role === "Wholesaler") {
-      navigate("/Dashboard/Wholesaler", { replace: true });
-    }
-  }
-}, [role, loading]);
+//  useEffect(() => {
+//   if (!loading && role) {
+//     if (role === "Retailer") {
+//       navigate("/Dashboard/Retailer", { replace: true });
+//     }
+//     if (role === "Wholesaler") {
+//       navigate("/Dashboard/Wholesaler", { replace: true });
+//     }
+//   }
+// }, [role, loading]);
+if (loading) return <div>Loading...</div>;
+
+if (!role) return <div>Loading...</div>; // 👈 ADD THIS
+
 switch(role){
   case 'Admin':
     return <>
       <Header/>
       <Outlet/>
     </>
-  case 'Wholesaler':
+  case 'Wholesaler':   
     return <Wholesalerlayout/>
   case 'Retailer':
     return <Retailerlayout/>

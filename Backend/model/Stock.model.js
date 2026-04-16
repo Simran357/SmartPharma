@@ -1,5 +1,8 @@
 const mongoose = require("mongoose")
 const stockSchema = new mongoose.Schema({
+   userId: {
+    type: String,
+  },
   supplierName: { type: String, required: true },
   invoiceNumber: { type: String, required: true },
   date: { type: Date },

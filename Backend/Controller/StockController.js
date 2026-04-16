@@ -32,9 +32,9 @@ const addStock = async (req, res, next) => {
     } = value;
 
     // ✅ Duplicate check
-    const existing = await StockModel.findOne({ invoiceNumber ,userId});
+    const existing = await StockModel.findOne({ invoiceNumber, userId });
     if (existing) {
-      return res.status(400).json({
+     res.status(400).json({
         success: false,
         message: "Invoice already exists",
       });
@@ -57,7 +57,7 @@ const addStock = async (req, res, next) => {
     });
 
     console.log("new stock", newStock)
-    return res.status(200).json({
+     res.status(200).json({
       success: true,
       message: "Stock added successfully",
       data: newStock,
@@ -66,7 +66,7 @@ const addStock = async (req, res, next) => {
   } catch (error) {
     console.error("ADD STOCK ERROR:", error);
 
-    return res.status(500).json({
+     res.status(500).json({
       success: false,
       message: "Server error",
     });

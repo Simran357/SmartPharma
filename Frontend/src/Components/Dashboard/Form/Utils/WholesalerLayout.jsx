@@ -5,7 +5,6 @@ import {
   RobotFilled,
 
 } from '@ant-design/icons';
-import { Bell, Settings, User } from "lucide-react";
 
 import { Button, Layout, Menu, theme } from 'antd';
 import { DashboardCustomize, Inventory2 } from '@mui/icons-material';
@@ -52,6 +51,10 @@ const Wholesalerlayout = () => {
       key: "/Dashboard/Wholesaler/Retailors",
       icon: <RobotFilled />,
       label: "Retailors",
+    },{
+      key: "/Dashboard/Wholesaler/OrdersOverview",
+      icon: <RobotFilled />,
+      label: "OrdersOverview",
     },
 
   ];

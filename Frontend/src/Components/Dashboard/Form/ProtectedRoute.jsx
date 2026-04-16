@@ -4,11 +4,16 @@ import  { contextProvide }  from './Utils/Context/CommonContext';
 
 const ProtectedRoute = ({ children }) => {
   const { userRoles } = useContext(contextProvide);
-  console.log("userRole in protected route",userRoles)
-if (!userRoles) return <div>Loading...</div>;
-  return userRoles  ? children : <Navigate to="/" />;
 
+  if (userRoles === null) {
+    return <div>Loading...</div>;
+  }
 
+  if (!userRoles) {
+    return <Navigate to="/" />;
+  }
+
+  return children;
 };
 
 export default ProtectedRoute;

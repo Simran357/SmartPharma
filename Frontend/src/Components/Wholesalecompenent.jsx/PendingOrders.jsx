@@ -112,7 +112,7 @@ const PendingOrders = () => {
               <div className='lg:col-span-1'>
                 <label className='text-xs  mb-1 font-semibold text-slate-500'>Search ID / Retailer</label>
                 <div className='relative'>
-                  <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                  <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
                     <SearchIcon className='text-lg' />
                   </span>
                   <input

@@ -7,7 +7,7 @@ import { Outlet } from 'react-router-dom';
 const OrderWholesaler = () => {
   const [activeTab, setActiveTab] = useState("wholesaler");
 
-  return (
+  return (   
     <>
       <div className='m-6 pr-4'>
         <section className="relative bg-linear-to-r from-[#0f3d2e] via-[#145c43] to-[#0b2f3a] text-white  rounded-2xl  p-6 mt-2 shadow-lg shadow-blue-900/40 overflow-hidden">
@@ -23,8 +23,8 @@ const OrderWholesaler = () => {
             Order Now
           </button>
         </section>
-
-        <div className="m-4">
+                          
+        <div className="m-4">      
           <section className="bg-white p-4">
             {/* Heading */}
             <h2 className="text-xl font-semibold text-gray-800 mb-4">
@@ -38,7 +38,7 @@ const OrderWholesaler = () => {
                     ? "text-green-600"
                     : "text-gray-500 hover:text-gray-700"
                   }`}
-              >
+              >    
                 Wholesaler-First
                 {activeTab === "wholesaler" && (
                   <span className="absolute left-0 bottom-0 h-3px w-full bg-green-500 rounded-full"></span>

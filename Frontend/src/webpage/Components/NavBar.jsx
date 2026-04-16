@@ -4,10 +4,10 @@ import Login from "../../Components/Dashboard/Form/Login";
 import { motion } from "framer-motion";
 import { useLocation } from "react-router-dom";
 const NavBar = () => {
-  const [scrolled, setScrolled] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [isOpen, setIsOpen] = useState(false)
-  const location = useLocation();
+  const [scrolled, setScrolled] = useState(false);     
+  const [mobileOpen, setMobileOpen] = useState(false);              
+  const [isOpen, setIsOpen] = useState(false)     
+  const location = useLocation();                 
   const links = ["Home", "Medicines", "Services", "Contact", "RoleBased"];
 console.log("location",location)
   // Scroll effect                          
@@ -87,12 +87,19 @@ useEffect(() => {
               {item}
             </a>
           ))}
-
+            
           <input
             type="text"
             placeholder="Search..."
             className="px-3 py-2 border rounded"
           />
+               <button
+            className="bg-linear-to-r from-emerald-400 to-teal-500 text-white px-5 py-2 rounded-full"
+            onClick={() => setIsOpen(true)}>
+            Login/Register
+          </button> 
+              
+
         </div>
  )}  
      {isOpen && (    
