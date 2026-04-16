@@ -15,12 +15,12 @@ const [invoiceData, setInvoiceData] = useState(null);
     verify: false,
     sync: false,
   });
-
 const handleFileUpload = async (e) => {
   try {
     const file = e.target.files[0];
     if (!file) return;
 
+    // local preview
     setImage(URL.createObjectURL(file));
     setLoading(true);
 
@@ -40,8 +40,10 @@ const handleFileUpload = async (e) => {
 
     console.log(res.data);
 
-    // ✅ FIX: safe access
-setImage(res.data.imageUrl); // instead of local preview
+    // ✅ set both image + OCR text
+    setImage(res.data.imageUrl);
+    setInvoiceData(res.data.text);
+
     setWorkflow({
       upload: true,
       viewer: true,
@@ -55,7 +57,7 @@ setImage(res.data.imageUrl); // instead of local preview
   } finally {
     setLoading(false);
   }
-};
+}; 
   const handleAutoInventory = () => {
     setWorkflow((prev) => ({
       ...prev,

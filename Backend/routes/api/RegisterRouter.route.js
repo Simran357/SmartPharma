@@ -16,14 +16,12 @@ const getInventoryStock = require("../../Controller/getInventoryStock")
 const  getBatches  = require("../../Controller/BatchController")
 const uploadInvoice = require("../../MiddleWare/uploadInvoice")
 const aiOCRController = require("../../Controller/ocrParseControler")
-const uploadInvoice = require("../../MiddleWare/uploadInvoice")
-const aiOCRController = require("../../Controller/ocrParseControler")
 const {stripePayment} = require("../../Controller/bill")
 const getDistance = require("../../Controller/getCalcuateDistance")
 const order=require("../../Controller/orderController")
 const getShippingRates = require("../../Controller/getShippingRates")
-
 const getWholesalerOrders = require("../../Controller/getWholesalerOrders")
+
 
 router.post("/registercontroller",RegisterController)
 router.post("/LoginController",LoginController)
