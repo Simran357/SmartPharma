@@ -36,7 +36,6 @@ import Addstock from './Components/Wholesalecompenent.jsx/Addstock'
 import InvoicePurchaseScan from './Components/Billing/InvoicePurchaseScan'
 import OrderSuccess from './Components/Billing/OrderSuccess'
 import OrdersOverview from './Components/Ordersoverview/Order'
-import OrdersOverview from './Components/Ordersoverview/Order'
 
 const App = () => {
 
