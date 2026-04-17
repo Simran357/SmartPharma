@@ -1,47 +1,21 @@
-import React from 'react'
-import Inventory2Icon from '@mui/icons-material/Inventory2';
-import HistoryIcon from '@mui/icons-material/History';
-import SettingsIcon from '@mui/icons-material/Settings';
-import InventoryIcon from '@mui/icons-material/Inventory';
-import TodayIcon from '@mui/icons-material/Today';
-import SearchIcon from '@mui/icons-material/Search';
-import RestartAltIcon from '@mui/icons-material/RestartAlt';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
-const PendingOrders = () => {
+import { useEffect, useState } from "react";
+import axiosInstance from "../Dashboard/Form/Utils/AxiosInstance";
 
-  const orders = [
-    {
-      id: "#ORD-28491",
-      retailer: "Elite Supermarket",
-      retailerId: "RET-442",
-      items: "12 Items",
-      units: "450 Units Total",
-      amount: "$4,520.00",
-      orderDate: "04 Oct 2023",
-      deliveryDate: "08 Oct 2023",
-      paymentType: "CREDIT",
-      paymentStatus: "PARTIAL",
-      priority: "HIGH PRIORITY",
-      stock: "IN STOCK",
-      status: "PENDING"
-    },
-    {
-      id: "#ORD-28495",
-      retailer: "Sunshine Organics",
-      retailerId: "RET-109",
-      items: "5 Items",
-      units: "120 Units Total",
-      amount: "$1,280.50",
-      orderDate: "04 Oct 2023",
-      deliveryDate: "06 Oct 2023",
-      paymentType: "ONLINE",
-      paymentStatus: "PAID",
-      priority: "MEDIUM",
-      stock: "PARTIAL STOCK",
-      status: "PROCESSING"
+const PendingOrders = () => {
+  const [orders, setOrders] = useState([]);
+
+  useEffect(() => {
+    fetchOrders();
+  }, []);
+
+  const fetchOrders = async () => {
+    try {
+      const res = await axiosInstance.get("/registerroute/getWholesalerOrders");
+      setOrders(res.data);
+    } catch (err) {
+      console.log("Error fetching orders", err);
     }
-  ];
+  };
 
   return (
     <div className='bg-slate-50 font-sans text-slate-900'>
@@ -212,7 +186,7 @@ const PendingOrders = () => {
                 </thead>
                 {/* BODY */}
                 <tbody className="text-sm divide-y">
-                  {orders.map((order, index) => (
+                 {orders.map((order, index) => (
                     <tr key={index} className="hover:bg-slate-50">
                       <td className="px-6 py-4">
                         <input type="checkbox" />
@@ -224,26 +198,26 @@ const PendingOrders = () => {
                       <td className="px-6 py-4">
                         <div className="font-medium">{order.retailer}</div>
                         <div className="text-xs text-slate-500">
-                          {order.retailerId}
+                          {order.retailerName }
                         </div>
                       </td>
 
                       <td className="px-6 py-4">
-                        <div>{order.items}</div>
+                        <div>{order.items.length}</div>
                         <div className="text-xs text-slate-500">
                           {order.units}
                         </div>
                       </td>
 
                       <td className="px-6 py-4 text-right font-bold">
-                        {order.amount}
+                        {order.total}
                       </td>
 
                       <td className="px-6 py-4">
                         <div className="flex flex-col gap-1 text-xs">
-                          <span>{order.orderDate}</span>
+                          <span>{order.date}</span>
                           <span className="text-orange-600">
-                            {order.deliveryDate}
+                            {order.paymentMethod}
                           </span>
                         </div>
                       </td>
@@ -251,11 +225,9 @@ const PendingOrders = () => {
                       <td className="px-6 py-4">
                         <div className="flex flex-col gap-1 text-xs">
                           <span className="bg-slate-100 px-2 rounded">
-                            {order.paymentType}
+                            {order.paymentMethod}
                           </span>
-                          <span className="bg-amber-100 px-2 rounded">
-                            {order.paymentStatus}
-                          </span>
+                          
                         </div>
                       </td>
 

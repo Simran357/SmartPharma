@@ -9,6 +9,9 @@ const getBatches = async (req, res,next) => {
     // Step 1: Find documents where item exists
     const stocks = await StockModel.find({
       "items.name": name
+
+
+      
     });
 
     // Step 2: Extract only matching items (flatten)

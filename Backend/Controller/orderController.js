@@ -5,6 +5,7 @@ const order = async (req,res, next) => {
         console.log("order",req.body)
         const newOrder = new orderModel({
            orderId: orderData.id,
+            wholesalerId:orderData.wholesalerId,
             items: orderData.items,
             total: orderData.total,
             paymentMethod: orderData.paymentMethod || "Stripe",

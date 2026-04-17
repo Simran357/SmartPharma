@@ -52,7 +52,11 @@ const App = () => {
           <ProtectedRoute >
             <Layout />
           </ProtectedRoute>}>
+<<<<<<< HEAD
           
+=======
+      
+>>>>>>> 4707dc75f5093fbb768591d43c81eb7b836262b8
           <Route index element={<Navigate to="Retailer" replace />} />
           
           {/* Default landing page */}
@@ -70,6 +74,8 @@ const App = () => {
              <Route path="Connectcourier" element={<Connectcourier />} />
 
 
+            <Route path="OrdersOverview" element={<OrdersOverview />} />
+
             <Route path="Retailors">
               <Route index element={<Retailors />} />
               <Route path=":id" element={<SingleRetailerDetails />} />
@@ -83,6 +89,7 @@ const App = () => {
             <Route path="Inventory" element={<Inventory />} />
             <Route path="Inventory/:id" element={<OneMedicine />} />
 
+
             <Route path="TempelateDesigner" element={<TempelateDesigner />} />
             <Route path="InvoicePurchaseScan" element={<InvoicePurchaseScan />} />
             <Route path="AiAgent" element={<AiAgent />} />
@@ -95,6 +102,9 @@ const App = () => {
 
 
 
+
+
+
             <Route path="Order">
               <Route index element={<OrderWholesaler />} />
               <Route path="FindWholesaler" element={<OneWholesaler />} />
@@ -103,9 +113,9 @@ const App = () => {
               <Route path=":id" element={<SingleWholesalerInfo />} />
               {/* ✅ Correct flow */}
               <Route path=":id/Cart" element={<Cart />} />
-              <Route path=":id/Billing" element={<Billing />} />
-                             <Route path=":id/OrderSuccess" element={<OrderSuccess />} />
-
+              <Route path=":id/Billing" element={<Billing />} >
+                <Route path="OrderSuccess" element={<OrderSuccess />} />
+              </Route>
             </Route>
             <Route path="Courier" element={<Courier />} />
            

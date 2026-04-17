@@ -1,12 +1,12 @@
 import { CurrencyRupee } from "@mui/icons-material";
 import {  useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import axiosInstance from '../Dashboard/Form/Utils/AxiosInstance';
 
 const Billing = () => {   
   const location = useLocation();
-
+ const {id} = useParams()
   const cart = location.state?.cart || [];
   const [paymentMethod, setPaymentMethod] = useState("");
   // calculations
@@ -15,16 +15,13 @@ const Billing = () => {
     0
   );
  
+ 
   const shipping = subtotal > 1000 ? 0 : 150;
   const cgst = subtotal * 0.025;
   const sgst = subtotal * 0.025;
   const discount = subtotal > 2000 ? subtotal * 0.1 : 0;
-
   const total = subtotal + shipping + cgst + sgst - discount;
-
   const totalItems = cart.reduce((acc, item) => acc + item.qty, 0);
-
-
   const navigate = useNavigate();
 
   const handleCheckout =async () => {
@@ -54,7 +51,7 @@ const Billing = () => {
     console.log("Stripe response:", res?.data);
            
  const orderData = {
-  id: Date.now(),
+      id: orderId,
   items: cart,
   subtotal,
   shipping,
@@ -63,14 +60,15 @@ const Billing = () => {
   discount,
   total,
   paymentMethod,
+  wholesalerId:id,
   date: new Date().toLocaleString()
 };
 
 // ✅ SAVE IN LOCALSTORAGE
 localStorage.setItem("orderData", JSON.stringify(orderData));
 
-   //  IMPORTANT LINE
-    window.location.href = res.data.url;
+window.location.href = res?.data?.url;
+return; // IMPORTANT
    }catch (error){
         console.log("Payment error:", error);
     alert("Payment failed");
@@ -78,8 +76,8 @@ localStorage.setItem("orderData", JSON.stringify(orderData));
 
    
  
-    navigate("OrderSuccess", {
-      state: { order: orderData }
+    navigate("/Billing/OrderSuccess", {
+      state: { cart:cart , order: orderData }
     })
   };
 
@@ -222,6 +220,7 @@ localStorage.setItem("orderData", JSON.stringify(orderData));
               >
                 ✔ Complete Checkout
               </button>  
+          
 
               <button className="w-full text-sm text-gray-500 hover:underline">
                 🖨 Print Quotation Only

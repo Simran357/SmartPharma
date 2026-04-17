@@ -1,11 +1,13 @@
 import { Check, AlertCircle, Upload } from "lucide-react";
 import { useState } from "react";
+
 // import Tesseract from "tesseract.js";
 import axiosInstance from "../Dashboard/Form/Utils/AxiosInstance";
 
 const InvoicePurchaseScan = () => {
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
+const [invoiceData, setInvoiceData] = useState(null);
 
   const [workflow, setWorkflow] = useState({
     upload: false,
@@ -13,22 +15,49 @@ const InvoicePurchaseScan = () => {
     verify: false,
     sync: false,
   });
-
-  // ✅ FILE UPLOAD HANDLER
 const handleFileUpload = async (e) => {
-  const file = e.target.files[0];
+  try {
+    const file = e.target.files[0];
+    if (!file) return;
 
-  const formData = new FormData();
-  formData.append("file", file);
+    // local preview
+    setImage(URL.createObjectURL(file));
+    setLoading(true);
 
-  const res = await axiosInstance.post("/registerroute/ocrparse", formData);
-  console.log(res?.data); // JSON aa jayega
-};
+    const formData = new FormData();
+    formData.append("file", file);
 
-  // ✅ OCR FUNCTION
-  
+    const res = await axiosInstance.post(
+      "/registerroute/ocrparse",
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        timeout: 30000,
+      }
+    );
 
-  // ✅ AUTO INVENTORY BUTTON
+    console.log(res.data);
+
+    // ✅ set both image + OCR text
+    setImage(res.data.imageUrl);
+    setInvoiceData(res.data.text);
+
+    setWorkflow({
+      upload: true,
+      viewer: true,
+      verify: true,
+      sync: false,
+    });
+
+  } catch (err) {
+    console.error(err);
+    setInvoiceData("❌ OCR failed. Try again.");
+  } finally {
+    setLoading(false);
+  }
+}; 
   const handleAutoInventory = () => {
     setWorkflow((prev) => ({
       ...prev,
@@ -123,51 +152,30 @@ const handleFileUpload = async (e) => {
         </div>
 
         {/* CENTER PREVIEW */}
-        <div className="flex-1">
-          <div className="bg-white rounded-xl shadow-sm border h-full flex items-center justify-center overflow-hidden">
-            {image ? (
-              <img
-                src={image}
-                alt="preview"
-                className="max-h-full object-contain"
-              />
-            ) : (
-              <p className="text-gray-400">Invoice Preview</p>
-            )}
-          </div>
-        </div>
+        <div className="bg-white rounded-xl shadow-sm border h-full flex items-center justify-center overflow-hidden">
+  {loading ? (
+    <p className="text-blue-500 animate-pulse">Processing OCR...</p>
+  ) : image ? (
+    <img
+      src={image}
+      alt="preview"
+      className="max-h-full object-contain"
+    />
+  ) : (
+    <p className="text-gray-400">Invoice Preview</p>
+  )}
+</div>
 
-        {/* RIGHT PANEL */}
-        <div className="w-96 flex flex-col gap-4">
-
-          {/* LOADING */}
-          {loading && (
-            <div className="bg-white p-4 rounded-xl text-center">
-              🔍 Scanning invoice...
-            </div>
-          )}
-
-          {/* SAMPLE RESULT (replace later with API data) */}
-          {workflow.verify && (
-            <div className="bg-white rounded-xl border p-4">
-              <p className="text-xs text-gray-500">EXTRACTED ITEM</p>
-              <h3 className="font-semibold">Paracetamol 650mg</h3>
-              <p className="text-sm mt-2">Qty: 100</p>
-              <p className="text-sm">Price: ₹50</p>
-              <span className="text-xs bg-green-100 text-green-600 px-2 py-1 rounded">
-                OCR Parsed
-              </span>
-            </div>
-          )}
-
-          {/* TOTAL */}
-          <div className="bg-black text-white rounded-xl p-5">
-            <div className="flex justify-between">
-              <span>Total</span>
-              <span className="text-green-400">₹0.00</span>
-            </div>
-          </div>
-        </div>
+       {workflow.verify && (
+  <div className="bg-white rounded-xl border p-4 max-h-96 overflow-auto">
+    <p className="text-xs text-gray-500 mb-2">OCR TEXT</p>
+    <div className="text-xs text-gray-700 space-y-1">
+  {invoiceData?.split("\n").map((line, i) => (
+    <p key={i}>{line}</p>
+  ))}
+</div>
+  </div>
+)}
       </div>
 
       {/* FOOTER */}

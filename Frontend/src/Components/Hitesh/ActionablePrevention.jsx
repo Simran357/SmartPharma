@@ -4,7 +4,7 @@ import {
   Search,
   Bell,
   Settings,
-  User,
+  User, 
   Download,
   Zap,
   AlertCircle,
