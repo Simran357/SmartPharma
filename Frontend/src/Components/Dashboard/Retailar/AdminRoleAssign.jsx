@@ -79,9 +79,7 @@ const [openModel, setModel] = useState(false)
     }
   };
   
-
-
-  return (
+ return (
     <>
       <section className='m-6'>
         <div className="flex justify-between items-end">

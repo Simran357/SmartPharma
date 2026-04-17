@@ -41,10 +41,6 @@ const Retailerlayout = () => {
       icon: <RobotFilled />,
       label: "AI Agent",
     }, {
-      key: "/Dashboard/Retailer/Connectcourier",
-      icon: <DeliveryDining />,
-      label: "Connect Courier",
-    }, {
       key: "/Dashboard/Retailer/ReturnInvoice",
       icon: <DeliveryDining />,
       label: "ReturnInvoice",
@@ -52,10 +48,6 @@ const Retailerlayout = () => {
       key: "/Dashboard/Retailer/InvoicePurchaseScan",
       icon: <DeliveryDining />,
       label: "InvoicePurchaseScan",
-    },{
-       key: "/Dashboard/Retailer/Courier",
-      icon: <DeliveryDining />,
-      label: "Courier",
     }
   ]
 

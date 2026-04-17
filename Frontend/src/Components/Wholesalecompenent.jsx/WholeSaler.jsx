@@ -319,7 +319,7 @@ const WholeSaler = () => {
 
             </div>
             {/* <!-- Team Discussion: Real-time communication feed for internal staff --!> */}
-            <section className='bg-white p-6 rounded-3xl   overflow-hidden border border-slate-100 shadow-sm'>
+            {/* <section className='bg-white p-6 rounded-3xl   overflow-hidden border border-slate-100 shadow-sm'>
               <div className='p-6 border-b border-slate-50 flex items-center justify-between '>
                 <h3 className="text-xl font-bold text-slate-800 flex items-center gap-2">
 
@@ -330,7 +330,6 @@ const WholeSaler = () => {
                   FEED</span>
               </div>
               <div className="p-6 space-y-4">
-                {/* <!-- Comment Item --> */}
                 <div className="flex gap-4 p-4 bg-slate-50/50 rounded-2xl border border-slate-100">
                   <div
                     className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold text-sm shrink-0">
@@ -345,7 +344,7 @@ const WholeSaler = () => {
                       batch. 500 units added.</p>
                   </div>
                 </div>
-                {/* <!-- Comment Item --> */}
+                
                 <div className="flex gap-4 p-4 rounded-2xl">
                   <div
                     className="w-10 h-10 rounded-full bg-purple-500 flex items-center justify-center text-white font-bold text-sm shrink-0">
@@ -371,7 +370,7 @@ const WholeSaler = () => {
                   </button>
                 </div>
               </div>
-            </section>
+            </section> */}
 
           </div>
 
@@ -455,7 +454,7 @@ const WholeSaler = () => {
             </section>
 
             {/* <!-- Pending Franchise Requests --> */}
-            <section className="bg-white rounded-3xl border border-slate-100 shadow-sm p-6"
+            {/* <section className="bg-white rounded-3xl border border-slate-100 shadow-sm p-6"
               data-purpose="franchise-requests-widget">
               <h4 className="font-bold text-slate-800 mb-6 flex items-center gap-2">
                 <ApartmentIcon className='text-blue-500' />
@@ -502,7 +501,7 @@ const WholeSaler = () => {
                 <p className="text-[11px] text-blue-800 font-medium">3 more requests need your verification today.
                 </p>
               </div>
-            </section>
+            </section> */}
           </aside>
         </div>
       </main>

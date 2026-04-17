@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import LocalShippingOutlined from "@mui/icons-material/LocalShippingOutlined";
 import AddShoppingCart from "@mui/icons-material/AddShoppingCart";
 import EditCalendarRounded from "@mui/icons-material/EditCalendarRounded";
@@ -9,16 +9,38 @@ import axiosInstance from "../Dashboard/Form/Utils/AxiosInstance";
 const Cart = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { id } = useParams();
 
   const cartItems = location.state?.cartProduct || [];
 
   const [cart, setCart] = useState(cartItems);
-  const [pincode, setPincode] = useState("");
+
   const [couriers, setCouriers] = useState([]);
-  const [selectedCourier, setSelectedCourier] = useState(null);
+
   const [loading, setLoading] = useState(false);
-  const [isAddressConfirmed, setIsAddressConfirmed] = useState(false);
+const {id} = useParams()
+
+  useEffect(() => {
+    const fetchCouriers = async () => {
+      try {
+        const wholesalerId = id // dynamic kar lena later
+
+        const res = await axiosInstance.get(
+          `/registerRoute/getConnectedCouriers/${wholesalerId}`
+        );
+
+        const couriers = res.data.data.map((c) => c.courierId);
+
+        setCouriers(couriers);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchCouriers();
+  }, []);
+
+
+
 
   // Qty
   const increaseQty = (id) => {
@@ -44,50 +66,16 @@ const Cart = () => {
     0
   );
 
-  // API
-  const handleConfirmAddress = async () => {
-    if (pincode.length !== 6) {
-      alert("Enter valid pincode");
-      return;
-    }
-
-    try {
-      setLoading(true);
-
-      const res = await axiosInstance.post("/registerroute/ShippingRate", {
-        pincode,
-        weight: totalWeight,
-      });
-
-      const options =
-        res?.data?.data?.available_courier_companies || [];
-
-      const sorted = options.sort(
-        (a, b) => a.freight_charge - b.freight_charge
-      );
-
-      setCouriers(sorted);
-      setSelectedCourier(sorted[0]); // auto select cheapest
-      setIsAddressConfirmed(true);
-    } catch (err) {
-      console.error(err);
-      alert("Shipping error");
-    } finally {
-      setLoading(false);
-    }
-  };
-
   // Pricing
   const subtotal = cart.reduce(
     (acc, item) => acc + item.qty * (item.ProductPrice || 0),
     0
   );
 
-  const shipping = selectedCourier?.freight_charge || 0;
+  // const shipping = selectedCourier?.freight_charge || 0;
   const tax = subtotal * 0.05;
   const discount = subtotal > 2000 ? subtotal * 0.1 : 0;
-
-  const total = subtotal + shipping + tax - discount;
+  const total = subtotal + tax - discount;
 
   return (
     <>
@@ -118,108 +106,131 @@ const Cart = () => {
 
               {/* CART */}
               <div className="bg-white rounded-xl shadow-sm p-5">
-  <h2 className="font-semibold mb-4 flex items-center gap-2">
-    <AddShoppingCart style={{ color: "green" }} />
-    Items in Cart ({cart.length})
-  </h2>
+                <h2 className="font-semibold mb-4 flex items-center gap-2">
+                  <AddShoppingCart style={{ color: "green" }} />
+                  Items in Cart ({cart.length})
+                </h2>
 
-  {/* HEADER (desktop only) */}
-  <div className="hidden md:grid grid-cols-4 text-gray-500 pb-2 border-b text-sm">
-    <span>Medicine</span>
-    <span>Batch / Expiry</span>
-    <span>Qty</span>
-    <span>Unit Price</span>
-    <span>Scheme</span>
-    <span>Total</span>
-  </div>
+                {/* HEADER (desktop only) */}
+                <div className="hidden md:grid grid-cols-4 text-gray-500 pb-2 border-b text-sm">
+                  <span>Medicine</span>
+                  <span>Batch / Expiry</span>
+                  <span>Qty</span>
+                  <span>Unit Price</span>
+                  <span>Scheme</span>
+                  <span>Total</span>
+                </div>
 
-  {/* EMPTY STATE */}
-  {cart.length === 0 ? (
-    <p className="text-gray-400 text-sm mt-4">Cart is empty</p>
-  ) : (
-    <div className="space-y-4">
-      {cart.map((item) => (
-        <div
-          key={item._id}
-          className="
+                {/* EMPTY STATE */}
+                {cart.length === 0 ? (
+                  <p className="text-gray-400 text-sm mt-4">Cart is empty</p>
+                ) : (
+                  <div className="space-y-4">
+                    {cart.map((item) => (
+                      <div
+                        key={item._id}
+                        className="
             grid grid-cols-1 md:grid-cols-4 
             gap-3 md:gap-0 
             items-start md:items-center 
             py-4 border-b text-sm
           "
-        >
-          {/* NAME */}
-          <div>
-            <p className="font-medium">{item.ProductName}</p>
-            <p className="text-xs text-gray-500">
-              {item.ProductCategory}
-            </p>
-          </div>
+                      >
+                        {/* NAME */}
+                        <div>
+                          <p className="font-medium">{item.ProductName}</p>
+                          <p className="text-xs text-gray-500">
+                            {item.ProductCategory}
+                          </p>
+                        </div>
 
-          {/* BATCH / EXPIRY */}
-          <div className="text-xs md:text-sm">
-            {item.ProductSku}
-            <br />
-            Exp:{" "}
-            {item.ProductExpiryDate
-              ? new Date(item.ProductExpiryDate).toLocaleDateString()
-              : "N/A"}
-          </div>
+                        {/* BATCH / EXPIRY */}
+                        <div className="text-xs md:text-sm">
+                          {item.ProductSku}
+                          <br />
+                          Exp:{" "}
+                          {item.ProductExpiryDate
+                            ? new Date(item.ProductExpiryDate).toLocaleDateString()
+                            : "N/A"}
+                        </div>
 
-          {/* QTY */}
-          <div className="flex items-center gap-2">
-            <button
-              className="px-2 py-1 border rounded"
-              onClick={() => decreaseQty(item._id)}
-            >
-              -
-            </button>
+                        {/* QTY */}
+                        <div className="flex items-center gap-2">
+                          <button
+                            className="px-2 py-1 border rounded"
+                            onClick={() => decreaseQty(item._id)}
+                          >
+                            -
+                          </button>
 
-            <span className="min-w-20px text-center">
-              {item.qty}
-            </span>
+                          <span className="min-w-20px text-center">
+                            {item.qty}
+                          </span>
 
-            <button
-              className="px-2 py-1 border rounded"
-              onClick={() => increaseQty(item._id)}
-            >
-              +
-            </button>
-          </div>
+                          <button
+                            className="px-2 py-1 border rounded"
+                            onClick={() => increaseQty(item._id)}
+                          >
+                            +
+                          </button>
+                        </div>
 
-          {/* UNIT PRICE */}
-          <div>₹{item.ProductPrice || 0}</div>
+                        {/* UNIT PRICE */}
+                        <div>₹{item.ProductPrice || 0}</div>
 
-          {/* SCHEME */}
-          <div>
-            <span className="text-green-600 text-xs bg-green-100 px-2 py-1 rounded-full w-fit">
-              No Scheme
-            </span>
-          </div>
+                        {/* SCHEME */}
+                        <div>
+                          <span className="text-green-600 text-xs bg-green-100 px-2 py-1 rounded-full w-fit">
+                            No Scheme
+                          </span>
+                        </div>
 
-          {/* TOTAL */}
-          <div className="font-semibold">
-            ₹{item.qty * (item.ProductPrice || 0)}
-          </div>
-        </div>
-      ))}
-    </div>
-  )}
-</div>
+                        {/* TOTAL */}
+                        <div className="font-semibold">
+                          ₹{item.qty * (item.ProductPrice || 0)}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
 
-              {/* COURIER + PINCODE */}
+
+              {/*  COURIER  */}
+
+              {couriers.map((c) => (
+                <div
+                  key={c._id}
+                  onClick={() => setSelectedCourier(c)}
+                  className={`border p-3 rounded mb-2 flex justify-between cursor-pointer
+      ${selectedCourier?._id === c._id
+                      ? "border-green-600 bg-green-50"
+                      : ""
+                    }`}
+                >
+                  <div>
+                    <p className="font-medium">{c.name}</p>
+                    <p className="text-xs text-gray-500">
+                      {c.coverage}
+                    </p>
+                  </div>
+
+                  <p className="text-green-600 font-semibold">
+                    Available
+                  </p>
+                </div>
+              ))}
+
+              COURIER + PINCODE 
               <div className="grid md:grid-cols-2 gap-6">
-
-                {/* COURIERS */}
                 <div className="bg-white p-5 rounded shadow">
                   <h3 className="flex items-center gap-2 font-bold mb-3">
                     <LocalShippingOutlined style={{ color: "green" }} />
                     Courier Selection
                   </h3>
 
-                  {!isAddressConfirmed && (
                     <p className="text-gray-400">Enter pincode first</p>
-                  )}
+                  
 
                   {couriers.map((c) => (
                     <div
@@ -243,9 +254,7 @@ const Cart = () => {
                       <p>₹{c.freight_charge}</p>
                     </div>
                   ))}
-                </div>
-
-                {/* PINCODE */}
+                </div> 
                 <div className="bg-white p-5 rounded shadow">
                   <h3 className="flex items-center gap-2 font-bold">
                     <EditCalendarRounded style={{ color: "green" }} />
@@ -270,7 +279,7 @@ const Cart = () => {
               </div>
             </div>
 
-            {/* RIGHT */}
+            
             <div className="bg-white p-5 rounded shadow h-fit">
               <h2 className="font-semibold mb-3">Order Summary</h2>
 
@@ -298,6 +307,7 @@ const Cart = () => {
                 Checkout
               </button>
             </div>
+
           </div>
         </div>
       </div>

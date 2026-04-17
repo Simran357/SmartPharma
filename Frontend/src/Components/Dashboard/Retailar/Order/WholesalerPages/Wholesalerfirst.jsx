@@ -31,15 +31,26 @@ const Wholesalerfirst = () =>  {
 
       console.log(filteredUsers)
   return (
-  <div className='flex gap-4'>
+  <div className='w-full px-4 sm:px-6 lg:px-8'>
     <div className="w-full">
-      <div className="flex flex-wrap gap-4">
+      <div className="flex flex-wrap gap-6 justify-start">
 
         {filteredUsers.length > 0 ? filteredUsers.map((user) => (
           
           <div
             key={user._id}
-            className="w-full sm:w-[48%] md:w-[31%] lg:w-[23%] bg-[#162538] rounded-2xl shadow-xl overflow-hidden cursor-pointer"
+            className=" w-full 
+          sm:w-[48%] 
+          md:w-[31%] 
+          lg:w-[23%] 
+          xl:w-[18%]
+          bg-[#162538] 
+          rounded-2xl 
+          shadow-xl 
+          overflow-hidden 
+          cursor-pointer 
+          hover:scale-105 
+          transition-all duration-300"
             onClick={() => navigate(`${user._id}`)}
           >
 
@@ -65,43 +76,43 @@ const Wholesalerfirst = () =>  {
             <div className="pt-6 p-5 text-white">
 
               {/* Name */}
-              <div className="flex justify-between items-center">
+              <div className="flex justify-between items-start gap-2">
                 <div>
-                  <h3 className="text-lg font-semibold">{user.username}</h3>
-                  <p className="text-gray-400 text-sm">
+                  <h3 className="text-base sm:text-lg font-semibold">{user.username}</h3>
+                  <p className="text-gray-400 text-sm sm:text-sm">
                     {user.pharmacyName || "No Pharmacy"}
                   </p>
                 </div>
 
                 <div className="text-right">
-                  <p className="text-gray-400 text-xs">LOCATION</p>
-                  <p className="text-blue-400 font-semibold">
+                  <p className="text-gray-400  text-[10px] sm:text-xs  text-xs">LOCATION</p>
+                  <p className="text-blue-400  text-sm font-semibold">
                     {user.location || "N/A"}
                   </p>
                 </div>
               </div>
 
               {/* Stats */}
-              <div className="grid grid-cols-2 gap-4 mt-5">
-                <div className="bg-[rgba(36,55,81,0.36)] rounded-xl p-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-5">
+                <div className="bg-[rgba(36,55,81,0.36)] rounded-xl p-3 sm:p-4">
                   <p className="text-xs text-gray-400">CONTACT</p>
-                  <p className="text-sm mt-1">{user.contact || "N/A"}</p>
+                  <p className="text-sm mt-1  truncate">{user.contact || "N/A"}</p>
                 </div>
 
-                <div className="bg-[rgba(36,55,81,0.36)] p-4 rounded-xl">
+                <div className="bg-[rgba(36,55,81,0.36)] p-3 sm:p-4 rounded-xl">
                   <p className="text-xs text-gray-400">LICENSE</p>
-                  <p className="text-sm mt-1">{user.license || "N/A"}</p>
+                  <p className="text-sm mt-1  truncate">{user.license || "N/A"}</p>
                 </div>
               </div>
 
               <div className="border-t border-gray-700 my-4"></div>
 
               {/* Bottom */}
-              <div className="flex items-center justify-between">
-                <p className="text-gray-400 text-sm">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                <p className="text-gray-400 text-xs sm:text-sm truncate">
                   📍 {user.location || "Unknown"}
                 </p>
-                <button className="bg-blue-600 px-4 py-2 rounded-lg text-sm hover:bg-blue-700">
+                <button className="bg-blue-600 px-3 py-2 rounded-lg text-xs sm:text-sm hover:bg-blue-700 w-full sm:w-auto">
                   Open Store
                 </button>
               </div>
@@ -118,5 +129,4 @@ const Wholesalerfirst = () =>  {
   </div>
 )
 }
-
 export default Wholesalerfirst
