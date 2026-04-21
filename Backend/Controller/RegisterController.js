@@ -7,7 +7,7 @@ const RegisterController = async (req,res,next)=>{
     //extract data
     const {username,password,email} = registerData
      //validation
-    const registerDataCheck =  await RegisterModel.createIndex({
+    const registerDataCheck =  await RegisterModel.findOne({
         email:email
     })
                                                     
@@ -20,7 +20,7 @@ const RegisterController = async (req,res,next)=>{
     const hashedPassword = await bcrypt.hash(password,10)
 
     const NewData = new RegisterModel({
-        username:username,
+        username:username,    
         email:email,
         password:hashedPassword,
         provider: "local"
@@ -30,6 +30,6 @@ const RegisterController = async (req,res,next)=>{
 
 return res.status(200).json({
     success:true,
-    message:"registration successfull"
+    message:" You successfully registrated in smartpharma Website"
 });}
 module.exports = RegisterController;       

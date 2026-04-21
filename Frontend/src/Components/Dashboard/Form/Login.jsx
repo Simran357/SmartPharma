@@ -3,7 +3,8 @@ import { Button, Form, Input, Divider } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from './Utils/AxiosInstance';
 import { contextProvide } from './Utils/Context/CommonContext';
-import { useGoogleLogin } from '@react-oauth/google';   
+import { useGoogleLogin } from '@react-oauth/google';  
+import {toast}  from "react-toastify"
 const Login = () => {                
   const navigate = useNavigate()   
  
@@ -43,7 +44,7 @@ const Login = () => {
         const setToken = res?.data?.jwtToken  
         console.log(setToken) 
         localStorage.setItem("jwtToken", setToken)
-        alert("Login Successful");
+       toast.success("You successfully login in smartpharma Website");
         setState(res?.data?.message)
         navigate("/Dashboard")
       }    
