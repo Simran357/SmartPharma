@@ -30,38 +30,44 @@ const Billing = () => {
   const navigate = useNavigate();
 
   const handleCheckout = async () => {
-     try{
-    if (!customerName || !phone || !address) {
-      alert("Please fill customer details");
-      return;
-    }
+    try {
+      if (!customerName || !phone || !address) {
+        alert("Please fill customer details");
+        return;
+      }
 
-    if (cart.length === 0) {
-      alert("Cart is empty");
-      return;
-    }
+      if (cart.length === 0) {
+        alert("Cart is empty");
+        return;
+      }
 
-    if (!paymentMethod) {
-      alert("Please select payment method");
-      return;
-    }
-    //  Stripe only for card
-    if (paymentMethod !== "Card") {
-      alert("Only Card payment supported for now");
-      return;
-    }
-    // api calling for stripe
-    
+      if (!paymentMethod) {
+        alert("Please select payment method");
+        return;
+      }
+      //  Stripe only for card
+      if (paymentMethod !== "Card") {
+        alert("Only Card payment supported for now");
+        return;
+      }
+      // api calling for stripe
+
       const orderId = Date.now();
-       
-         const formattedItems = cart.map((item) => ({
+      const formattedItems = cart.map((item) => ({
         productId: item._id,
         name: item.ProductName,
         price: Number(item.ProductPrice) || 0,
         quantity: Number(item.qty) || 1,
         image: item.image || "",
-      }));
 
+        // ✅ ADD THESE (important)
+        batch: item.ProductSku || null,
+        expiryDate: item.ProductExpiryDate
+          ? new Date(item.ProductExpiryDate)
+          : null,
+
+        category: item.ProductCategory || null,
+      }));
       const orderData = {
         id: orderId,
         items: formattedItems,
@@ -88,13 +94,13 @@ const Billing = () => {
         date: new Date().toLocaleString()
       };
 
-      console.log("Sending Data:", orderData); 
+      console.log("Sending Data:", orderData);
 
       //api calling 
-      const res = await axiosInstance.post("/registerroute/billController",{
-         amount: total,
-         orderData,
-      } );
+      const res = await axiosInstance.post("/registerroute/billController", {
+        amount: total,
+        orderData,
+      });
 
       console.log("Stripe response:", res?.data);
 

@@ -25,24 +25,61 @@ import { useState  , useEffect} from "react";
 import axiosInstance from '../Dashboard/Form/Utils/AxiosInstance';
 const WholeSaler = () => {
   const navigate = useNavigate()
-  const [model, setModel] = useState(false);
+const [model, setModel] = useState(false);
 
- const [courierList, setCourierList] = useState([]);
- useEffect(() => {
-    const fetchCouriers = async () => {
-      try {
-        const res = await axiosInstance.get("/registerroute/getDeliveryPartners");
- 
-        if (res.data.success) {
-          setCourierList(res.data.data);
-        }
-      } catch (error) {
-       console.error("Courier fetch error:", error);
+const [courierList, setCourierList] = useState([]);
+const [orders, setOrders] = useState([]);
+const [lowStockItems, setLowStockItems] = useState([]); // ✅ ADD THIS
+
+const [loadingOrders, setLoadingOrders] = useState(false);
+const [loadingLowStock, setLoadingLowStock] = useState(false);
+useEffect(() => {
+  const fetchOrders = async () => {
+    try {
+      setLoadingOrders(true);
+
+      const res = await axiosInstance.get("/registerroute/getWholesalerOrders");
+
+      if (res?.data?.success) {
+        setOrders(res?.data?.orders);
       }
-    };
+    } catch (err) {
+      console.error("Order fetch error:", err);
+    } finally {
+      setLoadingOrders(false);
+    }
+  };
 
-    fetchCouriers();
-  }, []);
+  fetchOrders();
+}, []);
+
+
+useEffect(() => {
+  const fetchLowStock = async () => {
+    try {
+      setLoadingLowStock(true);
+
+      const res = await axiosInstance.get("/registerroute/getLowStockItems");
+
+      if (res?.data?.success) {
+        setLowStockItems(res?.data?.lowStockItems);
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoadingLowStock(false);
+    }
+  };
+
+  fetchLowStock();
+}, []);
+const totalOrders = orders?.length || 0;
+
+const pending = orders?.filter(o => o.status !== "Shipped")?.length || 0;
+
+const revenue = orders?.reduce((sum, o) => sum + (o.total || 0), 0) || 0;
+
+
 
   return (
 
@@ -84,8 +121,9 @@ const WholeSaler = () => {
               </div>
             </div>
             <div className="mt-4">
-              <h2 className="text-3xl font-bold text-slate-800">Rs12,450.00</h2>
-              <span className="text-green-500 text-sm font-semibold flex items-center gap-1 mt-1">
+<h2 className="text-3xl font-bold text-slate-800">
+  Rs {revenue.toLocaleString()}
+</h2>              <span className="text-green-500 text-sm font-semibold flex items-center gap-1 mt-1">
                 +12.5% vs yesterday
               </span>
               <div className='mt-4'>
@@ -103,16 +141,26 @@ const WholeSaler = () => {
               </div>
             </div>
             <div className="mt-4">
-              <h2 className="text-3xl font-bold text-slate-800">48</h2>
-              <span className="text-red-500 text-sm font-semibold flex items-center gap-1 mt-1">
+<h2 className="text-3xl font-bold text-slate-800">
+  {pending}
+</h2>              <span className="text-red-500 text-sm font-semibold flex items-center gap-1 mt-1">
                 -5% fulfillment rate
               </span>
             </div>
           </div>
           {/* <!-- Low Stock Alerts --> */}
           <div
-            onClick={() => navigate("Lowstock")}
-            className="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col justify-between hover:shadow-md transition-shadow">
+onClick={() =>
+ navigate("Lowstock", {
+  state: {
+    totalOrders,
+    revenue,
+    pending,
+    lowStockItems,
+    orders,   // ✅ ADD THIS
+  }
+})
+}            className="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col justify-between hover:shadow-md transition-shadow">
             <div className="flex justify-between items-start">
               <span className="text-slate-500 font-medium">Low Stock Alerts</span>
               <div className="p-2 bg-red-50 text-red-600 rounded-lg">
@@ -120,8 +168,9 @@ const WholeSaler = () => {
               </div>
             </div>
             <div className="mt-4">
-              <h2 className="text-3xl font-bold text-slate-800">12 Items</h2>
-              <span className="text-slate-500 text-sm font-medium mt-1">High Priority Restock</span>
+<p className='text-2xl font-bold text-orange-900'>
+{loadingLowStock ? "..." : lowStockItems.length}</p>             
+ <span className="text-slate-500 text-sm font-medium mt-1">High Priority Restock</span>
             </div>
           </div>
           {/* <!-- Expiry Alerts --> */}
@@ -224,57 +273,77 @@ const WholeSaler = () => {
                         Actions</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-50">
-                    <tr className="hover:bg-slate-50 transition-colors">
-                      <td className="px-6 py-5 text-sm font-semibold text-slate-600">#ORD-9024</td>
-                      <td className="px-6 py-5">
-                        <p className="text-sm font-bold text-slate-800 leading-tight">City Care Pharma</p>
-                        <p className="text-xs text-slate-400">Nagpur, MH</p>
-                      </td>
-                      <td className="px-6 py-5 text-sm font-bold text-slate-800">Rs1,240.00</td>
-                      <td className="px-6 py-5">
-                        <span className="status-pill status-pending"><span
-                          className="inline-block w-2 h-2 rounded-full mr-2 bg-current shadow-[0_0_8px_rgba(0,0,0,0.2)]"></span></span>
-                      </td>
-                      <td className="px-6 py-5 text-center">
-                        <button
-                          className="bg-blue-600 text-white text-[10px] font-bold px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors uppercase tracking-wider shadow-sm">Pack
-                          Order</button>
-                      </td>
-                    </tr>
-                    <tr className="hover:bg-slate-50 transition-colors">
-                      <td className="px-6 py-5 text-sm font-semibold text-slate-600">#ORD-9023</td>
-                      <td className="px-6 py-5">
-                        <p className="text-sm font-bold text-slate-800 leading-tight">HealthLine Meds</p>
-                        <p className="text-xs text-slate-400">Pune, MH</p>
-                      </td>
-                      <td className="px-6 py-5 text-sm font-bold text-slate-800">Rs850.50</td>
-                      <td className="px-6 py-5">
-                        <span className="status-pill status-packed"><span
-                          className="inline-block w-2 h-2 rounded-full mr-2 bg-current shadow-xl]"></span></span>
-                      </td>
-                      <td className="px-6 py-5 text-center flex justify-center gap-3 mt-1 text-slate-400">
-                        <PrintIcon
-                          className="w-5 h-5 cursor-pointer hover:text-blue-500 transition-colors"
-                        />
-                      </td>
-                    </tr>
-                    <tr className="hover:bg-slate-50 transition-colors">
-                      <td className="px-6 py-5 text-sm font-semibold text-slate-600">#ORD-9022</td>
-                      <td className="px-6 py-5">
-                        <p className="text-sm font-bold text-slate-800 leading-tight">Apex Medicos</p>
-                        <p className="text-xs text-slate-400">Mumbai, MH</p>
-                      </td>
-                      <td className="px-6 py-5 text-sm font-bold text-slate-800">Rs2,100.00</td>
-                      <td className="px-6 py-5">
-                        <span className="status-pill status-dispatched"><span
-                          className="inline-block w-2 h-2 rounded-full mr-2 bg-current shadow-xl]"></span></span>
-                      </td>
-                      <td className="px-6 py-5 text-center text-slate-400">
-                        <MoreHorizIcon className=" w-5 h-5 mx-auto cursor-pointer hover:text-blue-500" />
-                      </td>
-                    </tr>
-                  </tbody>
+    <tbody className="divide-y divide-slate-100">
+  {loadingOrders ? (
+    <tr>
+      <td colSpan="5" className="text-center py-6 text-slate-400">
+        Loading orders...
+      </td>
+    </tr>
+  ) : orders?.length > 0 ? (
+    orders.map((order) => (
+      <tr key={order._id} className="hover:bg-slate-50 transition-colors">
+
+        {/* ORDER ID */}
+        <td className="px-6 py-4">
+        <span
+  onClick={() => navigate(`/Dashboard/Retailer/order/${order._id}`)}
+  className="text-sm font-semibold text-blue-600 cursor-pointer hover:underline"
+>
+  #{order.orderId}
+</span>
+        </td>
+
+        {/* CUSTOMER */}
+        <td className="px-6 py-4">
+          <p className="text-sm font-bold text-slate-800">
+            {order?.customer?.name || "Unknown"}
+          </p>
+          <p className="text-xs text-slate-400">
+            {order?.customer?.city || order?.customer?.address || "N/A"}
+          </p>
+        </td>
+
+        {/* TOTAL */}
+        <td className="px-6 py-4 text-sm font-bold text-slate-800">
+          ₹{order.total}
+        </td>
+
+        {/* STATUS */}
+        <td className="px-6 py-4">
+          <span
+            className={`px-3 py-1 rounded-full text-[11px] font-bold uppercase
+              ${order.status === "Paid"
+                ? "bg-green-50 text-green-600"
+                : order.status === "Processing"
+                ? "bg-blue-50 text-blue-600"
+                : "bg-orange-50 text-orange-600"
+              }`}
+          >
+            {order.status}
+          </span>
+        </td>
+
+        {/* ACTIONS */}
+        <td className="px-6 py-4 text-center">
+        <button
+  onClick={() => navigate(`/Dashboard/Retailer/order/${order._id}`)}
+  className="bg-blue-600 text-white text-[10px] font-bold px-4 py-2 rounded-lg hover:bg-blue-700"
+>
+  View
+</button>
+        </td>
+
+      </tr>
+    ))
+  ) : (
+    <tr>
+      <td colSpan="5" className="text-center py-6 text-slate-400">
+        No orders found
+      </td>
+    </tr>
+  )}
+</tbody>
                 </table>
               </div>
             </section>
@@ -561,7 +630,7 @@ const WholeSaler = () => {
           </aside>
         </div>
       </main>
-      <Outlet />
+   <Outlet  />
     </div>
   )
 }

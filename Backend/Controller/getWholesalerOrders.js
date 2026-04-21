@@ -1,15 +1,23 @@
-const OrderModel = require("../model/order.model");
+const orderSchema = require("../model/order.model");
 
 const getWholesalerOrders = async (req, res) => {
   try {
-    const wholesalerId = req.user.id; // token se aayega
+    const wholesalerId = req?.user?.id;
 
-    const orders = await OrderModel.find({ wholesalerId });
+    console.log("wholesalerId:", wholesalerId);
 
-    res.json(orders);
+    const orders = await orderSchema
+      .find({ wholesalerId })   // ✅ FIXED HERE
+      .sort({ createdAt: -1 });
+
+    res.json({
+      success: true,
+      orders: orders || []
+    });
+
   } catch (err) {
-    res.status(500).json({ message: "Error fetching orders" });
+    res.status(500).json({ message: err.message });
   }
 };
 
-module.exports = getWholesalerOrders
+module.exports = getWholesalerOrders;

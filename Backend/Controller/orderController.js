@@ -1,14 +1,14 @@
 const orderModel = require("../model/order.model")
 const order = async (req, res, next) => {
     try {
-        const orderData = req.body;
-        console.log("BODY:", req.body);
-        console.log("ITEMS:", req.body.items);
+        const orderData = req?.body;
+        console.log("BODY:", req?.body);
+        console.log("ITEMS:", req?.body?.items);
 
         req.body.items.forEach((item, i) => {
             console.log(`Item ${i}:`, item);
-            console.log("price:", item.price, "type:", typeof item.price);
-            console.log("quantity:", item.quantity, "type:", typeof item.quantity);
+            console.log("price:", item.price, "type:", typeof item?.price);
+            console.log("quantity:", item.quantity, "type:", typeof item?.quantity);
         });
         const newOrder = new orderModel({
             orderId: orderData.id,

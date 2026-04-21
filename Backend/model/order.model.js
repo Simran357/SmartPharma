@@ -16,6 +16,13 @@ const orderSchema = new mongoose.Schema({
             price: Number,
             quantity: Number,
             image: String,
+            expiryDate: Date,
+            name: String,
+            hsn: String,
+            batch: String,
+            pack: String,
+            mrp: Number,
+            expiry: Date,
         },
     ],
     customer: {

@@ -37,6 +37,7 @@ import InvoicePurchaseScan from './Components/Billing/InvoicePurchaseScan'
 import OrderSuccess from './Components/Billing/OrderSuccess'
 import OrdersOverview from './Components/Ordersoverview/Order'
 import DeliverySys from './Components/Delivery/deliverySys'
+import SingleOrder from './Components/Wholesalecompenent.jsx/SingleOrder'
 
 const App = () => {
   return (
@@ -69,6 +70,7 @@ const App = () => {
           <Route path="AiAgent" element={<AiAgent />} />
           <Route path="Inventory" element={<Inventory />} />
           <Route path="TempelateDesigner" element={<TempelateDesigner />} />
+          <Route path="PendingOrders/:id" element={<SingleOrder />} />
           <Route path="ProductOverview" element={<ProductOverview />} />
           <Route path="OrdersOverview" element={<OrdersOverview />} />
           <Route path="Delivery" element={<DeliverySys />} />
@@ -78,7 +80,7 @@ const App = () => {
             <Route path=":id" element={<SingleRetailerDetails />} />
           </Route>
           <Route path="Alert" element={<Actionable />} />
-          <Route path="pendingorders" element={<PendingOrders />} />
+          <Route path="PendingOrders" element={<PendingOrders />} />
           <Route path="ExpiryMedicine" element={<ExpiryMedicine />} />
         </Route>
 
