@@ -29,4 +29,4 @@ const ShippingRate = async (req, res) => {
   }
 };
 
-module.exports = ShippingRate;
+module.exports = ShippingRate; 

@@ -1,21 +1,26 @@
 import { CurrencyRupee } from "@mui/icons-material";
-import {  useState } from "react";
+import { useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import axiosInstance from '../Dashboard/Form/Utils/AxiosInstance';
 
-const Billing = () => {   
+const Billing = () => {
   const location = useLocation();
- const {id} = useParams()
+  const { id } = useParams()
   const cart = location.state?.cart || [];
+  const courier = location.state?.courier || null;
   const [paymentMethod, setPaymentMethod] = useState("");
+  const [customerName, setCustomerName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
+
   // calculations
   const subtotal = cart.reduce(
     (acc, item) => acc + item.qty * (item.ProductPrice || 0),
     0
   );
- 
- 
+
+
   const shipping = subtotal > 1000 ? 0 : 150;
   const cgst = subtotal * 0.025;
   const sgst = subtotal * 0.025;
@@ -24,7 +29,13 @@ const Billing = () => {
   const totalItems = cart.reduce((acc, item) => acc + item.qty, 0);
   const navigate = useNavigate();
 
-  const handleCheckout =async () => {
+  const handleCheckout = async () => {
+     try{
+    if (!customerName || !phone || !address) {
+      alert("Please fill customer details");
+      return;
+    }
+
     if (cart.length === 0) {
       alert("Cart is empty");
       return;
@@ -35,50 +46,73 @@ const Billing = () => {
       return;
     }
     //  Stripe only for card
-  if (paymentMethod !== "Card") {
-    alert("Only Card payment supported for now");
-    return;
-  }
+    if (paymentMethod !== "Card") {
+      alert("Only Card payment supported for now");
+      return;
+    }
     // api calling for stripe
-   try{
-    const orderId = Date.now();
+    
+      const orderId = Date.now();
+       
+         const formattedItems = cart.map((item) => ({
+        productId: item._id,
+        name: item.ProductName,
+        price: Number(item.ProductPrice) || 0,
+        quantity: Number(item.qty) || 1,
+        image: item.image || "",
+      }));
 
-    const res = await axiosInstance.post("/registerroute/billController", {
-      amount: total,
-      id: orderId,
-      });
+      const orderData = {
+        id: orderId,
+        items: formattedItems,
+        subtotal: Number(subtotal) || 0,
+        shipping: Number(shipping) || 0,
+        cgst: Number(cgst) || 0,
+        sgst: Number(sgst) || 0,
+        discount: Number(discount) || 0,
+        total: Number(total) || 0,
+        paymentMethod,
+        wholesalerId: id,
+        //  NEW
+        customer: {
+          name: customerName,
+          phone: phone,
+          address: address,
+        },
 
-    console.log("Stripe response:", res?.data);
-           
- const orderData = {
-      id: orderId,
-  items: cart,
-  subtotal,
-  shipping,
-  cgst,
-  sgst,
-  discount,
-  total,
-  paymentMethod,
-  wholesalerId:id,
-  date: new Date().toLocaleString()
-};
+        courier: {
+          id: courier?._id,
+          name: courier?.name,
+          time: courier?.time,
+        },
+        date: new Date().toLocaleString()
+      };
 
-// ✅ SAVE IN LOCALSTORAGE
-localStorage.setItem("orderData", JSON.stringify(orderData));
+      console.log("Sending Data:", orderData); 
 
-window.location.href = res?.data?.url;
-return; // IMPORTANT
-   }catch (error){
-        console.log("Payment error:", error);
-    alert("Payment failed");
-   }
+      //api calling 
+      const res = await axiosInstance.post("/registerroute/billController",{
+         amount: total,
+         orderData,
+      } );
 
-   
- 
-    navigate("/Billing/OrderSuccess", {
-      state: { cart:cart , order: orderData }
-    })
+      console.log("Stripe response:", res?.data);
+
+      // ✅ SAVE IN LOCALSTORAGE
+      localStorage.setItem("orderData", JSON.stringify(orderData));
+
+      window.location.href = res?.data?.url;
+      return; // IMPORTANT
+    } catch (error) {
+      console.log("Payment error:", error);
+      alert("Payment failed");
+    }
+
+
+
+    // navigate("/Billing/OrderSuccess", {
+    //   state: { cart: cart, order: orderData }
+    // })
   };
 
   return (
@@ -145,6 +179,39 @@ return; // IMPORTANT
             </div>
           </div>
         </div>
+
+        <div className="bg-white rounded-xl shadow border p-5 mb-4">
+          <h2 className="font-semibold text-lg mb-3">Customer Details</h2>
+
+          <div className="grid grid-cols-2 gap-3 text-sm">
+
+            <input
+              type="text"
+              placeholder="Customer Name"
+              value={customerName}
+              onChange={(e) => setCustomerName(e.target.value)}
+              className="border p-2 rounded"
+            />
+
+            <input
+              type="text"
+              placeholder="Phone Number"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              className="border p-2 rounded"
+            />
+
+            <input
+              type="text"
+              placeholder="Address"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              className="border p-2 rounded col-span-2"
+            />
+
+          </div>
+        </div>
+
 
         {/* RIGHT - SUMMARY */}
         <div className="w-full lg:w-[35%]">
@@ -219,8 +286,8 @@ return; // IMPORTANT
                 className="w-full bg-green-500 text-white py-3 rounded-xl font-semibold hover:bg-green-600"
               >
                 ✔ Complete Checkout
-              </button>  
-          
+              </button>
+
 
               <button className="w-full text-sm text-gray-500 hover:underline">
                 🖨 Print Quotation Only

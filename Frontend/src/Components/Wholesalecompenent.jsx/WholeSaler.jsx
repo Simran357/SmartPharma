@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+
 import NotificationsNoneSharpIcon from '@mui/icons-material/NotificationsNoneSharp';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import CardTravelIcon from '@mui/icons-material/CardTravel';
@@ -17,10 +17,33 @@ import { Outlet, useNavigate } from "react-router-dom";
 import GroupsIcon from '@mui/icons-material/Groups';
 import DetailsIcon from '@mui/icons-material/Details';
 // import PendingOrders from './PendingOrders';
+import LocalShippingIcon from "@mui/icons-material/LocalShipping";
+import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import Addstock from './Addstock';
+import { useState  , useEffect} from "react";
+import axiosInstance from '../Dashboard/Form/Utils/AxiosInstance';
 const WholeSaler = () => {
   const navigate = useNavigate()
   const [model, setModel] = useState(false);
+
+ const [courierList, setCourierList] = useState([]);
+ useEffect(() => {
+    const fetchCouriers = async () => {
+      try {
+        const res = await axiosInstance.get("/registerroute/getDeliveryPartners");
+ 
+        if (res.data.success) {
+          setCourierList(res.data.data);
+        }
+      } catch (error) {
+       console.error("Courier fetch error:", error);
+      }
+    };
+
+    fetchCouriers();
+  }, []);
+
   return (
 
     <div className=" bg-gray-50 p-6 md:p-10 ">
@@ -139,7 +162,7 @@ const WholeSaler = () => {
                   <span className="text-[10px] text-slate-400 uppercase tracking-tighter">Purchase Entry</span>
                 </button>
                 {model && <Addstock close={() => setModel(false)} />}
-                    
+
                 <button
                   className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:border-blue-400 hover:shadow-lg transition-all text-center group">
                   <div
@@ -287,8 +310,8 @@ const WholeSaler = () => {
                     <div className="flex items-center gap-2">
                       <span
                         className="w-2 h-2 rounded-full bg-red-500"></span>
-                         <span className="text-slate-500">
-                          Out of Stock (15%)</span></div>
+                      <span className="text-slate-500">
+                        Out of Stock (15%)</span></div>
                   </div>
                 </div>
               </section>
@@ -378,7 +401,7 @@ const WholeSaler = () => {
           <aside className='space-y-8'>
             {/* <!-- Financial Overview: Credit limits and outstanding payment status | --> */}
             <section className='bg-slate-900 rounded-3xl text-white  p-6 shadow-xl relative overflow-hidden'>
-              <div className='relative z-10'>
+              {/* <div className='relative z-10'>
                 <h4 className='text-slate-400 text-[10px] font-bold uppercase tracking-widest mb-4'>Financial Overview</h4>
                 <div className="space-y-4">
                   <div>
@@ -399,7 +422,40 @@ const WholeSaler = () => {
                 <button
                   className="w-full mt-6 py-2 bg-blue-600 hover:bg-blue-700 rounded-xl text-xs font-bold transition-colors">Settle
                   Dues</button>
+              </div> */}
+
+              <div className="flex items-center gap-2 mb-3">
+                <LocalShippingIcon style={{ fontSize: 16, color: "#4ade80" }} />
+                <h4 className="text-xs font-bold text-slate-300 tracking-wide uppercase">
+                  Deliveries
+                </h4>
               </div>
+
+              {/* Courier Names */}
+              <div className="space-y-2">
+                {courierList.map((item) => (
+                  <div
+                    key={item.id}
+                    className="flex items-center justify-between bg-slate-800 px-3 py-2 rounded-md hover:bg-slate-700 transition cursor-pointer"
+                  >
+                    {/* Left side */}
+                    <div className="flex items-center gap-2">
+                      <FiberManualRecordIcon
+                        style={{ fontSize: 10, color: "#4ade80" }}
+                      />
+                      <span className="text-sm text-slate-200">
+                        {item.name}
+                      </span>
+                    </div>
+
+                    {/* Right icon */}
+                    <ChevronRightIcon
+                      style={{ fontSize: 16, color: "#94a3b8" }}
+                    />
+                  </div>
+                ))}
+              </div>
+
             </section>
             {/* <!-- Batch & Expiry Alerts --> */}
             <section className='bg-white rounded-3xl border border-slate-100 shadow-sm p-6'>

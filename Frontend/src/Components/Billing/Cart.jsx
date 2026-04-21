@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import LocalShippingOutlined from "@mui/icons-material/LocalShippingOutlined";
 import AddShoppingCart from "@mui/icons-material/AddShoppingCart";
 import EditCalendarRounded from "@mui/icons-material/EditCalendarRounded";
@@ -11,38 +11,28 @@ const Cart = () => {
   const location = useLocation();
 
   const cartItems = location.state?.cartProduct || [];
-
   const [cart, setCart] = useState(cartItems);
-
-  const [couriers, setCouriers] = useState([]);
-
   const [loading, setLoading] = useState(false);
-const {id} = useParams()
+  const { id } = useParams()
+  const [couriers, setCouriers] = useState([]);
+  const [selectedCourier, setSelectedCourier] = useState(null);
 
   useEffect(() => {
     const fetchCouriers = async () => {
       try {
-        const wholesalerId = id // dynamic kar lena later
+        const res = await axiosInstance.get("/registerroute/getDeliveryPartners");
 
-        const res = await axiosInstance.get(
-          `/registerRoute/getConnectedCouriers/${wholesalerId}`
-        );
-
-        const couriers = res.data.data.map((c) => c.courierId);
-
-        setCouriers(couriers);
+        if (res.data.success) {
+          setCouriers(res.data.data);
+        }
       } catch (err) {
-        console.error(err);
+        console.log(err);
       }
     };
 
     fetchCouriers();
   }, []);
 
-
-
-
-  // Qty
   const increaseQty = (id) => {
     setCart((prev) =>
       prev.map((item) =>
@@ -196,32 +186,9 @@ const {id} = useParams()
               </div>
 
 
-              {/*  COURIER  */}
 
-              {couriers.map((c) => (
-                <div
-                  key={c._id}
-                  onClick={() => setSelectedCourier(c)}
-                  className={`border p-3 rounded mb-2 flex justify-between cursor-pointer
-      ${selectedCourier?._id === c._id
-                      ? "border-green-600 bg-green-50"
-                      : ""
-                    }`}
-                >
-                  <div>
-                    <p className="font-medium">{c.name}</p>
-                    <p className="text-xs text-gray-500">
-                      {c.coverage}
-                    </p>
-                  </div>
 
-                  <p className="text-green-600 font-semibold">
-                    Available
-                  </p>
-                </div>
-              ))}
-
-              COURIER + PINCODE 
+              {/* COURIER  */}
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="bg-white p-5 rounded shadow">
                   <h3 className="flex items-center gap-2 font-bold mb-3">
@@ -229,62 +196,39 @@ const {id} = useParams()
                     Courier Selection
                   </h3>
 
-                    <p className="text-gray-400">Enter pincode first</p>
-                  
-
-                  {couriers.map((c) => (
-                    <div
-                      key={c.courier_company_id}
-                      onClick={() => setSelectedCourier(c)}
-                      className={`border p-3 rounded mb-2 flex justify-between cursor-pointer
-                        ${
-                          selectedCourier?.courier_company_id ===
-                          c.courier_company_id
+                  {couriers.length === 0 ? (
+                    <p className="text-gray-400 text-sm">No couriers available</p>
+                  ) : (
+                    couriers.map((c) => (
+                      <div
+                        key={c._id}
+                        onClick={() => setSelectedCourier(c)}
+                        className={`border p-3 rounded mb-2 cursor-pointer
+                          ${selectedCourier?._id === c._id
                             ? "border-green-600 bg-green-50"
-                            : ""
-                        }`}
-                    >
-                      <div>
-                        <p className="font-medium">{c.courier_name}</p>
-                        <p className="text-xs text-gray-500">
-                          {c.estimated_delivery_days} days
+                            : "hover:border-gray-400"
+                          }`}
+                      >
+                        <p className="font-medium text-gray-800">
+                          {c.name}
+                        </p>
+
+                        <p className="text-sm text-gray-500">
+                          {c.time}
                         </p>
                       </div>
-
-                      <p>₹{c.freight_charge}</p>
-                    </div>
-                  ))}
-                </div> 
-                <div className="bg-white p-5 rounded shadow">
-                  <h3 className="flex items-center gap-2 font-bold">
-                    <EditCalendarRounded style={{ color: "green" }} />
-                    Delivery Location
-                  </h3>
-
-                  <input
-                    type="number"
-                    placeholder="Enter Pincode"
-                    className="w-full border p-2 mt-3"
-                    value={pincode}
-                    onChange={(e) => setPincode(e.target.value)}
-                  />
-
-                  <button
-                    onClick={handleConfirmAddress}
-                    className="bg-green-600 text-white w-full mt-3 py-2 rounded"
-                  >
-                    {loading ? "Loading..." : "Check Delivery"}
-                  </button>
+                    ))
+                  )}
                 </div>
               </div>
             </div>
 
-            
+
             <div className="bg-white p-5 rounded shadow h-fit">
               <h2 className="font-semibold mb-3">Order Summary</h2>
 
               <p>Subtotal: ₹{subtotal.toFixed(2)}</p>
-              <p>Shipping: ₹{shipping}</p>
+              {/* <p>Shipping: ₹{shipping}</p> */}
               <p>GST: ₹{tax.toFixed(2)}</p>
 
               {discount > 0 && (
@@ -317,4 +261,4 @@ const {id} = useParams()
   );
 };
 
-export default Cart;
+export default Cart;  

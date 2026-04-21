@@ -7,19 +7,26 @@ const OrderSuccess = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const data = JSON.parse(localStorage.getItem("orderData"));
-    if (data) {
-      setOrder(data);
-      axiosInstance.post("/registerroute/orderController", data)
-        .then((res) => {
-          console.log("Order saved:", res?.data);
-          localStorage.removeItem("orderData");
-        })
-        .catch((err) => {
-          console.log("Error saving order", err);
-        });
-    }
-  }, []);
+  console.log("OrderSuccess page loaded");
+  const stored = localStorage.getItem("orderData");
+  console.log(localStorage.getItem("orderData"))
+  if (stored) {
+    
+    const parsed = JSON.parse(stored);
+    console.log("Recovered Order:", parsed);
+
+    setOrder(parsed); //  THIS FIXES YOUR UI
+
+    axiosInstance.post("/registerroute/orderController", parsed)
+      .then(() => {
+        console.log("Order saved in DB");
+      })
+      .catch((err) => console.log(err));
+  } else {
+    console.log("No data in localStorage");
+  }
+}, []);
+
 
   if (!order)
     return (
@@ -61,21 +68,28 @@ const OrderSuccess = () => {
           <div className="border rounded-lg overflow-hidden">
             {order.items.map((item, index) => (
               <div
-                key={item._id}
+                key={index}
                 className={`flex justify-between p-3 ${
                   index !== order.items.length - 1
                     ? "border-b"
                     : ""
                 }`}
               >
-                <span className="font-medium">{item.ProductName}</span>
+                <span className="font-medium">{item.name}</span>
                 <span className="text-gray-600">
-                  Qty: {item.qty}
+                  Qty: {item.quantity}
                 </span>
               </div>
             ))}
           </div>
         </div>
+
+
+       
+
+
+
+
 
         {/* Button */}
         <div className="mt-6 text-center">

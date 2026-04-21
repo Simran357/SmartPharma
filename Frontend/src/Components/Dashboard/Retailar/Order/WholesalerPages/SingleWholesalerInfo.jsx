@@ -130,12 +130,8 @@ const SingleWholesalerInfo = () => {
                 <span className='flex flex-row items-center gap-2'>
                   <h1 className='font-bold text-xl'>
                     {singleWholesaler?.pharmacyName || "No Name"}
-<<<<<<< HEAD
-                  </h1><p className=' bg-green-200/80 px-1 text-xs rounded-2xl text-green-700/90 uppercase '>verified</p>
-=======
                   </h1>                  
                   <p className=' bg-green-200/80 px-1 text-xs rounded-2xl text-green-700/90 uppercase '>verified</p>
->>>>>>> 4707dc75f5093fbb768591d43c81eb7b836262b8
                 </span>
                 <p className='text-sm font-medium text-gray-700 '>{singleWholesaler?.license}</p>
               </div>
@@ -310,14 +306,10 @@ const SingleWholesalerInfo = () => {
                   <p>No Medicines Found</p>
                 )}
               </div>
-<<<<<<< HEAD
-              {/* <div className='flex justify-center'>
-=======
               <div className='flex justify-center'>
->>>>>>> 4707dc75f5093fbb768591d43c81eb7b836262b8
                 <button className=' px-4 py-2 rounded-xl  mt-4 bg-white/90 border w-fit text-gray-600 border-slate-400 font-medium'>Load More Medicines</button>
 
-              </div> */}
+              </div> 
             </section>
           </div>
           {/* my cart */}
@@ -423,7 +415,6 @@ const SingleWholesalerInfo = () => {
                     }, 0) - 50}
                   </p>
                 </span>
-<<<<<<< HEAD
 
                 {/* CHECKOUT */}
                 <button className='w-full p-2 bg-green-600/70 rounded-xl mt-3 whitespace-nowrap text-black text-lg font-bold'
@@ -434,46 +425,7 @@ const SingleWholesalerInfo = () => {
               </div>
             </section>
 
-            {/* ACTIVE SCHEME */}
-            {/* <section className="bg-green-50 border shadow-xl border-green-200 p-6 rounded-xl">
-    <span className='text-black text-lg font-bold'>Active Schemes</span>
-    <div className='bg-white/80 border-gray-100 p-6 rounded-lg mt-2'>
-      <h1 className='font-bold text-xs'>Buy 100 Get 1 Free</h1>
-      <p className='text-slate-400 text-xs mt-2'>
-        On all GSK Antibiotics range
-      </p>
-
-      <button className='border border-emerald-300 mt-2 text-emerald-400 bg-white px-1 text-xs py-1 w-full'>
-        Apply
-      </button>
-    </div>
-  </section> */}
-=======
-
-                {/* CHECKOUT */}
-                <button className='w-full p-2 bg-green-600/70 rounded-xl mt-3 whitespace-nowrap text-black text-lg font-bold'
-                  onClick={() => navigate("Cart", { state: { cartProduct } })}
-                >
-                  Proceed to Checkout
-                </button>
-              </div>
-            </section>
-
-            {/* ACTIVE SCHEME */}
-            <section className="bg-green-50 border shadow-xl border-green-200 p-6 rounded-xl">
-              <span className='text-black text-lg font-bold'>Active Schemes</span>
-              <div className='bg-white/80 border-gray-100 p-6 rounded-lg mt-2'>
-                <h1 className='font-bold text-xs'>Buy 100 Get 1 Free</h1>
-                <p className='text-slate-400 text-xs mt-2'>
-                  On all GSK Antibiotics range
-                </p>
-
-                <button className='border border-emerald-300 mt-2 text-emerald-400 bg-white px-1 text-xs py-1 w-full'>
-                  Apply
-                </button>
-              </div>
-            </section>
->>>>>>> 4707dc75f5093fbb768591d43c81eb7b836262b8
+            
           </div>
         </div>
 

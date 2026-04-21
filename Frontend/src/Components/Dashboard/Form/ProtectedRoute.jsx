@@ -9,9 +9,9 @@ const ProtectedRoute = ({ children }) => {
     return <div>Loading...</div>;
   }
 
-  if (!userRoles) {
-    return <Navigate to="/" />;
-  }
+  // if (!userRoles) {
+  //   return <Navigate to="/" />;
+  // }
 
   return children;
 };

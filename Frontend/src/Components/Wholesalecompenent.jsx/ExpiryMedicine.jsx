@@ -379,24 +379,24 @@ const ExpiryMedicine = () => {
                             <div className="col-span-12  space-y-8">
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                                      {/* <!--  Expiry Trend View --> */}
-                                    <div className="glass-card p-6 rounded-2xl shadow-sm border border-white/40">
+                                    {/* <div className="glass-card p-6 rounded-2xl shadow-sm border border-white/40">
                                         <h3 className="font-headline font-bold mb-6">Expiry Trend (Next 6 Months)</h3>
                                         <div className="h-64 w-full flex items-end justify-between gap-1 pb-4 relative">
                                             <Bar data={data} options={options} />
                                         </div>
-                                    </div>
+                                    </div> */}
                                            {/* <!-- Stock Heaalth View --> */}
-                                    <div className="glass-card p-6 rounded-2xl shadow-sm border border-white/40">
+                                    {/* <div className="glass-card p-6 rounded-2xl shadow-sm border border-white/40">
                                         <h3 className="font-headline font-bold mb-6">Stock Health Ratio</h3>
                                         <div className="flex items-center justify-center gap-12 py-4">
 
                                         </div>
-                                    </div>
+                                    </div> */}
                                     {/* <!-- Expiry Calendar View --> */}
-                                    <div className="glass-card p-6 rounded-2xl shadow-sm border border-white/40">
-                                    </div>
+                                    {/* <div className="glass-card p-6 rounded-2xl shadow-sm border border-white/40">
+                                    </div> */}
                                 </div>
-                            </div>
+                            </div>    
                         </div>
                     </div>  
                 </div>

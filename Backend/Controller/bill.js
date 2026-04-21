@@ -1,71 +1,76 @@
-const express = require("express");
 const Stripe = require("stripe");
 
-const app = express();
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
-
-
-const stripePayment= async (req, res,next) => {
+const stripePayment = async (req, res, next) => {
   try {
-    const id = req?.user?.id
-        const role = req?.user?.role
+    console.log("BODY RECEIVED:", req.body);
 
-    const { amount} = req.body;
-      console.log(req.body.amount)
+    // ✅ Safe destructuring
+    const { amount, orderData } = req.body;
 
-    const customer = await stripe.customers.create({
-       userRole: role,
-         userId:id,
-        email: "client@gmail.com",
-        name: "John Doe",
-        address: {
-          line1: "Street 123",
-          city: "Toronto",
-          state: "ON",
-          postal_code: "M5V",
-          country: "CA", // ❗ MUST be NON-INDIA for export
-        },
+    if (!amount || !orderData) {
+      return res.status(400).json({
+        error: "Amount and orderData are required",
       });
+    }
 
+    // ✅ Extract wholesalerId safely
+    const wholesalerId = orderData?.wholesalerId || "unknown";
 
+    // ✅ Create Stripe customer (optional but good)
+    const customer = await stripe.customers.create({
+      metadata: {
+        wholesalerId: wholesalerId,
+      },
+      email: "client@gmail.com",
+      name: orderData?.customer?.name || "Customer",
+    });
 
+    // ✅ Create Stripe session
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
-
       mode: "payment",
-
 
       customer: customer.id,
 
       billing_address_collection: "required",
+
       line_items: [
         {
           price_data: {
             currency: "inr",
             product_data: {
-              name: "Your Service / Product Name",
+              name: "SmartPharm Order Payment",
             },
-           unit_amount: Math.round(amount * 100) // ₹ → paise
+            unit_amount: Math.round(amount * 100), // ₹ → paise
           },
           quantity: 1,
         },
       ],
 
-success_url: `http://localhost:5173/Dashboard/Retailer/Order/${id}/OrderSuccess`,
+      // ✅ IMPORTANT FIX (NO NESTED ROUTE)
+      success_url: "http://localhost:5173/OrderSuccess",
       cancel_url: "http://localhost:5173/Cart",
+
+      // ✅ Optional (useful later)
+      metadata: {
+        orderId: orderData.id.toString(),
+        wholesalerId: wholesalerId,
+      },
     });
 
-  
-    res.status(200).json({
+    return res.status(200).json({
       url: session.url,
       sessionId: session.id,
-      
     });
 
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.log("Stripe Error:", error);
+    return res.status(500).json({
+      error: error.message,
+    });
   }
-}
+};
 
-module.exports = {stripePayment}
+module.exports = { stripePayment };
