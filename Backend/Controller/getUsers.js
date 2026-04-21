@@ -1,5 +1,6 @@
 const getUserModel = require("../model/Register.model")
 const bcrypt = require("bcrypt")  
+const nodemailer = require("nodemailer");
 
 const createNewUser = async (req, res, next) => {
 
@@ -30,10 +31,14 @@ const createNewUser = async (req, res, next) => {
         })
 
         await newUser.save()
-
+          // 📧 email send notifiations
+          console.log("EMAIL FUNCTION CALLED");
+       await sendEmail(email, password);
+    
+     
         res.status(200).json({
             success: true,
-            message: "User created successfully",
+            message: "User created successfully and email sent successfully",
             data: newUser
         })
     } catch (error) {
@@ -45,6 +50,34 @@ const createNewUser = async (req, res, next) => {
     }
 
 }
+
+const sendEmail = async (to, password) => {
+  try {   
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass:process.env.EMAIL_PASS,
+      },
+    });
+
+    const mailOptions = {
+      from: "your_email@gmail.com",
+      to: to,
+      subject: "Account Created",
+      html: `
+        <h3>Your account has been created</h3>
+        <p>Email: ${to}</p>
+        <p>Password: ${password}</p>
+        <p style="color:red;">Please change your password after login</p>
+      `,
+    };
+
+    await transporter.sendMail(mailOptions);
+  } catch (error) {
+    console.log("Email error:", error);
+  }
+};
 
 const getUsers = async (req, res, next) => {
     try {

@@ -37,11 +37,13 @@ import InvoicePurchaseScan from './Components/Billing/InvoicePurchaseScan'
 import OrderSuccess from './Components/Billing/OrderSuccess'
 import OrdersOverview from './Components/Ordersoverview/Order'
 import DeliverySys from './Components/Delivery/deliverySys'
-
+import {ToastContainer} from "react-toastify"
+import "react-toastify/dist/ReactToastify.css";
 const App = () => {
   return (
-    <Routes>
-
+      <div>
+<Routes>
+     
       {/* PUBLIC ROUTES */}
       <Route path="/" element={<Index />} />
       <Route path="/login" element={<Login />} />
@@ -111,8 +113,12 @@ const App = () => {
         </Route>
 
       </Route>
-
+       
     </Routes>
+     <ToastContainer position="top-right" autoClose={3000} />
+      </div>
+    
+    
   )
 }
 
