@@ -20,6 +20,10 @@ const {stripePayment} = require("../../Controller/bill")
 const getDistance = require("../../Controller/getCalcuateDistance")
 const order=require("../../Controller/orderController")
 const getShippingRates = require("../../Controller/getShippingRates")
+const addDeliveryPartner=require("../../Controller/addDeliveryPartner")
+const getDeliveryPartners=require("../../Controller/getDeliveryPartners")
+const connectCourier= require('../../Controller/connectCourier')
+const getConnectedCouriers=require("../../Controller/getConnectedCourier")
 const getWholesalerOrders = require("../../Controller/getWholesalerOrders")
 
 
@@ -48,7 +52,16 @@ router.put("/updateRole/:id", updateRoleController)
 router.get("/getWholesalerOrders",getWholesalerOrders)
 
 //order
-router.post('/orderController',order)
+router.post('/orderController',order)   
 router.get("/me",authMiddleware,getMe)
 console.log("router.file")
+
+//delivery
+router.post("/addDeliveryPartner",addDeliveryPartner)
+router.get("/getDeliveryPartners", getDeliveryPartners)
+
+router.post("/connectCourier",connectCourier)
+
+router.get("/getConnectedCouriers",getConnectedCouriers)
+
 module.exports = router  

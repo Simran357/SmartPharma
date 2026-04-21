@@ -5,7 +5,10 @@ const orderSchema = new mongoose.Schema({
         type: String,
         default: () => Date.now().toString(),
     },
-
+    wholesalerId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "wholesaler",
+    },
     items: [
         {
             productId: String,
@@ -15,7 +18,17 @@ const orderSchema = new mongoose.Schema({
             image: String,
         },
     ],
+    customer: {
+        name: String,
+        phone: String,
+        address: String,
+    },
 
+    courier: {
+        id: String,
+        name: String,
+        time: String,
+    },
     subtotal: {
         type: Number,
     },
@@ -62,4 +75,4 @@ const orderSchema = new mongoose.Schema({
         default: Date.now,
     },
 })
-module.exports =mongoose.model("orderSchema", orderSchema);
+module.exports = mongoose.model("orderSchema", orderSchema);

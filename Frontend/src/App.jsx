@@ -36,84 +36,84 @@ import Addstock from './Components/Wholesalecompenent.jsx/Addstock'
 import InvoicePurchaseScan from './Components/Billing/InvoicePurchaseScan'
 import OrderSuccess from './Components/Billing/OrderSuccess'
 import OrdersOverview from './Components/Ordersoverview/Order'
+import DeliverySys from './Components/Delivery/deliverySys'
 
 const App = () => {
-
   return (
-    <>
-      <Routes>
-        <Route path="/" element={<Index />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        {/* Layout = Header + Outlet */}
-        <Route path="Dashboard" element={
-          <ProtectedRoute >
-            <Layout />
-          </ProtectedRoute>}>
-      
-          <Route index element={<Navigate to="Retailer" replace />} />
-          {/* Default landing page */}
-          <Route path='Wholesaler' >
-            <Route index element={<WholeSaler />} />
-            <Route path="AdminRoleAssign" element={<AdminRoleAssign />} />
-            <Route path="Lowstock" element={<Lowstock />} />
-            <Route path="Dailysales" element={<Dailysales />} />
-            <Route path="AiAgent" element={<AiAgent />} />
-            <Route path="Inventory" element={<Inventory />} />
-            <Route path="TempelateDesigner" element={<TempelateDesigner />} />
-            <Route path="ProductOverview" element={<ProductOverview />} />
-            <Route path="OrdersOverview" element={<OrdersOverview />} />
+    <Routes>
 
-            <Route path="OrdersOverview" element={<OrdersOverview />} />
+      {/* PUBLIC ROUTES */}
+      <Route path="/" element={<Index />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
 
-            <Route path="Retailors">
-              <Route index element={<Retailors />} />
-              <Route path=":id" element={<SingleRetailerDetails />} />
-            </Route>
-            <Route path="Alert" element={<Actionable />} />
-            <Route path="pendingorders" element={<PendingOrders />} />
-            <Route path="ExpiryMedicine" element={<ExpiryMedicine />} />
+      {/* ✅ IMPORTANT: Stripe Success Route (OUTSIDE) */}
+      <Route path="/OrderSuccess" element={<OrderSuccess />} />
+
+      {/* PROTECTED ROUTES */}
+      <Route path="Dashboard" element={
+        <ProtectedRoute>
+          <Layout />
+        </ProtectedRoute>
+      }>
+
+        {/* Default redirect */}
+        <Route index element={<Navigate to="Retailer" replace />} />
+
+        {/* ================= WHOLESALER ================= */}
+        <Route path="Wholesaler">
+          <Route index element={<WholeSaler />} />
+          <Route path="AdminRoleAssign" element={<AdminRoleAssign />} />
+          <Route path="Lowstock" element={<Lowstock />} />
+          <Route path="Dailysales" element={<Dailysales />} />
+          <Route path="AiAgent" element={<AiAgent />} />
+          <Route path="Inventory" element={<Inventory />} />
+          <Route path="TempelateDesigner" element={<TempelateDesigner />} />
+          <Route path="ProductOverview" element={<ProductOverview />} />
+          <Route path="OrdersOverview" element={<OrdersOverview />} />
+          <Route path="Delivery" element={<DeliverySys />} />
+          <Route path="Connectcourier" element={<Connectcourier />} />
+          <Route path="Retailors">
+            <Route index element={<Retailors />} />
+            <Route path=":id" element={<SingleRetailerDetails />} />
           </Route>
-          <Route path="Retailer">
-            <Route index element={<Retailer />} />
-            <Route path="Inventory" element={<Inventory />} />
-            <Route path="Inventory/:id" element={<OneMedicine />} />
-
-
-            <Route path="TempelateDesigner" element={<TempelateDesigner />} />
-            <Route path="InvoicePurchaseScan" element={<InvoicePurchaseScan />} />
-            <Route path="AiAgent" element={<AiAgent />} />
-            <Route path="AddStock" element={<Addstock />} />
-            <Route path="WhatsappTempelate" element={<WhatsappTempelate />} />
-            <Route path="ReturnInvoice" element={<ReturnInvoice />} />
-            <Route path="FilterWholesaler" element={<FilterOutWholesaler />} />
-            <Route path="FilterWholesaler" element={<FilterOutWholesaler />} />
-            <Route path="ActionablePrevention" element={<ActionablePrevention />} />
-
-
-
-
-
-
-            <Route path="Order">
-              <Route index element={<OrderWholesaler />} />
-              <Route path="FindWholesaler" element={<OneWholesaler />} />
-              <Route path="FilterOutWholesaler" element={<FilterOutWholesaler />} />
-              <Route path="MixedWholesaler" element={<MixedWholesaler />} />
-              <Route path=":id" element={<SingleWholesalerInfo />} />
-              {/* ✅ Correct flow */}
-              <Route path=":id/Cart" element={<Cart />} />
-              <Route path=":id/Billing" element={<Billing />} >
-                <Route path="OrderSuccess" element={<OrderSuccess />} />
-              </Route>
-            </Route>
-            <Route path="Courier" element={<Courier />} />
-            <Route path="Connectcourier" element={<Connectcourier />} />
-          </Route>
+          <Route path="Alert" element={<Actionable />} />
+          <Route path="pendingorders" element={<PendingOrders />} />
+          <Route path="ExpiryMedicine" element={<ExpiryMedicine />} />
         </Route>
-      </Routes>
 
-    </>)
+        {/* ================= RETAILER ================= */}
+        <Route path="Retailer">
+          <Route index element={<Retailer />} />
+          <Route path="Inventory" element={<Inventory />} />
+          <Route path="Inventory/:id" element={<OneMedicine />} />
+          <Route path="TempelateDesigner" element={<TempelateDesigner />} />
+          <Route path="InvoicePurchaseScan" element={<InvoicePurchaseScan />} />
+          <Route path="AiAgent" element={<AiAgent />} />
+          <Route path="AddStock" element={<Addstock />} />
+          <Route path="WhatsappTempelate" element={<WhatsappTempelate />} />
+          <Route path="ReturnInvoice" element={<ReturnInvoice />} />
+          <Route path="FilterWholesaler" element={<FilterOutWholesaler />} />
+          <Route path="ActionablePrevention" element={<ActionablePrevention />} />
+
+          {/* ORDER FLOW */}
+          <Route path="Order">
+            <Route index element={<OrderWholesaler />} />
+            <Route path="FindWholesaler" element={<OneWholesaler />} />
+            <Route path="FilterOutWholesaler" element={<FilterOutWholesaler />} />
+            <Route path="MixedWholesaler" element={<MixedWholesaler />} />
+            <Route path=":id" element={<SingleWholesalerInfo />} />
+            <Route path=":id/Cart" element={<Cart />} />
+            <Route path=":id/Billing" element={<Billing />} />
+          </Route>
+
+          <Route path="Courier" element={<Courier />} />
+        </Route>
+
+      </Route>
+
+    </Routes>
+  )
 }
 
 export default App

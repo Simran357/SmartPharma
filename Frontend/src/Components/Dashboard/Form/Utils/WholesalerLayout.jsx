@@ -56,7 +56,11 @@ const Wholesalerlayout = () => {
       icon: <RobotFilled />,
       label: "OrdersOverview",
     },
-
+    {
+      key: "/Dashboard/Wholesaler/Connectcourier",
+      icon: <RobotFilled />,
+      label: "CourierList", 
+    },
   ];
                              
   return (
@@ -106,7 +110,7 @@ const Wholesalerlayout = () => {
      </div>
           </Header>
           <Content className="p-6 h-screen overflow-auto bg-gray-50"
-          >
+          >   
             <Outlet />
           </Content>
         </Layout>

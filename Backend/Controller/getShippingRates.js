@@ -1,44 +1,32 @@
-const axios = require("axios");
-const { getToken } = require("./genrateShipingtoken"); // ✅ FIX IMPORT
+const connectCourierModel = require("../model/connectCourierModel");
 
-const getShippingRates = async (req, res) => {
+const ShippingRate = async (req, res) => {
   try {
-    const { pincode, weight } = req.body;
+    const { wholesalerId } = req.body;
 
-    const token = getToken(); // ✅ GET STORED TOKEN
+    // 🔥 get connected couriers
+    const data = await connectCourierModel
+      .find({ wholesalerId })
+      .populate("courierId");
 
-    if (!token) {
-      return res.status(500).json({ message: "Token not generated yet" });
-    }
+    // 🔥 convert to same format (IMPORTANT)
+    const formatted = data.map((item) => ({
+      courier_company_id: item.courierId._id,
+      courier_name: item.courierId.name,
+      freight_charge: item.courierId.price || 100,
+      estimated_delivery_days: item.courierId.deliveryDays || "3-5",
+    }));
 
-    const response = await axios.get(
-      `https://apiv2.shiprocket.in/v1/external/courier/serviceability/`,
-      {
-        params: {
-          pickup_postcode: "560001",
-          delivery_postcode: pincode,
-          weight: weight,
-          cod: 0,
-        },
-        headers: {
-          Authorization: `Bearer ${token}`, // ✅ CORRECT
-        },
-      }
-    );
-
-    res.status(200).json({
-      message: "success shipping rate api",
-      data: response.data,
+    return res.json({
+      success: true,
+      data: {
+        available_courier_companies: formatted,
+      },
     });
 
   } catch (err) {
-    console.error("SHIPROCKET ERROR:", err.response?.data || err.message);
-
-    res.status(500).json({
-      message: "Shiprocket error",
-      error: err.response?.data || err.message,
-    });
+    res.status(500).json({ error: err.message });
   }
 };
 
-module.exports = getShippingRates;
+module.exports = ShippingRate; 

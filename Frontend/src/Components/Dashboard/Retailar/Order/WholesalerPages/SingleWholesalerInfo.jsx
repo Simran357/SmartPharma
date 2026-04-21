@@ -309,7 +309,7 @@ const SingleWholesalerInfo = () => {
               <div className='flex justify-center'>
                 <button className=' px-4 py-2 rounded-xl  mt-4 bg-white/90 border w-fit text-gray-600 border-slate-400 font-medium'>Load More Medicines</button>
 
-              </div>
+              </div> 
             </section>
           </div>
           {/* my cart */}
@@ -425,20 +425,7 @@ const SingleWholesalerInfo = () => {
               </div>
             </section>
 
-            {/* ACTIVE SCHEME */}
-            <section className="bg-green-50 border shadow-xl border-green-200 p-6 rounded-xl">
-              <span className='text-black text-lg font-bold'>Active Schemes</span>
-              <div className='bg-white/80 border-gray-100 p-6 rounded-lg mt-2'>
-                <h1 className='font-bold text-xs'>Buy 100 Get 1 Free</h1>
-                <p className='text-slate-400 text-xs mt-2'>
-                  On all GSK Antibiotics range
-                </p>
-
-                <button className='border border-emerald-300 mt-2 text-emerald-400 bg-white px-1 text-xs py-1 w-full'>
-                  Apply
-                </button>
-              </div>
-            </section>
+            
           </div>
         </div>
 

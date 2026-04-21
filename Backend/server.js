@@ -15,7 +15,9 @@ const { generateToken } = require("./Controller/genrateShipingtoken");
   await generateToken();
   setInterval(generateToken, 9 * 60 * 60 * 1000); // refresh token
 })();
-chief.use(express.json())
+chief.use(express.json());
+
+chief.use(express.urlencoded({ extended: true }));
 chief.use(cookieParser())
 chief.use(cors({
     origin:["http://localhost:5173","http://localhost:5174"],

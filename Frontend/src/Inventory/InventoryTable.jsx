@@ -146,7 +146,7 @@ export default function InventoryTable() {
       })}
 
       {/* Footer */}
-      <div className="flex justify-between items-center mt-6 text-sm text-gray-500">
+      {/* <div className="flex justify-between items-center mt-6 text-sm text-gray-500">
         <span>Showing 1–10 of 482 products</span>
         <div className="flex gap-1">
           <button className="px-3 py-1 border rounded">‹</button>
@@ -155,7 +155,7 @@ export default function InventoryTable() {
           <button className="px-3 py-1 border rounded">3</button>
           <button className="px-3 py-1 border rounded">›</button>
         </div>
-      </div>
+      </div> */}
 
     </div>
   )
