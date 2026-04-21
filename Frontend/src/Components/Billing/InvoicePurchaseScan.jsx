@@ -1,13 +1,15 @@
 import { Check, AlertCircle, Upload } from "lucide-react";
-import { useState } from "react";
-
-// import Tesseract from "tesseract.js";
+import { useState, useEffect } from "react";
 import axiosInstance from "../Dashboard/Form/Utils/AxiosInstance";
 
 const InvoicePurchaseScan = () => {
-  const [image, setImage] = useState(null);
+  const [previewImage, setPreviewImage] = useState(null);
+  const [serverImage, setServerImage] = useState(null);
+
   const [loading, setLoading] = useState(false);
-const [invoiceData, setInvoiceData] = useState(null);
+
+  const [invoice, setInvoice] = useState(null);
+  const [items, setItems] = useState([]);
 
   const [workflow, setWorkflow] = useState({
     upload: false,
@@ -15,175 +17,238 @@ const [invoiceData, setInvoiceData] = useState(null);
     verify: false,
     sync: false,
   });
-const handleFileUpload = async (e) => {
-  try {
-    const file = e.target.files[0];
-    if (!file) return;
 
-    // local preview
-    setImage(URL.createObjectURL(file));
-    setLoading(true);
+  // ---------------- FILE UPLOAD ----------------
+  const handleFileUpload = async (e) => {
+    try {
+      const file = e.target.files?.[0];
+      if (!file) return;
 
-    const formData = new FormData();
-    formData.append("file", file);
+      setPreviewImage(URL.createObjectURL(file));
+      setLoading(true);
 
-    const res = await axiosInstance.post(
-      "/registerroute/ocrparse",
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-        timeout: 30000,
-      }
-    );
+      const formData = new FormData();
+      formData.append("file", file);
 
-    console.log(res.data);
+      const res = await axiosInstance.post(
+        "/registerroute/ocrparse",
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+          timeout: 30000,
+        }
+      );
 
-    // ✅ set both image + OCR text
-    setImage(res.data.imageUrl);
-    setInvoiceData(res.data.text);
+      const data = res?.data;
 
-    setWorkflow({
-      upload: true,
-      viewer: true,
-      verify: true,
-      sync: false,
-    });
+      setServerImage(data?.imageUrl);
+      setInvoice(data?.parsedData || null);
+      setItems(data?.tableRows || []);
 
-  } catch (err) {
-    console.error(err);
-    setInvoiceData("❌ OCR failed. Try again.");
-  } finally {
-    setLoading(false);
-  }
-}; 
-  const handleAutoInventory = () => {
-    setWorkflow((prev) => ({
-      ...prev,
-      sync: true,
-    }));
+      setWorkflow((prev) => ({
+        ...prev,
+        upload: true,
+        viewer: true,
+        verify: true,
+      }));
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  // ✅ REUSABLE STEP UI
+  // ---------------- TABLE EDIT ----------------
+const updateItem = (index, field, value) => {
+  const updated = [...items];
+  updated[index][field] = value;
+  setItems(updated);
+};
+
+
   const Step = ({ label, active }) => (
-    <div
-      className={`flex items-center gap-2 ${
-        active ? "text-green-600" : "text-gray-400"
-      }`}
-    >
+    <div className={`flex items-center gap-2 ${active ? "text-green-600" : "text-gray-400"}`}>
       <Check size={16} />
-      {label}
+      <span>{label}</span>
     </div>
   );
+
+  const displayImage = serverImage || previewImage;
 
   return (
     <div className="min-h-screen bg-gray-100 p-6 flex flex-col">
 
       {/* HEADER */}
       <div className="mb-6">
-        <h1 className="text-3xl font-semibold text-gray-800">
-          Purchase & OCR Bill Import
+        <h1 className="text-3xl font-bold text-gray-800">
+          Smart Invoice OCR System
         </h1>
 
-        <div className="flex items-center justify-between mt-2">
-          <p className="text-gray-500">
-            Extract line items automatically using OCR.
-          </p>
+        <div className="flex justify-between mt-3">
+          <label className="px-4 py-2 bg-white border rounded-lg cursor-pointer flex items-center gap-2">
+            <Upload size={16} />
+            Upload Invoice
+            <input type="file" hidden onChange={handleFileUpload} />
+          </label>
 
-          <div className="flex gap-3">
-            <label className="px-4 py-2 border rounded-lg text-sm bg-white hover:bg-gray-50 cursor-pointer flex items-center gap-2">
-              <Upload size={16} />
-              Upload Invoice
-              <input
-                type="file"
-                accept="image/*,application/pdf"
-                onChange={handleFileUpload}
-                className="hidden"
-              />
-            </label>
-
-            <button
-              onClick={handleAutoInventory}
-              className="px-4 py-2 bg-green-500 text-white rounded-lg text-sm shadow hover:bg-green-600"
-            >
-              Auto-update Inventory
-            </button>
-          </div>
+          <button className="px-4 py-2 bg-green-500 text-white rounded-lg">
+            Sync Inventory
+          </button>
         </div>
       </div>
 
-      {/* MAIN */}
-      <div className="flex gap-6 flex-1">
+      {/* MAIN GRID */}
+      <div className="grid grid-cols-3 gap-4 flex-1">
 
-        {/* LEFT PANEL */}
-        <div className="w-72 flex flex-col gap-4">
+        {/* LEFT STATUS */}
+        <div className="bg-white p-4 rounded-xl border">
+          <h2 className="text-sm font-semibold mb-3">WORKFLOW</h2>
 
-          {/* WORKFLOW */}
-          <div className="bg-white rounded-xl shadow-sm border p-4">
-            <h2 className="text-sm font-semibold text-gray-500 mb-3">
-              WORKFLOW STATUS
-            </h2>
+          <Step label="Upload" active={workflow.upload} />
+          <Step label="OCR Processing" active={workflow.viewer} />
+          <Step label="Verification" active={workflow.verify} />
+          <Step label="Sync" active={workflow.sync} />
+        </div>
 
-            <div className="flex flex-col gap-3 text-sm">
-              <Step label="Upload Invoice" active={workflow.upload} />
-              <Step label="Document Viewer" active={workflow.viewer} />
-              <Step label="Data Verification" active={workflow.verify} />
-              <Step label="Inventory Sync" active={workflow.sync} />
-            </div>
-          </div>
-
-          {/* WARNING */}
-          {workflow.verify && (
-            <div className="bg-yellow-50 border border-yellow-300 rounded-xl p-4">
-              <div className="flex items-start gap-2">
-                <AlertCircle className="text-yellow-600" size={18} />
-                <div>
-                  <h2 className="text-yellow-800 font-medium">
-                    Verification Required
-                  </h2>
-                  <p className="text-sm text-yellow-700 mt-1">
-                    Please review extracted data before syncing.
-                  </p>
-                </div>
-              </div>
-            </div>
+        {/* CENTER IMAGE */}
+        <div className="bg-white p-4 rounded-xl border flex items-center justify-center">
+          {loading ? (
+            <p className="text-blue-500 animate-pulse">Processing...</p>
+          ) : displayImage ? (
+            <img src={displayImage} className="max-h-96 object-contain" />
+          ) : (
+            <p className="text-gray-400">Upload Invoice</p>
           )}
         </div>
 
-        {/* CENTER PREVIEW */}
-        <div className="bg-white rounded-xl shadow-sm border h-full flex items-center justify-center overflow-hidden">
-  {loading ? (
-    <p className="text-blue-500 animate-pulse">Processing OCR...</p>
-  ) : image ? (
-    <img
-      src={image}
-      alt="preview"
-      className="max-h-full object-contain"
-    />
-  ) : (
-    <p className="text-gray-400">Invoice Preview</p>
-  )}
-</div>
+        {/* RIGHT SUMMARY */}
+        <div className="bg-white p-4 rounded-xl border">
+          <h2 className="text-sm font-semibold mb-3">SUMMARY</h2>
 
-       {workflow.verify && (
-  <div className="bg-white rounded-xl border p-4 max-h-96 overflow-auto">
-    <p className="text-xs text-gray-500 mb-2">OCR TEXT</p>
-    <div className="text-xs text-gray-700 space-y-1">
-  {invoiceData?.split("\n").map((line, i) => (
-    <p key={i}>{line}</p>
-  ))}
-</div>
-  </div>
-)}
+          <p className="text-xs text-gray-500">Supplier</p>
+          <p className="font-medium mb-2">{invoice?.supplierName}</p>
+
+          <p className="text-xs text-gray-500">Invoice No</p>
+          <p className="mb-2">{invoice?.invoiceNumber}</p>
+
+          <p className="text-xs text-gray-500">GSTIN</p>
+          <p className="mb-2">{invoice?.gstin}</p>
+
+          <p className="text-xs text-gray-500">Grand Total</p>
+     <p className="text-green-600 font-bold">
+  ₹ {invoice?.grandTotal || 0}
+</p>
+        </div>
       </div>
+
+      {/* TABLE SECTION */}
+      {items.length > 0 && (
+        <div className="mt-6 bg-white p-4 rounded-xl border overflow-auto">
+          <h2 className="text-lg font-semibold mb-3">Editable Items</h2>
+
+          <table className="w-full border text-sm">
+        <thead className="bg-gray-100">
+  <tr>
+    <th className="p-2">Product</th>
+    <th className="p-2">HSN</th>
+    <th className="p-2">Batch</th>
+    <th className="p-2">Expiry</th>
+    <th className="p-2">MRP</th>
+    <th className="p-2">Qty</th>
+    <th className="p-2">Rate</th>
+    <th className="p-2">Amount</th>
+  </tr>
+</thead>
+
+   <tbody>
+  {items.map((item, i) => (
+    <tr key={i} className="border-t">
+
+      {/* PRODUCT */}
+      <td className="p-2">
+        <input
+          value={item.name || ""}
+          onChange={(e) => updateItem(i, "name", e.target.value)}
+          className="border px-2 py-1 w-full"
+        />
+      </td>
+
+      {/* HSN */}
+      <td className="p-2">
+        <input
+          value={item.hsn || ""}
+          onChange={(e) => updateItem(i, "hsn", e.target.value)}
+          className="border px-2 py-1 w-full"
+        />
+      </td>
+
+      {/* BATCH */}
+      <td className="p-2">
+        <input
+          value={item.batch || ""}
+          onChange={(e) => updateItem(i, "batch", e.target.value)}
+          className="border px-2 py-1 w-full"
+        />
+      </td>
+
+      {/* EXPIRY */}
+      <td className="p-2">
+        <input
+          value={item.expiry || ""}
+          onChange={(e) => updateItem(i, "expiry", e.target.value)}
+          className="border px-2 py-1 w-full"
+        />
+      </td>
+
+      {/* MRP */}
+      <td className="p-2">
+        <input
+          value={item.mrp || ""}
+          onChange={(e) => updateItem(i, "mrp", e.target.value)}
+          className="border px-2 py-1 w-full"
+        />
+      </td>
+
+      {/* QTY */}
+      <td className="p-2">
+        <input
+          value={item.qty || ""}
+          onChange={(e) => updateItem(i, "qty", e.target.value)}
+          className="border px-2 py-1 w-full"
+        />
+      </td>
+
+      {/* RATE */}
+      <td className="p-2">
+        <input
+          value={item.rate || ""}
+          onChange={(e) => updateItem(i, "rate", e.target.value)}
+          className="border px-2 py-1 w-full"
+        />
+      </td>
+
+      {/* AMOUNT (NO AUTO CALC) */}
+      <td className="p-2">
+        <input
+          value={item.amount || ""}
+          onChange={(e) => updateItem(i, "amount", e.target.value)}
+          className="border px-2 py-1 w-full font-semibold"
+        />
+      </td>
+
+    </tr>
+  ))}
+</tbody>
+          </table>
+        </div>
+      )}
 
       {/* FOOTER */}
       <div className="mt-6 flex justify-end gap-3">
         <button className="px-4 py-2 border rounded-lg bg-white">
           Discard
         </button>
-        <button className="px-4 py-2 border rounded-lg text-green-600 border-green-500">
+        <button className="px-4 py-2 border rounded-lg text-green-600">
           Save Draft
         </button>
         <button className="px-5 py-2 bg-green-500 text-white rounded-lg">

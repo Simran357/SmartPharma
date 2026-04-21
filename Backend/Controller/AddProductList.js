@@ -27,11 +27,12 @@ const {
 ) {
   return res.status(400).json({ message: "All required fields missing" });
 }
-   let ProductCheck = await ProductModel.findOne({
-  ProductSku,
+
+let ProductCheck = await ProductModel.findOne({
+  ProductName,
+  ProductBatchNo,
   userId
 });
-
     if (!ProductCheck) {
       const newProduct = await ProductModel.create({
   userId,
@@ -52,10 +53,17 @@ const {
       });
     }
 
-    return res.status(200).json({
-      success: false,
-      message: "Product already exists"
-    });
+    if (ProductCheck) {
+  ProductCheck.ProductQuantity += Number(ProductQuantity);
+  await ProductCheck.save();
+
+  return res.json({
+    success: true,
+    message: "Stock updated",
+    data: ProductCheck
+  });
+}
+   
 
   } catch (error) {
     console.log("ERROR:", error);
