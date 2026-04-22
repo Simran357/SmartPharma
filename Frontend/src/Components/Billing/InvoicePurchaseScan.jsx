@@ -9,8 +9,22 @@ const InvoicePurchaseScan = () => {
   const [loading, setLoading] = useState(false);
 
   const [invoice, setInvoice] = useState(null);
-  const [items, setItems] = useState([]);
-
+const [items, setItems] = useState([]);
+const addRow = () => {
+  setItems((prev) => [
+    ...prev,
+    {
+      name: "",
+      hsn: "",
+      batch: "",
+      expiry: "",
+      mrp: "",
+      qty: "",
+      rate: "",
+      amount: "",
+    },
+  ]);
+};
   const [workflow, setWorkflow] = useState({
     upload: false,
     viewer: false,
@@ -60,12 +74,23 @@ const InvoicePurchaseScan = () => {
 
   // ---------------- TABLE EDIT ----------------
 const updateItem = (index, field, value) => {
-  const updated = [...items];
-  updated[index][field] = value;
-  setItems(updated);
+  setItems((prev) =>
+    prev.map((item, i) =>
+      i === index ? { ...item, [field]: value } : item
+    )
+  );
 };
 
+const totalGst = items.reduce(
+  (acc, i) =>
+    acc + ((Number(i.amount) || 0) * (Number(i.gst) || 0)) / 100,
+  0
+);
 
+const subTotal = items.reduce(
+  (acc, i) => acc + (Number(i.amount) || 0),
+  0
+);
   const Step = ({ label, active }) => (
     <div className={`flex items-center gap-2 ${active ? "text-green-600" : "text-gray-400"}`}>
       <Check size={16} />
@@ -74,7 +99,51 @@ const updateItem = (index, field, value) => {
   );
 
   const displayImage = serverImage || previewImage;
+ 
+const handleSubmit = async () => {
+  try {
+    setLoading(true);
 
+    const payload = {
+      supplierName: invoice?.supplierName,
+      invoiceNumber: invoice?.invoiceNumber,
+      gstin: invoice?.gstin,
+      phone: invoice?.phone,
+date: new Date(invoice?.date || Date.now()),
+      items: items.map((item) => ({
+        name: item.name,
+        hsn: item.hsn,
+        batch: item.batch,
+        pack: item.pack,
+        qty: Number(item.qty || 0),
+        rate: Number(item.rate || 0),
+        mrp: Number(item.mrp || 0),
+        gst: Number(item.gst || 0),
+        amount: Number(item.amount || 0),
+        expiry: item.expiry
+      })),
+totals: {
+  subTotal,
+  gst: totalGst,
+  grandTotal: subTotal + totalGst,
+},
+    };
+
+    await axiosInstance.post("/registerroute/addStock", payload);
+
+    alert("Stock Added ✅");
+
+    setItems([]);
+    setInvoice(null);
+    addRow();
+
+  } catch (err) {
+    console.log(err?.response?.data || err.message);
+    alert("Error saving stock");
+  } finally {
+    setLoading(false);
+  }
+};
   return (
     <div className="min-h-screen bg-gray-100 p-6 flex flex-col">
 
@@ -142,106 +211,187 @@ const updateItem = (index, field, value) => {
       </div>
 
       {/* TABLE SECTION */}
-      {items.length > 0 && (
-        <div className="mt-6 bg-white p-4 rounded-xl border overflow-auto">
-          <h2 className="text-lg font-semibold mb-3">Editable Items</h2>
+    {/* TABLE SECTION */}
+{items.length > 0 && (
+  <div className="mt-6 bg-white p-4 rounded-xl border overflow-auto">
 
-          <table className="w-full border text-sm">
-        <thead className="bg-gray-100">
-  <tr>
-    <th className="p-2">Product</th>
-    <th className="p-2">HSN</th>
-    <th className="p-2">Batch</th>
-    <th className="p-2">Expiry</th>
-    <th className="p-2">MRP</th>
-    <th className="p-2">Qty</th>
-    <th className="p-2">Rate</th>
-    <th className="p-2">Amount</th>
-  </tr>
-</thead>
+    <h2 className="text-lg font-semibold mb-3">
+      Editable Stock Items
+    </h2>
 
-   <tbody>
-  {items.map((item, i) => (
-    <tr key={i} className="border-t">
+    {/* HEADER INFO (invoice level) */}
+    <div className="grid md:grid-cols-4 gap-4 mb-4 p-3 border rounded bg-gray-50">
 
-      {/* PRODUCT */}
-      <td className="p-2">
+      <div>
+        <label className="text-xs text-gray-500">Supplier Name</label>
         <input
-          value={item.name || ""}
-          onChange={(e) => updateItem(i, "name", e.target.value)}
-          className="border px-2 py-1 w-full"
+          className="w-full border px-2 py-1 rounded"
+          value={invoice?.supplierName || ""}
+          onChange={(e) =>
+            setInvoice((prev) => ({
+              ...prev,
+              supplierName: e.target.value,
+            }))
+          }
         />
-      </td>
+      </div>
 
-      {/* HSN */}
-      <td className="p-2">
+      <div>
+        <label className="text-xs text-gray-500">Invoice Number</label>
         <input
-          value={item.hsn || ""}
-          onChange={(e) => updateItem(i, "hsn", e.target.value)}
-          className="border px-2 py-1 w-full"
+          className="w-full border px-2 py-1 rounded"
+          value={invoice?.invoiceNumber || ""}
+          onChange={(e) =>
+            setInvoice((prev) => ({
+              ...prev,
+              invoiceNumber: e.target.value,
+            }))
+          }
         />
-      </td>
+      </div>
 
-      {/* BATCH */}
-      <td className="p-2">
+      <div>
+        <label className="text-xs text-gray-500">GSTIN</label>
         <input
-          value={item.batch || ""}
-          onChange={(e) => updateItem(i, "batch", e.target.value)}
-          className="border px-2 py-1 w-full"
+          className="w-full border px-2 py-1 rounded"
+          value={invoice?.gstin || ""}
+          onChange={(e) =>
+            setInvoice((prev) => ({
+              ...prev,
+              gstin: e.target.value,
+            }))
+          }
         />
-      </td>
+      </div>
 
-      {/* EXPIRY */}
-      <td className="p-2">
+      <div>
+        <label className="text-xs text-gray-500">Phone</label>
         <input
-          value={item.expiry || ""}
-          onChange={(e) => updateItem(i, "expiry", e.target.value)}
-          className="border px-2 py-1 w-full"
+          className="w-full border px-2 py-1 rounded"
+          value={invoice?.phone || ""}
+          onChange={(e) =>
+            setInvoice((prev) => ({
+              ...prev,
+              phone: e.target.value,
+            }))
+          }
         />
-      </td>
+      </div>
 
-      {/* MRP */}
-      <td className="p-2">
-        <input
-          value={item.mrp || ""}
-          onChange={(e) => updateItem(i, "mrp", e.target.value)}
-          className="border px-2 py-1 w-full"
-        />
-      </td>
+    </div>
 
-      {/* QTY */}
-      <td className="p-2">
-        <input
-          value={item.qty || ""}
-          onChange={(e) => updateItem(i, "qty", e.target.value)}
-          className="border px-2 py-1 w-full"
-        />
-      </td>
+    {/* TABLE */}
+    <table className="w-full border text-sm">
+      <thead className="bg-gray-100">
+        <tr>
+          <th className="p-2">Name</th>
+          <th className="p-2">HSN</th>
+          <th className="p-2">Batch</th>
+          <th className="p-2">Pack</th>
+          <th className="p-2">Qty</th>
+          <th className="p-2">Rate</th>
+          <th className="p-2">MRP</th>
+          <th className="p-2">GST %</th>
+          <th className="p-2">Amount</th>
+          <th className="p-2">Expiry</th>
+        </tr>
+      </thead>
 
-      {/* RATE */}
-      <td className="p-2">
-        <input
-          value={item.rate || ""}
-          onChange={(e) => updateItem(i, "rate", e.target.value)}
-          className="border px-2 py-1 w-full"
-        />
-      </td>
+      <tbody>
+        {items.map((item, i) => (
+          <tr key={i} className="border-t">
 
-      {/* AMOUNT (NO AUTO CALC) */}
-      <td className="p-2">
-        <input
-          value={item.amount || ""}
-          onChange={(e) => updateItem(i, "amount", e.target.value)}
-          className="border px-2 py-1 w-full font-semibold"
-        />
-      </td>
+            <td className="p-2">
+              <input
+                value={item.name || ""}
+                onChange={(e) => updateItem(i, "name", e.target.value)}
+                className="border px-2 py-1 w-full"
+              />
+            </td>
 
-    </tr>
-  ))}
-</tbody>
-          </table>
-        </div>
-      )}
+            <td className="p-2">
+              <input
+                value={item.hsn || ""}
+                onChange={(e) => updateItem(i, "hsn", e.target.value)}
+                className="border px-2 py-1 w-full"
+              />
+            </td>
+
+            <td className="p-2">
+              <input
+                value={item.batch || ""}
+                onChange={(e) => updateItem(i, "batch", e.target.value)}
+                className="border px-2 py-1 w-full"
+              />
+            </td>
+
+            <td className="p-2">
+              <input
+                value={item.pack || ""}
+                onChange={(e) => updateItem(i, "pack", e.target.value)}
+                className="border px-2 py-1 w-full"
+              />
+            </td>
+
+            <td className="p-2">
+              <input
+                type="number"
+                value={item.qty || ""}
+                onChange={(e) => updateItem(i, "qty", e.target.value)}
+                className="border px-2 py-1 w-full"
+              />
+            </td>
+
+            <td className="p-2">
+              <input
+                type="number"
+                value={item.rate || ""}
+                onChange={(e) => updateItem(i, "rate", e.target.value)}
+                className="border px-2 py-1 w-full"
+              />
+            </td>
+
+            <td className="p-2">
+              <input
+                type="number"
+                value={item.mrp || ""}
+                onChange={(e) => updateItem(i, "mrp", e.target.value)}
+                className="border px-2 py-1 w-full"
+              />
+            </td>
+
+            <td className="p-2">
+              <input
+                type="number"
+                value={item.gst || ""}
+                onChange={(e) => updateItem(i, "gst", e.target.value)}
+                className="border px-2 py-1 w-full"
+              />
+            </td>
+
+            <td className="p-2">
+              <input
+                value={item.amount || ""}
+                disabled
+                className="border px-2 py-1 w-full bg-gray-100 font-semibold"
+              />
+            </td>
+
+            <td className="p-2">
+              <input
+                type="date"
+                value={item.expiry || ""}
+                onChange={(e) => updateItem(i, "expiry", e.target.value)}
+                className="border px-2 py-1 w-full"
+              />
+            </td>
+
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+)}
 
       {/* FOOTER */}
       <div className="mt-6 flex justify-end gap-3">
@@ -251,9 +401,15 @@ const updateItem = (index, field, value) => {
         <button className="px-4 py-2 border rounded-lg text-green-600">
           Save Draft
         </button>
-        <button className="px-5 py-2 bg-green-500 text-white rounded-lg">
+        {/* <button className="px-5 py-2 bg-green-500 text-white rounded-lg">
           Commit to Inventory
-        </button>
+        </button> */}
+        <button
+  onClick={handleSubmit}
+  className="px-5 py-2 bg-green-500 text-white rounded-lg"
+>
+  Commit to Inventory
+</button>
       </div>
     </div>
   );
