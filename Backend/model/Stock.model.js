@@ -5,14 +5,13 @@ const stockSchema = new mongoose.Schema({
   },
   supplierName: { type: String, required: true },
   invoiceNumber: { type: String, required: true },
-  date: { type: Date },
-  dueDate: { type: Date },
+  date:  Date ,
+  dueDate: Date ,
   poRef: String,
   gstin: String,
   dlNo: String,
   phone: String,
   address: String,
-
   items: [
     {
       name: String,
@@ -29,11 +28,12 @@ const stockSchema = new mongoose.Schema({
   ],
 
   totals: {
-    subTotal: Number,
-    cgst: Number,
-    sgst: Number,
-    grandTotal: Number,
-  },
+  subTotal: Number,
+  gst: Number,     // ADD THIS
+  cgst: Number,
+  sgst: Number,
+  grandTotal: Number,
+},
 }, { timestamps: true });
 
 module.exports = mongoose.model("Stock", stockSchema);    
