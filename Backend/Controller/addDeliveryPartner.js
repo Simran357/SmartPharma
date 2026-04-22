@@ -14,7 +14,7 @@ const addDeliveryPartner = async(req, res, next) => {
     } = req.body;
 
     //  validation (basic)
-    if (!name || !type || !coverage || !time || !email || !mobileNumber || description) {
+    if (!name || !type || !coverage || !time || !email || !mobileNumber ) {
       return res.status(400).json({
         success: false,
         message: "All fields are required",

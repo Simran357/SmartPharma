@@ -3,6 +3,7 @@ import { Button, Form, Input } from "antd";
 import axiosInstance from "./Utils/AxiosInstance";
 import { useNavigate } from "react-router-dom";
 import { MedicalInformation } from "@mui/icons-material";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const [state, setState] = useState();
@@ -23,9 +24,11 @@ const Register = () => {
         if (data) {
           setGetData(data?.data?.data);
         }
+         toast.success(res.data.message)
       }
       
       setState(res.data.message);
+    
     } catch (err) {
       setState(err?.response?.data?.message);
     }

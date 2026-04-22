@@ -25,13 +25,14 @@ const CreateUserForm = ({ setModel, getUser }) => {
     try {
       const res = await axiosInstance.post("/registerroute/createNewUser",formData);
       if (res?.data?.success) {
+        alert(res.data.message);
         getUser(); // refresh table
         setModel(false); // close modal
       }
     } catch (error) {
       console.log("Error:", error);
     }
-  };
+  }; 
 
   return (
    <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50">

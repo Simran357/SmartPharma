@@ -51,7 +51,7 @@ const DeliverySys = () => {
                 ...form,
                 active: true,
             };
-
+console.log("Sending Payload:", payload);
             // API CALL
             const res = await axiosInstance.post("/registerroute/addDeliveryPartner", payload);
 

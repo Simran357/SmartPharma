@@ -18,7 +18,7 @@ const RegisterModel = new mongoose.Schema({
   },
   contact: {
     type: String,
-    required: true,
+    // required: true,
   },
   license: {
     type: String
