@@ -57,7 +57,7 @@ const Dailysales = () => {
             customer: "Robert Fox",
             payment: "UPI",
             items: "Paracetamol, B-Complex",
-            amount: "$124.50",
+            amount: "₹ 124.50",
             status: "Success",
         },
         {
@@ -65,7 +65,7 @@ const Dailysales = () => {
             customer: "Jane Cooper",
             payment: "Cash",
             items: "Insulin Pen, Alcohol Swabs",
-            amount: "$450.00",
+            amount: "₹ 450.00",
             status: "Success",
         },
         {
@@ -73,7 +73,7 @@ const Dailysales = () => {
             customer: "Cody Fisher",
             payment: "Card",
             items: "Multivitamins Syrup",
-            amount: "$12.20",
+            amount: "₹ 12.20",
             status: "Pending",
         },
     ];
