@@ -1,10 +1,12 @@
 import { useEffect, useState, useMemo, useCallback } from "react";
 import axiosInstance from "../Dashboard/Form/Utils/AxiosInstance";
+import { useNavigate } from "react-router-dom";
 
 const PendingOrders = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
+  const navigate = useNavigate("")
 
   // ================= FETCH =================
   const fetchOrders = useCallback(async () => {
@@ -100,7 +102,7 @@ const PendingOrders = () => {
 
                 <tbody>
                   {filteredOrders.map((order) => (
-                    <tr key={order._id} className="border-t hover:bg-gray-50">
+                    <tr key={order._id} className="border-t hover:bg-gray-50" onClick={() => navigate(`/PendingOrders/${order._id}`)}>
 
                       <td className="px-6 py-4 text-indigo-600 font-semibold">
                         #{order.orderId}

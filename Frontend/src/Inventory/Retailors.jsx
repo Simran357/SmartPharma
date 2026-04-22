@@ -101,11 +101,11 @@ const filteredUsers = users.filter(
                         </div>
 
                         {/* Cards */}
-                        <div className="flex-1 overflow-y-auto overflow-x-hidden relative">
+                        <div className="flex-1 overflow-y-auto overflow-x-hidden  relative">
                             <div className="flex flex-wrap gap-6" 
                             >
 
-                                {filteredRetailors.length > 0 ? filteredRetailors.map((item, i) => (
+                                {filteredRetailors?.length > 0 ? filteredRetailors.map((item, i) => (
                                         <div
                                             key={item._id}
                                             onClick={() => navigate(`${item._id}`)}
@@ -115,47 +115,47 @@ const filteredUsers = users.filter(
                                                 <div className="flex items-center gap-2">
                                                     <FaShieldAlt className="p-2 bg-gray-100 rounded-full text-green-600 w-10 h-10" />
                                                     <div>
-                                                        <h1 className="font-semibold">{item.username}</h1>
-                                                        <p className="text-sm text-gray-500">{item.email}</p>
+                                                        <h1 className="font-semibold">{item?.username}</h1>
+                                                        <p className="text-sm text-gray-500">{item?.email}</p>
                                                     </div>
                                                 </div>
 
                                                 <span className="px-3 py-1 rounded-full text-xs text-green-600 bg-green-100 h-fit">
-                                                    {item.contact}
+                                                    {item?.contact}
                                                 </span>
                                             </div>
 
                                             <div className="flex gap-5 px-6 py-6 pt-8">
                                                 <div>
                                                     <p className="text-base text-gray-700">Monthly Salary</p>
-                                                    <h1 className="text-2xl font-bold">{item.location}</h1>
+                                                    <h1 className="text-2xl font-bold">{item?.location}</h1>
                                                 </div>
                                                 <div>
                                                     <p className="text-base text-gray-700">Outstanding</p>
-                                                    <h1 className="text-2xl font-bold">{item.outstanding}</h1>
+                                                    <h1 className="text-2xl font-bold">{item?.outstanding}</h1>
                                                 </div>
                                             </div>
 
                                             {/* Content */}
                                             <div className="pt-6 p-4">
-                                                <h2 className="font-semibold text-lg">{item.username}</h2>
+                                                <h2 className="font-semibold text-lg">{item?.username}</h2>
                                                 <p className="text-gray-500 text-sm mb-2">
-                                                    {item.location || "Unknown"}
+                                                    {item?.location || "Unknown"}
                                                 </p>
 
                                                 <p className="text-xs text-gray-400">PHARMACY</p>
                                                 <p className="font-medium mb-2">
-                                                    {item.pharmacyName || "Not Available"}
+                                                    {item?.pharmacyName || "Not Available"}
                                                 </p>
 
                                                 <p className="text-xs text-gray-400">CONTACT</p>
                                                 <p className="text-sm mb-3">
-                                                    {item.contact || "N/A"}
+                                                    {item?.contact || "N/A"}
                                                 </p>
 
                                                 <div className="flex justify-between items-center">
                                                     <span className="text-xs text-gray-400">
-                                                        📍 {item.location || "N/A"}
+                                                        📍 {item?.location || "N/A"}
                                                     </span>
 
                                                     <button className="bg-green-500 text-white px-3 py-1 text-sm rounded-lg hover:bg-green-600">
@@ -173,30 +173,7 @@ const filteredUsers = users.filter(
                             </div>
 
                             {/* Pagination (FIXED BELOW, NO OVERLAP) */}
-                            <div className="flex items-center justify-between px-2 py-4">
-                                <p className="text-gray-600">
-                                    Showing <b>1 to 5</b> of {filteredUsers.length} Retailers
-                                </p>
-
-                                <div className="flex items-center gap-4">
-                                    <AiOutlineLeft className="cursor-pointer hover:scale-110 transition" />
-
-                                    {[1, 2, 3].map((num) => (
-                                        <button
-                                            key={num}
-                                            onClick={() => setActivePage(num)}
-                                            className={`rounded-full py-1 px-3 transition ${activePage === num
-                                                    ? "bg-green-500 text-white"
-                                                    : "bg-white text-black hover:bg-gray-200"
-                                                }`}
-                                        >  
-                                            {num}
-                                        </button>
-                                    ))}
-
-                                    <AiOutlineRight className="cursor-pointer hover:scale-110 transition" />
-                                </div>
-                            </div>
+                          
 
                         </div>
                     </>
