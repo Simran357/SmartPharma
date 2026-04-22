@@ -102,7 +102,7 @@ const PendingOrders = () => {
 
                 <tbody>
                   {filteredOrders.map((order) => (
-                    <tr key={order._id} className="border-t hover:bg-gray-50" onClick={() => navigate(`/PendingOrders/${order._id}`)}>
+                    <tr key={order._id} className="border-t hover:bg-gray-50" onClick={() => navigate(`${order._id}`, { state: order })}>
 
                       <td className="px-6 py-4 text-indigo-600 font-semibold">
                         #{order.orderId}

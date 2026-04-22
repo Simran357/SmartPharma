@@ -26,6 +26,7 @@ const connectCourier= require('../../Controller/connectCourier')
 const getConnectedCouriers=require("../../Controller/getConnectedCourier")
 const getWholesalerOrders = require("../../Controller/getWholesalerOrders")
 const getLowStockItems  = require("../../Controller/getLowStockItems")
+const getOrderById = require("../../Controller/getOrderById")
 
 
 router.post("/registercontroller",RegisterController)
@@ -51,7 +52,11 @@ router.get("/getInventoryStock",authMiddleware,getInventoryStock)
 router.get("/batches/:name", getBatches)
 router.put("/updateRole/:id", updateRoleController)
 router.get("/getWholesalerOrders",authMiddleware,getWholesalerOrders)
+router.get("/getOrderById", getOrderById)
+
 router.get("/getLowStockItems", getLowStockItems)
+
+
 // routes/order.js
 //order
 router.post('/orderController',order)   

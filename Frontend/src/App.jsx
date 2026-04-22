@@ -69,7 +69,7 @@ const App = () => {
           <Route path="AiAgent" element={<AiAgent />} />
           <Route path="Inventory" element={<Inventory />} />
           <Route path="TempelateDesigner" element={<TempelateDesigner />} />
-          <Route path="PendingOrders/:id" element={<SingleOrder />} />
+          <Route path=":id" element={<SingleOrder />} />
           <Route path="OrdersOverview" element={<OrdersOverview />} />
           <Route path="Delivery" element={<DeliverySys />} />
           <Route path="Connectcourier" element={<Connectcourier />} />

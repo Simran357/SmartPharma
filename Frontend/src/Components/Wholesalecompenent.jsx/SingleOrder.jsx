@@ -4,45 +4,32 @@ import { CreditCard } from "lucide-react";
 import { User } from "lucide-react";
 import { MapPin } from "lucide-react";
 import { Receipt } from "lucide-react";
+import { useEffect, useState } from "react";
+import axiosInstance from "../Dashboard/Form/Utils/AxiosInstance";
+import { useLocation, useParams } from "react-router-dom";
+
 const SingleOrder = () => {
-  const order = {
-    id: "ORD12345",
-    status: "Pending",
-    date: "October 24, 2023",
-    payment: "Credit Card **** 4242",
-    customer: {
-      name: "John Doe",
-      email: "john.doe@example.com",
-      phone: "+1234567890",
-      account: "Premium Partner",
-    },
-    shipping: {
-      address: "123 Wholesale Ave, Suite 100, Cityville, State 12345, USA",
-      updated: "24 Oct 10:42 AM",
-    },
-    items: [
-       {
-    name: "Paracetamol 500mg Tablets",
-    qty: 10,
-    price: 50,
-  },
-  {
-    name: "Amoxicillin 250mg Capsules",
-    qty: 2,
-    price: 200,
-  },
-  {
-    name: "Vitamin D3 Softgel 60K IU",
-    qty: 4,
-    price: 50,
-      },
-    ],
+
+const { id } = useParams();
+const location = useLocation();
+
+// ✅ get instant data
+const [order, setOrder] = useState(location.state || null);
+
+useEffect(() => {
+  const fetchSingleOrder = async () => {
+    try {
+      const res = await axiosInstance.get(`/registerroute/getOrderById/${id}`);
+      setOrder(res?.data?.order);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
-  const subtotal = order.items.reduce(
-    (acc, item) => acc + item.qty * item.price,
-    0
-  );
+  fetchSingleOrder();
+}, [id]);
+
+if (!order) return <p>Loading...</p>;
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
@@ -55,7 +42,7 @@ const SingleOrder = () => {
           <div className="bg-white p-6 rounded-2xl shadow">
             <div className="flex justify-between items-center">
               <div>
-                <h1 className="text-2xl font-bold">{order.id}</h1>
+                <h1 className="text-2xl font-bold">#{order.orderId}</h1>
                 <span className="bg-orange-100 text-orange-600 px-3 py-1 rounded-full text-sm">
                   {order.status}
                 </span>
@@ -64,12 +51,12 @@ const SingleOrder = () => {
       {/* Date with icon */}
       <div className="flex items-center gap-2 mt-2 text-gray-500">
   <Calendar className="w-4 h-4 text-blue-600 shrink-0" />
-  <span className="leading-none">{order.date}</span>
+  <span className="leading-none">{new Date(order.createdAt).toLocaleDateString()}</span>
 </div>
       
               <div className="flex items-center gap-2 text-gray-500 mb-2">
   <CreditCard className="w-4 h-4 text-blue-600 shrink-0" />
-  <span className="leading-none">{order.payment}</span>
+  <span className="leading-none">{order.paymentMethod}</span>
 </div>
 </div>
 </div>
