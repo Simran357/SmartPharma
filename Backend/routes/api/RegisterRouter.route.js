@@ -24,6 +24,7 @@ const connectCourier= require('../../Controller/connectCourier')
 const getConnectedCouriers=require("../../Controller/getConnectedCourier")
 const getWholesalerOrders = require("../../Controller/getWholesalerOrders")
 const getLowStockItems  = require("../../Controller/getLowStockItems")
+const { updateOrderStatus } = require("../../Controller/updatePOrderStatus")
 const getOrderById = require("../../Controller/getOrderById")
 
 
@@ -51,6 +52,10 @@ router.get("/getLowStockItems", getLowStockItems)
 router.post('/orderController',order)   
 router.get("/me",authMiddleware,getMe)
 console.log("router.file")
+router.put('/updateOrderStatus',updateOrderStatus)   
+
+
+//delivery
 router.post("/addDeliveryPartner",addDeliveryPartner)
 router.get("/getDeliveryPartners", getDeliveryPartners)
 router.post("/connectCourier",connectCourier)

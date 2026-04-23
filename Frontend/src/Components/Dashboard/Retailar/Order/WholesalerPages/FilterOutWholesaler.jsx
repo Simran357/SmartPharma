@@ -51,8 +51,6 @@ const FilterOutWholesaler = () => {
       </div>
 
 
-
-
     </>
   )
 }
