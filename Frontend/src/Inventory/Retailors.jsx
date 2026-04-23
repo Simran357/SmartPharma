@@ -80,123 +80,88 @@ const filteredUsers = users.filter(
                         </div>
 
                         {/* Tabs */}
-                        <div className="flex gap-4 mt-6 mb-4">
-                            <button onClick={() => setTab("all")} className={tab === "all" ? "bg-black text-white px-3 py-1 rounded" : "px-3 py-1"}>
-                                All
-                            </button>
-
-                            <button
-                                onClick={() => setTab("active")}
-                                className={tab === "active" ? "bg-green-500 text-white px-3 py-1 rounded" : "px-3 py-1"}
-                            >
-                                Active
-                            </button>
-
-                            <button
-                                onClick={() => setTab("inactive")}
-                                className={tab === "inactive" ? "bg-red-500 text-white px-3 py-1 rounded" : "px-3 py-1"}
-                            >
-                                Inactive
-                            </button>
-                        </div>
+                        <div className="flex gap-4 mt-6 mb-4"> 
+                        
+                          
+                        </div> 
 
                         {/* Cards */}
                         <div className="flex-1 overflow-y-auto overflow-x-hidden relative">
                             <div className="flex flex-wrap gap-6" 
                             >
+{filteredRetailors.length > 0 ? (
+  filteredRetailors.map((item) => (
+    <div
+      key={item._id}
+      onClick={() => navigate(`${item._id}`)}
+      className="w-full sm:w-[48%] md:w-[31%] lg:w-[23%] rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition cursor-pointer bg-[#0f1f2e]"
+    >
+      {/* Image */}
+      <div className="relative">
+        <img
+          src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d"
+          className="h-36 w-full object-cover"
+        />
 
-                                {filteredRetailors.length > 0 ? filteredRetailors.map((item, i) => (
-                                        <div
-                                            key={item._id}
-                                            onClick={() => navigate(`${item._id}`)}
-                                            className="w-full sm:w-[48%] md:w-[31%] lg:w-[23%] bg-white rounded-2xl shadow-md hover:shadow-xl transition cursor-pointer overflow-hidden"
-                                        >
-                                            <div className="flex px-4 justify-between">
-                                                <div className="flex items-center gap-2">
-                                                    <FaShieldAlt className="p-2 bg-gray-100 rounded-full text-green-600 w-10 h-10" />
-                                                    <div>
-                                                        <h1 className="font-semibold">{item.username}</h1>
-                                                        <p className="text-sm text-gray-500">{item.email}</p>
-                                                    </div>
-                                                </div>
+        {/* Badge */}
+        <span className="absolute top-3 left-3 bg-green-500 text-white text-xs px-3 py-1 rounded-full">
+          FAST DELIVERY
+        </span>
 
-                                                <span className="px-3 py-1 rounded-full text-xs text-green-600 bg-green-100 h-fit">
-                                                    {item.contact}
-                                                </span>
-                                            </div>
+        {/* Avatar */}
+        <div className="absolute -bottom-6 left-4 bg-blue-600 w-12 h-12 flex items-center justify-center rounded-xl text-white font-bold border-4 border-[#0f1f2e]">
+          {item.username?.charAt(0)?.toUpperCase()}
+        </div>
+      </div>
 
-                                            <div className="flex gap-5 px-6 py-6 pt-8">
-                                                <div>
-                                                    <p className="text-base text-gray-700">Monthly Salary</p>
-                                                    <h1 className="text-2xl font-bold">{item.location}</h1>
-                                                </div>
-                                                <div>
-                                                    <p className="text-base text-gray-700">Outstanding</p>
-                                                    <h1 className="text-2xl font-bold">{item.outstanding}</h1>
-                                                </div>
-                                            </div>
+      {/* Content */}
+      <div className="pt-10 p-4 text-white">
+        <h2 className="text-lg font-semibold">{item.username}</h2>
+        <p className="text-sm text-gray-400">
+          {item.pharmacyName || "Pharma Store"}
+        </p>
 
-                                            {/* Content */}
-                                            <div className="pt-6 p-4">
-                                                <h2 className="font-semibold text-lg">{item.username}</h2>
-                                                <p className="text-gray-500 text-sm mb-2">
-                                                    {item.location || "Unknown"}
-                                                </p>
+        {/* Location */}
+        <div className="mt-3">
+          <p className="text-xs text-gray-400">LOCATION</p>
+          <p className="text-blue-400 font-medium">
+            {item.location || "N/A"}
+          </p>
+        </div>
 
-                                                <p className="text-xs text-gray-400">PHARMACY</p>
-                                                <p className="font-medium mb-2">
-                                                    {item.pharmacyName || "Not Available"}
-                                                </p>
+        {/* Info */}
+        <div className="flex gap-3 mt-4">
+          <div className="bg-[#1b2c3d] px-3 py-2 rounded-xl text-sm">
+            <p className="text-gray-400 text-xs">CONTACT</p>
+            <p>{item.contact?.slice(0, 5) || "N/A"}...</p>
+          </div>
 
-                                                <p className="text-xs text-gray-400">CONTACT</p>
-                                                <p className="text-sm mb-3">
-                                                    {item.contact || "N/A"}
-                                                </p>
+          <div className="bg-[#1b2c3d] px-3 py-2 rounded-xl text-sm">
+            <p className="text-gray-400 text-xs">LICENSE</p>
+            <p>{item.license || "253..."}</p>
+          </div>
+        </div>
 
-                                                <div className="flex justify-between items-center">
-                                                    <span className="text-xs text-gray-400">
-                                                        📍 {item.location || "N/A"}
-                                                    </span>
+        {/* Footer */}
+        <div className="flex justify-between items-center mt-5">
+          <p className="text-xs text-gray-400">
+            📍 {item.location || "N/A"}
+          </p>
 
-                                                    <button className="bg-green-500 text-white px-3 py-1 text-sm rounded-lg hover:bg-green-600">
-                                                        View
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                ))
-                                 : (
-                                    <p className="text-gray-600 text-center w-full">
-                                        No Retailers Found
-                                    </p>
-                                )}
-                            </div>
+          <button className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-xl text-sm">
+            Open Store
+          </button>
+        </div>
+      </div>
+    </div>
+  ))
+) : (
+  <p className="text-gray-600 text-center w-full">
+    No Retailers Found
+  </p>
+)}
+</div>
 
-                            {/* Pagination (FIXED BELOW, NO OVERLAP) */}
-                            <div className="flex items-center justify-between px-2 py-4">
-                                <p className="text-gray-600">
-                                    Showing <b>1 to 5</b> of {filteredUsers.length} Retailers
-                                </p>
-
-                                <div className="flex items-center gap-4">
-                                    <AiOutlineLeft className="cursor-pointer hover:scale-110 transition" />
-
-                                    {[1, 2, 3].map((num) => (
-                                        <button
-                                            key={num}
-                                            onClick={() => setActivePage(num)}
-                                            className={`rounded-full py-1 px-3 transition ${activePage === num
-                                                    ? "bg-green-500 text-white"
-                                                    : "bg-white text-black hover:bg-gray-200"
-                                                }`}
-                                        >  
-                                            {num}
-                                        </button>
-                                    ))}
-
-                                    <AiOutlineRight className="cursor-pointer hover:scale-110 transition" />
-                                </div>
-                            </div>
 
                         </div>
                     </>

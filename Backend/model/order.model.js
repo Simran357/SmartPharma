@@ -71,11 +71,20 @@ const orderSchema = new mongoose.Schema({
         required: true,
     },
 
-    status: {
-        type: String,
-        enum: ["Pending", "Paid", "Failed", "Shipped", "Delivered"],
-        default: "Pending",
-    },
+   status: {
+  type: String,
+  enum: [
+    "PLACED",
+    "CONFIRMED",
+    "PACKED",
+    "READY_FOR_DISPATCH",
+    "DISPATCHED",
+    "IN_TRANSIT",
+    "OUT_FOR_DELIVERY",
+    "DELIVERED",
+  ],
+  default: "PLACED",
+},
 
     createdAt: {
         type: Date,
