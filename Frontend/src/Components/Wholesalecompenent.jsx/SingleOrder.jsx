@@ -41,22 +41,24 @@ if (!order) return <p>Loading...</p>;
           {/* Order Header */}
           <div className="bg-white p-6 rounded-2xl shadow">
             <div className="flex justify-between items-center">
-              <div>
-                <h1 className="text-2xl font-bold">#{order.orderId}</h1>
+              <h1 className="text-2xl font-bold">#{order?.orderId}</h1>
                 <span className="bg-orange-100 text-orange-600 px-3 py-1 rounded-full text-sm">
-                  {order.status}
+                  {order?.status}
                 </span>
-             
+             </div>
+            <div className="flex justify-between items-center">
+              <div >
+              
 <div className="space-y-2 mt-2">
       {/* Date with icon */}
       <div className="flex items-center gap-2 mt-2 text-gray-500">
   <Calendar className="w-4 h-4 text-blue-600 shrink-0" />
-  <span className="leading-none">{new Date(order.createdAt).toLocaleDateString()}</span>
+  <span className="leading-none">{new Date(order?.createdAt).toLocaleDateString()}</span>
 </div>
       
               <div className="flex items-center gap-2 text-gray-500 mb-2">
   <CreditCard className="w-4 h-4 text-blue-600 shrink-0" />
-  <span className="leading-none">{order.paymentMethod}</span>
+  <span className="leading-none">{order?.paymentMethod}</span>
 </div>
 </div>
 </div>
@@ -78,7 +80,7 @@ if (!order) return <p>Loading...</p>;
 <div className="flex justify-between items-center mb-4">
   <h2 className="font-semibold text-2xl">Order Items</h2>
   <span className="font-medium text-2xl text-gray-500">
-    {order.items.length} items ordered
+    {order?.items?.length} items ordered
   </span>
 </div>
   {/* Heading */}
@@ -91,17 +93,17 @@ if (!order) return <p>Loading...</p>;
 
   {/* Items */}
   <div className="space-y-4">
-    {order.items.map((item, index) => (
+    {order?.items.map((item, index) => (
       <div
         key={index}
         className="grid grid-cols-5 items-center border-b pb-3"
       >
         <div className="col-span-2 font-medium">
-          {item.name}
+          {item?.name}
         </div>
-        <div>{item.qty}</div>
-        <div>₹{item.price}</div>
-        <div>₹{item.price * item.qty}</div>
+        <div>{item?.quantity}</div>
+        <div>₹{item?.price}</div>
+        <div>₹{item?.price * item?.quantity}</div>
       </div>
     ))}
   </div>
@@ -124,24 +126,24 @@ if (!order) return <p>Loading...</p>;
   <div className="space-y-4">
     <div>
       <p className="text-sm text-gray-500">FULL NAME</p>
-      <p className="font-medium text-lg">{order.customer.name}</p>
+      <p className="font-medium text-lg">{order?.customer?.name}</p>
     </div>
 
     <div>
       <p className="text-sm text-gray-500">EMAIL ADDRESS </p>
-      <p className="text-gray-800 text-lg">{order.customer.email}</p>
+      <p className="text-gray-800 text-lg">{order?.customer?.email}</p>
     </div>
 
     {/* Phone + Account same row */}
     <div className="grid grid-cols-2 gap-6">
       <div>
         <p className="text-sm text-gray-500">PHONE</p>
-        <p className="text-gray-800 text-lg">{order.customer.phone}</p>
+        <p className="text-gray-800 text-lg">{order?.customer?.phone}</p>
       </div>
 
       <div>
-        <p className="text-sm text-gray-500">ACCOUNT</p>
-        <p className="text-blue-600">{order.customer.account}</p>
+        <p className="text-sm text-gray-500">Address</p>
+        <p className="text-blue-600">{order?.customer?.address}</p>
       </div>
     </div>
   </div>
@@ -151,44 +153,42 @@ if (!order) return <p>Loading...</p>;
  
   <div className="flex items-center gap-2 mb-3">
   <MapPin className="text-blue-600 h-[1.3em] w-[1.3em]" />
-    <h2 className="font-semibold text-3xl">Shipping Address</h2>
+    <h2 className="font-semibold text-3xl">Shipping details</h2>
   </div>
 
-  {order.shipping.address.split(",").map((line, index) => (
-    <p key={index} className="text-gray-600">
-      {line.trim()}
-    </p>
-  ))}
-
-  <p className="text-gray-400 mt-2 text-sm">
-    Updated: {order.shipping.updated}
+ <p className="text-gray-400 mt-2 text-sm">
+    courier name:  {order?.courier?.name}
   </p>
+  <p className="text-gray-400 mt-2 text-sm">
+    delivery time: {order?.courier?.time}
+  </p>
+  
 </div>
 
           {/* Summary */}
           <div className="bg-blue-900 text-white p-6 rounded-2xl shadow">
              <h2 className="font-semibold text-3xl mb-4">Order Summary</h2> 
 
-            <div className="flex justify-between mb-2">
+            {/* <div className="flex justify-between mb-2">
               <span>Subtotal</span>
               <span>₹{subtotal}</span>
-            </div>
+            </div> */}
 
             <div className="flex justify-between mb-2">
               <span>Tax</span>
-              <span>₹0</span>
+              <span>₹{order?.sgst}</span>
             </div>
 
             <div className="flex justify-between mb-4">
               <span>Shipping</span>
-              <span>Calculated</span>
+              <span>{order?.shipping}</span>
             </div>
 
             <hr className="border-gray-500 mb-4" />
 
             <div className="flex justify-between text-xl font-bold">
               <span>Total</span>
-              <span>₹{subtotal}</span>
+              <span>₹{order?.total}</span>
             </div>
           </div>
         </div>

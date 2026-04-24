@@ -3,7 +3,7 @@ const order = async (req, res, next) => {
     try {
         const orderData = req?.body;
         console.log("BODY:", req?.body);
-        console.log("ITEMS:", req?.body?.items);
+        console.log("ITEMS:", req?.body);
 
         req.body.items.forEach((item, i) => {
             console.log(`Item ${i}:`, item);
@@ -20,7 +20,8 @@ const order = async (req, res, next) => {
             // ✅ NEW
             customer: orderData.customer,
             courier: orderData.courier,
-            status: "Paid",
+            paymentStatus: "Paid",
+            status:"PLACED"
         });
 
         await newOrder.save();

@@ -9,22 +9,23 @@ import MovingIcon from '@mui/icons-material/Moving';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 const OrdersOverview = () => {
-    const [selectedStatus, setSelectedStatus] = useState("ALL");
-const statusStyles = {
-  PLACED: "bg-gray-100 text-gray-600",
-  CONFIRMED: "bg-blue-100 text-blue-600",
-  PACKED: "bg-yellow-100 text-yellow-700",
-  READY_FOR_DISPATCH: "bg-purple-100 text-purple-600",
-  DISPATCHED: "bg-indigo-100 text-indigo-600",
-  IN_TRANSIT: "bg-orange-100 text-orange-600",
-  OUT_FOR_DELIVERY: "bg-pink-100 text-pink-600",
-  DELIVERED: "bg-green-100 text-green-600",
-};
+  const [selectedStatus, setSelectedStatus] = useState("ALL");
+  const statusStyles = {
+    PLACED: "bg-gray-100 text-gray-600",
+    CONFIRMED: "bg-blue-100 text-blue-600",
+    PACKED: "bg-yellow-100 text-yellow-700",
+    READY_FOR_DISPATCH: "bg-purple-100 text-purple-600",
+    DISPATCHED: "bg-indigo-100 text-indigo-600",
+    IN_TRANSIT: "bg-orange-100 text-orange-600",
+    OUT_FOR_DELIVERY: "bg-pink-100 text-pink-600",
+    DELIVERED: "bg-green-100 text-green-600",
+  };
+
+  const steps = ["PLACED", "PACKED", "DISPATCHED", "IN_TRANSIT", "DELIVERED"];
   const [open, setOpen] = useState(false);
   const [orders, setOrders] = useState([]);
-    const [loading, setLoading] = useState(true);
-
-    // ================= FETCH =================
+  const [loading, setLoading] = useState(true);
+  // ================= FETCH =================
   const fetchOrders = async () => {
     try {
       const res = await axiosInstance.get("/registerroute/getWholesalerOrders");
@@ -40,10 +41,33 @@ const statusStyles = {
     fetchOrders();
   }, []);
 
+
+  const handleStatusChange = async (orderId, newStatus) => {
+    try {
+      await axiosInstance.put(
+        `/registerroute/updateOrderStatus/${orderId}`,
+        {
+          status: newStatus,
+        }
+      );
+
+      // local UI update
+      setOrders((prev) =>
+        prev.map((order) =>
+          order._id === orderId
+            ? { ...order, status: newStatus }
+            : order
+        )
+      );
+    } catch (error) {
+      console.log("Status update failed", error);
+    }
+  };
+
   const filteredOrders =
-  selectedStatus === "ALL"
-    ? orders
-    : orders.filter((order) => order.status === selectedStatus);
+    selectedStatus === "ALL"
+      ? orders
+      : orders.filter((order) => order.status === selectedStatus);
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
 
@@ -166,21 +190,19 @@ const statusStyles = {
 
             {/* Right Side - Filters */}
             <div className="flex items-center gap-6">
-              <select
-                value={selectedStatus}
-                onChange={(e) => setSelectedStatus(e.target.value)}
-                className="border bg-white border-gray-500 p-2 rounded-md"
-              >
-                <option value="ALL">Status All</option>
-                <option value="PLACED">PLACED</option>
-                <option value="CONFIRMED">CONFIRMED</option>
-                <option value="PACKED">PACKED</option>
-                <option value="READY_FOR_DISPATCH">READY_FOR_DISPATCH</option>
-                <option value="DISPATCHED">DISPATCHED</option>
-                <option value="IN_TRANSIT">IN_TRANSIT</option>
-                <option value="OUT_FOR_DELIVERY">OUT_FOR_DELIVERY</option>
-                <option value="DELIVERED">DELIVERED</option>
-              </select>
+              {/* <select
+  
+  className="border p-2 rounded-md"
+>
+  <option value="PLACED">PLACED</option>
+  <option value="CONFIRMED">CONFIRMED</option>
+  <option value="PACKED">PACKED</option>
+  <option value="READY_FOR_DISPATCH">READY_FOR_DISPATCH</option>
+  <option value="DISPATCHED">DISPATCHED</option>
+  <option value="IN_TRANSIT">IN_TRANSIT</option>
+  <option value="OUT_FOR_DELIVERY">OUT_FOR_DELIVERY</option>
+  <option value="DELIVERED">DELIVERED</option>
+</select> */}
 
               <select className="border border-gray-500 p-2 rounded-md">
                 <option>Retailer: All</option>
@@ -192,144 +214,150 @@ const statusStyles = {
           {/* Order Card */}
           <div className="bg-white p-6 rounded-xl shadow">
 
-  {loading ? (
-  <p>Loading...</p>
-) : filteredOrders.length === 0 ? (
-  <p>No Orders Found</p>
-) : (
-  filteredOrders.map((order) => (
-    <div
-      key={order._id}
-       onClick={() => setOpen(!open)}
-      className="bg-white  p-6 rounded-xl shadow-2xl cursor-pointer  m-4"
-      onClick={() => setOpen(open === order._id ? null : order._id)}
-    >
-      <div className="flex justify-between items-center mb-4">
+            {loading ? (
+              <p>Loading...</p>
+            ) : filteredOrders.length === 0 ? (
+              <p>No Orders Found</p>
+            ) : (
+              filteredOrders.map((order) => (
+                <div
+                  key={order._id}
+                  className="bg-white  p-6 rounded-xl shadow-2xl cursor-pointer  m-4"
+                  onClick={() => setOpen(open === order._id ? null : order._id)}
+                >
+                  <div className="flex justify-between items-center mb-4">
 
-        <div>
-          {/* Order ID + Status */}
-          <div className="flex items-center gap-6">
-           
-          </div>
+                    <div>
+                      {/* Order ID + Status */}
+                      <div className="flex items-center gap-6">
 
-         <div className="flex gap-8 mt-2">
+                      </div>
 
-  {/* Retailer */}
-  <div className="flex flex-col">
-    <p className="text-black whitespace-nowrap">
-   #{order.orderId}
-    </p>
-<p className="text-black whitespace-nowrap">   {order.customer?.name} </p>
-    <div className="flex gap-2 mt-1 text-xs whitespace-nowrap">
-      <span className="text-gray-600">
-        {new Date(order.createdAt).toDateString()}
-      </span>
-      <span className="text-gray-600">
-        . {order.items.length} Items
-      </span>
-      <span className="text-black">
-        . ₹{order.total}
-      </span>
-    </div>
-  </div>
+                      <div className="flex gap-8 mt-2">
 
-  {/* Courier */}
-  <div className="text-sm text-gray-600">
-    {order.courier?.name} ({order.courier?.time})
-  </div>
+                        {/* Retailer */}
+                        <div className="flex flex-col">
+                          <p className="text-black whitespace-nowrap">
+                            #{order.orderId}
+                          </p>
+                          <p className="text-black whitespace-nowrap">   {order.customer?.name} </p>
+                          <div className="flex gap-2 mt-1 text-xs whitespace-nowrap">
+                            <span className="text-gray-600">
+                              {new Date(order.createdAt).toDateString()}
+                            </span>
+                            <span className="text-gray-600">
+                              . {order.items.length} Items
+                            </span>
+                            <span className="text-black">
+                              . ₹{order.total}
+                            </span>
+                          </div>
+                        </div>
 
-</div>
+                        {/* Courier */}
+                        <div className="text-sm text-gray-600">
+                          {order.courier?.name} ({order.courier?.time})
+                        </div>
 
-{/* ✅ STATUS BAR START */}
-<div className="flex  w-full mt-4 gap-4 items-center justify-center">
-  <h1 className="text-orange-500 font-bold text-lg whitespace-nowrap ">Process Status</h1>
+                      </div>
 
-  <div className="flex justify-between gap-8 items-center relative w-full max-w-[600px]">
-    {/* Background line */}
-    <div className="absolute top-2 left-0 w-full h-1 bg-gray-300"></div>
+                      {/* ✅ STATUS BAR START */}
+                      <div className="flex  w-full mt-4 gap-4 items-center justify-center">
+                        <h1 className="text-orange-500 font-bold text-lg whitespace-nowrap ">Process Status</h1>
 
-    {/* Dynamic progress line */}
-    <div
-      className="absolute top-2 left-0 h-1 bg-orange-500"
-      style={{
-        width:
-          order.status === "PLACED" ? "10%" :
-          order.status === "PACKED" ? "30%" :
-          order.status === "DISPATCHED" ? "50%" :
-          order.status === "IN_TRANSIT" ? "75%" :
-          order.status === "DELIVERED" ? "100%" :
-          "20%",
-      }}
-    ></div>
-<div className="flex w-full gap-6 items-center">
-    {/* Steps */}
-    {["PLACED", "PACKED", "DISPATCHED", "IN_TRANSIT", "DELIVERED"].map((step, i) => {
-      const isActive =
-        ["PLACED", "PACKED", "DISPATCHED", "IN_TRANSIT", "DELIVERED"]
-          .indexOf(order.status) >= i;
+                        <div className="flex justify-between gap-8 items-center relative w-full max-w-600px">
+                          {/* Background line */}
+                          <div className="absolute top-2 left-0 w-full h-1 bg-gray-300"></div>
 
-      return (
-        <div key={i} className="z-10 flex flex-col items-center">
-          <div
-            className={`w-4 h-4 rounded-full ${
-              isActive ? "bg-orange-500" : "bg-gray-400"
-            }`}
-          ></div>
-          <p
-            className={`text-sm mt-2 ${
-              isActive ? "text-orange-500" : "text-gray-400"
-            }`}
-          >
-            {step.replaceAll("_", " ")}
-          </p>
-        </div>
-      );
-    })}
-  </div>
-   </div>
-</div>
-        </div>
-           
-              <button className="bg-orange-500 text-white px-5 py-2 rounded-lg relative bottom-8 right-0">
-          View Order
-        </button>
-      
-      </div>
+                          {/* Dynamic progress line */}
+                       
+                          <div className="flex w-full gap-6 items-center">
+                            {(() => {
+                              const currentIndex = steps.indexOf(order.status);
+                              const progressWidth = ((currentIndex + 1) / steps.length) * 100;
 
-      {/* ITEMS TABLE */}
-      {open === order._id && (
-        <table className="w-full text-left mt-4">
-          <thead className="text-gray-500 text-sm border-b">
-            <tr>
-              <th className="py-2">MEDICINE</th>
-              <th>QTY</th>
-              <th>PRICE</th>
-              <th>BATCH</th>
-              <th>EXPIRY</th>
-            </tr>
-          </thead>
+                              return (
+                                <>
+                                  {/* Progress line */}
+                                  <div
+                                    className="absolute top-2 left-0 h-1 bg-orange-500 transition-all duration-500"
+                                    style={{ width: `${progressWidth}%` }}
+                                  ></div>
 
-          <tbody className="text-sm">
-            {order.items.map((item) => (
-              <tr key={item._id} className="border-b">
-                <td className="py-3 font-semibold">{item.name}</td>
-                <td>{item.quantity}</td>
-                <td>₹{item.price}</td>
-                <td>{item.batch}</td>
-                <td>
-                  {new Date(item.expiryDate).toLocaleDateString()}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
-    </div>
-  ))
-)}
+                                  {steps.map((step, i) => {
+                                    const isActive = currentIndex >= i;
+
+                                    return (
+                                      <div
+                                        key={i}
+                                        className="z-10 flex flex-col items-center cursor-pointer"
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          handleStatusChange(order._id, step);
+                                        }}
+                                      >
+                                        <div
+                                          className={`w-5 h-5 rounded-full transition-all duration-300 ${isActive ? "bg-orange-500" : "bg-gray-400"
+                                            }`}
+                                        ></div>
+
+                                        <p
+                                          className={`text-sm mt-2 whitespace-nowrap ${isActive ? "text-orange-500" : "text-gray-400"
+                                            }`}
+                                        >
+                                          {step.replaceAll("_", " ")}
+                                        </p>
+                                      </div>
+                                    );
+                                  })}
+                                </>
+                              );
+                            })()}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <button className="bg-orange-500 text-white px-5 py-2 rounded-lg relative bottom-8 right-0"   onClick={() => navigate(`${order._id}`, { state: order })}>
+                      View Order
+                    </button>
+
+                  </div>
+
+                  {/* ITEMS TABLE */}
+                  {open === order._id && (
+                    <table className="w-full text-left mt-4">
+                      <thead className="text-gray-500 text-sm border-b">
+                        <tr>
+                          <th className="py-2">MEDICINE</th>
+                          <th>QTY</th>
+                          <th>PRICE</th>
+                          <th>BATCH</th>
+                          <th>EXPIRY</th>
+                        </tr>
+                      </thead>
+
+                      <tbody className="text-sm">
+                        {order.items.map((item) => (
+                          <tr key={item._id} className="border-b">
+                            <td className="py-3 font-semibold">{item.name}</td>
+                            <td>{item.quantity}</td>
+                            <td>₹{item.price}</td>
+                            <td>{item.batch}</td>
+                            <td>
+                              {new Date(item.expiryDate).toLocaleDateString()}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  )}
+                </div>
+              ))
+            )}
 
             {/* Medicine Table */}
-          
+
           </div>
         </div>
 

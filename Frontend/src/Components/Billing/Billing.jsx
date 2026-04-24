@@ -13,7 +13,7 @@ const Billing = () => {
   const [customerName, setCustomerName] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
-
+const [customerEmail,setCustomerEmail] = useState("")
   // calculations
   const subtotal = cart.reduce(
     (acc, item) => acc + item.qty * (item.ProductPrice || 0),
@@ -83,7 +83,9 @@ const Billing = () => {
         customer: {
           name: customerName,
           phone: phone,
+          email:customerEmail,
           address: address,
+
         },
 
         courier: {
@@ -200,10 +202,18 @@ const Billing = () => {
             />
 
             <input
-              type="text"
+              type="Number"
               placeholder="Phone Number"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
+              className="border p-2 rounded"
+            />
+            
+            <input
+              type="text"
+              placeholder="Customer Email"
+              value={customerEmail}
+              onChange={(e) => setCustomerEmail(e.target.value)}
               className="border p-2 rounded"
             />
 

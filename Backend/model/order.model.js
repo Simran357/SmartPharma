@@ -28,6 +28,7 @@ const orderSchema = new mongoose.Schema({
     customer: {
         name: String,
         phone: String,
+        email:String,
         address: String,
     },
 
@@ -70,7 +71,11 @@ const orderSchema = new mongoose.Schema({
         enum: ["COD", "Card", "UPI", "Stripe"],
         required: true,
     },
-
+  paymentStatus: {
+    type: String,
+    enum: ["Paid", "Pending", "Failed"],
+    default: "Paid",
+},
    status: {
   type: String,
   enum: [
