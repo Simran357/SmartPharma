@@ -1,51 +1,81 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Outlet } from "react-router-dom";
-import { Upload, ReceiptLong, Verified, CloudOutlined, Error, LocalFireDepartment, AddShoppingCart, EventBusy, TrendingUp, Assessment, AutoAwesome, AssignmentTurnedIn, CurrencyRupee, Inventory, WarningAmber } from '@mui/icons-material';
+import { useState , useEffect } from "react";
+import { Upload, ReceiptLong, Verified, CloudOutlined, Error, LocalFireDepartment, AddShoppingCart, EventBusy, TrendingUp, Assessment, AutoAwesome, AssignmentTurnedIn, CurrencyRupee, Inventory, WarningAmber, StarTwoTone } from '@mui/icons-material';
 import MedicineSalesChart from './SubComponent/MedicineSalesChart'; 
+import axiosInstance from '../Form/Utils/AxiosInstance'
+const Retailer = () => {
+  const navigate = useNavigate()
+  const [dashboardData, setDashboardData] = useState({
+  totalStockValue: 0,
+  lowStock: 0,
+  nearExpiry: 0,
+   });
+    
+   const [state, setState] = useState(null);
+   // dynamic the main cards 
+  useEffect(() => {
+     console.log("Component Mounted");
+  fetchDashboard();
+}, []);
+
+
+
+const fetchDashboard = async () => {
+  try {
+    const res = await axiosInstance.get("/registerroute/getDashboardStats"); 
+    console.log("API RESPONSE:", res.data);  
+      
+    setDashboardData(res.data.data);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+// impulsive div 
+ useEffect(() => {
+  const fetchStats = async () => {
+    try {
+      const res = await axiosInstance.get("/registerroute/inventaryImpulse"); 
+      setState(res.data.data);
+    } catch (err) {
+      console.error("Dashboard error:", err);
+    }
+  };
+
+  fetchStats();
+}, []);
+
+
+
+
 const stats = [
+  
   {
     id: 1,
-    title: "Today's Sales",
-    icon: <CurrencyRupee />,
-    value: "4,250",
-    change: "+5.2%",
-    border: "hover:border-green-500",
-    disc: "Total revenue from 142 orders"
-  },
-  {
-    id: 2,
-    title: "Today's Profit",
-    icon: <TrendingUp />,
-    value: "8,420",
-    change: "17.5%",
-    disc: "Net margin after tax & cost",
-    border: "hover:border-yellow-500"
-  },
-  {
-    id: 3,
     title: "Total Stock Value",
     icon: <Inventory />,
-    value: "12.4L",
+    value:  `₹${(dashboardData.totalStockValue / 100000).toFixed(1)}L`,
     change: "Net",
     disc: "Valuation of 2,450 unique SKUs",
     border: "hover:border-green-500",
 
   },
   {
-    id: 4,
+    id: 2,
     title: "Low Stock",
     icon: <WarningAmber />,
-    value: "24 Items",
+    value:  `${dashboardData.lowStock} Items`,
     disc: "Items below safety threshold",
     iconBg: "text-yellow-400",
     border: "hover:border-yellow-500",
   },
   {
-    id: 6,
+    id: 3,
     title: "Near Expiry",
     icon: <EventBusy />,
-    value: "08 Items",
+    value:`${dashboardData.nearExpiry} Items`,
     change: "30 Days",
     disc: "Immediate action required",
     border: "hover:border-red-500",
@@ -53,7 +83,7 @@ const stats = [
 
   },
   {
-    id: 5,
+    id: 4,
     title: "Pending Bills",
     icon: <ReceiptLong />,
     value: "64K",
@@ -63,8 +93,8 @@ const stats = [
     iconBg: "text-red-600"
   },
 ];
-const Retailer = () => {
-  const navigate = useNavigate()
+ 
+
   return (           
     <>                  
       <section className="p-4 md:p-6 space-y-6">
@@ -112,7 +142,7 @@ const Retailer = () => {
                     <button className='rounded-xl px-2 bg-green-200 text-green-600 font-medium text-xs  hover:border-green-600 hover:shadow-md hover:bg-green-800 transition-all'> Sales</button>
                     <button className='rounded-xl px-2 bg-gray-200 text-gray-600 text-xs font-medium   hover:border-gray-600 hover:shadow-md hover:bg-gray-300 transition-all'>Profit</button>
                   </div>
-                </div>
+                </div>   
                 <div className='mt-6'>
                   <MedicineSalesChart />
                 </div>
@@ -126,7 +156,7 @@ const Retailer = () => {
                 </div>
               </section>
 
-              <section className="grid md:grid-cols-1 gap-4 auto-rows-fr">
+              {/* <section className="grid md:grid-cols-1 gap-4 auto-rows-fr">
                 <section className='bg-green-50 border border-green-200 rounded-xl p-2 max-h-fit'>
                   <div className='flex flex-row gap-2 items-center justify-between'>
                     <span className='flex gap-2  items-center text-green-400'>
@@ -176,7 +206,7 @@ const Retailer = () => {
                     </div>
                   </section>
                 </section>
-              </section>
+              </section> */}
             </div>
           </div>
           <div className="flex flex-col gap-6 ">
@@ -230,6 +260,7 @@ const Retailer = () => {
                 </button>
               </div>
             </section>
+
             <section className='bg-gray-50  shadow-xs border border-gray-200 rounded-xl p-6 max-w-full max-h-full'>
               <div className='flex flex-row justify-between gap-2 items-center'>
                 <span className='flex flex-row  gap-4 '>
@@ -245,23 +276,23 @@ const Retailer = () => {
                   <div>
                     <div className="flex justify-between text-sm mb-2">
                       <span className="text-gray-700">In Stock</span>
-                      <span className="text-green-600 font-semibold">82%</span>
+                      <span className="text-green-600 font-semibold">{state?.inStockPercent || 0}%</span>
                     </div>
                     <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
                       <div
                         className="h-full bg-green-500 rounded-full"
-                        style={{ width: "82%" }}
+                        style={{ width:`${state?.inStockPercent || 0}%` }}
                       />
                     </div>
                   </div>
                   <div className='mt-4'>
                     <div className="flex justify-between text-sm mb-2">
                       <span className="text-gray-700">Low Stock</span>
-                      <span className="text-amber-500 font-semibold">12%</span>
+                      <span className="text-amber-500 font-semibold"> {state?.lowStockPercent || 0}%</span>
                     </div>
                     <div className='w-full bg-gray-200 h-2 rounded-full overflow-hidden'>
                       <div className='h-full bg-amber-400'
-                        style={{ width: "12%" }}>
+                        style={{ width: `${state?.lowStockPercent || 0}%` }}>
                       </div>
                     </div>
                   </div>
@@ -275,23 +306,23 @@ const Retailer = () => {
                       <span className="w-2 h-2 rounded-full bg-red-500"></span>
                       <span className='font-semibold'>&lt; 30d</span>
                     </div>
-                    <span className="font-semibold text-gray-800">08</span>
+                    <span className="font-semibold text-gray-800"> {state?.expiry30 || 0} </span>
                   </div>
                   <div className='mt-8'>
 
                     <div className="flex items-center justify-between text-sm">
                       <div className="flex items-center gap-2">
                         <span className="w-2 h-2 rounded-full bg-amber-300"></span>
-                        <span className='font-semibold'>&lt; 30d - 90d</span>
+                        <span className='font-semibold'>30d - 90d</span>
                       </div>
-                      <span className="font-semibold text-amber-600">42</span>
+                      <span className="font-semibold text-amber-600"> {state?.expiry90 || 0}</span>
                     </div>
                   </div>
                 </div>
               </div>
             </section>
 
-            <section className=''>
+            {/* <section className=''>
               <div className='bg-gray-100 shadow-sm border border-gray-300 rounded-xl  p-6'>
                 <h1 className="text-xs text-[#d5d3d3] font-medium">STOCK VELOCITY</h1>
                 <div className="flex flex-row  mt-4 gap-2 justify-between">
@@ -328,10 +359,10 @@ const Retailer = () => {
                   </div>
                 </div>
               </div>
-            </section>
+            </section> */}
 
 
-
+{/* 
             <div className='bg-gray-50 shadow-sm border border-gray-200 rounded-xl  p-6'>
               <h1 className="text-sm text-[#6e6e6e]  font-medium">OUTSTANDING & COMPLIANCE</h1>
               <div className="flex flex-col gap-2 mt-2 justify-between">
@@ -385,7 +416,7 @@ const Retailer = () => {
                   </span>
                 </span>
               </div>
-            </div>
+            </div> */}
           </div>
         </section>
       </section>

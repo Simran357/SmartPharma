@@ -20,63 +20,109 @@ import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import Addstock from './Addstock';
-import { useState  , useEffect} from "react";
+import { useState, useEffect } from "react";
 import axiosInstance from '../Dashboard/Form/Utils/AxiosInstance';
 const WholeSaler = () => {
   const navigate = useNavigate()
-const [model, setModel] = useState(false);
+  const [model, setModel] = useState(false);
 
-const [courierList, setCourierList] = useState([]);
-const [orders, setOrders] = useState([]);
-const [lowStockItems, setLowStockItems] = useState([]); // ✅ ADD THIS
+  const [courierList, setCourierList] = useState([]);
+  const [orders, setOrders] = useState([]);
+  const [lowStockItems, setLowStockItems] = useState([]); // ✅ ADD THIS
 
-const [loadingOrders, setLoadingOrders] = useState(false);
-const [loadingLowStock, setLoadingLowStock] = useState(false);
-useEffect(() => {
-  const fetchOrders = async () => {
-    try {
-      setLoadingOrders(true);
+  const [loadingOrders, setLoadingOrders] = useState(false);
+  const [loadingLowStock, setLoadingLowStock] = useState(false);
+  const [health, setHealth] = useState({
+    inStockPercent: 0,
+    lowStockPercent: 0,
+    outStockPercent: 0
+  });
+  const { inStockPercent, lowStockPercent, outStockPercent } = health;
+  const [products, setProducts] = useState([]);
 
-      const res = await axiosInstance.get("/registerroute/getWholesalerOrders");
-
-      if (res?.data?.success) {
-        setOrders(res?.data?.orders);
+  useEffect(() => {
+    console.log("chl pya hh ")
+    const fetchTopProducts = async () => {
+      try {
+        const res = await axiosInstance.get("/registerroute/getTopSellingProducts");
+        setProducts(res.data.data);
+      } catch (err) {
+        console.error(err);
       }
-    } catch (err) {
-      console.error("Order fetch error:", err);
-    } finally {
-      setLoadingOrders(false);
-    }
-  };
+    };
 
-  fetchOrders();
-}, []);
-
-
-useEffect(() => {
-  const fetchLowStock = async () => {
-    try {
-      setLoadingLowStock(true);
-
-      const res = await axiosInstance.get("/registerroute/getLowStockItems");
-
-      if (res?.data?.success) {
-        setLowStockItems(res?.data?.lowStockItems);
+    fetchTopProducts();
+  }, []);
+  useEffect(() => {
+    const fetchHealth = async () => {
+      try {
+        const res = await axiosInstance.get("/registerroute/getInventoryHealth");
+        setHealth(res.data.data);
+      } catch (err) {
+        console.error("Error fetching inventory health:", err);
       }
+    };
+
+    fetchHealth();
+  }, []);
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        setLoadingOrders(true);
+
+        const res = await axiosInstance.get("/registerroute/getWholesalerOrders");
+
+        if (res?.data?.success) {
+          setOrders(res?.data?.orders);
+        }
+      } catch (err) {
+        console.error("Order fetch error:", err);
+      } finally {
+        setLoadingOrders(false);
+      }
+    };
+
+    fetchOrders();
+  }, []);
+ 
+  useEffect(() => {
+  const fetchPartners = async () => {
+    try {
+      const res = await axiosInstance.get("/registerroute/getDeliveryPartners");
+      setCourierList(res.data.data);
     } catch (err) {
       console.error(err);
-    } finally {
-      setLoadingLowStock(false);
     }
   };
 
-  fetchLowStock();
+  fetchPartners();
 }, []);
-const totalOrders = orders?.length || 0;
 
-const pending = orders?.filter(o => o.status !== "Shipped")?.length || 0;
+  useEffect(() => {
+    const fetchLowStock = async () => {
+      try {
+        setLoadingLowStock(true);
 
-const revenue = orders?.reduce((sum, o) => sum + (o.total || 0), 0) || 0;
+        const res = await axiosInstance.get("/registerroute/getLowStockItems");
+
+        if (res?.data?.success) {
+          setLowStockItems(res?.data?.lowStockItems);
+        }
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoadingLowStock(false);
+      }
+    };
+
+    fetchLowStock();
+  }, []);
+  const totalOrders = orders?.length || 0;
+
+  const pending = orders?.filter(o => o.status !== "Shipped")?.length || 0;
+
+  const revenue = orders?.reduce((sum, o) => sum + (o.total || 0), 0) || 0;
 
 
 
@@ -120,9 +166,9 @@ const revenue = orders?.reduce((sum, o) => sum + (o.total || 0), 0) || 0;
               </div>
             </div>
             <div className="mt-4">
-<h2 className="text-3xl font-bold text-slate-800">
-  Rs {revenue.toLocaleString()}
-</h2>              <span className="text-green-500 text-sm font-semibold flex items-center gap-1 mt-1">
+              <h2 className="text-3xl font-bold text-slate-800">
+                Rs {revenue.toLocaleString()}
+              </h2>              <span className="text-green-500 text-sm font-semibold flex items-center gap-1 mt-1">
                 +12.5% vs yesterday
               </span>
               <div className='mt-4'>
@@ -140,26 +186,26 @@ const revenue = orders?.reduce((sum, o) => sum + (o.total || 0), 0) || 0;
               </div>
             </div>
             <div className="mt-4">
-<h2 className="text-3xl font-bold text-slate-800">
-  {pending}
-</h2>              <span className="text-red-500 text-sm font-semibold flex items-center gap-1 mt-1">
+              <h2 className="text-3xl font-bold text-slate-800">
+                {pending}
+              </h2>              <span className="text-red-500 text-sm font-semibold flex items-center gap-1 mt-1">
                 -5% fulfillment rate
               </span>
             </div>
           </div>
           {/* <!-- Low Stock Alerts --> */}
           <div
-onClick={() =>
- navigate("Lowstock", {
-  state: {
-    totalOrders,
-    revenue,
-    pending,
-    lowStockItems,
-    orders,   // ✅ ADD THIS
-  }
-})
-}            className="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col justify-between hover:shadow-md transition-shadow">
+            onClick={() =>
+              navigate("Lowstock", {
+                state: {
+                  totalOrders,
+                  revenue,
+                  pending,
+                  lowStockItems,
+                  orders,   // ✅ ADD THIS
+                }
+              })
+            } className="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col justify-between hover:shadow-md transition-shadow">
             <div className="flex justify-between items-start">
               <span className="text-slate-500 font-medium">Low Stock Alerts</span>
               <div className="p-2 bg-red-50 text-red-600 rounded-lg">
@@ -167,9 +213,9 @@ onClick={() =>
               </div>
             </div>
             <div className="mt-4">
-<p className='text-2xl font-bold text-orange-900'>
-{loadingLowStock ? "..." : lowStockItems.length}</p>             
- <span className="text-slate-500 text-sm font-medium mt-1">High Priority Restock</span>
+              <p className='text-2xl font-bold text-orange-900'>
+                {loadingLowStock ? "..." : lowStockItems.length}</p>
+              <span className="text-slate-500 text-sm font-medium mt-1">High Priority Restock</span>
             </div>
           </div>
           {/* <!-- Expiry Alerts --> */}
@@ -272,82 +318,82 @@ onClick={() =>
                         Actions</th>
                     </tr>
                   </thead>
-    <tbody className="divide-y divide-slate-100">
-  {loadingOrders ? (
-    <tr>
-      <td colSpan="5" className="text-center py-6 text-slate-400">
-        Loading orders...
-      </td>
-    </tr>
-  ) : orders?.length > 0 ? (
-    orders.map((order) => (
-      <tr key={order._id} className="hover:bg-slate-50 transition-colors">
+                  <tbody className="divide-y divide-slate-100">
+                    {loadingOrders ? (
+                      <tr>
+                        <td colSpan="5" className="text-center py-6 text-slate-400">
+                          Loading orders...
+                        </td>
+                      </tr>
+                    ) : orders?.length > 0 ? (
+                      orders.map((order) => (
+                        <tr key={order._id} className="hover:bg-slate-50 transition-colors">
 
-        {/* ORDER ID */}
-        <td className="px-6 py-4">
-        <span
-  onClick={() => navigate(`/Dashboard/Retailer/order/${order._id}`)}
-  className="text-sm font-semibold text-blue-600 cursor-pointer hover:underline"
->
-  #{order.orderId}
-</span>
-        </td>
+                          {/* ORDER ID */}
+                          <td className="px-6 py-4">
+                            <span
+                              onClick={() => navigate(`/Dashboard/Retailer/order/${order._id}`)}
+                              className="text-sm font-semibold text-blue-600 cursor-pointer hover:underline"
+                            >
+                              #{order.orderId}
+                            </span>
+                          </td>
 
-        {/* CUSTOMER */}
-        <td className="px-6 py-4">
-          <p className="text-sm font-bold text-slate-800">
-            {order?.customer?.name || "Unknown"}
-          </p>
-          <p className="text-xs text-slate-400">
-            {order?.customer?.city || order?.customer?.address || "N/A"}
-          </p>
-        </td>
+                          {/* CUSTOMER */}
+                          <td className="px-6 py-4">
+                            <p className="text-sm font-bold text-slate-800">
+                              {order?.customer?.name || "Unknown"}
+                            </p>
+                            <p className="text-xs text-slate-400">
+                              {order?.customer?.city || order?.customer?.address || "N/A"}
+                            </p>
+                          </td>
 
-        {/* TOTAL */}
-        <td className="px-6 py-4 text-sm font-bold text-slate-800">
-          ₹{order.total}
-        </td>
+                          {/* TOTAL */}
+                          <td className="px-6 py-4 text-sm font-bold text-slate-800">
+                            ₹{order.total}
+                          </td>
 
-        {/* STATUS */}
-        <td className="px-6 py-4">
-          <span
-            className={`px-3 py-1 rounded-full text-[11px] font-bold uppercase
+                          {/* STATUS */}
+                          <td className="px-6 py-4">
+                            <span
+                              className={`px-3 py-1 rounded-full text-[11px] font-bold uppercase
               ${order.status === "Paid"
-                ? "bg-green-50 text-green-600"
-                : order.status === "Processing"
-                ? "bg-blue-50 text-blue-600"
-                : "bg-orange-50 text-orange-600"
-              }`}
-          >
-            {order.status}
-          </span>
-        </td>
+                                  ? "bg-green-50 text-green-600"
+                                  : order.status === "Processing"
+                                    ? "bg-blue-50 text-blue-600"
+                                    : "bg-orange-50 text-orange-600"
+                                }`}
+                            >
+                              {order.status}
+                            </span>
+                          </td>
 
-        {/* ACTIONS */}
-        <td className="px-6 py-4 text-center">
-        <button
-  onClick={() => navigate(`/Dashboard/Retailer/order/${order._id}`)}
-  className="bg-blue-600 text-white text-[10px] font-bold px-4 py-2 rounded-lg hover:bg-blue-700"
->
-  View
-</button>
-        </td>
+                          {/* ACTIONS */}
+                          <td className="px-6 py-4 text-center">
+                            <button
+                              onClick={() => navigate(`/Dashboard/Retailer/order/${order._id}`)}
+                              className="bg-blue-600 text-white text-[10px] font-bold px-4 py-2 rounded-lg hover:bg-blue-700"
+                            >
+                              View
+                            </button>
+                          </td>
 
-      </tr>
-    ))
-  ) : (
-    <tr>
-      <td colSpan="5" className="text-center py-6 text-slate-400">
-        No orders found
-      </td>
-    </tr>
-  )}
-</tbody>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan="5" className="text-center py-6 text-slate-400">
+                          No orders found
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
                 </table>
               </div>
             </section>
 
-            {/* <!-- BEGIN: NEW FEATURE - Team Discussion --> */}
+            {/* <!-- BEGIN: NEW FEATURE -  --> */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* <!-- Inventory Health: Visual representation of stock availability --!> */}
               <section className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
@@ -357,13 +403,14 @@ onClick={() =>
                     <svg className="w-full h-full" viewBox="0 0 36 36">
                       <circle cx="18" cy="18" fill="none" r="16" stroke="#f1f5f9" strokeWidth="4">
                       </circle>
+                      {/* In Stock */}
                       <circle cx="18" cy="18" fill="none" r="16" stroke="#22c55e"
-                        strokeDasharray="70, 100" strokeLinecap="round" strokeWidth="4"></circle>
+                        strokeDasharray={`${inStockPercent}, 100`} strokeLinecap="round" strokeWidth="4"></circle>
                       <circle cx="18" cy="18" fill="none" r="16" stroke="#f59e0b"
-                        strokeDasharray="15, 100" strokeDashoffset="-70" strokeLinecap="round"
+                        strokeDasharray={`${lowStockPercent}, 100`} strokeDashoffset={`-${inStockPercent}`} strokeLinecap="round"
                         strokeWidth="4"></circle>
                       <circle cx="18" cy="18" fill="none" r="16" stroke="#ef4444"
-                        strokeDasharray="15, 100" strokeDashoffset="-85" strokeLinecap="round"
+                        strokeDasharray={`${outStockPercent}, 100`} strokeDashoffset={`-${inStockPercent + lowStockPercent}`} strokeLinecap="round"
                         strokeWidth="4"></circle>
                     </svg>
                   </div>
@@ -371,15 +418,15 @@ onClick={() =>
                   <div className="space-y-2 text-sm">
                     <div className="flex items-center gap-2"><span
                       className="w-2 h-2 rounded-full bg-green-500"></span> <span
-                        className="text-slate-500">In Stock (70%)</span></div>
+                        className="text-slate-500">In Stock ({inStockPercent}%)</span></div>
                     <div className="flex items-center gap-2"><span
                       className="w-2 h-2 rounded-full bg-amber-500"></span> <span
-                        className="text-slate-500">Low Stock (15%)</span></div>
+                        className="text-slate-500">Low Stock ({lowStockPercent}%)</span></div>
                     <div className="flex items-center gap-2">
                       <span
                         className="w-2 h-2 rounded-full bg-red-500"></span>
                       <span className="text-slate-500">
-                        Out of Stock (15%)</span></div>
+                        Out of Stock ({outStockPercent}%)</span></div>
                   </div>
                 </div>
               </section>
@@ -387,81 +434,22 @@ onClick={() =>
               <section className='bg-white p-6 rounded-3xl border border-slate-100 shadow-sm'>
                 <h3 className="text-lg font-bold text-slate-800 mb-4">Top Selling Products</h3>
                 <ul className="space-y-3">
-                  <li className="flex justify-between items-center">
-                    <span
-                      className="text-sm font-medium text-slate-700">Paracetamol 500mg</span>
-                    <span
-                      className="text-xs font-bold bg-slate-50 px-2 py-1 rounded">2.4k units</span>
-                  </li>
-                  <li className="flex justify-between items-center">
-                    <span
-                      className="text-sm font-medium text-slate-700">Paracetamol 500mg</span>
-                    <span
-                      className="text-xs font-bold bg-slate-50 px-2 py-1 rounded">2.4k units</span>
-                  </li>
-                  <li className="flex justify-between items-center">
-                    <span
-                      className="text-sm font-medium text-slate-700">Paracetamol 500mg</span>
-                    <span
-                      className="text-xs font-bold bg-slate-50 px-2 py-1 rounded">2.4k units</span>
-                  </li>
+                  {products.map((item, index) => (
+                    <li key={index} className="flex justify-between items-center">
+                      <span className="text-sm font-medium text-slate-700">
+                        {item.name}
+                      </span>
+
+                      <span className="text-xs font-bold bg-slate-50 px-2 py-1 rounded">
+                        {item.totalSold} units
+                      </span>
+                    </li>
+                  ))}
                 </ul>
               </section>
 
             </div>
-            {/* <!-- Team Discussion: Real-time communication feed for internal staff --!> */}
-            {/* <section className='bg-white p-6 rounded-3xl   overflow-hidden border border-slate-100 shadow-sm'>
-              <div className='p-6 border-b border-slate-50 flex items-center justify-between '>
-                <h3 className="text-xl font-bold text-slate-800 flex items-center gap-2">
 
-                  <GroupsIcon className='w-5 h-5 text-indigo-500' />
-                  Team Discussion
-                </h3>
-                <span className="text-xs bg-indigo-50 text-indigo-600 px-3 py-1 rounded-full font-bold">LIVE
-                  FEED</span>
-              </div>
-              <div className="p-6 space-y-4">
-                <div className="flex gap-4 p-4 bg-slate-50/50 rounded-2xl border border-slate-100">
-                  <div
-                    className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold text-sm shrink-0">
-                    AS</div>
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <span className="font-bold text-slate-800 text-sm">Amit Sharma</span>
-                      <span className="text-[10px] text-slate-400 uppercase font-medium">10:45 AM</span>
-                    </div>
-                    <p className="text-slate-600 text-sm mt-1">Stock for <span
-                      className="text-blue-600 font-semibold">Amoxicillin</span> updated for the morning
-                      batch. 500 units added.</p>
-                  </div>
-                </div>
-                
-                <div className="flex gap-4 p-4 rounded-2xl">
-                  <div
-                    className="w-10 h-10 rounded-full bg-purple-500 flex items-center justify-center text-white font-bold text-sm shrink-0">
-                    RK</div>
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <span className="font-bold text-slate-800 text-sm">Rahul Kapoor</span>
-                      <span className="text-[10px] text-slate-400 uppercase font-medium">09:15 AM</span>
-                    </div>
-                    <p className="text-slate-600 text-sm mt-1">Follow up with <span
-                      className="font-semibold text-slate-800">City Care Pharma</span> regarding their
-                      outstanding #ORD-9021.</p>
-                  </div>
-                </div>
-
-                <div className="mt-6 flex items-center gap-3">
-                  <input
-                    className="flex-1 bg-white border-slate-200 rounded-2xl py-3 px-4 text-sm focus:ring-indigo-500 focus:border-indigo-500"
-                    placeholder="Type a note for the team..." type="text" />
-                  <button
-                    className="bg-indigo-600 text-white p-3 rounded-2xl hover:bg-indigo-700 shadow-md shadow-indigo-200 transition-all">
-                    <DetailsIcon className='w-5 h-5' />
-                  </button>
-                </div>
-              </div>
-            </section> */}
 
           </div>
 
@@ -629,7 +617,7 @@ onClick={() =>
           </aside>
         </div>
       </main>
-   <Outlet  />
+      <Outlet />
     </div>
   )
 }
