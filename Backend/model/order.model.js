@@ -28,6 +28,7 @@ const orderSchema = new mongoose.Schema({
     customer: {
         name: String,
         phone: String,
+        email:String,
         address: String,
     },
 
@@ -70,12 +71,25 @@ const orderSchema = new mongoose.Schema({
         enum: ["COD", "Card", "UPI", "Stripe"],
         required: true,
     },
-
-    status: {
-        type: String,
-        enum: ["Pending", "Paid", "Failed", "Shipped", "Delivered"],
-        default: "Pending",
-    },
+  paymentStatus: {
+    type: String,
+    enum: ["Paid", "Pending", "Failed"],
+    default: "Paid",
+},
+   status: {
+  type: String,
+  enum: [
+    "PLACED",
+    "CONFIRMED",
+    "PACKED",
+    "READY_FOR_DISPATCH",
+    "DISPATCHED",
+    "IN_TRANSIT",
+    "OUT_FOR_DELIVERY",
+    "DELIVERED",
+  ],
+  default: "PLACED",
+},
 
     createdAt: {
         type: Date,
