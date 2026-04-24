@@ -9,12 +9,14 @@ const cors = require("cors")
 const cookieParser = require("cookie-parser")
 require("dotenv").config();
 const routes = require("./routes/index")
-const { generateToken } = require("./Controller/genrateShipingtoken");
+// const { generateToken } = require("./Controller/genrateShipingtoken");
 
-(async () => {
-  await generateToken();
-  setInterval(generateToken, 9 * 60 * 60 * 1000); // refresh token
-})();
+// (async () => {
+//   await generateToken();
+//   setInterval(generateToken, 9 * 60 * 60 * 1000); // refresh token
+// })();
+
+
 chief.use(express.json());
 
 chief.use(express.urlencoded({ extended: true }));
