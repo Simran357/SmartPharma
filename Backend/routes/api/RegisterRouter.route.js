@@ -17,7 +17,9 @@ const  getBatches  = require("../../Controller/BatchController")
 const uploadInvoice = require("../../MiddleWare/uploadInvoice")
 const aiOCRController = require("../../Controller/ocrParseControler")
 const {stripePayment} = require("../../Controller/bill")
+
 const order=require("../../Controller/orderController")
+
 const addDeliveryPartner=require("../../Controller/addDeliveryPartner")
 const getDeliveryPartners=require("../../Controller/getDeliveryPartners")
 const connectCourier= require('../../Controller/connectCourier')
@@ -36,6 +38,8 @@ router.post("/createNewUser",createNewUser)
 router.post("/AddProductList/:id",authMiddleware,AddProductList)
 router.post("/addStock",authMiddleware, addStock);
 router.post("/billController", stripePayment);
+
+
 
 
 router.post("/ocrparse",uploadInvoice.single("file"), aiOCRController);

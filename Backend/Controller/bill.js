@@ -72,5 +72,4 @@ const stripePayment = async (req, res, next) => {
     });
   }
 };
-
 module.exports = { stripePayment };
