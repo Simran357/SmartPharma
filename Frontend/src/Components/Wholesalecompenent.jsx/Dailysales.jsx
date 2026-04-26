@@ -57,7 +57,7 @@ const Dailysales = () => {
             customer: "Robert Fox",
             payment: "UPI",
             items: "Paracetamol, B-Complex",
-            amount: "$124.50",
+            amount: "₹124.50",
             status: "Success",
         },
         {
@@ -65,7 +65,7 @@ const Dailysales = () => {
             customer: "Jane Cooper",
             payment: "Cash",
             items: "Insulin Pen, Alcohol Swabs",
-            amount: "$450.00",
+            amount: "₹450.00",
             status: "Success",
         },
         {
@@ -73,7 +73,7 @@ const Dailysales = () => {
             customer: "Cody Fisher",
             payment: "Card",
             items: "Multivitamins Syrup",
-            amount: "$12.20",
+            amount: "₹12.20",
             status: "Pending",
         },
     ];
@@ -101,7 +101,7 @@ const Dailysales = () => {
                                 </span>
                             </div>
                             <p className="text-slate-500 dark:text-slate-400 text-sm font-medium">Total Revenue</p>
-                            <h3 className="text-2xl font-bold text-slate-900 dark:text-white mt-1">$4,250.00</h3>
+                            <h3 className="text-2xl font-bold text-slate-900 dark:text-white mt-1">₹4,250.00</h3>
                         </div>
                         <div
                             className="bg-white  p-6 rounded-xl border border-slate-200  shadow-sm">
@@ -140,7 +140,7 @@ const Dailysales = () => {
                                 </span>
                             </div>
                             <p className="text-slate-500 dark:text-slate-400 text-sm font-medium">Avg Order Value</p>
-                            <h3 className="text-2xl font-bold text-slate-900 dark:text-white mt-1">$29.92</h3>
+                            <h3 className="text-2xl font-bold text-slate-900 dark:text-white mt-1">₹29.92</h3>
                         </div>
                         <div
                             className="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
@@ -309,7 +309,7 @@ const Dailysales = () => {
                                     </div>
                                     <div className="text-right">
                                         <p className="text-sm font-bold text-slate-900 ">82</p>
-                                        <p className="text-[10px] text-emerald-500 font-bold">$820.00</p>
+                                        <p className="text-[10px] text-emerald-500 font-bold">₹820.00</p>
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-4">
@@ -321,7 +321,7 @@ const Dailysales = () => {
                                     </div>
                                     <div className="text-right">
                                         <p className="text-sm font-bold text-slate-900 ">64</p>
-                                        <p className="text-[10px] text-emerald-500 font-bold">$512.00</p>
+                                        <p className="text-[10px] text-emerald-500 font-bold">₹512.00</p>
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-4">
@@ -332,7 +332,7 @@ const Dailysales = () => {
                                     </div>
                                     <div className="text-right">
                                         <p className="text-sm font-bold text-slate-900 ">51</p>
-                                        <p className="text-[10px] text-emerald-500 font-bold">$408.00</p>
+                                        <p className="text-[10px] text-emerald-500 font-bold">₹408.00</p>
                                     </div>
                                 </div>
                             </div>
@@ -346,15 +346,15 @@ const Dailysales = () => {
                             <div className="grid grid-cols-2 gap-6">
                                 <div className="space-y-1">
                                     <p className="text-xs text-slate-500 font-medium">Purchase Cost</p>
-                                    <p className="text-lg font-bold text-slate-900 ">$3,120.00</p>
+                                    <p className="text-lg font-bold text-slate-900 ">₹3,120.00</p>
                                 </div>
                                 <div className="space-y-1">
                                     <p className="text-xs text-slate-500 font-medium">Selling Price</p>
-                                    <p className="text-lg font-bold text-slate-900 ">$4,250.00</p>
+                                    <p className="text-lg font-bold text-slate-900 ">₹4,250.00</p>
                                 </div>
                                 <div className="space-y-1 border-t border-slate-100  pt-4">
                                     <p className="text-xs text-slate-500 font-medium">Net Profit</p>
-                                    <p className="text-xl font-bold text-emerald-500">$1,130.00</p>
+                                    <p className="text-xl font-bold text-emerald-500">₹1,130.00</p>
                                 </div>
                                 <div className="space-y-1 border-t border-slate-100  pt-4">
                                     <p className="text-xs text-slate-500 font-medium">Margin %</p>
@@ -371,7 +371,7 @@ const Dailysales = () => {
                                     <span className="text-xs text-slate-500 font-medium uppercase">Total Count</span>
                                 </div>
                                 <div className="flex flex-col text-right">
-                                    <span className="text-2xl font-bold text-slate-900 ">$142.20</span>
+                                    <span className="text-2xl font-bold text-slate-900 ">₹142.20</span>
                                     <span className="text-xs text-slate-500 font-medium uppercase">Refund Amount</span>
                                 </div>
                             </div>

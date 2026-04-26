@@ -1,6 +1,6 @@
 
 import NotificationsNoneSharpIcon from '@mui/icons-material/NotificationsNoneSharp';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import CurrencyRupeeIcon  from '@mui/icons-material/AttachMoney';
 import CardTravelIcon from '@mui/icons-material/CardTravel';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import DateRangeIcon from '@mui/icons-material/DateRange';
@@ -116,8 +116,8 @@ const revenue = orders?.reduce((sum, o) => sum + (o.total || 0), 0) || 0;
               <div >
                 <p className='font-medium text-slate-500'>Daily Sales</p>
               </div>
-              <div className='bg-blue-50 rounded-lg p-2 text-blue-600'>
-                <AttachMoneyIcon />
+              <div className='bg-blue-50 rounded-lg p-2 text-lg  text-blue-600'>
+               ₹
               </div>
             </div>
             <div className="mt-4">
