@@ -1,102 +1,101 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Outlet } from "react-router-dom";
-import { useState , useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Upload, ReceiptLong, Verified, CloudOutlined, Error, LocalFireDepartment, AddShoppingCart, EventBusy, TrendingUp, Assessment, AutoAwesome, AssignmentTurnedIn, CurrencyRupee, Inventory, WarningAmber, StarTwoTone } from '@mui/icons-material';
-import MedicineSalesChart from './SubComponent/MedicineSalesChart'; 
+import MedicineSalesChart from './SubComponent/MedicineSalesChart';
 import axiosInstance from '../Form/Utils/AxiosInstance'
 const Retailer = () => {
   const navigate = useNavigate()
   const [dashboardData, setDashboardData] = useState({
-  totalStockValue: 0,
-  lowStock: 0,
-  nearExpiry: 0,
-   });
-    
-   const [state, setState] = useState(null);
-   // dynamic the main cards 
+    totalStockValue: 0,
+    lowStock: 0,
+    nearExpiry: 0,
+  });
+
+  const [state, setState] = useState(null);
+  // dynamic the main cards 
   useEffect(() => {
-     console.log("Component Mounted");
-  fetchDashboard();
-}, []);
+    console.log("Component Mounted");
+    fetchDashboard();
+  }, []);
 
 
 
-const fetchDashboard = async () => {
-  try {
-    const res = await axiosInstance.get("/registerroute/getDashboardStats"); 
-    console.log("API RESPONSE:", res.data);  
-      
-    setDashboardData(res.data.data);
-  } catch (err) {
-    console.log(err);
-  }
-};
-
-// impulsive div 
- useEffect(() => {
-  const fetchStats = async () => {
+  const fetchDashboard = async () => {
     try {
-      const res = await axiosInstance.get("/registerroute/inventaryImpulse"); 
-      setState(res.data.data);
+      const res = await axiosInstance.get("/registerroute/getDashboardStats");
+      console.log("API RESPONSE:", res.data);
+
+      setDashboardData(res.data.data);
     } catch (err) {
-      console.error("Dashboard error:", err);
+      console.log(err);
     }
   };
 
-  fetchStats();
-}, []);
+  // impulsive div 
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const res = await axiosInstance.get("/registerroute/inventaryImpulse");
+        setState(res.data.data);
+      } catch (err) {
+        console.error("Dashboard error:", err);
+      }
+    };
+
+    fetchStats();
+  }, []);
 
 
 
 
-const stats = [
-  
-  {
-    id: 1,
-    title: "Total Stock Value",
-    icon: <Inventory />,
-    value:  `₹${(dashboardData.totalStockValue / 100000).toFixed(1)}L`,
-    change: "Net",
-    disc: "Valuation of 2,450 unique SKUs",
-    border: "hover:border-green-500",
+  const stats = [
+    {
+      id: 1,
+      title: "Total Stock Value",
+      icon: <Inventory />,
+      value: `₹${(dashboardData.totalStockValue / 100000).toFixed(1)}L`,
+      change: "Net",
+      disc: "Valuation of 2,450 unique SKUs",
+      iconBg: "text-green-400",
+      border: "hover:border-green-500",
+    },
+    {
+      id: 2,
+      title: "Low Stock",
+      icon: <WarningAmber />,
+      value: `${dashboardData.lowStock} Items`,
+      disc: "Items below safety threshold",
+      iconBg: "text-yellow-400",
+      border: "hover:border-yellow-500",
+    },
+    {
+      id: 3,
+      title: "Near Expiry",
+      icon: <EventBusy />,
+      value: `${dashboardData.nearExpiry} Items`,
+      change: "30 Days",
+      disc: "Immediate action required",
+      border: "hover:border-red-500",
+      iconBg: "text-red-600"
 
-  },
-  {
-    id: 2,
-    title: "Low Stock",
-    icon: <WarningAmber />,
-    value:  `${dashboardData.lowStock} Items`,
-    disc: "Items below safety threshold",
-    iconBg: "text-yellow-400",
-    border: "hover:border-yellow-500",
-  },
-  {
-    id: 3,
-    title: "Near Expiry",
-    icon: <EventBusy />,
-    value:`${dashboardData.nearExpiry} Items`,
-    change: "30 Days",
-    disc: "Immediate action required",
-    border: "hover:border-red-500",
-    iconBg: "text-red-600"
+    },
+    {
+      id: 4,
+      title: "Pending Bills",
+      icon: <ReceiptLong />,
+      value: "64K",
+      change: "Due: 4",
+      disc: "Outstanding supplier payments",
+      border: "hover:border-red-500",
+      iconBg: "text-red-600"
+    },
+  ];
 
-  },
-  {
-    id: 4,
-    title: "Pending Bills",
-    icon: <ReceiptLong />,
-    value: "64K",
-    change: "Due: 4",
-    disc: "Outstanding supplier payments",
-    border: "hover:border-red-500",
-    iconBg: "text-red-600"
-  },
-];
- 
 
-  return (           
-    <>                  
+  return (
+    <>
       <section className="p-4 md:p-6 space-y-6">
         <section className="mt-2">
           <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 ">
@@ -142,7 +141,7 @@ const stats = [
                     <button className='rounded-xl px-2 bg-green-200 text-green-600 font-medium text-xs  hover:border-green-600 hover:shadow-md hover:bg-green-800 transition-all'> Sales</button>
                     <button className='rounded-xl px-2 bg-gray-200 text-gray-600 text-xs font-medium   hover:border-gray-600 hover:shadow-md hover:bg-gray-300 transition-all'>Profit</button>
                   </div>
-                </div>   
+                </div>
                 <div className='mt-6'>
                   <MedicineSalesChart />
                 </div>
@@ -209,6 +208,7 @@ const stats = [
               </section> */}
             </div>
           </div>
+
           <div className="flex flex-col gap-6 ">
 
             <section className="rounded-xl bg-gray-50 shadow-sm  p-4 max-h-fit max-w-full border border-gray-200">
@@ -266,14 +266,14 @@ const stats = [
                 <span className='flex flex-row  gap-4 '>
                   <AssignmentTurnedIn className='text-amber-600' />
                   <h1 className='text-lg font-medium  text-gray-800'>INVENTORY PULSE</h1>
-                </span>
+                </span>                                          
                 <button className='text-green-500 underline text-sm font-semibold cursor-pointer'>Auto-Reorder</button>
-              </div>
+              </div>                                   
               <div className='grid grid-cols-2 gap-6 relative mt-6 '>
                 <div className="absolute left-1/2 top-0 h-full w-px bg-gray-200">
-                </div>
+                </div>            
                 <div className="flex flex-col justify-between text-sm mb-2">
-                  <div>
+                  <div>   
                     <div className="flex justify-between text-sm mb-2">
                       <span className="text-gray-700">In Stock</span>
                       <span className="text-green-600 font-semibold">{state?.inStockPercent || 0}%</span>
@@ -281,10 +281,10 @@ const stats = [
                     <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
                       <div
                         className="h-full bg-green-500 rounded-full"
-                        style={{ width:`${state?.inStockPercent || 0}%` }}
+                        style={{ width: `${state?.inStockPercent || 0}%` }}
                       />
                     </div>
-                  </div>
+                  </div>    
                   <div className='mt-4'>
                     <div className="flex justify-between text-sm mb-2">
                       <span className="text-gray-700">Low Stock</span>
@@ -307,9 +307,9 @@ const stats = [
                       <span className='font-semibold'>&lt; 30d</span>
                     </div>
                     <span className="font-semibold text-gray-800"> {state?.expiry30 || 0} </span>
-                  </div>
-                  <div className='mt-8'>
-
+                  </div>                               
+                  <div className='mt-8'>           
+                                                             
                     <div className="flex items-center justify-between text-sm">
                       <div className="flex items-center gap-2">
                         <span className="w-2 h-2 rounded-full bg-amber-300"></span>
@@ -321,7 +321,7 @@ const stats = [
                 </div>
               </div>
             </section>
-
+                                 
             {/* <section className=''>
               <div className='bg-gray-100 shadow-sm border border-gray-300 rounded-xl  p-6'>
                 <h1 className="text-xs text-[#d5d3d3] font-medium">STOCK VELOCITY</h1>
@@ -362,7 +362,7 @@ const stats = [
             </section> */}
 
 
-{/* 
+            {/* 
             <div className='bg-gray-50 shadow-sm border border-gray-200 rounded-xl  p-6'>
               <h1 className="text-sm text-[#6e6e6e]  font-medium">OUTSTANDING & COMPLIANCE</h1>
               <div className="flex flex-col gap-2 mt-2 justify-between">
@@ -424,5 +424,4 @@ const stats = [
     </>
   )
 }
-
 export default Retailer

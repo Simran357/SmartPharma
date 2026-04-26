@@ -40,10 +40,10 @@ const Wholesalerfirst = () =>  {
           <div
             key={user._id}
             className=" w-full 
-          sm:w-[48%] 
+           sm:w-[48%]
           md:w-[31%] 
           lg:w-[23%] 
-          xl:w-[18%]
+          xl:w-[40%]
           bg-[#162538] 
           rounded-2xl 
           shadow-xl 
@@ -73,7 +73,7 @@ const Wholesalerfirst = () =>  {
             </div>
 
             {/* Content */}
-            <div className="pt-6 p-5 text-white">
+            <div className="pt-6  p-5 text-white">
 
               {/* Name */}
               <div className="flex justify-between items-start gap-2">
@@ -99,7 +99,7 @@ const Wholesalerfirst = () =>  {
                   <p className="text-sm mt-1  truncate">{user.contact || "N/A"}</p>
                 </div>
 
-                <div className="bg-[rgba(36,55,81,0.36)] p-3 sm:p-4 rounded-xl">
+                <div className="bg-[rgba(36,55,81,0.36)]  gap-5  p-3 sm:p-4 rounded-xl">
                   <p className="text-xs text-gray-400">LICENSE</p>
                   <p className="text-sm mt-1  truncate">{user.license || "N/A"}</p>
                 </div>
