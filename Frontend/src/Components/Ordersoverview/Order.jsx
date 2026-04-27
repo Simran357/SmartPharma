@@ -31,9 +31,37 @@ const steps = [
   "IN_TRANSIT",
   "OUT_FOR_DELIVERY",
   "DELIVERED",
-];  const [open, setOpen] = useState(false);
+];
+
+const [open, setOpen] = useState(false);
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+  const orderStats = {
+  total: orders.length,
+  inProgress: orders.filter(
+    (o) =>
+      o.status === "PLACED" ||
+      o.status === "CONFIRMED" ||
+      o.status === "PACKED"
+  ).length,
+
+  readyForDispatch: orders.filter(
+    (o) => o.status === "READY_FOR_DISPATCH"
+  ).length,
+
+  inTransit: orders.filter(
+    (o) =>
+      o.status === "DISPATCHED" ||
+      o.status === "IN_TRANSIT" ||
+      o.status === "OUT_FOR_DELIVERY"
+  ).length,
+
+  delayed: orders.filter((o) => o.status === "DELAYED").length,
+
+  pending: orders.filter((o) => o.status === "PLACED").length,
+};
+
+const [searchTerm, setSearchTerm] = useState("");
   // ================= FETCH =================
   const fetchOrders = async () => {
     try {
@@ -45,6 +73,7 @@ const steps = [
       setLoading(false);
     }
   }
+
 
   useEffect(() => {
     fetchOrders();
@@ -79,10 +108,21 @@ const handleStatusChange = async (orderId, newStatus) => {
     console.log("Full Error:", error);
   }
 };
-  const filteredOrders =
-    selectedStatus === "ALL"
-      ? orders
-      : orders.filter((order) => order.status === selectedStatus);
+  const filteredOrders = orders.filter((order) => {
+  const matchesStatus =
+    selectedStatus === "ALL" ||
+    order.status === selectedStatus;
+
+  const matchesSearch =
+    order?.orderId
+      ?.toLowerCase()
+      .includes(searchTerm.toLowerCase()) ||
+    order?.customer?.name
+      ?.toLowerCase()
+      .includes(searchTerm.toLowerCase());
+
+  return matchesStatus && matchesSearch;
+});
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
 
@@ -103,7 +143,9 @@ const handleStatusChange = async (orderId, newStatus) => {
             <ShoppingCartIcon className="text-red-500 " />
           </div>
           <div className="flex items-center gap-3">
-            <span className="text-4xl font-bold text-black">142</span>
+<span className="text-4xl font-bold text-black">
+  {orderStats.total}
+</span>
             <span className="text-green-600 font-semibold"><MovingIcon className="text-green-500" />12%</span>
           </div>
         </div>
@@ -116,7 +158,9 @@ const handleStatusChange = async (orderId, newStatus) => {
           </p>
 
           <div className="flex items-center gap-3 mt-2">
-            <span className="text-4xl font-bold text-black">38</span>
+<span className="text-4xl font-bold text-black">
+  {orderStats.inProgress}
+</span>
             <span className="text-green-600 font-semibold"><MovingIcon className="text-green-500" />5%</span>
           </div>
         </div>
@@ -133,7 +177,9 @@ const handleStatusChange = async (orderId, newStatus) => {
 
 
           <div className="flex items-center gap-3 mt-2">
-            <span className="text-4xl font-bold text-black">24</span>
+<span className="text-4xl font-bold text-black">
+  {orderStats.readyForDispatch}
+</span>
             <span className="text-red-600 font-semibold"><MovingIcon className="text-red-500" />2%</span>
           </div>
         </div>
@@ -148,7 +194,9 @@ const handleStatusChange = async (orderId, newStatus) => {
           </div>
 
           <div className="flex items-center gap-3 mt-2">
-            <span className="text-4xl font-bold text-black">65</span>
+<span className="text-4xl font-bold text-black">
+  {orderStats.inTransit}
+</span>
             <span className="text-green-600 font-semibold"><MovingIcon className="text-green-500" />8%</span>
           </div>
         </div>
@@ -163,7 +211,9 @@ const handleStatusChange = async (orderId, newStatus) => {
             <WarningAmberIcon className="text-red-500" />
           </div>
           <div className="flex items-center gap-3 mt-2">
-            <span className="text-4xl font-bold text-black">15</span>
+<span className="text-4xl font-bold text-black">
+  {orderStats.delayed}
+</span>
             <span className="text-yellow-500 font-semibold"><ArrowForwardIcon sx={{ color: "yellow" }} />1%</span>
           </div>
         </div>
@@ -179,10 +229,12 @@ const handleStatusChange = async (orderId, newStatus) => {
           </div>
 
           <div className="flex items-center gap-3 mt-2">
-            <span className="text-4xl font-bold text-black">14</span>
+<span className="text-4xl font-bold text-black">
+  {orderStats.pending}
+</span>
             <span className="text-green-600 font-semibold"><MovingIcon className="text-green-500" />4%</span>
           </div>
-          <div className='p-2 mt-4 border border-gray-500  text-center text-black'>VIEW DETAILS</div>
+          <div className='p-2 mt-4 border border-gray-500  text-center text-black'onClick={() => navigate("/Dashboard/Wholesaler/PendingOrders")}>VIEW DETAILS</div>
         </div>
       </div>
 
@@ -192,24 +244,35 @@ const handleStatusChange = async (orderId, newStatus) => {
         <div className="lg:col-span-4 space-y-6">
 
 
-          {/* search */}
-          <div className="flex items-center bg-white justify-between border mt-8 border-gray-600 p-4 w-full ">
+       {/* search + filter */}
+<div className="flex flex-col md:flex-row items-start md:items-center bg-white justify-between border mt-8 border-gray-300 p-4 w-full gap-4">
 
-            {/* Left Side - Search */}
-            <div className="border border-gray-500 bg-white p-2">
-              Search OrderID, Retailer
-            </div>
+  {/* Search */}
+ <input
+  type="text"
+  placeholder="Search OrderID or Retailer"
+  value={searchTerm}
+  onChange={(e) => setSearchTerm(e.target.value)}
+  className="border border-gray-400 p-2 rounded-md w-full md:w-80"
+/>
 
-
-            {/* Right Side - Filters */}
-            <div className="flex items-center gap-6">
-              <select className="border border-gray-500 p-2 rounded-md">
-                <option>Retailer: All</option>
-              </select>
-
-
-            </div>
-          </div>
+  {/* Status Filter */}
+  <select
+    value={selectedStatus}
+    onChange={(e) => setSelectedStatus(e.target.value)}
+    className="border border-gray-400 p-2 rounded-md"
+  >
+    <option value="ALL">All Orders</option>
+    <option value="PLACED">Placed</option>
+    <option value="CONFIRMED">Confirmed</option>
+    <option value="PACKED">Packed</option>
+    <option value="READY_FOR_DISPATCH">Ready For Dispatch</option>
+    <option value="DISPATCHED">Dispatched</option>
+    <option value="IN_TRANSIT">In Transit</option>
+    <option value="OUT_FOR_DELIVERY">Out For Delivery</option>
+    <option value="DELIVERED">Delivered</option>
+  </select>
+</div>
           {/* Order Card */}
           <div className="bg-white p-6 rounded-xl shadow">
 
@@ -268,7 +331,7 @@ const handleStatusChange = async (orderId, newStatus) => {
   </h1>
 
   <div className="overflow-x-auto scrollbar-hide">
-    <div className="relative min-w-[850px] md:min-w-full flex items-center py-4">
+    <div className="relative min-w-850px md:min-w-full flex items-center py-4">
 
       {/* Background line */}
       <div className="absolute top-6 left-0 w-full h-1 bg-gray-300"></div>
@@ -294,7 +357,7 @@ const handleStatusChange = async (orderId, newStatus) => {
                 return (
                   <div
                     key={i}
-                    className="flex flex-col items-center flex-1 min-w-[100px]"
+                    className="flex flex-col items-center flex-1 min-w-100px"
                     onClick={(e) => {
                       e.stopPropagation();
                       if (!isClickable) return;

@@ -8,7 +8,7 @@ console.log("userid",req?.user?.id)
 console.log("id",id)
     const order = await orderModel.findOne({
       _id: id,
-
+userId:userId
     });
 
 

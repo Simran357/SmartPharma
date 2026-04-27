@@ -5,33 +5,32 @@ const updateOrderStatus = async (req, res) => {
     const { id } = req.params;
     const { status } = req.body;
 
-    console.log("Updating:", id, status);
+    console.log("Updating:", id);
+    console.log("Received status:", status);
 
-    const updatedOrder = await orderModel.findByIdAndReplace(
-      id,
-      { status },
-{
-  returnDocument: "after",
-  runValidators: true,
-}    );
-
-    if (!updatedOrder) {
-      return res.status(404).json({
+    if (!status) {
+      return res.status(400).json({
         success: false,
-        message: "Order not found",
+        message: "Status is required",
       });
     }
 
+    const updatedOrder = await orderModel.findByIdAndUpdate(
+      id,
+      { status },
+      { new: true, runValidators: true }
+    );
+
     res.status(200).json({
       success: true,
-      order: updatedOrder,
+      updatedOrder,
     });
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    console.log(error);
 
     res.status(500).json({
       success: false,
-      message: err.message,
+      message: "Failed to update status",
     });
   }
 };

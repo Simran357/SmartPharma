@@ -1,98 +1,67 @@
 import React from "react";
 
-const InventoryOrder = () => {
+const InventoryOrder = ({ inventoryStock }) => {
+  const totalProducts = inventoryStock.length;
+
+const totalUnits = inventoryStock.reduce(
+  (acc, item) => acc + Number(item.qty || 0),
+  0
+);
+
+const lowStockCount = inventoryStock.filter(
+  (item) => item.qty < 20
+).length;
+
+const expiringSoonCount = inventoryStock.filter((item) => {
+  if (!item.expiry) return false;
+
+  const diffDays =
+    (new Date(item.expiry) - new Date()) /
+    (1000 * 60 * 60 * 24);
+
+  return diffDays <= 90;
+}).length;
   return (
-    <div className="p-8 bg-gray-50 min-h-screen">
+  <>{/* INVENTORY OVERVIEW */}
+<div className="grid grid-cols-1 md:grid-cols-4 gap-5 mb-6">
 
-      {/* ===== TOP STATS ===== */}
-      <div className="grid grid-cols-5 gap-6 mb-8">
-        
-        <StatCard
-          title="ORDERS TODAY"
-          value="1,284"
-          subtitle="+12%"
-          subtitleColor="text-green-500"
-        />
+  {/* TOTAL PRODUCTS */}
+  <div className="bg-white rounded-2xl shadow-sm p-5 border">
+    <p className="text-gray-500 text-sm">Total Products</p>
+    <h2 className="text-3xl font-bold mt-2">{totalProducts}</h2>
+    <p className="text-green-600 text-sm mt-1">
+      Active Inventory
+    </p>
+  </div>
 
-        <StatCard
-          title="PENDING PACKING"
-          value="42"
-          subtitle="Queueing"
-          subtitleColor="text-orange-500"
-        />
+  {/* TOTAL UNITS */}
+  <div className="bg-white rounded-2xl shadow-sm p-5 border">
+    <p className="text-gray-500 text-sm">Total Units</p>
+    <h2 className="text-3xl font-bold mt-2">{totalUnits}</h2>
+    <p className="text-blue-600 text-sm mt-1">
+      Available Stock
+    </p>
+  </div>
 
-        <StatCard
-          title="READY FOR PICKUP"
-          value="18"
-          subtitle="Staged"
-          subtitleColor="text-green-600"
-        />
+  {/* LOW STOCK */}
+  <div className="bg-white rounded-2xl shadow-sm p-5 border">
+    <p className="text-gray-500 text-sm">Low Stock Alerts</p>
+    <h2 className="text-3xl font-bold mt-2">{lowStockCount}</h2>
+    <p className="text-orange-500 text-sm mt-1">
+      Need Restocking
+    </p>
+  </div>
 
-        <StatCard
-          title="COURIER ARRIVAL"
-          value="12 min"
-          subtitle="-5 min"
-          subtitleColor="text-red-500"
-        />
+  {/* EXPIRING */}
+  <div className="bg-white rounded-2xl shadow-sm p-5 border">
+    <p className="text-gray-500 text-sm">Expiring Soon</p>
+    <h2 className="text-3xl font-bold mt-2">{expiringSoonCount}</h2>
+    <p className="text-red-500 text-sm mt-1">
+      Within 90 Days
+    </p>
+  </div>
 
-        <StatCard
-          title="STOCK ALERTS"
-          value="5 Alerts"
-          subtitle="Critical"
-          subtitleColor="text-red-600"
-        />
-      </div>
-
-      {/* ===== ORDER COLUMNS ===== */}
-      <div className="grid grid-cols-3 gap-6">
-        {/* NEW ORDERS */}
-        <OrderColumn title="New Orders" count="12" dotColor="bg-blue-500">
-          <OrderCard
-            id="#ORD-9921"
-            name="City Pharma Central"
-            items="48 Items"
-            time="08:12"
-            tag="URGENT"
-            tagColor="bg-blue-100 text-blue-600"
-            footer="DHL  Express Delivery"
-          />
-
-          <OrderCard
-            id="#ORD-9930"
-            name="Green Cross Pharmacy"
-            items="65 Items"
-            time="45:30"
-            footer="UPS  Standard"
-          />
-        </OrderColumn>
-
-        {/* PROCESSING */}
-        <OrderColumn title="Processing" count="8" dotColor="bg-orange-500">
-          <OrderCard
-            id="#ORD-9925"
-            name="HealthFirst Pharmacy"
-            items="120 Items"
-            progress="75%"
-            progressColor="bg-orange-500"
-            footer="FDX  Express"
-          />
-        </OrderColumn>
-
-        {/* PACKING */}
-        <OrderColumn title="Packing" count="15" dotColor="bg-green-500">
-          <OrderCard
-            id="#ORD-9928"
-            name="MediCare Hub"
-            items="12 Items"
-            tag="STATION 4"
-            tagColor="text-green-600"
-            footer="INT  Internal Fleet"
-            complete
-          />
-        </OrderColumn>
-
-      </div>
-    </div>
+</div></>
   );
 };
 
