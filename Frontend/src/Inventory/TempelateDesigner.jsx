@@ -1,151 +1,251 @@
+
 import React, { useState, useEffect } from "react";
 import { useQuill } from "react-quilljs";
 import "quill/dist/quill.snow.css";
+import {
+  MessageSquare,
+  Clock3,
+  CheckSquare,
+  ShieldCheck,
+  Settings,
+  Plus,
+} from "lucide-react";
 
 function TempelateDesigner() {
-    const [activeTab, setActiveTab] = useState("email");
+  const [activeTab, setActiveTab] = useState("whatsapp");
 
-    const [emailSubject, setEmailSubject] = useState("");
-    const [emailBody, setEmailBody] = useState("");
-    const [whatsappText, setWhatsappText] = useState("");
+  const [emailSubject, setEmailSubject] = useState("");
+  const [emailBody, setEmailBody] = useState("");
 
-    // 🔹 Quill setup
-    const { quill, quillRef } = useQuill({
-        theme: "snow",
-        modules: {
-            toolbar: [
-                ["bold", "italic", "underline"],
-                ["link"],
-                [{ list: "ordered" }, { list: "bullet" }],
-                ["clean"],
-            ],
-        },
-    });
+  const [whatsappText, setWhatsappText] = useState(`Hi *{retailer_name}*,
 
-    // 🔹 Sync quill content
-    useEffect(() => {
-        if (quill) {
-            quill.on("text-change", () => {
-                setEmailBody(quill.root.innerHTML);
-            });
-        }
-    }, [quill]);
+We regret to inform you that your order *#{order_id}* is experiencing a delay.
 
-    return (
-        <div className="grid grid-cols-4">
+Our logistics team is working to resolve this. Your new estimated delivery time is *{new_eta}*.
 
-            {/* ================= LEFT SIDEBAR ================= */}
-            <div className="col-span-1 min-h-screen border-r">
+We apologize for the inconvenience.`);
 
-                <div className="p-6 px-10 border-b">
-                    <h2 className="font-bold">Template Designer</h2>
-                    <span className="text-xs">Claim Rejection v.1.0.4</span>
-                </div>
+  const { quill, quillRef } = useQuill({
+    theme: "snow",
+    modules: {
+      toolbar: [
+        ["bold", "italic", "underline"],
+        ["link"],
+        [{ list: "ordered" }, { list: "bullet" }],
+        ["clean"],
+      ],
+    },
+  });
 
-                <div className="p-6">
+  useEffect(() => {
+    if (quill) {
+      quill.on("text-change", () => {
+        setEmailBody(quill.root.innerHTML);
+      });
+    }
+  }, [quill]);
 
-                    {/* Toggle Buttons */}
-                    <div className="flex mb-4 gap-2">
-                        <button
-                            onClick={() => setActiveTab("email")}
-                            className={
-                                activeTab === "email"
-                                    ? "flex-1 bg-green-500 text-white py-2 rounded-md"
-                                    : "flex-1 bg-gray-300 py-2 rounded-md"
-                            }
-                        >
-                            Email
-                        </button>
+  return (
+    <div className="min-h-screen bg-[#F3F5F4]">
 
-                        <button
-                            onClick={() => setActiveTab("whatsapp")}
-                            className={
-                                activeTab === "whatsapp"
-                                    ? "flex-1 bg-green-500 text-white py-2 rounded-md"
-                                    : "flex-1 bg-gray-300 py-2 rounded-md"
-                            }
-                        >
-                            WhatsApp
-                        </button>
-                    </div>
+     
 
-                    {/* EMAIL INPUTS */}
-                    {activeTab === "email" && (
-                        <div>
-                            <input
-                                type="text"
-                                placeholder="Email Subject"
-                                value={emailSubject}
-                                onChange={(e) => setEmailSubject(e.target.value)}
-                                className="w-full border p-2 mb-3 rounded-md"
-                            />
+      {/* MAIN GRID */}
+      <div className="grid grid-cols-[340px_1fr_320px] min-h-[calc(100vh-80px)]">
 
-                            {/* Rich Editor */}
-                            <div ref={quillRef} className="bg-white" />
-                        </div>
-                    )}
+        {/* LEFT PANEL */}
+        <div className="bg-[#F7F8F7] border-r p-6 overflow-y-auto">
 
-                    {/* WHATSAPP INPUT */}
-                    {activeTab === "whatsapp" && (
-                        <textarea
-                            placeholder="WhatsApp Message"
-                            value={whatsappText}
-                            onChange={(e) => setWhatsappText(e.target.value)}
-                            className="w-full border p-2 rounded-md"
-                            rows="4"
-                        />
-                    )}
-                </div>
+          <h2 className="text-3xl font-bold mb-8">Message Template</h2>
+
+          {/* CATEGORY */}
+          <div className="mb-6">
+            <p className="text-sm text-gray-500 mb-2 font-medium">
+              TEMPLATE CATEGORY
+            </p>
+
+            <select className="w-full border rounded-xl px-4 py-3 bg-[#EEF1EE] outline-none">
+              <option>Delivery Delay Alert</option>
+              <option>Order Confirmation</option>
+              <option>Invoice Sent</option>
+            </select>
+          </div>
+
+          {/* CONTENT EDITOR */}
+          <div className="mb-6">
+            <div className="flex justify-between mb-2 items-center">
+              <p className="text-sm text-gray-500 font-medium">
+                CONTENT EDITOR
+              </p>
+
+              <button className="text-green-600 text-sm font-medium flex items-center gap-1">
+                <Plus size={14} /> Add Variable
+              </button>
             </div>
 
-            {/* ================= MIDDLE PREVIEW ================= */}
-            {/* ================= MIDDLE PREVIEW ================= */}
-            <div className="col-span-2 min-h-screen bg-[#F6F8F6] pt-8 flex flex-col px-24 gap-4">
+            <textarea
+              value={whatsappText}
+              onChange={(e) => setWhatsappText(e.target.value)}
+              rows={12}
+              className="w-full rounded-xl border bg-[#EEF1EE] p-4 outline-none resize-none text-sm leading-7"
+            />
+          </div>
 
-                <div className="text-lg font-semibold">Email Preview</div>
+          {/* BUTTONS */}
+          <div>
+            <p className="text-sm text-gray-500 mb-3 font-medium">
+              INTERACTIVE BUTTONS
+            </p>
 
-                <div className="border shadow-lg rounded-lg bg-white">
+            <div className="space-y-3">
 
-                    <div className="flex justify-between py-6 px-10 border-b">
-                        <div>Smart Pharma Logo</div>
-                        <span>ID: SP-CLAIM-8821</span>
-                    </div>
+              <div className="border border-dashed border-green-500 rounded-xl px-4 py-4 flex justify-between items-center bg-[#F7FBF7]">
+                <span>Track Order</span>
+                <Settings size={16} className="text-gray-500" />
+              </div>
 
-                    <div className="pt-6 pb-6 px-10 flex flex-col gap-6">
+              <div className="border border-dashed border-green-500 rounded-xl px-4 py-4 flex justify-between items-center bg-[#F7FBF7]">
+                <span>Contact Support</span>
+                <Settings size={16} className="text-gray-500" />
+              </div>
 
-                        <h1 className="text-2xl font-bold">
-                            {emailSubject || "Claim Rejection Number"}
-                        </h1>
+              <button className="w-full border border-dashed rounded-xl py-4 text-gray-500 hover:bg-gray-100">
+                + Add Button
+              </button>
+            </div>
+          </div>
 
-                        {/* 🔥 ONLY THIS PART IS CONNECTED TO EDITOR */}
-                        {activeTab === "email" && (
-                            <div
-                                dangerouslySetInnerHTML={{ __html: emailBody }}
-                            />
-                        )}
+          <div className="mt-12 text-sm text-green-700">
+            Use *text* for bold in WhatsApp
+          </div>
+        </div>
 
-                        {activeTab === "whatsapp" && (
-                            <p>{whatsappText}</p>
-                        )}
+        {/* CENTER PREVIEW */}
+        <div className="flex justify-center items-center p-8 bg-[#EEF1EE] relative">
 
-                        <button className="rounded-xl max-w-fit px-4 py-2 font-medium bg-[#13EC49]">
-                            View Full Decision Record
-                        </button>
+          <div className="absolute top-10 bg-green-500 text-white rounded-full px-6 py-2 text-sm font-medium shadow">
+            Verified Template Preview
+          </div>
 
-                        <div className="flex justify-center items-center">
-                            <p className="text-xs">
-                                ©2024 SmartPharma Wholesale Solutions
-                            </p>
-                        </div>
+          <div className="w-340px h-690px rounded-[50px] bg-black shadow-2xl p-4">
 
-                    </div>
+            <div className="bg-[#0D6E63] h-full rounded-[40px] overflow-hidden relative">
+
+              {/* CHAT HEADER */}
+              <div className="flex items-center gap-3 px-5 py-5 text-white bg-[#0B5E54]">
+                <div className="text-2xl">←</div>
+
+                <div className="w-11 h-11 rounded-full bg-white flex items-center justify-center text-[#0B5E54] font-bold">
+                  S
                 </div>
+
+                <div>
+                  <h3 className="font-semibold text-lg">
+                    SmartPharm Wholesaler
+                  </h3>
+                  <p className="text-xs opacity-80">Online</p>
+                </div>
+              </div>
+
+              {/* MESSAGE */}
+              <div className="p-5 pt-8">
+                <div className="bg-white rounded-2xl p-4 shadow max-w-[90%] text-sm leading-7 whitespace-pre-line">
+                  {whatsappText}
+                </div>
+
+                <div className="mt-4 space-y-2">
+                  <button className="bg-white w-full rounded-xl py-3 border text-sm font-medium hover:bg-gray-50">
+                    Track Order
+                  </button>
+
+                  <button className="bg-white w-full rounded-xl py-3 border text-sm font-medium hover:bg-gray-50">
+                    Contact Support
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* RIGHT PANEL */}
+        <div className="bg-[#F7F8F7] border-l p-6">
+
+          <h2 className="text-3xl font-bold mb-8">Trigger Settings</h2>
+
+          {/* AUTO RULE */}
+          <div className="mb-8">
+            <div className="flex justify-between items-center mb-4">
+              <p className="text-sm font-medium text-gray-500">
+                AUTO-SEND RULE
+              </p>
+
+              <div className="w-12 h-7 rounded-full bg-green-500 relative">
+                <div className="absolute right-1 top-1 bg-white w-5 h-5 rounded-full"></div>
+              </div>
             </div>
 
+            <p className="text-sm text-gray-500 mb-4">
+              Send this template automatically based on delay data.
+            </p>
 
-            {/* ================= RIGHT SIDEBAR ================= */}
-            <div className="col-span-1 bg-green-300 min-h-screen px-8 py-8"> <h1>Rejection Reason Presets</h1> <div className='flex flex-col gap-3 mt-5'> <div className='border flex p-3 px-5 justify-between rounded-2xl'> <h3>Batch Mismatch</h3> <p>Icon</p> </div> <div className='border flex p-3 px-5 justify-between rounded-2xl'> <h3>Batch Mismatch</h3> <p>Icon</p> </div> <div className='border flex p-3 px-5 justify-between rounded-2xl'> <h3>Batch Mismatch</h3> <p>Icon</p> </div> <div className='border flex p-3 px-5 justify-between rounded-2xl'> <h3>Batch Mismatch</h3> <p>Icon</p> </div> </div> <div className='border border-dashed mt-4 flex p-3 px-5 justify-center items-center rounded-2xl'> <h3>Batch Mismatch</h3> </div> <div className=' flex justify-between mt-6 rounded-2xl'> <h3 >Inspector's Evidence</h3> <span className='text-[#05EB20] px-1 bg-[#D0FBDB] rounded-xl ' >Verified</span> </div> <div className="flex mt-4 gap-2"> <img src="https://tse1.mm.bing.net/th/id/OIP.ZPYR9dC7_bgZgeF7BdrCggHaJQ?pid=Api&P=0&h=180" alt="" className="rounded-xl object-cover object-center w-1/2 h-40" /> <img src="https://tse3.mm.bing.net/th/id/OIP.FlOv-gYD0V4BxFh5VDDt1gHaLH?pid=Api&P=0&h=180" alt="" className="rounded-xl object-cover object-center w-1/2 h-40" /> </div> <div className='flex-col border border-dashed mt-4 flex p-7 px-5 justify-center items-center rounded-2xl'> <img src="" alt="img" /> <h3 className='text-nowrap text-xs'>Drag and drop Items to Upload Evidence</h3> </div> <div className='border text-white bg-black mt-4 flex p-3 px-5 justify-center items-center rounded-2xl'> <h3>Finalize & Send Notice</h3> </div> <div className='border mt-4 flex p-3 px-5 justify-center items-center rounded-2xl'> <h3>Batch Mismatch</h3> </div> </div> </div>
-    );
+            <div className="bg-[#EEF1EE] rounded-2xl p-5">
+              <p className="text-sm mb-3">Delay Threshold</p>
+
+              <div className="flex items-center gap-4">
+                <input
+                  type="number"
+                  defaultValue={30}
+                  className="w-24 rounded-lg border p-3 bg-white"
+                />
+                <span className="text-gray-600">minutes</span>
+              </div>
+            </div>
+          </div>
+
+          {/* RECIPIENTS */}
+          <div className="mb-8 border-t pt-8">
+            <p className="text-sm font-medium text-gray-500 mb-5">
+              RECIPIENTS
+            </p>
+
+            <div className="space-y-4">
+              <label className="flex items-center gap-3">
+                <input type="checkbox" checked readOnly />
+                <span>Primary Retail Contact</span>
+              </label>
+
+              <label className="flex items-center gap-3">
+                <input type="checkbox" />
+                <span>Store Manager</span>
+              </label>
+            </div>
+          </div>
+
+          {/* APPROVAL */}
+          <div className="border-t pt-8">
+            <p className="text-sm font-medium text-gray-500 mb-4">
+              APPROVAL WORKFLOW
+            </p>
+
+            <div className="bg-yellow-50 border border-yellow-300 rounded-2xl p-4 flex gap-3 items-start">
+              <ShieldCheck className="text-yellow-600 mt-1" size={18} />
+
+              <p className="text-sm text-yellow-700">
+                This template requires <strong>Logistics Head</strong> approval before going live.
+              </p>
+            </div>
+          </div>
+
+          <button className="w-full mt-12 bg-gray-100 py-4 rounded-xl font-semibold hover:bg-gray-200">
+            Send Test Message
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default TempelateDesigner;
+
+
+
