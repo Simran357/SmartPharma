@@ -189,7 +189,7 @@ const handleStatusChange = async (orderId, newStatus) => {
       {/* ================= MAIN SECTION ================= */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* LEFT SIDE */}
-        <div className="lg:col-span-2 space-y-6">
+        <div className="lg:col-span-4 space-y-6">
 
 
           {/* search */}
@@ -261,66 +261,73 @@ const handleStatusChange = async (orderId, newStatus) => {
                       </div>
 
                       {/* ✅ STATUS BAR START */}
-                      <div className="flex  w-full mt-4 gap-4 items-center justify-center">
-                        <h1 className="text-orange-500 font-bold text-lg whitespace-nowrap ">Process Status</h1>
+                    {/* ✅ RESPONSIVE STATUS BAR */}
+<div className="w-full mt-4">
+  <h1 className="text-orange-500 font-bold text-lg mb-3">
+    Process Status
+  </h1>
 
-                        <div className="flex justify-between gap-8 items-center relative w-full max-w-600px">
-                          {/* Background line */}
-                          <div className="absolute top-2 left-0 w-full h-1 bg-gray-300"></div>
+  <div className="overflow-x-auto scrollbar-hide">
+    <div className="relative min-w-[850px] md:min-w-full flex items-center py-4">
 
-                          {/* Dynamic progress line */}
+      {/* Background line */}
+      <div className="absolute top-6 left-0 w-full h-1 bg-gray-300"></div>
 
-                          <div className="flex w-full gap-6 items-center">
-                            {(() => {
-                              const currentIndex = steps.indexOf(order?.status);
-                              const progressWidth = ((currentIndex + 1) / steps.length) * 100;
+      {(() => {
+        const currentIndex = steps.indexOf(order?.status);
+        const progressWidth =
+          ((currentIndex + 1) / steps.length) * 100;
 
-                              return (
-                                <>
-                                  {/* Progress line */}
-                                  <div
-                                    className="absolute top-2 left-0 h-1 bg-orange-500 transition-all duration-500"
-                                    style={{ width: `${progressWidth}%` }}
-                                  ></div>
+        return (
+          <>
+            {/* Progress line */}
+            <div
+              className="absolute top-6 left-0 h-1 bg-orange-500 transition-all duration-500"
+              style={{ width: `${progressWidth}%` }}
+            ></div>
 
-                                  {steps.map((step, i) => {
-                                    const isActive = currentIndex >= i;
-                                    const isClickable = i <= currentIndex + 1;
-                                    return (
-                                      <div
-                                        key={i}
-                                        className="z-10 flex flex-col items-center cursor-pointer"
-                                      onClick={(e) => {
-  e.stopPropagation();
+            <div className="flex justify-between w-full relative z-10">
+              {steps.map((step, i) => {
+                const isActive = currentIndex >= i;
+                const isClickable = i <= currentIndex + 1;
 
-  if (!isClickable) return;
+                return (
+                  <div
+                    key={i}
+                    className="flex flex-col items-center flex-1 min-w-[100px]"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (!isClickable) return;
+                      handleStatusChange(order._id, step);
+                    }}
+                  >
+                    <div
+                      className={`w-5 h-5 rounded-full ${
+                        isActive
+                          ? "bg-orange-500"
+                          : "bg-gray-400"
+                      }`}
+                    ></div>
 
-  console.log("Clicked Step:", step);
-  console.log("Order ID:", order._id);
-
-  handleStatusChange(order._id, step);
-}}
-                                      >
-                                        <div
-                                          className={`w-5 h-5 rounded-full transition-all duration-300 ${isActive ? "bg-orange-500" : "bg-gray-400"
-                                            }`}
-                                        ></div>
-
-                                        <p
-                                          className={`text-sm mt-2 whitespace-nowrap ${isActive ? "text-orange-500" : "text-gray-400"
-                                            }`}
-                                        >
-                                          {step.replaceAll("_", " ")}
-                                        </p>
-                                      </div>
-                                    );
-                                  })}
-                                </>
-                              );
-                            })()}
-                          </div>
-                        </div>
-                      </div>
+                    <p
+                      className={`text-[10px] md:text-sm mt-2 text-center ${
+                        isActive
+                          ? "text-orange-500"
+                          : "text-gray-400"
+                      }`}
+                    >
+                      {step.replaceAll("_", " ")}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+          </>
+        );
+      })()}
+    </div>
+  </div>
+</div>
                     </div>
 
                     <button className="bg-orange-500 text-white px-5 py-2 rounded-lg relative bottom-8 right-0" onClick={() => navigate(`${order._id}`, { state: order })}>
@@ -370,116 +377,7 @@ const handleStatusChange = async (orderId, newStatus) => {
 
 
 
-        {/* RIGHT SIDE PANEL */}
-        <div className="space-y-6">
-
-          {/* Inventory Risk */}
-          <div className="bg-white p-6 mt-4 rounded-xl shadow">
-            <h3 className="font-bold text-3xl text-black mb-10">Inventory Risk Summary</h3>
-            <p className="text-gray-400">TOP DEPLETION RISKS</p>
-
-            {/* Item 1 */}
-            <div className="mb-6">
-              <div className="flex justify-between">
-                <span className="font-medium">Amoxicillin 500mg</span>
-                <span className="text-red-600 font-semibold">2 Left</span>
-              </div>
-
-              <div className="w-full h-2 bg-gray-200 rounded-full mt-2">
-                <div className="w-[10%] h-2 bg-red-500 rounded-full"></div>
-              </div>
-
-              <span className="text-xs text-gray-400 block mt-1">
-                Triggered by 3 new orders
-              </span>
-            </div>
-            {/* Item 2 */}
-            <div className="mb-6">
-              <div className="flex justify-between">
-                <span className="font-medium">Metformin 850mg</span>
-                <span className="text-yellow-600 font-semibold">18 Left</span>
-              </div>
-
-              <div className="w-full h-2 bg-gray-200 rounded-full mt-2">
-                <div className="w-[25%] h-2 bg-yellow-500 rounded-full"></div>
-              </div>
-
-              <span className="text-xs text-gray-400 block mt-1">
-                Triggered by Order #ORD-88291
-              </span>
-            </div>
-
-            {/* Item 3 */}
-            <div className="mb-6">
-              <div className="flex justify-between">
-                <span className="font-medium">Vitamin C 1000mg</span>
-                <span className="text-yellow-600 font-semibold">45 Left</span>
-              </div>
-
-              <div className="w-full h-2 bg-gray-200 rounded-full mt-2">
-                <div className="w-[50%] h-2 bg-yellow-500 rounded-full"></div>
-              </div>
-            </div>
-
-            {/* Item 4 */}
-            <div className="mb-6">
-              <div className="flex justify-between">
-                <span className="font-medium">Omeprazole 20mg</span>
-                <span className="text-gray-700 font-semibold">82 Left</span>
-              </div>
-
-              <div className="w-full h-2 bg-gray-200 rounded-full mt-2">
-                <div className="w-[75%] h-2 bg-orange-500 rounded-full"></div>
-              </div>
-            </div>
-
-            {/* Button */}
-            <div className="mt-4">
-              <button className="w-full border border-gray-300 rounded-xl py-3 font-medium hover:bg-gray-50 transition">
-                Review Stock Replenishment
-              </button>
-            </div>
-          </div>
-
-          {/* Auto Cart Alert */}
-          <div className="bg-orange-300 border border-orange-300 p-4 rounded-lg">
-            <h2 className="text-orange-500 text-2xl font-extrabold">AUTO-CART ALERTS</h2>
-            <div className="bg-white border border-gray-300 rounded-lg p-4 shadow-sm">
-              <div className="flex justify-between items-center">
-                <p className="text-black font-medium">
-                  Will Trigger Reorder
-                </p>
-
-                <span className="bg-orange-600 text-white border border-orange-500 px-2 py-1 rounded-md text-sm">
-                  CRITICAL
-                </span>
-              </div>
-
-              <p className="text-gray-600 mt-2">
-                Antibiotics Group 4 will reach reorder point after next dispatch.
-              </p>
-            </div>
-
-            <div className="bg-white border border-gray-300 mt-4 rounded-lg p-4 shadow-sm">
-
-              <div className="flex justify-between items-center">
-                <p className="text-black font-medium">
-                  Batch Ending Soon
-                </p>
-
-                <span className="text-white border bg-yellow-500 border-yellow-500 px-2 py-1 rounded-md text-sm">
-                  WARNING
-                </span>
-              </div>
-
-              <p className="text-gray-600 mt-2">
-                Batch #BN-99201 for Insulin Vials expires in 45 days.
-              </p>
-
-
-            </div>
-          </div>
-        </div>
+        
       </div>
 
     </div>

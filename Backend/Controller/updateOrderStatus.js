@@ -7,7 +7,7 @@ const updateOrderStatus = async (req, res) => {
 
     console.log("Updating:", id, status);
 
-    const updatedOrder = await orderModel.findByIdAndUpdate(
+    const updatedOrder = await orderModel.findByIdAndReplace(
       id,
       { status },
 {
