@@ -7,6 +7,7 @@ import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import Inventory2Icon from "@mui/icons-material/Inventory2";
 import MovingIcon from '@mui/icons-material/Moving';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { useNavigate } from "react-router-dom";
 
 const OrdersOverview = () => {
   const [selectedStatus, setSelectedStatus] = useState("ALL");
@@ -21,8 +22,16 @@ const OrdersOverview = () => {
     DELIVERED: "bg-green-100 text-green-600",
   };
 
-  const steps = ["PLACED", "PACKED", "DISPATCHED", "IN_TRANSIT", "DELIVERED"];
-  const [open, setOpen] = useState(false);
+const steps = [
+  "PLACED",
+  "CONFIRMED",
+  "PACKED",
+  "READY_FOR_DISPATCH",
+  "DISPATCHED",
+  "IN_TRANSIT",
+  "OUT_FOR_DELIVERY",
+  "DELIVERED",
+];  const [open, setOpen] = useState(false);
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   // ================= FETCH =================
@@ -40,18 +49,21 @@ const OrdersOverview = () => {
   useEffect(() => {
     fetchOrders();
   }, []);
+  const navigate = useNavigate()
+const handleStatusChange = async (orderId, newStatus) => {
+  try {
+    console.log("Sending Status:", newStatus);
 
+    const res = await axiosInstance.put(
+      `/registerroute/updateOrderStatus/${orderId}`,
+      {
+        status: newStatus,
+      }
+    );
 
-  const handleStatusChange = async (orderId, newStatus) => {
-    try {
-      await axiosInstance.put(
-        `/registerroute/updateOrderStatus/${orderId}`,
-        {
-          status: newStatus,
-        }
-      );
+    console.log("API Success:", res.data);
 
-      // local UI update
+    if (res.data.success) {
       setOrders((prev) =>
         prev.map((order) =>
           order._id === orderId
@@ -59,11 +71,14 @@ const OrdersOverview = () => {
             : order
         )
       );
-    } catch (error) {
-      console.log("Status update failed", error);
     }
-  };
+  } catch (error) {
+    console.log("Status update failed");
 
+    console.log("Backend Error:", error.response?.data);
+    console.log("Full Error:", error);
+  }
+};
   const filteredOrders =
     selectedStatus === "ALL"
       ? orders
@@ -173,8 +188,6 @@ const OrdersOverview = () => {
 
       {/* ================= MAIN SECTION ================= */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-
-
         {/* LEFT SIDE */}
         <div className="lg:col-span-2 space-y-6">
 
@@ -190,20 +203,6 @@ const OrdersOverview = () => {
 
             {/* Right Side - Filters */}
             <div className="flex items-center gap-6">
-              {/* <select
-  
-  className="border p-2 rounded-md"
->
-  <option value="PLACED">PLACED</option>
-  <option value="CONFIRMED">CONFIRMED</option>
-  <option value="PACKED">PACKED</option>
-  <option value="READY_FOR_DISPATCH">READY_FOR_DISPATCH</option>
-  <option value="DISPATCHED">DISPATCHED</option>
-  <option value="IN_TRANSIT">IN_TRANSIT</option>
-  <option value="OUT_FOR_DELIVERY">OUT_FOR_DELIVERY</option>
-  <option value="DELIVERED">DELIVERED</option>
-</select> */}
-
               <select className="border border-gray-500 p-2 rounded-md">
                 <option>Retailer: All</option>
               </select>
@@ -216,7 +215,7 @@ const OrdersOverview = () => {
 
             {loading ? (
               <p>Loading...</p>
-            ) : filteredOrders.length === 0 ? (
+            ) : filteredOrders?.length === 0 ? (
               <p>No Orders Found</p>
             ) : (
               filteredOrders.map((order) => (
@@ -238,25 +237,25 @@ const OrdersOverview = () => {
                         {/* Retailer */}
                         <div className="flex flex-col">
                           <p className="text-black whitespace-nowrap">
-                            #{order.orderId}
+                            #{order?.orderId}
                           </p>
-                          <p className="text-black whitespace-nowrap">   {order.customer?.name} </p>
+                          <p className="text-black whitespace-nowrap">   {order?.customer?.name} </p>
                           <div className="flex gap-2 mt-1 text-xs whitespace-nowrap">
                             <span className="text-gray-600">
-                              {new Date(order.createdAt).toDateString()}
+                              {new Date(order?.createdAt).toDateString()}
                             </span>
                             <span className="text-gray-600">
-                              . {order.items.length} Items
+                              . {order?.items?.length} Items
                             </span>
                             <span className="text-black">
-                              . ₹{order.total}
+                              . ₹{order?.total}
                             </span>
                           </div>
                         </div>
 
                         {/* Courier */}
                         <div className="text-sm text-gray-600">
-                          {order.courier?.name} ({order.courier?.time})
+                          {order?.courier?.name} ({order?.courier?.time})
                         </div>
 
                       </div>
@@ -270,10 +269,10 @@ const OrdersOverview = () => {
                           <div className="absolute top-2 left-0 w-full h-1 bg-gray-300"></div>
 
                           {/* Dynamic progress line */}
-                       
+
                           <div className="flex w-full gap-6 items-center">
                             {(() => {
-                              const currentIndex = steps.indexOf(order.status);
+                              const currentIndex = steps.indexOf(order?.status);
                               const progressWidth = ((currentIndex + 1) / steps.length) * 100;
 
                               return (
@@ -286,15 +285,21 @@ const OrdersOverview = () => {
 
                                   {steps.map((step, i) => {
                                     const isActive = currentIndex >= i;
-
+                                    const isClickable = i <= currentIndex + 1;
                                     return (
                                       <div
                                         key={i}
                                         className="z-10 flex flex-col items-center cursor-pointer"
-                                        onClick={(e) => {
-                                          e.stopPropagation();
-                                          handleStatusChange(order._id, step);
-                                        }}
+                                      onClick={(e) => {
+  e.stopPropagation();
+
+  if (!isClickable) return;
+
+  console.log("Clicked Step:", step);
+  console.log("Order ID:", order._id);
+
+  handleStatusChange(order._id, step);
+}}
                                       >
                                         <div
                                           className={`w-5 h-5 rounded-full transition-all duration-300 ${isActive ? "bg-orange-500" : "bg-gray-400"
@@ -318,7 +323,7 @@ const OrdersOverview = () => {
                       </div>
                     </div>
 
-                    <button className="bg-orange-500 text-white px-5 py-2 rounded-lg relative bottom-8 right-0"   onClick={() => navigate(`${order._id}`, { state: order })}>
+                    <button className="bg-orange-500 text-white px-5 py-2 rounded-lg relative bottom-8 right-0" onClick={() => navigate(`${order._id}`, { state: order })}>
                       View Order
                     </button>
 

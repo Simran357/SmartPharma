@@ -45,7 +45,7 @@ const WholeSaler = () => {
     const fetchTopProducts = async () => {
       try {
         const res = await axiosInstance.get("/registerroute/getTopSellingProducts");
-        setProducts(res.data.data);
+        setProducts(res?.data?.data);
       } catch (err) {
         console.error(err);
       }
@@ -57,7 +57,7 @@ const WholeSaler = () => {
     const fetchHealth = async () => {
       try {
         const res = await axiosInstance.get("/registerroute/getInventoryHealth");
-        setHealth(res.data.data);
+        setHealth(res?.data?.data);
       } catch (err) {
         console.error("Error fetching inventory health:", err);
       }
@@ -90,7 +90,7 @@ const WholeSaler = () => {
   const fetchPartners = async () => {
     try {
       const res = await axiosInstance.get("/registerroute/getDeliveryPartners");
-      setCourierList(res.data.data);
+      setCourierList(res?.data?.data);
     } catch (err) {
       console.error(err);
     }
@@ -332,7 +332,7 @@ const WholeSaler = () => {
                           {/* ORDER ID */}
                           <td className="px-6 py-4">
                             <span
-                              onClick={() => navigate(`/Dashboard/Retailer/order/${order._id}`)}
+                              onClick={() => navigate(`PendingOrders/${order._id}`)}
                               className="text-sm font-semibold text-blue-600 cursor-pointer hover:underline"
                             >
                               #{order.orderId}
@@ -372,7 +372,7 @@ const WholeSaler = () => {
                           {/* ACTIONS */}
                           <td className="px-6 py-4 text-center">
                             <button
-                              onClick={() => navigate(`/Dashboard/Retailer/order/${order._id}`)}
+                              onClick={() => navigate(`PendingOrders/${order._id}`)}
                               className="bg-blue-600 text-white text-[10px] font-bold px-4 py-2 rounded-lg hover:bg-blue-700"
                             >
                               View
@@ -457,28 +457,7 @@ const WholeSaler = () => {
           <aside className='space-y-8'>
             {/* <!-- Financial Overview: Credit limits and outstanding payment status | --> */}
             <section className='bg-slate-900 rounded-3xl text-white  p-6 shadow-xl relative overflow-hidden'>
-              {/* <div className='relative z-10'>
-                <h4 className='text-slate-400 text-[10px] font-bold uppercase tracking-widest mb-4'>Financial Overview</h4>
-                <div className="space-y-4">
-                  <div>
-                    <p className='text-xs mb-1 text-slate-400 '>Available Credit Limit</p>
-                    <p className='text-white font-semibold  text-1xl'>Rs45,000.00<span
-                      className='text-xs font-normal  text-slate-400 ml-1'>/ Rs100k</span></p>
-                    <div className="w-full h-1 bg-slate-800 rounded-full mt-2">
-                      <div className="w-[45%] h-full bg-blue-500 rounded-full"></div>
-                    </div>
-                  </div>
-
-                  <div className="pt-2">
-                    <p className="text-slate-400 text-xs mb-1">Outstanding Payments</p>
-                    <p className="text-xl font-bold text-rose-400">Rs 12,340.50</p>
-                  </div>
-                </div>
-
-                <button
-                  className="w-full mt-6 py-2 bg-blue-600 hover:bg-blue-700 rounded-xl text-xs font-bold transition-colors">Settle
-                  Dues</button>
-              </div> */}
+            
 
               <div className="flex items-center gap-2 mb-3">
                 <LocalShippingIcon style={{ fontSize: 16, color: "#4ade80" }} />
@@ -565,55 +544,6 @@ const WholeSaler = () => {
                 Expiry List</button>
             </section>
 
-            {/* <!-- Pending Franchise Requests --> */}
-            {/* <section className="bg-white rounded-3xl border border-slate-100 shadow-sm p-6"
-              data-purpose="franchise-requests-widget">
-              <h4 className="font-bold text-slate-800 mb-6 flex items-center gap-2">
-                <ApartmentIcon className='text-blue-500' />
-                Franchise Requests
-              </h4>
-              <div className="space-y-4">
-                <div
-                  className="flex items-center justify-between p-3 hover:bg-slate-50 rounded-2xl transition-colors cursor-pointer">
-                  <div className="flex items-center gap-3">
-                    <div
-                      className="w-10 h-10 bg-blue-100 text-blue-700 rounded-full flex items-center justify-center font-bold text-xs">
-                      JP</div>
-                    <div>
-                      <p className="text-sm font-bold text-slate-800">Janata Pharma</p>
-                      <p className="text-[10px] text-slate-400">New Registration</p>
-                    </div>
-                  </div>
-                  <button
-                    className="p-1.5 bg-green-50 text-green-600 rounded-lg hover:bg-green-600 hover:text-white transition-colors">
-                    <DoneIcon />
-                  </button>
-                </div>
-                <div
-                  className="flex items-center justify-between p-3 hover:bg-slate-50 rounded-2xl transition-colors cursor-pointer">
-                  <div className="flex items-center gap-3">
-                    <div
-                      className="w-10 h-10 bg-indigo-100 text-indigo-700 rounded-full flex items-center justify-center font-bold text-xs">
-                      SM</div>
-                    <div>
-                      <p className="text-sm font-bold text-slate-800">Star Meds Co.</p>
-                      <p className="text-[10px] text-slate-400">Credit Limit Increase</p>
-                    </div>
-                  </div>
-                  <button
-                    className="p-1.5 bg-green-50 text-green-600 rounded-lg hover:bg-green-600 hover:text-white transition-colors">
-                    <DoneIcon />
-                  </button>
-                </div>
-              </div>
-              <div className="mt-6 p-4 bg-blue-50/50 rounded-2xl flex gap-3 items-center">
-                <div className="bg-blue-600 p-1.5 rounded-lg text-white">
-
-                </div>
-                <p className="text-[11px] text-blue-800 font-medium">3 more requests need your verification today.
-                </p>
-              </div>
-            </section> */}
           </aside>
         </div>
       </main>

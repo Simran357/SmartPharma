@@ -12,7 +12,7 @@ const SingleOrder = () => {
 
 const { id } = useParams();
 const location = useLocation();
-
+console.log(id)
 // ✅ get instant data
 const [order, setOrder] = useState(location.state || null);
 
@@ -21,6 +21,7 @@ useEffect(() => {
     try {
       const res = await axiosInstance.get(`/registerroute/getOrderById/${id}`);
       setOrder(res?.data?.order);
+      console.log(res?.data?.order)
     } catch (err) {
       console.log(err);
     }

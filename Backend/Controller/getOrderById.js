@@ -4,10 +4,11 @@ const getOrderById = async (req, res) => {
   try {
     const userId = req?.user?.id;
     const { id } = req.params;
-
+console.log("userid",req?.user?.id)
+console.log("id",id)
     const order = await orderModel.findOne({
       _id: id,
-      userId: userId,
+
     });
 
 
