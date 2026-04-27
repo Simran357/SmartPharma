@@ -7,7 +7,12 @@ import {
 } from '@ant-design/icons';
 
 import { Button, Layout, Menu, theme } from 'antd';
-import { DashboardCustomize, Inventory2 } from '@mui/icons-material';
+import ListAltIcon from '@mui/icons-material/ListAlt';
+import { DashboardCustomize } from '@mui/icons-material';
+import StoreIcon from '@mui/icons-material/Store';
+import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+import Inventory2Icon from '@mui/icons-material/Inventory2';
+
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import UserProfileMenu from '../UserProfile';
 import { NotificationMenu } from './Notifications';
@@ -30,12 +35,12 @@ const Wholesalerlayout = () => {
     },
     {
       key: "/Dashboard/Wholesaler/Inventory",
-      icon: <Inventory2 />,
+      icon: <Inventory2Icon  />,
       label: "Inventory",
     },
     {
       key: "/Dashboard/Wholesaler/Alert",
-      icon: <Inventory2 />,
+      icon: <Inventory2Icon />,
       label: "Actionable",
     },
     {
@@ -49,16 +54,16 @@ const Wholesalerlayout = () => {
     },
     {
       key: "/Dashboard/Wholesaler/Retailors",
-      icon: <RobotFilled />,
+      icon: <StoreIcon />,
       label: "Retailors",
     },{
       key: "/Dashboard/Wholesaler/OrdersOverview",
-      icon: <RobotFilled />,
+      icon: <ListAltIcon />,
       label: "OrdersOverview",
     },
     {
       key: "/Dashboard/Wholesaler/Connectcourier",
-      icon: <RobotFilled />,
+      icon: <LocalShippingIcon />,
       label: "CourierList", 
     },
   ];
