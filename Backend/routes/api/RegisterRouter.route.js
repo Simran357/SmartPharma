@@ -17,9 +17,9 @@ const  getBatches  = require("../../Controller/BatchController")
 const uploadInvoice = require("../../MiddleWare/uploadInvoice")
 const aiOCRController = require("../../Controller/ocrParseControler")
 const {stripePayment} = require("../../Controller/bill")
-const getDistance = require("../../Controller/getCalcuateDistance")
+
 const order=require("../../Controller/orderController")
-const getShippingRates = require("../../Controller/getShippingRates")
+
 const addDeliveryPartner=require("../../Controller/addDeliveryPartner")
 const getDeliveryPartners=require("../../Controller/getDeliveryPartners")
 const connectCourier= require('../../Controller/connectCourier')
@@ -27,6 +27,7 @@ const getConnectedCouriers=require("../../Controller/getConnectedCourier")
 const getWholesalerOrders = require("../../Controller/getWholesalerOrders")
 const getLowStockItems  = require("../../Controller/getLowStockItems")
 const { updateOrderStatus } = require("../../Controller/updatePOrderStatus")
+const getOrderById = require("../../Controller/getOrderById")
 
 
 router.post("/registercontroller",RegisterController)
@@ -35,14 +36,12 @@ router.get("/GetRegisterdata",GetRegisterdata)
 router.post("/auth/google",GoogleController)
 router.post("/createNewUser",createNewUser)
 router.post("/AddProductList/:id",authMiddleware,AddProductList)
-//stock
 router.post("/addStock",authMiddleware, addStock);
 router.post("/billController", stripePayment);
-router.post("/getDistance", getDistance);
-router.post("/ShippingRate", getShippingRates);
 
 
-router.post("/ocrparse",uploadInvoice.single("file"), aiOCRController);
+
+
 router.post("/ocrparse",uploadInvoice.single("file"), aiOCRController);
 router.get("/getSingleRetailor/:id",getSingleRetailor)
 router.get("/getProductList/:id",getProductList)
@@ -52,9 +51,8 @@ router.get("/getInventoryStock",authMiddleware,getInventoryStock)
 router.get("/batches/:name", getBatches)
 router.put("/updateRole/:id", updateRoleController)
 router.get("/getWholesalerOrders",authMiddleware,getWholesalerOrders)
+router.get("/getOrderById", getOrderById)
 router.get("/getLowStockItems", getLowStockItems)
-// routes/order.js
-//order
 router.post('/orderController',order)   
 router.get("/me",authMiddleware,getMe)
 console.log("router.file")
@@ -64,9 +62,7 @@ router.put('/updateOrderStatus',updateOrderStatus)
 //delivery
 router.post("/addDeliveryPartner",addDeliveryPartner)
 router.get("/getDeliveryPartners", getDeliveryPartners)
-
 router.post("/connectCourier",connectCourier)
-
 router.get("/getConnectedCouriers",getConnectedCouriers)
 
 module.exports = router  

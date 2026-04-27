@@ -13,7 +13,6 @@ import Actionable from './Components/Billing/Alert/Actionable'
 import SingleWholesalerInfo from './Components/Dashboard/Retailar/Order/WholesalerPages/SingleWholesalerInfo'
 import Lowstock from './Components/Wholesalecompenent.jsx/Lowstock'
 import Dailysales from './Components/Wholesalecompenent.jsx/Dailysales'
-import ProductOverview from './Inventory/ProductOverview'
 import Courier from './Components/Billing/Courier'
 import TempelateDesigner from './Inventory/TempelateDesigner'
 import ProtectedRoute from './Components/Dashboard/Form/ProtectedRoute'
@@ -37,12 +36,15 @@ import InvoicePurchaseScan from './Components/Billing/InvoicePurchaseScan'
 import OrderSuccess from './Components/Billing/OrderSuccess'
 import OrdersOverview from './Components/Ordersoverview/Order'
 import DeliverySys from './Components/Delivery/deliverySys'
+import {ToastContainer} from "react-toastify"
+import "react-toastify/dist/ReactToastify.css";
 import SingleOrder from './Components/Wholesalecompenent.jsx/SingleOrder'
 
 const App = () => {
   return (
-    <Routes>
-
+      <div>
+<Routes>
+     
       {/* PUBLIC ROUTES */}
       <Route path="/" element={<Index />} />
       <Route path="/login" element={<Login />} />
@@ -70,9 +72,15 @@ const App = () => {
           <Route path="AiAgent" element={<AiAgent />} />
           <Route path="Inventory" element={<Inventory />} />
           <Route path="TempelateDesigner" element={<TempelateDesigner />} />
-          <Route path="PendingOrders/:id" element={<SingleOrder />} />
-          <Route path="ProductOverview" element={<ProductOverview />} />
-          <Route path="OrdersOverview" element={<OrdersOverview />} />
+<Route path="PendingOrders">
+  <Route index element={<PendingOrders />} />
+  <Route path=":id" element={<SingleOrder />} />
+</Route>        
+
+<Route path="OrdersOverview">
+  <Route index element={<OrdersOverview />} />
+  <Route path=":id" element={<SingleOrder />} />
+</Route>
           <Route path="Delivery" element={<DeliverySys />} />
           <Route path="Connectcourier" element={<Connectcourier />} />
           <Route path="Retailors">
@@ -80,7 +88,6 @@ const App = () => {
             <Route path=":id" element={<SingleRetailerDetails />} />
           </Route>
           <Route path="Alert" element={<Actionable />} />
-          <Route path="PendingOrders" element={<PendingOrders />} />
           <Route path="ExpiryMedicine" element={<ExpiryMedicine />} />
         </Route>
 
@@ -113,8 +120,12 @@ const App = () => {
         </Route>
 
       </Route>
-
+       
     </Routes>
+     <ToastContainer position="top-right" autoClose={3000} />
+      </div>
+    
+    
   )
 }
 

@@ -23,7 +23,7 @@ const stripePayment = async (req, res, next) => {
       metadata: {
         wholesalerId: wholesalerId,
       },
-      email: "client@gmail.com",
+      email: orderData?.customer?.email,
       name: orderData?.customer?.name || "Customer",
     });
 
@@ -72,5 +72,4 @@ const stripePayment = async (req, res, next) => {
     });
   }
 };
-
 module.exports = { stripePayment };

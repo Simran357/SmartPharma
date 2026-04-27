@@ -1,15 +1,4 @@
 
-// const FetchProductList= async (req,res,next)=>{
-//     console.log("fetch product list hits")
-//     console.log(req.body)
-   
-
-
-//     res.status(200).json({message:"medicine fetch successfully"})
-
-// }
-
-// module.exports = FetchProductList
 const ProductModel = require("../model/Product.model");
 
 const FetchProductList = async (req, res, next) => {

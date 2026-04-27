@@ -103,13 +103,13 @@ useEffect(() => {
         </div>
  )}  
      {isOpen && (    
-  <div
+  <div   
 className="fixed inset-0 bg-black/40 flex items-center justify-center"
     onClick={() => setIsOpen(false)} 
-  >
-    <motion.div
+  >   
+    <motion.div   
       initial={{ scale: 0 }}
-      animate={{ scale: 1 }}
+      animate={{ scale: 1 }}   
       transition={{ duration: 0.3 }}
       onClick={(e) => e.stopPropagation()}
       className="p-2 w-[90%] md:w-500px"
@@ -123,8 +123,7 @@ className="fixed inset-0 bg-black/40 flex items-center justify-center"
         Close   
       </button>
     </motion.div>
-  </div>
-)}
-    </nav>
+  </div>   
+)}</nav>
 );}; 
 export default NavBar;

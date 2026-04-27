@@ -43,11 +43,11 @@ const Retailerlayout = () => {
     }, {
       key: "/Dashboard/Retailer/ReturnInvoice",
       icon: <DeliveryDining />,
-      label: "ReturnInvoice",
+      label: "Return Invoice",
     }, {
       key: "/Dashboard/Retailer/InvoicePurchaseScan",
       icon: <DeliveryDining />,
-      label: "InvoicePurchaseScan",
+      label: "OCR System",
     }
   ]
 
