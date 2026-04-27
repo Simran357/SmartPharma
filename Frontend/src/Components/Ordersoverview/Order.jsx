@@ -7,6 +7,7 @@ import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import Inventory2Icon from "@mui/icons-material/Inventory2";
 import MovingIcon from '@mui/icons-material/Moving';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { useNavigate } from "react-router-dom";
 
 const OrdersOverview = () => {
   const [selectedStatus, setSelectedStatus] = useState("ALL");
@@ -21,10 +22,46 @@ const OrdersOverview = () => {
     DELIVERED: "bg-green-100 text-green-600",
   };
 
-  const steps = ["PLACED", "PACKED", "DISPATCHED", "IN_TRANSIT", "DELIVERED"];
-  const [open, setOpen] = useState(false);
+const steps = [
+  "PLACED",
+  "CONFIRMED",
+  "PACKED",
+  "READY_FOR_DISPATCH",
+  "DISPATCHED",
+  "IN_TRANSIT",
+  "OUT_FOR_DELIVERY",
+  "DELIVERED",
+];
+
+const [open, setOpen] = useState(false);
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+  const orderStats = {
+  total: orders.length,
+  inProgress: orders.filter(
+    (o) =>
+      o.status === "PLACED" ||
+      o.status === "CONFIRMED" ||
+      o.status === "PACKED"
+  ).length,
+
+  readyForDispatch: orders.filter(
+    (o) => o.status === "READY_FOR_DISPATCH"
+  ).length,
+
+  inTransit: orders.filter(
+    (o) =>
+      o.status === "DISPATCHED" ||
+      o.status === "IN_TRANSIT" ||
+      o.status === "OUT_FOR_DELIVERY"
+  ).length,
+
+  delayed: orders.filter((o) => o.status === "DELAYED").length,
+
+  pending: orders.filter((o) => o.status === "PLACED").length,
+};
+
+const [searchTerm, setSearchTerm] = useState("");
   // ================= FETCH =================
   const fetchOrders = async () => {
     try {
@@ -37,21 +74,25 @@ const OrdersOverview = () => {
     }
   }
 
+
   useEffect(() => {
     fetchOrders();
   }, []);
+  const navigate = useNavigate()
+const handleStatusChange = async (orderId, newStatus) => {
+  try {
+    console.log("Sending Status:", newStatus);
 
+    const res = await axiosInstance.put(
+      `/registerroute/updateOrderStatus/${orderId}`,
+      {
+        status: newStatus,
+      }
+    );
 
-  const handleStatusChange = async (orderId, newStatus) => {
-    try {
-      await axiosInstance.put(
-        `/registerroute/updateOrderStatus/${orderId}`,
-        {
-          status: newStatus,
-        }
-      );
+    console.log("API Success:", res.data);
 
-      // local UI update
+    if (res.data.success) {
       setOrders((prev) =>
         prev.map((order) =>
           order._id === orderId
@@ -59,15 +100,29 @@ const OrdersOverview = () => {
             : order
         )
       );
-    } catch (error) {
-      console.log("Status update failed", error);
     }
-  };
+  } catch (error) {
+    console.log("Status update failed");
 
-  const filteredOrders =
-    selectedStatus === "ALL"
-      ? orders
-      : orders.filter((order) => order.status === selectedStatus);
+    console.log("Backend Error:", error.response?.data);
+    console.log("Full Error:", error);
+  }
+};
+  const filteredOrders = orders.filter((order) => {
+  const matchesStatus =
+    selectedStatus === "ALL" ||
+    order.status === selectedStatus;
+
+  const matchesSearch =
+    order?.orderId
+      ?.toLowerCase()
+      .includes(searchTerm.toLowerCase()) ||
+    order?.customer?.name
+      ?.toLowerCase()
+      .includes(searchTerm.toLowerCase());
+
+  return matchesStatus && matchesSearch;
+});
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
 
@@ -88,7 +143,9 @@ const OrdersOverview = () => {
             <ShoppingCartIcon className="text-red-500 " />
           </div>
           <div className="flex items-center gap-3">
-            <span className="text-4xl font-bold text-black">142</span>
+<span className="text-4xl font-bold text-black">
+  {orderStats.total}
+</span>
             <span className="text-green-600 font-semibold"><MovingIcon className="text-green-500" />12%</span>
           </div>
         </div>
@@ -101,7 +158,9 @@ const OrdersOverview = () => {
           </p>
 
           <div className="flex items-center gap-3 mt-2">
-            <span className="text-4xl font-bold text-black">38</span>
+<span className="text-4xl font-bold text-black">
+  {orderStats.inProgress}
+</span>
             <span className="text-green-600 font-semibold"><MovingIcon className="text-green-500" />5%</span>
           </div>
         </div>
@@ -118,7 +177,9 @@ const OrdersOverview = () => {
 
 
           <div className="flex items-center gap-3 mt-2">
-            <span className="text-4xl font-bold text-black">24</span>
+<span className="text-4xl font-bold text-black">
+  {orderStats.readyForDispatch}
+</span>
             <span className="text-red-600 font-semibold"><MovingIcon className="text-red-500" />2%</span>
           </div>
         </div>
@@ -133,7 +194,9 @@ const OrdersOverview = () => {
           </div>
 
           <div className="flex items-center gap-3 mt-2">
-            <span className="text-4xl font-bold text-black">65</span>
+<span className="text-4xl font-bold text-black">
+  {orderStats.inTransit}
+</span>
             <span className="text-green-600 font-semibold"><MovingIcon className="text-green-500" />8%</span>
           </div>
         </div>
@@ -148,7 +211,9 @@ const OrdersOverview = () => {
             <WarningAmberIcon className="text-red-500" />
           </div>
           <div className="flex items-center gap-3 mt-2">
-            <span className="text-4xl font-bold text-black">15</span>
+<span className="text-4xl font-bold text-black">
+  {orderStats.delayed}
+</span>
             <span className="text-yellow-500 font-semibold"><ArrowForwardIcon sx={{ color: "yellow" }} />1%</span>
           </div>
         </div>
@@ -164,59 +229,56 @@ const OrdersOverview = () => {
           </div>
 
           <div className="flex items-center gap-3 mt-2">
-            <span className="text-4xl font-bold text-black">14</span>
+<span className="text-4xl font-bold text-black">
+  {orderStats.pending}
+</span>
             <span className="text-green-600 font-semibold"><MovingIcon className="text-green-500" />4%</span>
           </div>
-          <div className='p-2 mt-4 border border-gray-500  text-center text-black'>VIEW DETAILS</div>
+          <div className='p-2 mt-4 border border-gray-500  text-center text-black'onClick={() => navigate("/Dashboard/Wholesaler/PendingOrders")}>VIEW DETAILS</div>
         </div>
       </div>
 
       {/* ================= MAIN SECTION ================= */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-
-
         {/* LEFT SIDE */}
-        <div className="lg:col-span-2 space-y-6">
+        <div className="lg:col-span-4 space-y-6">
 
 
-          {/* search */}
-          <div className="flex items-center bg-white justify-between border mt-8 border-gray-600 p-4 w-full ">
+       {/* search + filter */}
+<div className="flex flex-col md:flex-row items-start md:items-center bg-white justify-between border mt-8 border-gray-300 p-4 w-full gap-4">
 
-            {/* Left Side - Search */}
-            <div className="border border-gray-500 bg-white p-2">
-              Search OrderID, Retailer
-            </div>
+  {/* Search */}
+ <input
+  type="text"
+  placeholder="Search OrderID or Retailer"
+  value={searchTerm}
+  onChange={(e) => setSearchTerm(e.target.value)}
+  className="border border-gray-400 p-2 rounded-md w-full md:w-80"
+/>
 
-
-            {/* Right Side - Filters */}
-            <div className="flex items-center gap-6">
-              {/* <select
-  
-  className="border p-2 rounded-md"
->
-  <option value="PLACED">PLACED</option>
-  <option value="CONFIRMED">CONFIRMED</option>
-  <option value="PACKED">PACKED</option>
-  <option value="READY_FOR_DISPATCH">READY_FOR_DISPATCH</option>
-  <option value="DISPATCHED">DISPATCHED</option>
-  <option value="IN_TRANSIT">IN_TRANSIT</option>
-  <option value="OUT_FOR_DELIVERY">OUT_FOR_DELIVERY</option>
-  <option value="DELIVERED">DELIVERED</option>
-</select> */}
-
-              <select className="border border-gray-500 p-2 rounded-md">
-                <option>Retailer: All</option>
-              </select>
-
-
-            </div>
-          </div>
+  {/* Status Filter */}
+  <select
+    value={selectedStatus}
+    onChange={(e) => setSelectedStatus(e.target.value)}
+    className="border border-gray-400 p-2 rounded-md"
+  >
+    <option value="ALL">All Orders</option>
+    <option value="PLACED">Placed</option>
+    <option value="CONFIRMED">Confirmed</option>
+    <option value="PACKED">Packed</option>
+    <option value="READY_FOR_DISPATCH">Ready For Dispatch</option>
+    <option value="DISPATCHED">Dispatched</option>
+    <option value="IN_TRANSIT">In Transit</option>
+    <option value="OUT_FOR_DELIVERY">Out For Delivery</option>
+    <option value="DELIVERED">Delivered</option>
+  </select>
+</div>
           {/* Order Card */}
           <div className="bg-white p-6 rounded-xl shadow">
 
             {loading ? (
               <p>Loading...</p>
-            ) : filteredOrders.length === 0 ? (
+            ) : filteredOrders?.length === 0 ? (
               <p>No Orders Found</p>
             ) : (
               filteredOrders.map((order) => (
@@ -238,87 +300,100 @@ const OrdersOverview = () => {
                         {/* Retailer */}
                         <div className="flex flex-col">
                           <p className="text-black whitespace-nowrap">
-                            #{order.orderId}
+                            #{order?.orderId}
                           </p>
-                          <p className="text-black whitespace-nowrap">   {order.customer?.name} </p>
+                          <p className="text-black whitespace-nowrap">   {order?.customer?.name} </p>
                           <div className="flex gap-2 mt-1 text-xs whitespace-nowrap">
                             <span className="text-gray-600">
-                              {new Date(order.createdAt).toDateString()}
+                              {new Date(order?.createdAt).toDateString()}
                             </span>
                             <span className="text-gray-600">
-                              . {order.items.length} Items
+                              . {order?.items?.length} Items
                             </span>
                             <span className="text-black">
-                              . ₹{order.total}
+                              . ₹{order?.total}
                             </span>
                           </div>
                         </div>
 
                         {/* Courier */}
                         <div className="text-sm text-gray-600">
-                          {order.courier?.name} ({order.courier?.time})
+                          {order?.courier?.name} ({order?.courier?.time})
                         </div>
 
                       </div>
 
                       {/* ✅ STATUS BAR START */}
-                      <div className="flex  w-full mt-4 gap-4 items-center justify-center">
-                        <h1 className="text-orange-500 font-bold text-lg whitespace-nowrap ">Process Status</h1>
+                    {/* ✅ RESPONSIVE STATUS BAR */}
+<div className="w-full mt-4">
+  <h1 className="text-orange-500 font-bold text-lg mb-3">
+    Process Status
+  </h1>
 
-                        <div className="flex justify-between gap-8 items-center relative w-full max-w-600px">
-                          {/* Background line */}
-                          <div className="absolute top-2 left-0 w-full h-1 bg-gray-300"></div>
+  <div className="overflow-x-auto scrollbar-hide">
+    <div className="relative min-w-850px md:min-w-full flex items-center py-4">
 
-                          {/* Dynamic progress line */}
-                       
-                          <div className="flex w-full gap-6 items-center">
-                            {(() => {
-                              const currentIndex = steps.indexOf(order.status);
-                              const progressWidth = ((currentIndex + 1) / steps.length) * 100;
+      {/* Background line */}
+      <div className="absolute top-6 left-0 w-full h-1 bg-gray-300"></div>
 
-                              return (
-                                <>
-                                  {/* Progress line */}
-                                  <div
-                                    className="absolute top-2 left-0 h-1 bg-orange-500 transition-all duration-500"
-                                    style={{ width: `${progressWidth}%` }}
-                                  ></div>
+      {(() => {
+        const currentIndex = steps.indexOf(order?.status);
+        const progressWidth =
+          ((currentIndex + 1) / steps.length) * 100;
 
-                                  {steps.map((step, i) => {
-                                    const isActive = currentIndex >= i;
+        return (
+          <>
+            {/* Progress line */}
+            <div
+              className="absolute top-6 left-0 h-1 bg-orange-500 transition-all duration-500"
+              style={{ width: `${progressWidth}%` }}
+            ></div>
 
-                                    return (
-                                      <div
-                                        key={i}
-                                        className="z-10 flex flex-col items-center cursor-pointer"
-                                        onClick={(e) => {
-                                          e.stopPropagation();
-                                          handleStatusChange(order._id, step);
-                                        }}
-                                      >
-                                        <div
-                                          className={`w-5 h-5 rounded-full transition-all duration-300 ${isActive ? "bg-orange-500" : "bg-gray-400"
-                                            }`}
-                                        ></div>
+            <div className="flex justify-between w-full relative z-10">
+              {steps.map((step, i) => {
+                const isActive = currentIndex >= i;
+                const isClickable = i <= currentIndex + 1;
 
-                                        <p
-                                          className={`text-sm mt-2 whitespace-nowrap ${isActive ? "text-orange-500" : "text-gray-400"
-                                            }`}
-                                        >
-                                          {step.replaceAll("_", " ")}
-                                        </p>
-                                      </div>
-                                    );
-                                  })}
-                                </>
-                              );
-                            })()}
-                          </div>
-                        </div>
-                      </div>
+                return (
+                  <div
+                    key={i}
+                    className="flex flex-col items-center flex-1 min-w-100px"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (!isClickable) return;
+                      handleStatusChange(order._id, step);
+                    }}
+                  >
+                    <div
+                      className={`w-5 h-5 rounded-full ${
+                        isActive
+                          ? "bg-orange-500"
+                          : "bg-gray-400"
+                      }`}
+                    ></div>
+
+                    <p
+                      className={`text-[10px] md:text-sm mt-2 text-center ${
+                        isActive
+                          ? "text-orange-500"
+                          : "text-gray-400"
+                      }`}
+                    >
+                      {step.replaceAll("_", " ")}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+          </>
+        );
+      })()}
+    </div>
+  </div>
+</div>
                     </div>
 
-                    <button className="bg-orange-500 text-white px-5 py-2 rounded-lg relative bottom-8 right-0"   onClick={() => navigate(`${order._id}`, { state: order })}>
+                    <button className="bg-orange-500 text-white px-5 py-2 rounded-lg relative bottom-8 right-0" onClick={() => navigate(`${order._id}`, { state: order })}>
                       View Order
                     </button>
 
@@ -365,116 +440,7 @@ const OrdersOverview = () => {
 
 
 
-        {/* RIGHT SIDE PANEL */}
-        <div className="space-y-6">
-
-          {/* Inventory Risk */}
-          <div className="bg-white p-6 mt-4 rounded-xl shadow">
-            <h3 className="font-bold text-3xl text-black mb-10">Inventory Risk Summary</h3>
-            <p className="text-gray-400">TOP DEPLETION RISKS</p>
-
-            {/* Item 1 */}
-            <div className="mb-6">
-              <div className="flex justify-between">
-                <span className="font-medium">Amoxicillin 500mg</span>
-                <span className="text-red-600 font-semibold">2 Left</span>
-              </div>
-
-              <div className="w-full h-2 bg-gray-200 rounded-full mt-2">
-                <div className="w-[10%] h-2 bg-red-500 rounded-full"></div>
-              </div>
-
-              <span className="text-xs text-gray-400 block mt-1">
-                Triggered by 3 new orders
-              </span>
-            </div>
-            {/* Item 2 */}
-            <div className="mb-6">
-              <div className="flex justify-between">
-                <span className="font-medium">Metformin 850mg</span>
-                <span className="text-yellow-600 font-semibold">18 Left</span>
-              </div>
-
-              <div className="w-full h-2 bg-gray-200 rounded-full mt-2">
-                <div className="w-[25%] h-2 bg-yellow-500 rounded-full"></div>
-              </div>
-
-              <span className="text-xs text-gray-400 block mt-1">
-                Triggered by Order #ORD-88291
-              </span>
-            </div>
-
-            {/* Item 3 */}
-            <div className="mb-6">
-              <div className="flex justify-between">
-                <span className="font-medium">Vitamin C 1000mg</span>
-                <span className="text-yellow-600 font-semibold">45 Left</span>
-              </div>
-
-              <div className="w-full h-2 bg-gray-200 rounded-full mt-2">
-                <div className="w-[50%] h-2 bg-yellow-500 rounded-full"></div>
-              </div>
-            </div>
-
-            {/* Item 4 */}
-            <div className="mb-6">
-              <div className="flex justify-between">
-                <span className="font-medium">Omeprazole 20mg</span>
-                <span className="text-gray-700 font-semibold">82 Left</span>
-              </div>
-
-              <div className="w-full h-2 bg-gray-200 rounded-full mt-2">
-                <div className="w-[75%] h-2 bg-orange-500 rounded-full"></div>
-              </div>
-            </div>
-
-            {/* Button */}
-            <div className="mt-4">
-              <button className="w-full border border-gray-300 rounded-xl py-3 font-medium hover:bg-gray-50 transition">
-                Review Stock Replenishment
-              </button>
-            </div>
-          </div>
-
-          {/* Auto Cart Alert */}
-          <div className="bg-orange-300 border border-orange-300 p-4 rounded-lg">
-            <h2 className="text-orange-500 text-2xl font-extrabold">AUTO-CART ALERTS</h2>
-            <div className="bg-white border border-gray-300 rounded-lg p-4 shadow-sm">
-              <div className="flex justify-between items-center">
-                <p className="text-black font-medium">
-                  Will Trigger Reorder
-                </p>
-
-                <span className="bg-orange-600 text-white border border-orange-500 px-2 py-1 rounded-md text-sm">
-                  CRITICAL
-                </span>
-              </div>
-
-              <p className="text-gray-600 mt-2">
-                Antibiotics Group 4 will reach reorder point after next dispatch.
-              </p>
-            </div>
-
-            <div className="bg-white border border-gray-300 mt-4 rounded-lg p-4 shadow-sm">
-
-              <div className="flex justify-between items-center">
-                <p className="text-black font-medium">
-                  Batch Ending Soon
-                </p>
-
-                <span className="text-white border bg-yellow-500 border-yellow-500 px-2 py-1 rounded-md text-sm">
-                  WARNING
-                </span>
-              </div>
-
-              <p className="text-gray-600 mt-2">
-                Batch #BN-99201 for Insulin Vials expires in 45 days.
-              </p>
-
-
-            </div>
-          </div>
-        </div>
+        
       </div>
 
     </div>

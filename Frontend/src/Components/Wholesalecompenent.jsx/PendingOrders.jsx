@@ -37,17 +37,27 @@ const PendingOrders = () => {
 
   // ================= STATS =================
   const stats = useMemo(() => {
-    const today = new Date().toDateString();
+  const today = new Date().toDateString();
 
-    return {
-      total: orders.length,
-      processing: orders.filter(o => o.status === "Processing").length,
-      packed: orders.filter(o => o.status === "Packed").length,
-      today: orders.filter(o =>
+  return {
+    total: orders.filter(o => o.status === "PLACED").length,
+
+    processing: orders.filter(
+      (o) =>
+        o.status === "PLACED" ||
+        o.status === "CONFIRMED"
+    ).length,
+
+    packed: orders.filter(
+      (o) => o.status === "PACKED"
+    ).length,
+
+    today: orders.filter(
+      (o) =>
         new Date(o.createdAt).toDateString() === today
-      ).length
-    };
-  }, [orders]);
+    ).length,
+  };
+}, [orders]);
 
   return (
     <div className='bg-slate-50 font-sans text-slate-900'>

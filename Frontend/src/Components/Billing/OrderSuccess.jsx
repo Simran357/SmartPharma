@@ -84,13 +84,6 @@ const OrderSuccess = () => {
           </div>
         </div>
 
-
-       
-
-
-
-
-
         {/* Button */}
         <div className="mt-6 text-center">
           <button

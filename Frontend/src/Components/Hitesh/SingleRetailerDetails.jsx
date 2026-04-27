@@ -19,7 +19,6 @@ import { useParams } from "react-router-dom";
 const SingleRetailerDetails = () => {
   const { id } = useParams()
   console.log(id)
-  console.log(id)
   const [singleRetailer, setSingleRetailer] = useState({})
   console.log("singleRetailer", singleRetailer)
   const getUser = async () => {
@@ -34,13 +33,36 @@ const SingleRetailerDetails = () => {
       console.log("Error fetching user data:", error);
     }
   }
+  const [retailerOrders, setRetailerOrders] = useState([]);
 
+ const getRetailerOrders = async () => {
+  try {
+    const res = await axiosInstance.get(
+      `/registerroute/getRetailerOrder/${singleRetailer._id}`
+    );
+
+    console.log("API Success:", res?.data);
+
+    if (res?.data?.success) {
+      setRetailerOrders(res?.data?.orders || []);
+    }
+  } catch (error) {
+    console.log("Backend Error:", error);
+  }
+};
   useEffect(() => {
     if (id) {
       getUser();
     }
   }, [id]);
   //  TABLE COLUMNS (OUTSIDE JSX)
+
+
+  useEffect(() => {
+    if (singleRetailer?._id) {
+      getRetailerOrders();
+    }
+  }, [singleRetailer]);
   const columns = [
     {
       title: "ORDER ID",
@@ -66,69 +88,40 @@ const SingleRetailerDetails = () => {
           {amount}
         </span>),
     },
-    {
-      title: "STATUS",
-      dataIndex: "status",
-      key: "status",
-      render: (status) => {
-        return (
+ {
+  title: "STATUS",
+  dataIndex: "status",
+  key: "status",
+  render: (status) => {
+    const colorMap = {
+      PLACED: "default",
+      CONFIRMED: "blue",
+      PACKED: "orange",
+      READY_FOR_DISPATCH: "cyan",
+      DISPATCHED: "geekblue",
+      IN_TRANSIT: "purple",
+      OUT_FOR_DELIVERY: "gold",
+      DELIVERED: "green",
+    };
 
-          <>
-            {status === "DELIVERED" && (
-              <Tag color="green">DELIVERED</Tag>
-            )}
-
-            {status === "SHIPPED" && (
-              <Tag color="blue">SHIPPED</Tag>
-            )}
-
-            {status === "CANCELED" && (
-              <Tag color="red">CANCELED</Tag>
-            )}
-
-          </>
-
-        );
-      },
-    },
+    return (
+      <Tag color={colorMap[status] || "default"}>
+        {status}
+      </Tag>
+    );
+  },
+}
   ];
 
   //  TABLE DATA
-  const data = [
-    {
-      key: "1",
-      orderId: "#ORD-1001",
-      date: "2026-03-20",
-      items: "25 SKUs",
-      amount: "₹42,500",
-
-      status: "SHIPPED",
-    },
-    {
-      key: "2",
-      orderId: "#ORD-1002",
-      date: "2026-03-22",
-      items: "12 SKUs",
-      amount: "₹15,550",
-      status: "DELIVERED",
-    },
-    {
-      key: "3",
-      orderId: "#ORD-1003",
-      date: "2026-03-24",
-      items: "45 SKUs",
-      amount: "₹1,12,000",
-      status: "DELIVERED",
-    },
-    {
-      key: "4",
-      orderId: "#ORD-1003",
-      date: "2026-03-24",
-      items: "8 SKUs",
-      amount: "₹8,900",
-      status: "CANCELED",
-    },
-  ];
+  const tableData = retailerOrders.map((order, index) => ({
+    key: order._id,
+    orderId: order.orderId,
+    date: new Date(order.createdAt).toLocaleDateString(),
+    items: order.items?.length,
+    amount: `₹${order.total}`,
+    status: order.status,
+  }));
   const trendData = [
     { month: "May", revenue: 40000, orders: 240 },
     { month: "Jun", revenue: 30000, orders: 200 },
@@ -149,8 +142,9 @@ const SingleRetailerDetails = () => {
 
           {/* Logo */}
           <div className="w-16 h-16 rounded-xl bg-linear-to-br from-green-200 to-green-500 flex items-center justify-center">
-            <span className="text-white font-bold">M</span>
-          </div>
+            <span className="text-white font-bold text-xl">
+              {singleRetailer?.pharmacyName?.slice(0, 1).toUpperCase()}
+            </span>          </div>
 
           {  /* Details */}
           <div className="w-full">
@@ -164,7 +158,7 @@ const SingleRetailerDetails = () => {
 
 
                   <h1 className="text-xl font-bold">
-                    {singleRetailer && singleRetailer.pharmacyname ? singleRetailer.pharmacyname : "Pharmacy"}
+                    {singleRetailer && singleRetailer.pharmacyName ? singleRetailer.pharmacyName : "Pharmacy"}
                   </h1>
                   <span className="bg-green-100 text-green-600 text-xs px-3 py-1 rounded-full font-semibold">
                     ACTIVE
@@ -173,9 +167,6 @@ const SingleRetailerDetails = () => {
 
                 {/* RIGHT SIDE BUTTONS */}
                 <div className="flex items-center gap-3">
-                  <button className="px-4 py-2 border rounded-lg text-sm hover:bg-gray-100">
-                    Contact
-                  </button>
                   <button className="px-4 py-2 bg-green-600 text-white rounded-lg text-sm hover:bg-green-700">
                     Adjust Credit
                   </button>
@@ -187,7 +178,7 @@ const SingleRetailerDetails = () => {
               </div>
             </div>
             <p className="text-gray-500 text-sm mt-1">
-              ID: {singleRetailer?._id} | {singleRetailer?.location} | GST: {singleRetailer?.license}
+              License No: {singleRetailer?.license} | {singleRetailer?.location} | Contact: {singleRetailer?.contact}
             </p>
 
             <div className="flex items-center gap-4 mt-2 text-sm text-gray-600">
@@ -200,12 +191,6 @@ const SingleRetailerDetails = () => {
           </div>
         </div>
 
-
-
-
-
-        {/* Grid Section */}
-        {/* <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">  */}
         {/* TOP CARDS */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           { /* CARD 1 */}
@@ -237,8 +222,9 @@ const SingleRetailerDetails = () => {
             </div>
             <h2 className="text-2xl font-bold mt-1">₹2.45M</h2>
             <p className="text-gray-500 text-sm">Total revenue YTD</p>
-            <p className="text-gray-500 rounded-2xl  shadow p-5 w-fit text-sm mt-1">42 Orders Total</p>
-          </div>
+<p className="text-gray-500 rounded-2xl shadow p-5 w-fit text-sm mt-1">
+  {retailerOrders.length} Orders Total
+</p>          </div>
           {/* CARD 4 */}
           <div className="bg-white rounded-2xl shadow p-5">
             <div className="flex flex-row justify-between gap-2">
@@ -260,10 +246,9 @@ const SingleRetailerDetails = () => {
               <h2 className="text-lg font-semibold mb-4">Recent Orders</h2>
               <Table
                 columns={columns}
-                dataSource={data}
+                dataSource={tableData}
                 pagination={{ pageSize: 5 }}
               />
-
 
             </div>
 

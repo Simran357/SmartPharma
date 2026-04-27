@@ -1,41 +1,15 @@
 import { useEffect, useState } from "react"
 import axiosInstance from "../Components/Dashboard/Form/Utils/AxiosInstance";
 import { useNavigate } from "react-router-dom";
-export default function InventoryTable() {
-  const [inventoryStock, setInventoryStock] = useState([]);
-  const [loading, setLoading] = useState(false);
+export default function InventoryTable({ inventoryStock }) {
 
 
   const navigate = useNavigate()
-  useEffect(() => {
-    const fetchInventory = async () => {
-      try {
-        console.log("🔥 API CALL STARTED");
-        const res = await axiosInstance.get("/registerroute/getInventoryStock");
-        console.log("✅ inventory data", res?.data);
-        setInventoryStock(
-          res?.data?.data?.flatMap((invoice) =>
-            invoice.items.map((item) => ({
-              name: item.name || item.ProductName,   // ✅ FIX
-              qty: item.qty || item.ProductQuantity, // ✅ FIX
-              batch: item.batch || item.ProductBatchNo,
-              expiry: item.expiry || item.ProductExpiryDate,
-              supplier: invoice.supplierName,
-              invoiceNumber: invoice.invoiceNumber,
-            }))
-          ) || []
-        )
-      } catch (error) {
-        console.log("❌ error in inventory stock", error);
-      } finally {
-        setLoading(false);
-      }
-    };
 
-    fetchInventory();
-  }, []);
-  console.log("inventoryStock", inventoryStock)
+
+  
   return (
+    
     <div className="bg-white rounded-xl p-6 shadow-sm">
 
       {/* Tabs */}
@@ -145,18 +119,7 @@ export default function InventoryTable() {
         );
       })}
 
-      {/* Footer */}
-      {/* <div className="flex justify-between items-center mt-6 text-sm text-gray-500">
-        <span>Showing 1–10 of 482 products</span>
-        <div className="flex gap-1">
-          <button className="px-3 py-1 border rounded">‹</button>
-          <button className="px-3 py-1 rounded bg-green-500 text-white">1</button>
-          <button className="px-3 py-1 border rounded">2</button>
-          <button className="px-3 py-1 border rounded">3</button>
-          <button className="px-3 py-1 border rounded">›</button>
-        </div>
-      </div> */}
-
+    
     </div>
   )
 }

@@ -13,7 +13,7 @@ const stockSchema = new mongoose.Schema({
   phone: String,
   address: String,
   items: [
-    {
+    {      
       name: String,
       hsn: String,
       batch: String,

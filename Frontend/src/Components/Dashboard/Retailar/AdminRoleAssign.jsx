@@ -133,7 +133,7 @@ const [openModel, setModel] = useState(false)
                   <option value="All">All Roles</option>
                   <option value="Admin">Admin</option>
                   <option value="Retailer">Retailer</option>
-                  <option value="Wholesaler">Wholesaler</option>
+                  <option value="Wholesaler">Wholesaler</option>  
                 </select>
               </div>
               <div className="h-8 w-1 bg-outline-variant/20"></div>

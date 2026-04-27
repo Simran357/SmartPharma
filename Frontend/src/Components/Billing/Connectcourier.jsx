@@ -176,67 +176,7 @@ const Courier = () => {
           ))}
         </div>
 
-        {/* Right Side - Setup Configuration */}
-        {/* <div className="bg-white p-6 rounded-xl shadow border border-green-200">
-          <h3 className="text-green-500 font-semibold mb-4">
-            SETUP CONFIGURATION
-          </h3>
-
-          <div className="bg-green-100 p-3 rounded mb-4">
-            Integrating DHL Express
-          </div>
-
-          <div className="mb-4">
-            <label className="text-sm text-green-500">API KEY</label>
-            <input
-              type="password"
-              value="••••••••••••"
-              readOnly
-              className="w-full border rounded px-3 py-2 mt-1"
-            />
-          </div>
-
-          <div className="mb-4">
-            <label className="text-sm text-green-500">WEBHOOK URL</label>
-            <input
-              type="text"
-              value="https://api.smartpharm.com/hooks/dhl"
-              readOnly
-              className="w-full border rounded px-3 py-2 mt-1"
-            />
-          </div>
-
-          <div className="mb-6">
-            <label className="text-sm text-green-500">
-              SERVICE LEVELS (SLAS)
-            </label>
-
-            <div className="flex flex-wrap gap-2 mt-2">
-              <span className="bg-green-500 text-white px-3 py-1 rounded-full text-sm">
-                Express 24h
-              </span>
-              <span className="bg-green-500 text-white px-3 py-1 rounded-full text-sm">
-                Ground 3-5d
-              </span>
-              <span className="bg-gray-200 px-3 py-1 rounded-full text-sm">
-                Same Day
-              </span>
-              <span className="bg-gray-200 px-3 py-1 rounded-full text-sm">
-                Economy
-              </span>
-            </div>
-          </div>
-          <div className=" mt-6 flex flex-col gap-4">
-            <button className="w-full border border-green-500 text-green-600 py-2 rounded hover:bg-green-50 transition">
-              Test Connection
-            </button>
-
-            <button className="w-full bg-green-600 text-white  py-2 rounded hover:bg-green-700 transition">
-              Save & Activate
-            </button>
-          </div>
-          <div className="text-green-600 text-center mt-4 mb-4">SECURE ENTERPRISE INTEGRATION</div>
-        </div> */}
+      
       </div>
     </div>
   );

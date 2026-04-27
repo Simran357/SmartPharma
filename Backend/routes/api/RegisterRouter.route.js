@@ -26,9 +26,12 @@ const connectCourier= require('../../Controller/connectCourier')
 const getConnectedCouriers=require("../../Controller/getConnectedCourier")
 const getWholesalerOrders = require("../../Controller/getWholesalerOrders")
 const getLowStockItems  = require("../../Controller/getLowStockItems")
-const { updateOrderStatus } = require("../../Controller/updatePOrderStatus")
+const updateOrderStatus = require("../../Controller/updateOrderStatus")
 const getOrderById = require("../../Controller/getOrderById")
-
+const {getDashboardStats ,inventaryImpulse} = require("../../Controller/getDashboardStats")
+const getInventoryHealth = require("../../Controller/getInventaryHealth")
+const getTopSellingProducts=require("../../Controller/getTopSellingProduct")
+const getRetailerOrder = require("../../Controller/getRetailerOrder")
 
 router.post("/registercontroller",RegisterController)
 router.post("/LoginController",LoginController)
@@ -51,12 +54,14 @@ router.get("/getInventoryStock",authMiddleware,getInventoryStock)
 router.get("/batches/:name", getBatches)
 router.put("/updateRole/:id", updateRoleController)
 router.get("/getWholesalerOrders",authMiddleware,getWholesalerOrders)
-router.get("/getOrderById", getOrderById)
+router.get("/getOrderById/:id", getOrderById)
+router.get("/getRetailerOrder/:id", getRetailerOrder)
+
 router.get("/getLowStockItems", getLowStockItems)
-router.post('/orderController',order)   
+router.post('/orderController',authMiddleware,order)   
 router.get("/me",authMiddleware,getMe)
 console.log("router.file")
-router.put('/updateOrderStatus',updateOrderStatus)   
+router.put('/updateOrderStatus/:id',updateOrderStatus)   
 
 
 //delivery
@@ -65,4 +70,9 @@ router.get("/getDeliveryPartners", getDeliveryPartners)
 router.post("/connectCourier",connectCourier)
 router.get("/getConnectedCouriers",getConnectedCouriers)
 
+
+router.get("/getDashboardStats",authMiddleware,getDashboardStats)
+router.get("/inventaryImpulse",authMiddleware,inventaryImpulse)
+router.get("/getInventoryHealth",authMiddleware,getInventoryHealth)
+router.get("/getTopSellingProducts", authMiddleware,getTopSellingProducts)
 module.exports = router  

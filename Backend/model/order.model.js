@@ -5,6 +5,10 @@ const orderSchema = new mongoose.Schema({
         type: String,
         default: () => Date.now().toString(),
     },
+    retailerId: {
+  type: mongoose.Schema.Types.ObjectId,
+  ref: "registerSchema",
+},
     wholesalerId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "wholesaler",
