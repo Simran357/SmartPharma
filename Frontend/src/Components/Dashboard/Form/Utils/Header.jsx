@@ -27,8 +27,7 @@ const Header = () => {
     const menuItems = [
         { text: 'Retailer', path: '/Dashboard/Retailer' },
         { text: 'Inventory', path: '/Dashboard/Retailer/Inventory' },
-        { text: 'Billing', path: '/Dashboard/Retailer/Billing' },
-        { text: 'Cart', path: '/Dashboard/Retailer/Cart' },
+       
         { text: 'Wholesalers', path: '/Dashboard/Retailer/Order' },
         { text: 'Role Control', path: '/Dashboard/Wholesaler/AdminRoleAssign' },
         { text: 'Wholesaler Panel', path: '/Dashboard/Wholesaler' },
