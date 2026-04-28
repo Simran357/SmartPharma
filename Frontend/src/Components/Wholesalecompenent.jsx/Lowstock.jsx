@@ -11,29 +11,65 @@ const [activeCategory, setActiveCategory] = React.useState("All Items");
 // correct fallback safety
 const lowStockItems = location?.state?.lowStockItems || [];
 const orders = location?.state?.orders || [];
-const filteredItems =
-  activeCategory === "All Items"
-    ? lowStockItems
-    : lowStockItems.filter(
-        item => (item.category || "Pharma") === activeCategory
-      );
-// flatten order items into history rows
-const categories = React.useMemo(() => {
-  const cats = lowStockItems.map(i => i.category || "Pharma");
-  return ["All Items", ...new Set(cats)];
-}, [lowStockItems]);
+
 
 
 const historyData = orders.flatMap(order =>
   (order?.items || []).map(item => ({
     orderId: order.orderId,
     itemName: item.name,
-    category: "Pharma",
-    qty: item.quantity,
+    category: item.category || "Pharma",
+    qty: item.qty || item.quantity || 0,
     date: order.createdAt,
     status: order.status,
   }))
 );
+const enrichedLowStockItems = React.useMemo(() => {
+  return lowStockItems.map((product) => {
+
+    const matchedOrder = orders.find(order =>
+      order.items?.some(item =>
+        item?.name?.trim().toLowerCase() ===
+        product?.ProductName?.trim().toLowerCase()
+      )
+    );
+
+    const matchedItem = matchedOrder?.items?.find(item =>
+      item?.name?.trim().toLowerCase() ===
+      product?.ProductName?.trim().toLowerCase()
+    );
+
+    console.log("PRODUCT:", product.ProductName);
+    console.log("MATCHED ITEM:", matchedItem);
+
+    return {
+      ...product,
+      supplierName: matchedOrder?.supplierName || "Unknown",
+      invoiceNumber: matchedOrder?.invoiceNumber || "N/A",
+      batch: matchedItem?.batch || product?.ProductBatchNo,
+      hsn: matchedItem?.hsn || "N/A",
+      pack: matchedItem?.pack || "N/A",
+      rate: matchedItem?.rate || product?.ProductPrice,
+      expiry: matchedItem?.expiry || product?.ProductExpiryDate,
+      qty: matchedItem?.qty || product?.ProductQuantity,
+    };
+  });
+}, [lowStockItems, orders]);
+const categories = React.useMemo(() => {
+  const cats = enrichedLowStockItems.map(
+    item => item.ProductCategory || "Pharma"
+  );
+
+  return ["All Items", ...new Set(cats)];
+}, [enrichedLowStockItems]);
+
+const filteredItems =
+  activeCategory === "All Items"
+    ? enrichedLowStockItems
+    : enrichedLowStockItems.filter(
+        item =>
+          (item.ProductCategory || "Pharma") === activeCategory
+      );
     return (
         <div className="bg-gray-50 min-h-screen">
             {/* /-- Main Dashboard Container - / */}
@@ -74,39 +110,138 @@ const historyData = orders.flatMap(order =>
                 {/* Summary Cards: Low Stock Stats and Toggle Settings */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
 
-                    {filteredItems?.map((item, i) => (
-                        <div key={i} className="bg-white border rounded-xl p-6 shadow-sm">
+     {filteredItems?.map((item, i) => {
 
-                            <h3 className="font-bold text-lg text-slate-900">
-                                {item?.name}
-                            </h3>
+  const quantity = item.ProductQuantity || item.qty || 0;
 
-                            <p className="text-xs text-slate-500 mb-4">
-                                Product ID: {item?.productId}
-                            </p>
+  const stockPercent = Math.min(
+    100,
+    (quantity / (quantity + 200)) * 100
+  );
 
-                            <div className="flex justify-between text-sm mb-1">
-                                <span className="text-slate-500">Stock</span>
-                                <span className="font-bold text-orange-600">
-                                    {item?.stock} Units
-                                </span>
-                            </div>
+  const expiryDate =
+    item?.ProductExpiryDate || item?.expiry;
 
-                            <div className="w-full bg-slate-100 h-2 rounded-full mb-6">
-                                <div
-                                    className="bg-orange-500 h-2 rounded-full"
-                                    style={{
-                                        width: `${Math.min(100, (item.totalSold / (item.totalSold + item.stock)) * 100)}%`
-                                    }} />
-                            </div>
+  return (
+    <div
+      key={i}
+      className="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm hover:shadow-lg transition-all"
+    >
+      {/* Header */}
+      <div className="flex justify-between items-start mb-5">
+        <div>
+          <h3 className="font-bold text-lg text-slate-900">
+            {item?.ProductName || item?.name}
+          </h3>
 
-                            <button className="px-4 py-2 bg-orange-600 text-white rounded-lg">
-                                ⚡ Replenish
-                            </button>
+          <p className="text-xs text-slate-400 mt-1">
+            SKU: {item?.ProductSku || "N/A"}
+          </p>
+        </div>
+<span
+  className={`text-xs px-3 py-1 rounded-full font-semibold
+    ${
+      quantity < 100
+        ? "bg-red-100 text-red-600"
+        : quantity < 300
+        ? "bg-yellow-100 text-yellow-700"
+        : "bg-green-100 text-green-700"
+    }
+  `}
+>
+  {quantity < 100
+    ? "LOW STOCK"
+    : quantity < 300
+    ? "MEDIUM"
+    : "GOOD"}
+</span>
+      </div>
 
-                        </div>
-                    ))}
+      {/* Product Details */}
+      <div className="grid grid-cols-2 gap-y-3 text-sm mb-5">
 
+        <div>
+          <p className="text-slate-400">Category</p>
+          <p className="font-medium">
+            {item?.ProductCategory || "Medicine"}
+          </p>
+        </div>
+
+        <div>
+          <p className="text-slate-400">Batch</p>
+          <p className="font-medium">
+            {item?.ProductBatchNo || item?.batch || "N/A"}
+          </p>
+        </div>
+
+        <div>
+          <p className="text-slate-400">Stock</p>
+          <p className="font-bold text-orange-600">
+            {quantity} Units
+          </p>
+        </div>
+
+        <div>
+          <p className="text-slate-400">MRP</p>
+          <p className="font-medium">
+            ₹{item?.ProductPrice || item?.mrp || 0}
+          </p>
+        </div>
+
+        <div>
+          <p className="text-slate-400">Supplier</p>
+          <p className="font-medium">
+            {item?.supplierName || "Unknown"}
+          </p>
+        </div>
+
+        <div>
+          <p className="text-slate-400">Invoice</p>
+          <p className="font-medium">
+            {item?.invoiceNumber || "N/A"}
+          </p>
+        </div>
+
+        <div className="col-span-2">
+          <p className="text-slate-400">Expiry</p>
+          <p className="font-medium text-red-500">
+            {expiryDate
+              ? new Date(expiryDate).toLocaleDateString()
+              : "N/A"}
+          </p>
+        </div>
+      </div>
+
+      {/* Progress */}
+      <div className="mb-5">
+        <div className="flex justify-between text-xs mb-1">
+          <span className="text-slate-500">Stock Level</span>
+          <span className="font-semibold text-orange-600">
+            {stockPercent.toFixed(0)}%
+          </span>
+        </div>
+
+        <div className="w-full bg-slate-100 h-2 rounded-full">
+          <div
+            className="bg-orange-500 h-2 rounded-full"
+            style={{ width: `${stockPercent}%` }}
+          />
+        </div>
+      </div>
+
+      {/* Actions */}
+      <div className="flex gap-2">
+        <button className="flex-1 bg-orange-600 hover:bg-orange-700 text-white py-2 rounded-xl text-sm font-semibold">
+          Restock
+        </button>
+
+        <button className="px-4 border border-slate-200 rounded-xl hover:bg-slate-50">
+          View
+        </button>
+      </div>
+    </div>
+  );
+})}
                 </div>
 
 

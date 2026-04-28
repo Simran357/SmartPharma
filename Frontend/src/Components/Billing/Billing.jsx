@@ -116,67 +116,82 @@ const [customerEmail,setCustomerEmail] = useState("")
       alert("Payment failed");
     }
 
-
-
-    // navigate("/Billing/OrderSuccess", {
-    //   state: { cart: cart, order: orderData }
-    // })
   };
 
-  return (
-    <>
+ 
+return (
+  <>
+    <div className="min-h-screen bg-slate-50 p-4 lg:p-8">
+      <div className="max-w-7xl mx-auto grid lg:grid-cols-12 gap-6">
 
-      <div className="flex flex-col lg:flex-row gap-6 m-4 lg:m-8">
+        {/* LEFT PANEL */}
+        <div className="lg:col-span-2">
+          <div className="bg-white rounded-2xl shadow-sm border p-5 sticky top-6">
+            <div className="flex items-center gap-2 mb-4">
+              <div className="bg-green-100 p-2 rounded-xl">
+                <CurrencyRupee className="text-green-600" />
+              </div>
 
-        {/* LEFT SIDEBAR */}
-        <div className="w-full lg:w-[20%]">
-          <div className="bg-gray-50 rounded-xl shadow-sm p-4 border space-y-4">
-            <h2 className="font-semibold text-lg flex items-center gap-2">
-              💊 SmartPharm POS
-            </h2>
-
-            <div className="text-sm text-gray-600">
-              Main Store <br />
-              <span className="text-green-600">• COUNTER 01 ONLINE</span>
+              <div>
+                <h2 className="font-bold text-slate-800">SmartPharm</h2>
+                <p className="text-xs text-slate-500">POS Billing</p>
+              </div>
             </div>
 
-            <button className="bg-green-100 text-green-700 px-3 py-2 rounded-md font-medium flex items-center gap-2">
-              <CurrencyRupee /> New Billing
-            </button>
           </div>
         </div>
 
-        {/* MIDDLE - ORDER TABLE */}
-        <div className="w-full lg:w-[45%]">
-          <div className="bg-white rounded-xl shadow border">
-            <div className="px-5 py-3 border-b flex justify-between">
-              <h2 className="font-semibold text-lg">Current Order</h2>
-              <span className="text-sm text-gray-500">
-                {totalItems} items
-              </span>
+        {/* ORDER TABLE */}
+        <div className="lg:col-span-6 space-y-6">
+          <div className="bg-white rounded-2xl shadow-sm border overflow-hidden">
+            <div className="px-6 py-4 border-b flex justify-between items-center bg-slate-50">
+              <div>
+                <h2 className="font-bold text-lg text-slate-800">
+                  Current Order
+                </h2>
+                <p className="text-sm text-slate-500">
+                  {totalItems} items selected
+                </p>
+              </div>
             </div>
 
-            <div className="p-5 overflow-x-auto">
+            <div className="overflow-x-auto">
               {cart.length === 0 ? (
-                <p className="text-gray-400">No items in cart</p>
+                <div className="p-10 text-center text-slate-400">
+                  No items added in cart
+                </div>
               ) : (
                 <table className="w-full text-sm">
-                  <thead className="border-b text-gray-500">
+                  <thead className="bg-slate-50 text-slate-600 border-b">
                     <tr>
-                      <th className="text-left py-2">Product</th>
-                      <th className="text-center">Qty</th>
-                      <th className="text-right">Price</th>
-                      <th className="text-right">Total</th>
+                      <th className="text-left px-6 py-4">Product</th>
+                      <th className="text-center py-4">Qty</th>
+                      <th className="text-right py-4">Price</th>
+                      <th className="text-right px-6 py-4">Total</th>
                     </tr>
                   </thead>
 
                   <tbody>
                     {cart.map((item) => (
-                      <tr key={item._id} className="border-b">
-                        <td className="py-2">{item.ProductName}</td>
+                      <tr key={item._id} className="border-b hover:bg-slate-50 transition">
+                        <td className="px-6 py-4">
+                          <div>
+                            <p className="font-medium text-slate-800">
+                              {item.ProductName}
+                            </p>
+                            <p className="text-xs text-slate-400">
+                              {item.ProductCategory}
+                            </p>
+                          </div>
+                        </td>
+
                         <td className="text-center">{item.qty}</td>
-                        <td className="text-right">₹{item.ProductPrice}</td>
-                        <td className="text-right font-medium">
+
+                        <td className="text-right">
+                          ₹{item.ProductPrice}
+                        </td>
+
+                        <td className="text-right px-6 font-semibold text-slate-800">
                           ₹{(item.qty * item.ProductPrice).toFixed(2)}
                         </td>
                       </tr>
@@ -186,90 +201,88 @@ const [customerEmail,setCustomerEmail] = useState("")
               )}
             </div>
           </div>
-        </div>
 
-        <div className="bg-white rounded-xl shadow border p-5 mb-4">
-          <h2 className="font-semibold text-lg mb-3">Customer Details</h2>
+          {/* CUSTOMER DETAILS */}
+          <div className="bg-white rounded-2xl shadow-sm border p-6">
+            <h2 className="font-bold text-lg mb-5 text-slate-800">
+              Customer Details
+            </h2>
 
-          <div className="grid grid-cols-2 gap-3 text-sm">
+            <div className="grid md:grid-cols-2 gap-4">
+              <input
+                type="text"
+                placeholder="Customer Name"
+                value={customerName}
+                onChange={(e) => setCustomerName(e.target.value)}
+                className="border border-slate-200 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-green-400"
+              />
 
-            <input
-              type="text"
-              placeholder="Customer Name"
-              value={customerName}
-              onChange={(e) => setCustomerName(e.target.value)}
-              className="border p-2 rounded"
-            />
+              <input
+                type="number"
+                placeholder="Phone Number"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                className="border border-slate-200 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-green-400"
+              />
 
-            <input
-              type="Number"
-              placeholder="Phone Number"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              className="border p-2 rounded"
-            />
-            
-            <input
-              type="text"
-              placeholder="Customer Email"
-              value={customerEmail}
-              onChange={(e) => setCustomerEmail(e.target.value)}
-              className="border p-2 rounded"
-            />
+              <input
+                type="email"
+                placeholder="Customer Email"
+                value={customerEmail}
+                onChange={(e) => setCustomerEmail(e.target.value)}
+                className="border border-slate-200 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-green-400"
+              />
 
-            <input
-              type="text"
-              placeholder="Address"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-              className="border p-2 rounded col-span-2"
-            />
-
+              <input
+                type="text"
+                placeholder="Customer Address"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                className="border border-slate-200 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-green-400"
+              />
+            </div>
           </div>
         </div>
 
+        {/* SUMMARY PANEL */}
+        <div className="lg:col-span-4">
+          <div className="bg-white rounded-2xl shadow-sm border p-6 sticky top-6">
+            <h2 className="text-xl font-bold mb-5 text-slate-800">
+              Order Summary
+            </h2>
 
-        {/* RIGHT - SUMMARY */}
-        <div className="w-full lg:w-[35%]">
-          <div className="bg-white rounded-2xl shadow p-5 space-y-5">
-
-            {/* SUMMARY */}
-            <div className="space-y-2 text-sm">
-              <h2 className="font-semibold text-lg mb-2">Summary</h2>
-
-              <div className="flex justify-between">
-                <span>Subtotal ({totalItems} items)</span>
+            <div className="space-y-4 text-sm">
+              <div className="flex justify-between text-slate-600">
+                <span>Subtotal</span>
                 <span>₹{subtotal.toFixed(2)}</span>
               </div>
 
-              <div className="flex justify-between">
+              <div className="flex justify-between text-slate-600">
                 <span>Shipping</span>
                 <span className={shipping === 0 ? "text-green-600" : ""}>
                   {shipping === 0 ? "FREE" : `₹${shipping}`}
                 </span>
               </div>
 
-              <div className="flex justify-between">
-                <span>CGST (2.5%)</span>
+              <div className="flex justify-between text-slate-600">
+                <span>CGST</span>
                 <span>₹{cgst.toFixed(2)}</span>
               </div>
 
-              <div className="flex justify-between">
-                <span>SGST (2.5%)</span>
+              <div className="flex justify-between text-slate-600">
+                <span>SGST</span>
                 <span>₹{sgst.toFixed(2)}</span>
               </div>
 
               {discount > 0 && (
-                <div className="flex justify-between text-green-600">
+                <div className="flex justify-between text-green-600 font-medium">
                   <span>Discount</span>
                   <span>-₹{discount.toFixed(2)}</span>
                 </div>
               )}
 
-              <hr />
-
-              <div className="flex justify-between font-bold text-lg">
-                <span>Total Payment</span>
+              <div className="border-t pt-4 flex justify-between font-bold text-lg text-slate-800">
+                <span>Total</span>
                 <span className="text-green-600">
                   ₹{total.toFixed(2)}
                 </span>
@@ -277,45 +290,48 @@ const [customerEmail,setCustomerEmail] = useState("")
             </div>
 
             {/* PAYMENT */}
-            <div className="space-y-3">
-              <h3 className="font-semibold text-sm">
-                SELECT PAYMENT METHOD
+            <div className="mt-8">
+              <h3 className="font-semibold text-sm text-slate-700 mb-3">
+                Payment Method
               </h3>
 
-              <div className="grid grid-cols-3 gap-3">
+              <div className="grid grid-cols-3 gap-3 mb-5">
                 {["UPI", "Card", "Cash"].map((method) => (
-                  <div
+                  <button
                     key={method}
                     onClick={() => setPaymentMethod(method)}
-                    className={`border rounded-xl py-3 text-center cursor-pointer 
-      ${paymentMethod === method
-                        ? "bg-green-100 border-green-500"
-                        : "hover:bg-green-50"}`}
+                    className={`rounded-xl py-3 border text-sm font-medium transition
+                      ${
+                        paymentMethod === method
+                          ? "bg-green-100 border-green-500 text-green-700"
+                          : "border-slate-200 hover:bg-slate-50"
+                      }`}
                   >
                     {method}
-                  </div>
+                  </button>
                 ))}
               </div>
 
               <button
                 onClick={handleCheckout}
-                className="w-full bg-green-500 text-white py-3 rounded-xl font-semibold hover:bg-green-600"
+                className="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl font-semibold transition"
               >
-                ✔ Complete Checkout
+                Complete Checkout
               </button>
 
-
-              <button className="w-full text-sm text-gray-500 hover:underline">
-                🖨 Print Quotation Only
+              <button className="w-full text-sm text-slate-500 mt-4 hover:text-slate-700 transition">
+                Print Quotation Only
               </button>
             </div>
-
           </div>
         </div>
-
       </div>
+
       <Outlet />
-    </>);
+    </div>
+  </>
+);
+
 };
 
 export default Billing;

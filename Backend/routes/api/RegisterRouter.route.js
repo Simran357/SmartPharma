@@ -17,6 +17,7 @@ const  getBatches  = require("../../Controller/BatchController")
 const uploadInvoice = require("../../MiddleWare/uploadInvoice")
 const aiOCRController = require("../../Controller/ocrParseControler")
 const {stripePayment} = require("../../Controller/bill")
+const getRetailerOrders = require("../../Controller/getOrderHistory")
 
 const order=require("../../Controller/orderController")
 
@@ -31,7 +32,7 @@ const getOrderById = require("../../Controller/getOrderById")
 const {getDashboardStats ,inventaryImpulse} = require("../../Controller/getDashboardStats")
 const getInventoryHealth = require("../../Controller/getInventaryHealth")
 const getTopSellingProducts=require("../../Controller/getTopSellingProduct")
-const getRetailerOrder = require("../../Controller/getRetailerOrder")
+const getRetailerOrder = require("../../Controller/getOrderHistory")
 
 router.post("/registercontroller",RegisterController)
 router.post("/LoginController",LoginController)
@@ -69,6 +70,7 @@ router.post("/addDeliveryPartner",addDeliveryPartner)
 router.get("/getDeliveryPartners", getDeliveryPartners)
 router.post("/connectCourier",connectCourier)
 router.get("/getConnectedCouriers",getConnectedCouriers)
+router.get("/getOrderHistory/:id",getRetailerOrder)
 
 
 router.get("/getDashboardStats",authMiddleware,getDashboardStats)

@@ -122,14 +122,59 @@ const SingleRetailerDetails = () => {
     amount: `₹${order.total}`,
     status: order.status,
   }));
-  const trendData = [
-    { month: "May", revenue: 40000, orders: 240 },
-    { month: "Jun", revenue: 30000, orders: 200 },
-    { month: "Jul", revenue: 50000, orders: 280 },
-    { month: "Aug", revenue: 78000, orders: 350 },
-    { month: "Sep", revenue: 62000, orders: 300 },
-    { month: "Oct", revenue: 90000, orders: 420 },
-  ];
+const trendData = React.useMemo(() => {
+  const monthlyData = {};
+
+  retailerOrders.forEach((order) => {
+    const date = new Date(order.createdAt);
+
+    const month = date.toLocaleString("default", {
+      month: "short",
+    });
+
+    if (!monthlyData[month]) {
+      monthlyData[month] = {
+        month,
+        revenue: 0,
+        orders: 0,
+      };
+    }
+
+    monthlyData[month].revenue += order.total || 0;
+    monthlyData[month].orders += 1;
+  });
+
+  return Object.values(monthlyData);
+}, [retailerOrders]);
+
+  // ================= DYNAMIC STATS =================
+
+const totalOrders = retailerOrders.length;
+
+const totalRevenue = retailerOrders.reduce(
+  (sum, order) => sum + (order.total || 0),
+  0
+);
+
+const deliveredOrders = retailerOrders.filter(
+  (order) => order.status === "DELIVERED"
+).length;
+
+const deliveredPercentage =
+  totalOrders > 0
+    ? ((deliveredOrders / totalOrders) * 100).toFixed(1)
+    : 0;
+
+const averageOrderValue =
+  totalOrders > 0
+    ? (totalRevenue / totalOrders).toFixed(0)
+    : 0;
+
+const pendingOrders = retailerOrders.filter(
+  (order) =>
+    order.status !== "DELIVERED" &&
+    order.status !== "CANCELLED"
+).length;
   return (
 
     <div className="p-6 bg-gray-100 min-h-screen">
@@ -199,8 +244,13 @@ const SingleRetailerDetails = () => {
               <p className="text-gray-500 text-lg">Order Consistency</p>
               <BarChart className="text-green-600 w-10 h-10" />
             </div>
-            <h2 className="text-2xl font-bold mt-1">94%</h2>
-            <p className="text-green-500 text-sm mt-1">+2.4% from last month</p>
+<h2 className="text-2xl font-bold mt-1">
+  {deliveredPercentage}%
+</h2>
+
+<p className="text-green-500 text-sm mt-1">
+  {deliveredOrders} Delivered Orders
+</p>            <p className="text-green-500 text-sm mt-1">+2.4% from last month</p>
           </div>
 
           {/* CARD 2 */}
@@ -209,8 +259,13 @@ const SingleRetailerDetails = () => {
               <p className="text-gray-500 text-lg">Financial Overview</p>
               <Building2 className="text-blue-500 w-10 h-10" />
             </div>
-            <h2 className="text-sm font-bold mt-1">Credit Limit Usage:₹8.4L / ₹10L</h2>
-            <p className="text-gray-500 text-sm mt-1">Next Due: Oct 24, 2023</p>
+<h2 className="text-sm font-bold mt-1">
+  Avg Order Value: ₹{averageOrderValue}
+</h2>
+
+<p className="text-gray-500 text-sm mt-1">
+  Pending Orders: {pendingOrders}
+</p>            <p className="text-gray-500 text-sm mt-1">Next Due: Oct 24, 2023</p>
           </div>
 
           {/* CARD 3 */}
@@ -220,19 +275,35 @@ const SingleRetailerDetails = () => {
               <p className="text-gray-500 text-lg">Order Metrics</p>
               <ShoppingBag className="text-purple-600 w-10 h-10" />
             </div>
-            <h2 className="text-2xl font-bold mt-1">₹2.45M</h2>
-            <p className="text-gray-500 text-sm">Total revenue YTD</p>
+<h2 className="text-2xl font-bold mt-1">
+  ₹{totalRevenue.toLocaleString()}
+</h2>
+
+<p className="text-gray-500 text-sm">
+  Total Revenue
+</p>
+
 <p className="text-gray-500 rounded-2xl shadow p-5 w-fit text-sm mt-1">
-  {retailerOrders.length} Orders Total
-</p>          </div>
+  {totalOrders} Orders Total
+</p>           
+         </div>
           {/* CARD 4 */}
           <div className="bg-white rounded-2xl shadow p-5">
             <div className="flex flex-row justify-between gap-2">
 
               <p className="text-gray-500 text-lg">Profitability</p>
               <Banknote className="text-green-600 text-lg w-10 h-10" /></div>
-            <h2 className="text-2xl font-bold mt-1">18.2%</h2>
-            <p className="text-gray-500 text-sm mt-1">Average gross margin</p>
+<h2 className="text-2xl font-bold mt-1">
+  ₹{averageOrderValue}
+</h2>
+
+<p className="text-gray-500 text-sm mt-1">
+  Avg Order Value
+</p>
+
+<p className="text-green-500">
+  {totalOrders > 20 ? "A-Class Retailer" : "Growing Retailer"}
+</p>            <p className="text-gray-500 text-sm mt-1">Average gross margin</p>
             <p className="text-green-500">A-Class Retailer</p>
           </div>
         </div>

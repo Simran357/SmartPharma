@@ -67,198 +67,233 @@ const Cart = () => {
   const discount = subtotal > 2000 ? subtotal * 0.1 : 0;
   const total = subtotal + tax - discount;
 
-  return (
-    <>
-      <div className="min-h-screen p-6">
-        <div className="max-w-7xl mx-auto">
+ return (
+  <>
+    <div className="min-h-screen bg-slate-50 p-6">
+      <div className="max-w-7xl mx-auto">
 
-          {/* HEADER */}
-          <div className="mb-6">
-            <h1 className="text-2xl font-bold mb-2">
-              Review Your Order
-            </h1>
+        {/* Header */}
+        <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 mb-6">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div>
+              <h1 className="text-3xl font-bold text-slate-800">
+                Review Your Order
+              </h1>
 
-            <div className="flex justify-between">
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-slate-500 mt-1">
                 GSTIN: 29AABCC1234F1Z5 • Verified Retailer
               </p>
-              <button className="text-sm border px-3 py-1 rounded">
-                <Download /> Download Quote
-              </button>
             </div>
+
+            <button className="flex items-center gap-2 border border-slate-300 px-4 py-2 rounded-xl hover:bg-slate-100 text-sm font-medium">
+              <Download fontSize="small" />
+              Download Quote
+            </button>
           </div>
+        </div>
 
-          {/* GRID */}
-          <div className="grid lg:grid-cols-3 gap-6">
+        {/* Main Grid */}
+        <div className="grid lg:grid-cols-[2fr_1fr] gap-6 items-start">
 
-            {/* LEFT */}
-            <div className="lg:col-span-2 space-y-6">
+          {/* Left Section */}
+          <div className="space-y-6">
 
-              {/* CART */}
-              <div className="bg-white rounded-xl shadow-sm p-5">
-                <h2 className="font-semibold mb-4 flex items-center gap-2">
-                  <AddShoppingCart style={{ color: "green" }} />
-                  Items in Cart ({cart.length})
+            {/* Cart */}
+            <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6">
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="font-bold text-lg flex items-center gap-2 text-slate-800">
+                  <AddShoppingCart style={{ color: '#16a34a' }} />
+                  Items in Cart
                 </h2>
 
-                {/* HEADER (desktop only) */}
-                <div className="hidden md:grid grid-cols-4 text-gray-500 pb-2 border-b text-sm">
-                  <span>Medicine</span>
-                  <span>Batch / Expiry</span>
-                  <span>Qty</span>
-                  <span>Unit Price</span>
-                  <span>Scheme</span>
-                  <span>Total</span>
-                </div>
+                <span className="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-xs font-semibold">
+                  {cart.length} Items
+                </span>
+              </div>
 
-                {/* EMPTY STATE */}
-                {cart.length === 0 ? (
-                  <p className="text-gray-400 text-sm mt-4">Cart is empty</p>
-                ) : (
-                  <div className="space-y-4">
-                    {cart.map((item) => (
-                      <div
-                        key={item._id}
-                        className="
-            grid grid-cols-1 md:grid-cols-4 
-            gap-3 md:gap-0 
-            items-start md:items-center 
-            py-4 border-b text-sm
-          "
-                      >
-                        {/* NAME */}
+              {cart.length === 0 ? (
+                <div className="text-center py-10 text-slate-400">
+                  Cart is empty
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {cart.map((item) => (
+                    <div
+                      key={item._id}
+                      className="grid md:grid-cols-6 gap-4 items-center bg-slate-50 rounded-2xl p-4 border border-slate-100"
+                    >
+
+                      {/* Product */}
+                      <div className="md:col-span-2">
+                        <p className="font-semibold text-slate-800">
+                          {item.ProductName}
+                        </p>
+
+                        <p className="text-xs text-slate-500 mt-1">
+                          {item.ProductCategory}
+                        </p>
+                      </div>
+
+                      {/* Batch */}
+                      <div className="text-sm text-slate-600">
+                        <p>{item.ProductSku}</p>
+                        <p className="text-xs text-slate-400 mt-1">
+                          Exp:
+                          {item.ProductExpiryDate
+                            ? new Date(item.ProductExpiryDate).toLocaleDateString()
+                            : 'N/A'}
+                        </p>
+                      </div>
+
+                      {/* Qty */}
+                      <div className="flex items-center gap-2">
+                        <button
+                          className="w-8 h-8 rounded-lg border border-slate-300 hover:bg-slate-100 font-bold"
+                          onClick={() => decreaseQty(item._id)}
+                        >
+                          -
+                        </button>
+
+                        <span className="font-semibold min-w-30px text-center">
+                          {item.qty}
+                        </span>
+
+                        <button
+                          className="w-8 h-8 rounded-lg border border-slate-300 hover:bg-slate-100 font-bold"
+                          onClick={() => increaseQty(item._id)}
+                        >
+                          +
+                        </button>
+                      </div>
+
+                      {/* Price */}
+                      <div className="text-slate-700 font-medium">
+                        ₹{item.ProductPrice}
+                      </div>
+
+                      {/* Total */}
+                      <div className="text-right font-bold text-slate-800">
+                        ₹{(item.qty * (item.ProductPrice || 0)).toFixed(2)}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Courier Selection */}
+            <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6">
+              <div className="flex items-center gap-2 mb-5">
+                <LocalShippingOutlined style={{ color: '#16a34a' }} />
+
+                <h3 className="font-bold text-lg text-slate-800">
+                  Select Courier
+                </h3>
+              </div>
+
+              {couriers.length === 0 ? (
+                <p className="text-slate-400 text-sm">
+                  No courier available
+                </p>
+              ) : (
+                <div className="grid md:grid-cols-2 gap-4">
+                  {couriers.map((c) => (
+                    <div
+                      key={c._id}
+                      onClick={() => setSelectedCourier(c)}
+                      className={`
+                        border rounded-2xl p-4 cursor-pointer transition-all
+                        ${
+                          selectedCourier?._id === c._id
+                            ? 'border-green-500 bg-green-50'
+                            : 'border-slate-200 hover:border-slate-400 hover:bg-slate-50'
+                        }
+                      `}
+                    >
+                      <div className="flex justify-between items-center">
                         <div>
-                          <p className="font-medium">{item.ProductName}</p>
-                          <p className="text-xs text-gray-500">
-                            {item.ProductCategory}
+                          <p className="font-semibold text-slate-800">
+                            {c.name}
+                          </p>
+
+                          <p className="text-sm text-slate-500 mt-1">
+                            Delivery: {c.time}
                           </p>
                         </div>
 
-                        {/* BATCH / EXPIRY */}
-                        <div className="text-xs md:text-sm">
-                          {item.ProductSku}
-                          <br />
-                          Exp:{" "}
-                          {item.ProductExpiryDate
-                            ? new Date(item.ProductExpiryDate).toLocaleDateString()
-                            : "N/A"}
-                        </div>
-
-                        {/* QTY */}
-                        <div className="flex items-center gap-2">
-                          <button
-                            className="px-2 py-1 border rounded"
-                            onClick={() => decreaseQty(item._id)}
-                          >
-                            -
-                          </button>
-
-                          <span className="min-w-20px text-center">
-                            {item.qty}
-                          </span>
-
-                          <button
-                            className="px-2 py-1 border rounded"
-                            onClick={() => increaseQty(item._id)}
-                          >
-                            +
-                          </button>
-                        </div>
-
-                        {/* UNIT PRICE */}
-                        <div>₹{item.ProductPrice || 0}</div>
-
-                        {/* SCHEME */}
-                        <div>
-                          <span className="text-green-600 text-xs bg-green-100 px-2 py-1 rounded-full w-fit">
-                            No Scheme
-                          </span>
-                        </div>
-
-                        {/* TOTAL */}
-                        <div className="font-semibold">
-                          ₹{item.qty * (item.ProductPrice || 0)}
-                        </div>
+                        {selectedCourier?._id === c._id && (
+                          <div className="w-5 h-5 rounded-full bg-green-600"></div>
+                        )}
                       </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-
-
-
-              {/* COURIER  */}
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="bg-white p-5 rounded shadow">
-                  <h3 className="flex items-center gap-2 font-bold mb-3">
-                    <LocalShippingOutlined style={{ color: "green" }} />
-                    Courier Selection
-                  </h3>
-
-                  {couriers.length === 0 ? (
-                    <p className="text-gray-400 text-sm">No couriers available</p>
-                  ) : (
-                    couriers.map((c) => (
-                      <div
-                        key={c._id}
-                        onClick={() => setSelectedCourier(c)}
-                        className={`border p-3 rounded mb-2 cursor-pointer
-                          ${selectedCourier?._id === c._id
-                            ? "border-green-600 bg-green-50"
-                            : "hover:border-gray-400"
-                          }`}
-                      >
-                        <p className="font-medium text-gray-800">
-                          {c.name}
-                        </p>
-
-                        <p className="text-sm text-gray-500">
-                          {c.time}
-                        </p>
-                      </div>
-                    ))
-                  )}
+                    </div>
+                  ))}
                 </div>
-              </div>
+              )}
             </div>
+          </div>
 
+          {/* Summary */}
+          <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 sticky top-6 h-fit">
+            <h2 className="font-bold text-xl text-slate-800 mb-6">
+              Order Summary
+            </h2>
 
-            <div className="bg-white p-5 rounded shadow h-fit">
-              <h2 className="font-semibold mb-3">Order Summary</h2>
+            <div className="space-y-4">
+              <div className="flex justify-between text-sm text-slate-600">
+                <span>Subtotal</span>
+                <span>₹{subtotal.toFixed(2)}</span>
+              </div>
 
-              <p>Subtotal: ₹{subtotal.toFixed(2)}</p>
-              {/* <p>Shipping: ₹{shipping}</p> */}
-              <p>GST: ₹{tax.toFixed(2)}</p>
+              <div className="flex justify-between text-sm text-slate-600">
+                <span>GST (5%)</span>
+                <span>₹{tax.toFixed(2)}</span>
+              </div>
 
               {discount > 0 && (
-                <p>Discount: -₹{discount.toFixed(2)}</p>
+                <div className="flex justify-between text-sm text-green-600">
+                  <span>Discount</span>
+                  <span>-₹{discount.toFixed(2)}</span>
+                </div>
               )}
 
-              <hr className="my-3" />
+              <hr className="border-slate-200" />
 
-              <h3 className="font-bold">Total: ₹{total.toFixed(2)}</h3>
+              <div className="flex justify-between items-center">
+                <span className="text-lg font-bold text-slate-800">
+                  Total
+                </span>
 
-              <button
-                disabled={!selectedCourier}
-                className="bg-orange-500 text-white w-full mt-4 py-2 rounded disabled:bg-gray-400"
-                onClick={() =>
-                  navigate(`/Dashboard/Retailer/Order/${id}/Billing`, {
-                    state: { cart, total, courier: selectedCourier },
-                  })
-                }
-              >
-                Checkout
-              </button>
+                <span className="text-2xl font-bold text-green-600">
+                  ₹{total.toFixed(2)}
+                </span>
+              </div>
             </div>
 
+            <button
+              disabled={!selectedCourier}
+              className="w-full mt-6 bg-green-600 hover:bg-green-700 text-white py-3 rounded-2xl font-semibold transition-all disabled:bg-slate-300"
+              onClick={() =>
+                navigate(`/Dashboard/Retailer/Order/${id}/Billing`, {
+                  state: { cart, total, courier: selectedCourier },
+                })
+              }
+            >
+              Continue to Billing
+            </button>
+
+            {!selectedCourier && (
+              <p className="text-xs text-center text-slate-400 mt-3">
+                Select a courier to continue
+              </p>
+            )}
           </div>
         </div>
       </div>
+    </div>
 
-      <Outlet />
-    </>
-  );
+    <Outlet />
+  </>
+);;
 };
 
 export default Cart;  

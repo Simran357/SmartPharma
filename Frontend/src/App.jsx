@@ -39,6 +39,7 @@ import DeliverySys from './Components/Delivery/deliverySys'
 import { ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css";
 import SingleOrder from './Components/Wholesalecompenent.jsx/SingleOrder'
+import RetailerOrderHistory from './Components/Dashboard/Retailar/Order/RetailerOrderHistory'
 
 const App = () => {
   return (
@@ -106,6 +107,7 @@ const App = () => {
             <Route path="ReturnInvoice" element={<ReturnInvoice />} />
             <Route path="FilterWholesaler" element={<FilterOutWholesaler />} />
             <Route path="ActionablePrevention" element={<ActionablePrevention />} />
+              <Route path="RetailerOrderHistory" element={<RetailerOrderHistory />} />
 
             {/* ORDER FLOW */}
             <Route path="Order">
