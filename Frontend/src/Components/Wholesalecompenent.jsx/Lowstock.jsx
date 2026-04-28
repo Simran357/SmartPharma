@@ -70,6 +70,43 @@ const filteredItems =
         item =>
           (item.ProductCategory || "Pharma") === activeCategory
       );
+
+      const stockAnalysis = React.useMemo(() => {
+  return filteredItems.map((product) => {
+    const productName = product?.ProductName?.trim().toLowerCase();
+
+    // Total ordered qty for same medicine from all orders
+    const totalOrderedQty = orders.reduce((acc, order) => {
+      const matchedQty = (order.items || [])
+        .filter(
+          (item) =>
+            item?.name?.trim().toLowerCase() === productName
+        )
+        .reduce(
+          (sum, item) =>
+            sum + (item.qty || item.quantity || 0),
+          0
+        );
+
+      return acc + matchedQty;
+    }, 0);
+
+    const currentStock =
+      product?.ProductQuantity || product?.qty || 0;
+
+    const shortage = Math.max(
+      0,
+      totalOrderedQty - currentStock
+    );
+
+    return {
+      ...product,
+      totalOrderedQty,
+      currentStock,
+      shortage,
+    };
+  });
+}, [filteredItems, orders]);
     return (
         <div className="bg-gray-50 min-h-screen">
             {/* /-- Main Dashboard Container - / */}
@@ -110,7 +147,7 @@ const filteredItems =
                 {/* Summary Cards: Low Stock Stats and Toggle Settings */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
 
-     {filteredItems?.map((item, i) => {
+ {stockAnalysis?.map((item, i) => {
 
   const quantity = item.ProductQuantity || item.qty || 0;
 
@@ -212,6 +249,99 @@ const filteredItems =
         </div>
       </div>
 
+{/* Demand Analysis */}
+{/* Demand Analysis */}
+<div className="bg-slate-50 rounded-2xl p-4 mb-5 border border-slate-100">
+  <h4 className="text-xs font-bold text-slate-500 uppercase mb-4">
+    Demand Analysis
+  </h4>
+
+  <div className="grid grid-cols-2 gap-3 text-sm">
+
+    {/* Total Orders */}
+    <div className="bg-white rounded-xl p-3 border">
+      <p className="text-slate-400 text-xs">Total Ordered</p>
+      <p className="font-bold text-blue-600 text-xl">
+        {item.totalOrderedQty}
+      </p>
+      <p className="text-[11px] text-slate-400">
+        Units required in all orders
+      </p>
+    </div>
+
+    {/* Current Stock */}
+    <div className="bg-white rounded-xl p-3 border">
+      <p className="text-slate-400 text-xs">Current Stock</p>
+      <p className="font-bold text-green-600 text-xl">
+        {item.currentStock}
+      </p>
+      <p className="text-[11px] text-slate-400">
+        Units available
+      </p>
+    </div>
+
+    {/* Remaining */}
+    <div className="bg-white rounded-xl p-3 border">
+      <p className="text-slate-400 text-xs">After Orders</p>
+
+      <p
+        className={`font-bold text-xl ${
+          item.currentStock - item.totalOrderedQty >= 0
+            ? "text-green-600"
+            : "text-red-600"
+        }`}
+      >
+        {item.currentStock - item.totalOrderedQty}
+      </p>
+
+      <p className="text-[11px] text-slate-400">
+        Remaining stock
+      </p>
+    </div>
+
+    {/* Shortage */}
+    <div className="bg-white rounded-xl p-3 border">
+      <p className="text-slate-400 text-xs">Need To Order</p>
+
+      <p
+        className={`font-bold text-xl ${
+          item.shortage > 0
+            ? "text-red-600"
+            : "text-green-600"
+        }`}
+      >
+        {item.shortage}
+      </p>
+
+      <p className="text-[11px] text-slate-400">
+        Extra units required
+      </p>
+    </div>
+  </div>
+
+  {/* Alert Box */}
+  {item.shortage > 0 ? (
+    <div className="mt-4 bg-red-50 border border-red-100 rounded-xl px-4 py-3">
+      <p className="text-red-600 text-sm font-semibold">
+        ⚠ Shortage Detected
+      </p>
+
+      <p className="text-xs text-red-500 mt-1">
+        You need to order <strong>{item.shortage}</strong> more units to fulfill all customer orders.
+      </p>
+    </div>
+  ) : (
+    <div className="mt-4 bg-green-50 border border-green-100 rounded-xl px-4 py-3">
+      <p className="text-green-600 text-sm font-semibold">
+        ✔ Stock is sufficient
+      </p>
+
+      <p className="text-xs text-green-500 mt-1">
+        Current stock can fulfill all orders.
+      </p>
+    </div>
+  )}
+</div>
       {/* Progress */}
       <div className="mb-5">
         <div className="flex justify-between text-xs mb-1">
