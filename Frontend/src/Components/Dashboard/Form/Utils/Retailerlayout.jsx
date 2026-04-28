@@ -6,7 +6,9 @@ import {
 } from '@ant-design/icons';
 
 import { Button, Layout, Menu, theme } from 'antd';
-import { DashboardCustomize, DeliveryDining, Inventory2, SubjectOutlined } from '@mui/icons-material';
+import { DashboardCustomize, DeliveryDining,  Inventory2, SubjectOutlined } from '@mui/icons-material';
+import AssignmentReturnIcon from '@mui/icons-material/AssignmentReturn';
+import DocumentScannerIcon from '@mui/icons-material/DocumentScanner';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import UserProfileMenu from '../UserProfile';
 import { SettingsMenu } from './Setting';
@@ -42,11 +44,11 @@ const Retailerlayout = () => {
       label: "AI Agent",
     }, {
       key: "/Dashboard/Retailer/ReturnInvoice",
-      icon: <DeliveryDining />,
+      icon: <AssignmentReturnIcon />,
       label: "Return Invoice",
     }, {
       key: "/Dashboard/Retailer/InvoicePurchaseScan",
-      icon: <DeliveryDining />,
+      icon: <DocumentScannerIcon />,
       label: "OCR System",
     }
   ]
