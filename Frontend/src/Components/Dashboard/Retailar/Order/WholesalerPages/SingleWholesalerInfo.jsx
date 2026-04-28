@@ -120,23 +120,23 @@ const SingleWholesalerInfo = () => {
   return (
     <>
       <div className='m-6'>
-        <div className='bg-white border shadow-xl border-gray-300 p-6 rounded-xl ' >
+        <div className='bg-white border    shadow-xl border-gray-300 p-6 rounded-xl ' >
           <div className='flex gap-2'>
-            <span className='flex flex-row items-center gap-2'>
+            <span className='flex flex-row items-center gap-5'>
               <span className='text-green-900/90  rounded-xl bg-green-200/80 p-6'>
                 <LocalShipping fontSize='medium' />
               </span>
               <div className='flex flex-col items-center gap-2'>
                 <span className='flex flex-row items-center gap-2'>
-                  <h1 className='font-bold text-xl'>
+                  <h1 className='font-bold text-xl'> 
                     {singleWholesaler?.pharmacyName || "No Name"}
                   </h1>                  
                   <p className=' bg-green-200/80 px-1 text-xs rounded-2xl text-green-700/90 uppercase '>verified</p>
-                </span>
+                </span>     
                 <p className='text-sm font-medium text-gray-700 '>{singleWholesaler?.license}</p>
               </div>
-            </span>
-          </div>
+            </span> 
+          </div>   
           <div className='flex flex-row gap-2 ml-4 mt-4'>
             <div className='flex flex-row gap-8'>
               <span className='flex flex-col items-center'>
@@ -158,7 +158,7 @@ const SingleWholesalerInfo = () => {
         </div>
         <div className="grid grid-cols-12 gap-6 mt-8">
           <div className="col-span-12 lg:col-span-3">
-            <section className='bg-white border shadow-xl border-gray-300 p-6 rounded-xl '>
+            <section className='bg-white border shadow-xl border-gray-300 p-6 rounded-xl'>
               <span className='flex justify-between items-center'>
                 <h1 className='font-bold text-lg'>Filters</h1>
                 <p className='text-green-500 text-sm font-semibold'>Clear All</p>
@@ -193,7 +193,7 @@ const SingleWholesalerInfo = () => {
 
               <div className='mt-4'>
                 <h1 className=' text-xs font-bold break-normal'>SALT COMPOSITION</h1>
-                <div className='grid grid-cols-4 lg:grid-cols-2  gap-2'>
+                <div className='grid grid-cols-4 lg:grid-cols-2  mt-3 gap-2'>
                   <span className='bg-gray-500/80 rounded px-2 lg:max-w-32 max-w-30 py-1 text-xs font-bold text-gray-700'>Amoxillin</span>
                   <span className='bg-gray-500/80 rounded px-2 lg:max-w-32 max-w-30 py-1 text-xs font-bold text-gray-700'>Paracetamol</span>
                   <span className='bg-gray-500/80 rounded px-2 lg:max-w-32 max-w-30 py-1 text-xs font-bold text-gray-700'>Metformin</span>
