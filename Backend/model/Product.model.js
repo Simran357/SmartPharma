@@ -37,10 +37,6 @@ const ProductSchema = new mongoose.Schema({
   ProductMfgDate: { 
     type: Date, 
     required: true 
-  }
-
-}, { timestamps: true });
-
+  }}, 
+{ timestamps: true });
 module.exports = mongoose.model("Product", ProductSchema);
-
-

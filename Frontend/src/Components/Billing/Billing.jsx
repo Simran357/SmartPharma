@@ -60,7 +60,7 @@ const [customerEmail,setCustomerEmail] = useState("")
         quantity: Number(item.qty) || 1,
         image: item.image || "",
 
-        // ✅ ADD THESE (important)
+        //  ADD THESE (important)
         batch: item.ProductSku || null,
         expiryDate: item.ProductExpiryDate
           ? new Date(item.ProductExpiryDate)
@@ -106,7 +106,7 @@ const [customerEmail,setCustomerEmail] = useState("")
 
       console.log("Stripe response:", res?.data);
 
-      // ✅ SAVE IN LOCALSTORAGE
+      //  SAVE IN LOCALSTORAGE
       localStorage.setItem("orderData", JSON.stringify(orderData));
 
       window.location.href = res?.data?.url;
@@ -126,7 +126,7 @@ return (
 
         {/* LEFT PANEL */}
         <div className="lg:col-span-2">
-          <div className="bg-white rounded-2xl shadow-sm border p-5 sticky top-6">
+          <div className="bg-white rounded-2xl shadow-sm border  border-gray-400 p-5 sticky top-6">
             <div className="flex items-center gap-2 mb-4">
               <div className="bg-green-100 p-2 rounded-xl">
                 <CurrencyRupee className="text-green-600" />
@@ -143,7 +143,7 @@ return (
 
         {/* ORDER TABLE */}
         <div className="lg:col-span-6 space-y-6">
-          <div className="bg-white rounded-2xl shadow-sm border overflow-hidden">
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-400 overflow-hidden">
             <div className="px-6 py-4 border-b flex justify-between items-center bg-slate-50">
               <div>
                 <h2 className="font-bold text-lg text-slate-800">
@@ -203,7 +203,7 @@ return (
           </div>
 
           {/* CUSTOMER DETAILS */}
-          <div className="bg-white rounded-2xl shadow-sm border p-6">
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-400 p-6">
             <h2 className="font-bold text-lg mb-5 text-slate-800">
               Customer Details
             </h2>
@@ -246,7 +246,7 @@ return (
 
         {/* SUMMARY PANEL */}
         <div className="lg:col-span-4">
-          <div className="bg-white rounded-2xl shadow-sm border p-6 sticky top-6">
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-400 p-6 sticky top-6">
             <h2 className="text-xl font-bold mb-5 text-slate-800">
               Order Summary
             </h2>

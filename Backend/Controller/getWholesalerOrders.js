@@ -7,7 +7,7 @@ const getWholesalerOrders = async (req, res) => {
     console.log("wholesalerId:", wholesalerId);
 
     const orders = await orderSchema
-      .find({ wholesalerId })   // ✅ FIXED HERE
+      .find({ wholesalerId })   //  FIXED HERE
       .sort({ createdAt: -1 });
 
     res.json({

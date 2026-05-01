@@ -33,6 +33,7 @@ const {getDashboardStats ,inventaryImpulse} = require("../../Controller/getDashb
 const getInventoryHealth = require("../../Controller/getInventaryHealth")
 const getTopSellingProducts=require("../../Controller/getTopSellingProduct")
 const getRetailerOrder = require("../../Controller/getOrderHistory")
+const getExpiryProduct=require("../../Controller/getExpiryProduct")
 
 router.post("/registercontroller",RegisterController)
 router.post("/LoginController",LoginController)
@@ -61,7 +62,7 @@ router.get("/getRetailerOrder/:id", getRetailerOrder)
 router.get("/getLowStockItems", getLowStockItems)
 router.post('/orderController',authMiddleware,order)   
 router.get("/me",authMiddleware,getMe)
-console.log("router.file")
+console.log("router.file")  
 router.put('/updateOrderStatus/:id',updateOrderStatus)   
 
 
@@ -77,4 +78,8 @@ router.get("/getDashboardStats",authMiddleware,getDashboardStats)
 router.get("/inventaryImpulse",authMiddleware,inventaryImpulse)
 router.get("/getInventoryHealth",authMiddleware,getInventoryHealth)
 router.get("/getTopSellingProducts", authMiddleware,getTopSellingProducts)
+
+router.get("/getExpiryProduct",getExpiryProduct)
+
+
 module.exports = router  

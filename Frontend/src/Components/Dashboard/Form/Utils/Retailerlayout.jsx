@@ -49,7 +49,7 @@ const Retailerlayout = () => {
 
     if (auth) {
       fetchUser();
-    }
+    } 
   }, [auth]);
 
   console.log("user",userData)
@@ -131,7 +131,7 @@ const Retailerlayout = () => {
                 "User"
               }
               role={userData?.role || "Retailer"}
-            />
+            />     
           </div>
         </Header>
 

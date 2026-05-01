@@ -36,12 +36,12 @@ const Wholesalerfirst = () =>  {
       <div className="flex flex-wrap gap-6 justify-start">
 
         {filteredUsers.length > 0 ? filteredUsers.map((user) => (
-          
+                                                            
           <div
-            key={user._id}
-            className=" w-full 
-           sm:w-[48%]
-          md:w-[31%] 
+          key={user._id}           
+          className=" w-full 
+          sm:w-[48%]
+          md:w-[39%] 
           lg:w-[23%] 
           xl:w-[40%]
           bg-[#162538] 
