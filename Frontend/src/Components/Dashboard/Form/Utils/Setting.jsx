@@ -27,10 +27,10 @@ export const SettingsMenu = () => {
 
             {open && (
                 <div className="absolute right-0 mt-3 w-44 bg-white shadow-lg rounded-lg border z-50">
-                    <button className="w-full text-left px-3 py-2 hover:bg-gray-100">
+                    <button className="w-full text-left px-3  hover:bg-gray-100">
                         Preferences
                     </button>
-                    <button className="w-full text-left px-3 py-2 hover:bg-gray-100">
+                    <button className="w-full text-left px-3  hover:bg-gray-100">
                         Security
                     </button>
                 </div>

@@ -327,9 +327,17 @@ const OrdersOverview = () => {
                       {/* ✅ STATUS BAR START */}
                       {/* ✅ RESPONSIVE STATUS BAR */}
                       <div className="w-full mt-4">
-                        <h1 className="text-orange-500 font-bold text-lg mb-3">
-                          Process Status
-                        </h1>
+
+                        <div className="flex flex-row justify-between items-center">
+                          <h1 className="text-orange-500 font-bold text-lg mb-3">
+                            Process Status
+                          </h1>
+
+                          <button className="bg-orange-500 text-white px-5 py-2 rounded-lg   right-0" onClick={() => navigate(`${order._id}`, { state: order })}>
+                            View Order
+                          </button>
+                        </div>
+
 
                         <div className="overflow-x-auto scrollbar-hide">
                           <div className="relative min-w-850px md:min-w-full flex items-center py-4">
@@ -367,15 +375,15 @@ const OrdersOverview = () => {
                                         >
                                           <div
                                             className={`w-5 h-5 rounded-full ${isActive
-                                                ? "bg-orange-500"
-                                                : "bg-gray-400"
+                                              ? "bg-orange-500"
+                                              : "bg-gray-400"
                                               }`}
                                           ></div>
 
                                           <p
                                             className={`text-[10px] md:text-sm mt-2 text-center ${isActive
-                                                ? "text-orange-500"
-                                                : "text-gray-400"
+                                              ? "text-orange-500"
+                                              : "text-gray-400"
                                               }`}
                                           >
                                             {step.replaceAll("_", " ")}
@@ -392,9 +400,7 @@ const OrdersOverview = () => {
                       </div>
                     </div>
 
-                    <button className="bg-orange-500 text-white px-5 py-2 rounded-lg relative bottom-8 right-0" onClick={() => navigate(`${order._id}`, { state: order })}>
-                      View Order
-                    </button>
+
 
                   </div>
 

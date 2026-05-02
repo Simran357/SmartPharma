@@ -1,8 +1,40 @@
 import React from 'react'
 import { motion } from "framer-motion"
 import { Mail, MapPin, Phone } from 'lucide-react'
-
+import { useState } from 'react'
+import axiosInstance from "../../Components/Dashboard/Form/Utils/AxiosInstance"
 const Contact = () => {
+
+  const [formData, setFormData] = useState({
+  name: "",
+  email: "",
+  message: ""
+});
+
+const handleChange = (e) => {
+  setFormData({
+    ...formData,
+    [e.target.name]: e.target.value
+  });
+  // console.log("  data form da ",formData)
+};
+
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+  console.log("SUBMIT WORKING ");
+  try {
+    const res = await axiosInstance.post("/registerroute/contactUs", formData);
+
+    if (res.data.success) {
+      alert("Message sent ");
+      setFormData({ name: "", email: "", message: "" });
+    }
+  } catch (err) {
+    console.log(err);
+    alert("Error sending message ");
+  }
+};
+
   return (
     <>
       <section id="contact" className='py-20'>
@@ -45,7 +77,7 @@ const Contact = () => {
 
               {/* Phone */}
               <div className='flex items-start gap-4'>
-                <div className='gradient-bg rounded-xl p-3 shrink-0'>
+                <div className='bg-emerald-600 rounded-xl p-3 shrink-0'>
                   <Phone className='h-5 w-5 text-white' />
                 </div>
                 <div>
@@ -58,7 +90,7 @@ const Contact = () => {
 
               {/* Email */}
               <div className='flex items-start gap-4'>
-                <div className='bg-purple-600 rounded-xl p-3 shrink-0'>
+                <div className='bg-emerald-600 rounded-xl p-3 shrink-0'>
                   <Mail className='h-5 w-5 text-white' />
                 </div>
                 <div>
@@ -81,17 +113,21 @@ const Contact = () => {
             </motion.div>
 
             {/* RIGHT FORM */}
-            <motion.form
+            <motion.form  
+               onSubmit={handleSubmit}
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              onSubmit={(e) => e.preventDefault()}
+              // onSubmit={(e) => e.preventDefault()}
               className='smart-card space-y-5 p-6 rounded-2xl shadow-sm'
             >
               
               <div>
                 <label className='text-sm font-medium mb-1 block'>Name</label>
                 <input
+                name="name"
+                    value={formData.name}
+                  onChange={handleChange}
                   className='w-full rounded-xl bg-muted px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-primary/30'
                   placeholder='your name'
                 />
@@ -100,6 +136,9 @@ const Contact = () => {
               <div>
                 <label className='text-sm font-medium mb-1 block'>Email</label>
                 <input
+                   name="email"
+                   value={formData.email}
+                  onChange={handleChange}
                   type="email"
                   className='w-full rounded-xl bg-muted px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-primary/30'
                   placeholder='your email'
@@ -109,17 +148,20 @@ const Contact = () => {
               <div>
                 <label className='text-sm font-medium mb-1 block'>Message</label>
                 <textarea
+                 name="message"
+                value={formData.message}
+                 onChange={handleChange}
                   rows={4}
                   className='w-full rounded-xl bg-muted px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-primary/30'
                   placeholder='How can we help?'
                 />
               </div>
 
-              {/* ❌ removed extra textarea (bug) */}
+              {/* removed extra textarea (bug) */}
 
               <button
                 type="submit"
-                className='w-full bg-primary text-white py-3 rounded-xl font-medium hover:opacity-90 transition'
+                className='w-full bg-emerald-600 text- py-3 rounded-xl font-medium hover:opacity-90 transition'
               >
                 Send Message
               </button>

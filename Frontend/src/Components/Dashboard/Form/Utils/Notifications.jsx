@@ -28,8 +28,8 @@ useEffect(() => {
       </button>
 
       {open && (
-        <div className="absolute right-0 mt-3 w-64 bg-white shadow-lg rounded-lg border z-50">
-          <div className="p-3 border-b font-semibold">
+        <div className="absolute right-0 mt-3 w-50 bg-white shadow-lg rounded-lg border z-50">
+          <div className="p-1 text-left border-b font-semibold">
             Notifications
           </div>
 

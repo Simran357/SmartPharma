@@ -14,10 +14,10 @@ const navigate = useNavigate()
 useEffect(() => {
   const fetchMeApi = async ()=>{
   await axiosInstance.get("/registerroute/me")
-    .then(res => {
+    .then(res => { 
       setRole(res?.data?.user?.role);
     })
-    .catch(err => {
+    .catch(err => {          
       console.error(err);
     })  
     .finally(() => {
@@ -39,7 +39,7 @@ useEffect(() => {
 }, [role, loading]);
 if (loading) return <div>Loading...</div>;
 
-if (!role) return <div>Loading...</div>; // 👈 ADD THIS
+if (!role) return <div>Loading...</div>; // ADD THIS
 
 switch(role){
   case 'Admin':

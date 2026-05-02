@@ -11,6 +11,7 @@ const NavBar = () => {
   const links = ["Home", "Medicines", "Services", "Contact", "RoleBased"];
 console.log("location",location)
   // Scroll effect                          
+  
   useEffect(() => {  
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);

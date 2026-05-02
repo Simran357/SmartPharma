@@ -81,7 +81,7 @@ const UserProfileMenu = ({ username, role }) => {
                 <div className="w-14 h-14 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center text-xl font-bold border border-white/20">
                   {initials}
                 </div>
-
+                 
                 <div>
                   <h3 className="font-semibold text-lg">{username}</h3>
                   <p className="text-sm opacity-90">{role}</p>
@@ -117,5 +117,4 @@ const UserProfileMenu = ({ username, role }) => {
     </div>
   );
 };
-
 export default UserProfileMenu;

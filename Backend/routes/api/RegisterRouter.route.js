@@ -34,6 +34,7 @@ const getInventoryHealth = require("../../Controller/getInventaryHealth")
 const getTopSellingProducts=require("../../Controller/getTopSellingProduct")
 const getRetailerOrder = require("../../Controller/getOrderHistory")
 const getExpiryProduct=require("../../Controller/getExpiryProduct")
+const contactUs=require("../../Controller/contactUs")
 
 router.post("/registercontroller",RegisterController)
 router.post("/LoginController",LoginController)
@@ -80,6 +81,6 @@ router.get("/getInventoryHealth",authMiddleware,getInventoryHealth)
 router.get("/getTopSellingProducts", authMiddleware,getTopSellingProducts)
 
 router.get("/getExpiryProduct",getExpiryProduct)
-
+router.post("/contactUs",contactUs)
 
 module.exports = router  

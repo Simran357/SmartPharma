@@ -316,11 +316,12 @@ const WholeSaler = () => {
                 <button
                   className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:border-blue-400 hover:shadow-lg transition-all text-center group">
                   <div
+                  onClick={()=>navigate("OrdersOverview")}
                     className="w-12 h-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:bg-blue-600 group-hover:text-white transition-colors">
                     <CheckCircleOutlineOutlinedIcon />
                   </div>
-                  <span className="block text-sm font-bold text-slate-700">Approve Requests</span>
-                  <span className="text-[10px] text-slate-400 uppercase tracking-tighter">Franchise Portal</span>
+                  <span className="block text-sm font-bold text-slate-700">Approve Orders</span>
+                  <span className="text-[10px] text-slate-400 uppercase tracking-tighter">Orders Portal</span>
                 </button>
 
                 <button
