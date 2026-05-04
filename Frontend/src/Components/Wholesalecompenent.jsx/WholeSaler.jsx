@@ -1,5 +1,5 @@
 import NotificationsNoneSharpIcon from '@mui/icons-material/NotificationsNoneSharp';
-import CurrencyRupeeIcon  from '@mui/icons-material/AttachMoney';
+import CurrencyRupeeIcon from '@mui/icons-material/AttachMoney';
 import CardTravelIcon from '@mui/icons-material/CardTravel';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import DateRangeIcon from '@mui/icons-material/DateRange';
@@ -39,6 +39,8 @@ const WholeSaler = () => {
   });
   const { inStockPercent, lowStockPercent, outStockPercent } = health;
   const [products, setProducts] = useState([]);
+  const [exProducts, setexProducts] = useState([]);
+  const [expiryData, setExpiryData] = useState(null);
 
   useEffect(() => {
     console.log("chl pya hh ")
@@ -85,19 +87,19 @@ const WholeSaler = () => {
 
     fetchOrders();
   }, []);
- 
-  useEffect(() => {
-  const fetchPartners = async () => {
-    try {
-      const res = await axiosInstance.get("/registerroute/getDeliveryPartners");
-      setCourierList(res?.data?.data);
-    } catch (err) {
-      console.error(err);
-    }
-  };
 
-  fetchPartners();
-}, []);
+  useEffect(() => {
+    const fetchPartners = async () => {
+      try {
+        const res = await axiosInstance.get("/registerroute/getDeliveryPartners");
+        setCourierList(res?.data?.data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchPartners();
+  }, []);
 
   useEffect(() => {
     const fetchLowStock = async () => {
@@ -124,6 +126,51 @@ const WholeSaler = () => {
 
   const revenue = orders?.reduce((sum, o) => sum + (o.total || 0), 0) || 0;
 
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const res = await axiosInstance.get(
+          "/registerroute/getExpiryProduct"
+        );
+
+        if (res?.data?.success) {
+          setexProducts(res.data.data);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  useEffect(() => {
+    if (!exProducts.length) return;
+
+    const today = new Date();
+
+    const expiryItems = exProducts.filter((item) => {
+      if (!item.ProductExpiryDate) return false;
+
+      const expiryDate = new Date(item.ProductExpiryDate);
+
+      const diffDays =
+        (expiryDate - today) / (1000 * 60 * 60 * 24);
+
+      return diffDays <= 30 && diffDays >= 0;
+    });
+
+    // Risk logic
+    let risk = "Low";
+    if (expiryItems.length > 20) risk = "Critical";
+    else if (expiryItems.length > 10) risk = "Moderate";
+
+    setExpiryData({
+      days: 30,
+      totalBatches: expiryItems.length,
+      risk,
+    });
+  }, [exProducts]);
 
 
   return (
@@ -135,7 +182,7 @@ const WholeSaler = () => {
         <header className='flex flex-col md:flex-row md:items-center justify-between gap-4'>
           <div>
             <h1 className='text-3xl font-bold text-slate-800 tracking-tight'>Dashboard Overview</h1>
-            <p className=' text-slate-500 mt-1'>Welcome back, Amit. Here is what's happening today.</p>
+            <p className=' text-slate-500 mt-1'>Welcome back,  Here is what's happening today.</p>
           </div>
           <div className='flex items-center gap-3'>
             <div className='relative'>
@@ -143,7 +190,7 @@ const WholeSaler = () => {
                 type="text"
                 className="w-64 pl-10 pr-4 py-2 border border-slate-200 rounded-xl 
                          focus:ring-2 focus:ring-blue-500 text-sm outline-none"
-                placeholder="Search medicines, orders..." />
+                placeholder="Search medicines , orders..." />
 
               <button className="bg-white border border-slate-200 rounded-xl p-2 hover:bg-slate-50 transition-colors relative ml-2" >
                 <NotificationsNoneSharpIcon className="  " />
@@ -156,13 +203,13 @@ const WholeSaler = () => {
           {/* <!-- Daily Sales --> */}
           <div
             onClick={() => navigate("Dailysales")}
-            className=' bg-white rounded-3xl p-6 shadow-sm border border-slate-100 flex flex-col justify-between hover:shadow-md transition-shadow'>
+            className=' bg-white rounded-3xl p-6 shadow-sm border border-slate-100 flex flex-col hover:scale-100 justify-between hover:shadow-md transition-shadow'>
             <div className="flex justify-between items-start">
               <div >
                 <p className='font-medium text-slate-500'>Daily Sales</p>
               </div>
               <div className='bg-blue-50 rounded-lg p-2 text-lg  text-blue-600'>
-               ₹
+                ₹
               </div>
             </div>
             <div className="mt-4">
@@ -196,15 +243,7 @@ const WholeSaler = () => {
           {/* <!-- Low Stock Alerts --> */}
           <div
             onClick={() =>
-              navigate("Lowstock", {
-                state: {
-                  totalOrders,
-                  revenue,
-                  pending,
-                  lowStockItems,
-                  orders,   // ✅ ADD THIS
-                }
-              })
+              navigate("Lowstock")
             } className="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col justify-between hover:shadow-md transition-shadow">
             <div className="flex justify-between items-start">
               <span className="text-slate-500 font-medium">Low Stock Alerts</span>
@@ -221,16 +260,33 @@ const WholeSaler = () => {
           {/* <!-- Expiry Alerts --> */}
           <div
             onClick={() => navigate("ExpiryMedicine")}
-            className="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col justify-between hover:shadow-md transition-shadow">
+            className="bg-white p-6 rounded-3xl shadow-sm border-none flex flex-col justify-between hover:shadow-md"
+          >
             <div className="flex justify-between items-start">
-              <span className="text-slate-500 font-medium">Expiry (30 Days)</span>
+              <span className="text-slate-500 font-medium">
+                Expiry ({expiryData?.days || 0} Days)
+              </span>
+
               <div className="p-2 bg-rose-50 text-rose-600 rounded-lg">
                 <DateRangeIcon />
               </div>
             </div>
+
             <div className="mt-4">
-              <h2 className="text-3xl font-bold text-slate-800">24 Batches</h2>
-              <span className="text-rose-600 text-sm font-bold mt-1 uppercase tracking-wider">Critical Risk</span>
+              <h2 className="text-3xl font-bold text-slate-800">
+                {expiryData?.totalBatches || 0} Batches
+              </h2>
+
+              <span
+                className={`text-sm font-bold mt-1 uppercase tracking-wider ${expiryData?.risk === "Critical"
+                    ? "text-red-600"
+                    : expiryData?.risk === "Moderate"
+                      ? "text-yellow-600"
+                      : "text-green-600"
+                  }`}
+              >
+                {expiryData?.risk || "Low"} Risk
+              </span>
             </div>
           </div>
         </section>
@@ -260,14 +316,16 @@ const WholeSaler = () => {
                 <button
                   className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:border-blue-400 hover:shadow-lg transition-all text-center group">
                   <div
+                  onClick={()=>navigate("OrdersOverview")}
                     className="w-12 h-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:bg-blue-600 group-hover:text-white transition-colors">
                     <CheckCircleOutlineOutlinedIcon />
                   </div>
-                  <span className="block text-sm font-bold text-slate-700">Approve Requests</span>
-                  <span className="text-[10px] text-slate-400 uppercase tracking-tighter">Franchise Portal</span>
+                  <span className="block text-sm font-bold text-slate-700">Approve Orders</span>
+                  <span className="text-[10px] text-slate-400 uppercase tracking-tighter">Orders Portal</span>
                 </button>
 
                 <button
+                onClick={()=>navigate("Connectcourier")}
                   className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:border-blue-400 hover:shadow-lg transition-all text-center group">
                   <div
                     className="w-12 h-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:bg-blue-600 group-hover:text-white transition-colors">
@@ -281,7 +339,7 @@ const WholeSaler = () => {
                 <button
                   className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:border-blue-400 hover:shadow-lg transition-all text-center group">
                   <div
-                    className="w-12 h-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                    className="w-12   h-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:bg-blue-600 group-hover:text-white transition-colors">
                     <DeleteForeverOutlinedIcon />
                   </div>
                   <span className="block text-sm font-bold text-slate-700">Record Waste</span>
@@ -393,62 +451,6 @@ const WholeSaler = () => {
               </div>
             </section>
 
-            {/* <!-- BEGIN: NEW FEATURE -  --> */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* <!-- Inventory Health: Visual representation of stock availability --!> */}
-              <section className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
-                <h3 className="text-lg font-bold text-slate-800 mb-4">Inventory Health</h3>
-                <div className="flex items-center gap-6">
-                  <div className="relative w-24 h-24">
-                    <svg className="w-full h-full" viewBox="0 0 36 36">
-                      <circle cx="18" cy="18" fill="none" r="16" stroke="#f1f5f9" strokeWidth="4">
-                      </circle>
-                      {/* In Stock */}
-                      <circle cx="18" cy="18" fill="none" r="16" stroke="#22c55e"
-                        strokeDasharray={`${inStockPercent}, 100`} strokeLinecap="round" strokeWidth="4"></circle>
-                      <circle cx="18" cy="18" fill="none" r="16" stroke="#f59e0b"
-                        strokeDasharray={`${lowStockPercent}, 100`} strokeDashoffset={`-${inStockPercent}`} strokeLinecap="round"
-                        strokeWidth="4"></circle>
-                      <circle cx="18" cy="18" fill="none" r="16" stroke="#ef4444"
-                        strokeDasharray={`${outStockPercent}, 100`} strokeDashoffset={`-${inStockPercent + lowStockPercent}`} strokeLinecap="round"
-                        strokeWidth="4"></circle>
-                    </svg>
-                  </div>
-                  {/* Legend */}
-                  <div className="space-y-2 text-sm">
-                    <div className="flex items-center gap-2"><span
-                      className="w-2 h-2 rounded-full bg-green-500"></span> <span
-                        className="text-slate-500">In Stock ({inStockPercent}%)</span></div>
-                    <div className="flex items-center gap-2"><span
-                      className="w-2 h-2 rounded-full bg-amber-500"></span> <span
-                        className="text-slate-500">Low Stock ({lowStockPercent}%)</span></div>
-                    <div className="flex items-center gap-2">
-                      <span
-                        className="w-2 h-2 rounded-full bg-red-500"></span>
-                      <span className="text-slate-500">
-                        Out of Stock ({outStockPercent}%)</span></div>
-                  </div>
-                </div>
-              </section>
-
-              <section className='bg-white p-6 rounded-3xl border border-slate-100 shadow-sm'>
-                <h3 className="text-lg font-bold text-slate-800 mb-4">Top Selling Products</h3>
-                <ul className="space-y-3">
-                  {products.map((item, index) => (
-                    <li key={index} className="flex justify-between items-center">
-                      <span className="text-sm font-medium text-slate-700">
-                        {item.name}
-                      </span>
-
-                      <span className="text-xs font-bold bg-slate-50 px-2 py-1 rounded">
-                        {item.totalSold} units
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </section>
-
-            </div>
 
 
           </div>
@@ -457,9 +459,9 @@ const WholeSaler = () => {
           <aside className='space-y-8'>
             {/* <!-- Financial Overview: Credit limits and outstanding payment status | --> */}
             <section className='bg-slate-900 rounded-3xl text-white  p-6 shadow-xl relative overflow-hidden'>
-            
 
-              <div className="flex items-center gap-2 mb-3">
+
+              <div className="flex items-center ml-23 gap-2 mb-3">
                 <LocalShippingIcon style={{ fontSize: 16, color: "#4ade80" }} />
                 <h4 className="text-xs font-bold text-slate-300 tracking-wide uppercase">
                   Deliveries
@@ -544,6 +546,58 @@ const WholeSaler = () => {
                 Expiry List</button>
             </section>
 
+
+            <section className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
+              <h3 className="text-lg font-bold text-slate-800 mb-4">Inventory Health</h3>
+              <div className="flex items-center gap-6">
+                <div className="relative w-24 h-24">
+                  <svg className="w-full h-full" viewBox="0 0 36 36">
+                    <circle cx="18" cy="18" fill="none" r="16" stroke="#f1f5f9" strokeWidth="4">
+                    </circle>
+                    {/* In Stock */}
+                    <circle cx="18" cy="18" fill="none" r="16" stroke="#22c55e"
+                      strokeDasharray={`${inStockPercent}, 100`} strokeLinecap="round" strokeWidth="4"></circle>
+                    <circle cx="18" cy="18" fill="none" r="16" stroke="#f59e0b"
+                      strokeDasharray={`${lowStockPercent}, 100`} strokeDashoffset={`-${inStockPercent}`} strokeLinecap="round"
+                      strokeWidth="4"></circle>
+                    <circle cx="18" cy="18" fill="none" r="16" stroke="#ef4444"
+                      strokeDasharray={`${outStockPercent}, 100`} strokeDashoffset={`-${inStockPercent + lowStockPercent}`} strokeLinecap="round"
+                      strokeWidth="4"></circle>
+                  </svg>
+                </div>
+                {/* Legend */}
+                <div className="space-y-2 text-sm">
+                  <div className="flex flex-row items-center gap-2"><span
+                    className="w-2 h-2 rounded-full bg-green-500"></span> <span
+                      className="text-slate-500">In Stock ({inStockPercent}%)</span></div>
+                  <div className="flex items-center gap-2"><span
+                    className="w-2 h-2 rounded-full bg-amber-500"></span> <span
+                      className="text-slate-500">Low Stock ({lowStockPercent}%)</span></div>
+                  <div className="flex items-center gap-2">
+                    <span
+                      className="w-2 h-2 rounded-full bg-red-500"></span>
+                    <span className="text-slate-500">
+                      Out of Stock ({outStockPercent}%)</span></div>
+                </div>
+              </div>
+            </section>
+
+            <section className='bg-white p-6 rounded-3xl border border-slate-100 shadow-sm'>
+              <h3 className="text-lg font-bold text-slate-800 mb-4">Top Selling Products</h3>
+              <ul className="space-y-3">
+                {products.map((item, index) => (
+                  <li key={index} className="flex justify-between items-center">
+                    <span className="text-sm font-medium text-slate-700">
+                      {item.name}
+                    </span>
+
+                    <span className="text-xs font-bold bg-slate-50 px-2 py-1 rounded">
+                      {item.totalSold} units
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </section>
           </aside>
         </div>
       </main>

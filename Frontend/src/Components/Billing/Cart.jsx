@@ -70,7 +70,7 @@ const Cart = () => {
  return (
   <>
     <div className="min-h-screen bg-slate-50 p-6">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-15">
 
         {/* Header */}
         <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 mb-6">

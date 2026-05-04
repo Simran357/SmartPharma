@@ -14,7 +14,7 @@ const SingleOrder = () => {
   const { id } = useParams();
   const location = useLocation();
   console.log(id)
-  // ✅ get instant data
+  //  get instant data
   const steps = [
     "PLACED",
     "CONFIRMED",
@@ -87,7 +87,7 @@ const SingleOrder = () => {
                 <span className="bg-orange-100 text-orange-600 px-3 py-1 rounded-full text-sm">
                   {order?.status}
                 </span>
-              </div>
+              </div>   
               <div className="flex justify-between items-center">
                 <div >
 
@@ -105,7 +105,7 @@ const SingleOrder = () => {
                   </div>
                 </div>
 
-                <div className="flex gap-4">
+                <div className="flex  gap-4">
                   <button className="px-4 py-2 bg-gray-200 rounded-lg">
                     Download PDF
                   </button>
@@ -170,7 +170,7 @@ const SingleOrder = () => {
                 {order?.items.map((item, index) => (
                   <div
                     key={index}
-                    className="grid grid-cols-5 items-center border-b pb-3"
+                    className="grid grid-cols-5 items-center  border-b pb-3"
                   >
                     <div className="col-span-2 font-medium">
                       {item?.name}
@@ -231,10 +231,10 @@ const SingleOrder = () => {
               </div>
 
               <p className="text-gray-400 mt-2 text-sm">
-                courier name:  {order?.courier?.name}
+                Courier name:  {order?.courier?.name}
               </p>
               <p className="text-gray-400 mt-2 text-sm">
-                delivery time: {order?.courier?.time}
+               Delivery time: {order?.courier?.time}
               </p>
 
             </div>
@@ -243,10 +243,7 @@ const SingleOrder = () => {
             <div className="bg-blue-900 text-white p-6 rounded-2xl shadow">
               <h2 className="font-semibold text-3xl mb-4">Order Summary</h2>
 
-              {/* <div className="flex justify-between mb-2">
-              <span>Subtotal</span>
-              <span>₹{subtotal}</span>
-            </div> */}
+             
 
               <div className="flex justify-between mb-2">
                 <span>Tax</span>

@@ -128,15 +128,15 @@ const SingleWholesalerInfo = () => {
               </span>
               <div className='flex flex-col items-center gap-2'>
                 <span className='flex flex-row items-center gap-2'>
-                  <h1 className='font-bold text-xl'> 
+                  <h1 className='font-bold text-xl'>
                     {singleWholesaler?.pharmacyName || "No Name"}
-                  </h1>                  
+                  </h1>
                   <p className=' bg-green-200/80 px-1 text-xs rounded-2xl text-green-700/90 uppercase '>verified</p>
-                </span>     
+                </span>
                 <p className='text-sm font-medium text-gray-700 '>{singleWholesaler?.license}</p>
               </div>
-            </span> 
-          </div>   
+            </span>
+          </div>
           <div className='flex flex-row gap-2 ml-4 mt-4'>
             <div className='flex flex-row gap-8'>
               <span className='flex flex-col items-center'>
@@ -202,13 +202,12 @@ const SingleWholesalerInfo = () => {
               </div>
             </section>
           </div>
-
           <div className="col-span-12 lg:col-span-6">
-            <section className=" min-h-600px">
+            <section className="min-h-600px">
               <div className='m-4'>
                 <h1 className='text-black font-medium text-lg '>Available Medicines</h1>
                 <h1 className='text-gray-500 font-bold text-sm mt-2'>BATCH SEARCH</h1>
-                <span className='flex justify-between items-center gap-4'>
+                <span className='flex  justify-between items-center  gap-4'>
                   <input
                     className="w-full bg-gray-100 py-1 px-2 rounded-lg mt-2"
                     placeholder='Enter Batch No.'
@@ -278,14 +277,14 @@ const SingleWholesalerInfo = () => {
                         <div className="flex justify-between items-center mt-2">
                           <p className="text-lg font-bold text-gray-800">
                             ₹ {med.ProductPrice || 0}
-                            <span className="text-xs text-gray-400 ml-1">/ unit</span>
+                            <span className="text-xs text-gray-900 ml-1">/ unit</span>
                           </p>
 
                           <button
                             disabled={isInCart(med._id)}
                             className={`p-2 rounded-lg transition ${isInCart(med._id)
-                                ? "bg-gray-200 cursor-not-allowed"
-                                : "bg-green-100 hover:bg-green-200"
+                              ? "bg-gray-200 cursor-not-allowed"
+                              : "bg-green-100 hover:bg-green-200"
                               }`}
                             onClick={() => handleCartItem(med._id)}
                           >
@@ -309,13 +308,13 @@ const SingleWholesalerInfo = () => {
               <div className='flex justify-center'>
                 <button className=' px-4 py-2 rounded-xl  mt-4 bg-white/90 border w-fit text-gray-600 border-slate-400 font-medium'>Load More Medicines</button>
 
-              </div> 
+              </div>
             </section>
           </div>
-          {/* my cart */}
+
           {/* MY CART (OLD DESIGN + NEW LOGIC) */}
           <div className="col-span-12 lg:col-span-3 flex flex-col gap-6">
-            <section className='bg-white border shadow-xl w-full mt-8 border-gray-300 p-6 rounded-xl'>
+            <section className='bg-white border shadow-xl w-full mt-30 border-gray-300 p-6 rounded-xl'>
 
               {/* Header */}
               <div className='flex justify-between items-center'>
@@ -424,8 +423,6 @@ const SingleWholesalerInfo = () => {
                 </button>
               </div>
             </section>
-
-            
           </div>
         </div>
 
@@ -433,5 +430,4 @@ const SingleWholesalerInfo = () => {
     </>
   )
 }
-
 export default SingleWholesalerInfo

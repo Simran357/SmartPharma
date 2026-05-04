@@ -28,9 +28,9 @@ const PendingOrders = () => {
   const filteredOrders = useMemo(() => {
     return orders.filter((order) => {
       const text = search.toLowerCase();
-      return (
-        order?.orderId?.toLowerCase().includes(text) ||
-        order?.customer?.name?.toLowerCase().includes(text)
+      return (                                                     
+        order?.orderId?.toLowerCase().includes(text) ||         
+        order?.customer?.name?.toLowerCase().includes(text)             
       );
     });
   }, [orders, search]);
@@ -164,7 +164,7 @@ const PendingOrders = () => {
 // ================= REUSABLE =================
 
 const Card = ({ title, value }) => (
-  <div className="bg-white p-5 rounded-xl shadow-sm border">
+  <div className="bg-white p-5 rounded-xl shadow-sm border border-gray-400">
     <p className="text-sm text-gray-500">{title}</p>
     <h2 className="text-2xl font-bold">{value}</h2>
   </div>

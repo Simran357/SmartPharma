@@ -23,4 +23,4 @@ const getInventoryStock = async (req, res,next) => {
   }
 };
   
-module.exports = getInventoryStock;
+module.exports = getInventoryStock;  

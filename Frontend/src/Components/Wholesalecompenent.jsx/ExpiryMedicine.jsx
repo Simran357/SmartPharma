@@ -16,44 +16,56 @@ import {
     BarElement
 } from "chart.js";
 ChartJS.register(CategoryScale, LinearScale, BarElement);
-
+import { useEffect, useState } from "react";
+import axiosInstance from "../Dashboard/Form/Utils/AxiosInstance";
 const ExpiryMedicine = () => {
+    const [products, setProducts] = useState([]);
 
-    const medicines = [
-        {
-            name: "Paracetamol 500mg",
-            sku: "PH-90210",
-            batch: "#B23-902",
-            supplier: "Cipla Ltd.",
-            exp: "12 May 2024",
-            daysLeft: 12,
-            percentage: 15,
-            stock: "₹ 14,200",
-            status: "Critical",
-        },
-        {
-            name: "Amoxicillin Syrup",
-            sku: "PH-11234",
-            batch: "#AX-2024",
-            supplier: "Sun Pharma",
-            exp: "28 June 2024",
-            daysLeft: 45,
-            percentage: 45,
-            stock: "₹ 8,450",
-            status: "Warning",
-        },
-        {
-            name: "Aspirin 75mg",
-            sku: "PH-55421",
-            batch: "#ASP-002",
-            supplier: "Dr. Reddy's",
-            exp: "05 Jan 2024",
-            daysLeft: 0,
-            percentage: 0,
-            stock: "₹ 2,100",
-            status: "Expired",
-        },
-    ];
+    useEffect(() => {
+        getProducts();
+    }, []);
+
+    const getProducts = async () => {
+        try {
+            const res = await axiosInstance.get("/registerroute/getExpiryProduct");
+            setProducts(res.data.data);
+        } catch (err) {
+            console.log(err);
+        }
+    };
+    const today = new Date();
+
+        const expiryData = products.map((item) => {
+        const expDate = new Date(item.ProductExpiryDate);
+
+        const diffTime = expDate - today;
+        const daysLeft = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+        let status = "Safe";
+
+        if (daysLeft <= 0) status = "Expired";
+        else if (daysLeft <= 30) status = "Warning";
+        else if (daysLeft <= 60) status = "Critical";
+
+        return {
+            ...item,
+            daysLeft,
+            status,
+            stockValue: item.ProductQuantity * item.ProductPrice,
+        };
+    });
+
+    const expiredCount = expiryData.filter(item => item.status === "Expired").length;
+
+    const nearExpiryCount = expiryData.filter(item => item.status === "Warning").length;
+
+    const safeStockCount = expiryData.filter(item => item.status === "Safe").length;
+
+    const totalLoss = expiryData
+        .filter(item => item.status === "Expired")
+        .reduce((acc, item) => acc + item.stockValue, 0);
+
+   
 
     const getStatusStyle = (status) => {
         if (status === "Critical") {
@@ -64,38 +76,13 @@ const ExpiryMedicine = () => {
         }
         return "bg-red-600 text-white";
     };
-
     const getBarColor = (status) => {
         if (status === "Critical") return "bg-red-500";
         if (status === "Warning") return "bg-yellow-500";
         return "bg-gray-400";
     };
 
-    const data = {
-        labels: ["May", "Jun", "Jul", "Aug", "Sep", "Oct"],
-        datasets: [
-            {
-                data: [40, 65, 90, 100, 55, 35],
-                backgroundColor: [
-                    "#6366f133",
-                    "#6366f133",
-                    "#6366f133",
-                    "#ef444466",
-                    "#6366f133",
-                    "#6366f133"
-                ],
-                borderRadius: 8
-            }
-        ]
-    };
 
-    const options = {
-        plugins: { legend: { display: false } },
-        scales: {
-            y: { display: false, grid: { color: "#e5e7eb" } },
-            x: { grid: { display: false } }
-        }
-    };
 
 
     return (
@@ -124,23 +111,23 @@ const ExpiryMedicine = () => {
                     </div>
                     {/* <!-- Top Summary Cards --> */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        {/* <!-- Card 1: Expired --> */}
+                        {/* <!-- Card 1: Expired --> */}    
                         <div className='bg-white p-6 rounded-2xl shadow-sm border border-slate-200'>
                             <div className="flex justify-between gap-4">
                                 <div className='bg-red-100 p-2 rounded-lg '>
                                     <DangerousIcon className='text-red-700 text-3xl' />
-                                </div>
+                                </div>                
                                 <div className='text-xs  bg-red-100 p-2 rounded-lg'>
                                     <span className='text-sm text-red-700'>+15%</span>
                                     <TrendingUpIcon className='text-red-700' />
                                 </div>
-                            </div>
-                            <div className='mt-4'>
+                            </div>     
+                            <div className='mt-4'>    
                                 <p className='text-sm font-medium  text-slate-600'>Total Expired</p>
-                                <h3 className='text-2xl font-bold text-slate-900 mt-1'>142 Items</h3>
+                                <h3 className='text-2xl font-bold text-slate-900 mt-1'>{expiredCount} Items</h3>
                                 <p className='font-semibold mt-2  text-[11px] text-red-700'>Action required immediately</p>
                             </div>
-                        </div>
+                        </div>     
                         {/* <!-- Card 2: Near Expiry --> */}
                         <div className='bg-white p-6 rounded-2xl shadow-sm border border-slate-200'>
                             <div className="flex justify-between gap-4">
@@ -154,7 +141,7 @@ const ExpiryMedicine = () => {
                             </div>
                             <div className='mt-4'>
                                 <p className='text-sm font-medium  text-slate-600'>Near Expiry (30d)</p>
-                                <h3 className='text-2xl font-bold text-slate-900 mt-1'>486 Items</h3>
+                                <h3 className='text-2xl font-bold text-slate-900 mt-1'>{nearExpiryCount} Items</h3>
                                 <p className='font-semibold mt-2  text-[11px] text-amber-950'>Discount strategies available</p>
                             </div>
                         </div>
@@ -172,7 +159,7 @@ const ExpiryMedicine = () => {
                             </div>
                             <div className='mt-4'>
                                 <p className='text-sm font-medium  text-slate-600'>Safe Stock</p>
-                                <h3 className='text-2xl font-bold text-slate-900 mt-1'>14,200 Items</h3>
+                                <h3 className='text-2xl font-bold text-slate-900 mt-1'>{safeStockCount} Items</h3>
                                 <p className='font-semibold mt-2  text-[11px] text-blue-700'>Next 90+ days secured</p>
                             </div>
                         </div>
@@ -190,14 +177,14 @@ const ExpiryMedicine = () => {
                             </div>
                             <div className='mt-4'>
                                 <p className='text-sm font-medium  text-slate-600'>Total Loss Value</p>
-                                <h3 className='text-2xl font-bold text-slate-900 mt-1'>₹ 84,250</h3>
+                                <h3 className='text-2xl font-bold text-slate-900 mt-1'>₹  {totalLoss}</h3>
                                 <p className='font-semibold mt-2  text-[11px] text-blue-700'>Projected for current month</p>
                             </div>
                         </div>
                     </div>
 
                     {/* <!-- Smart Alert Banner --> */}
-                    <div className='bg-slate-100 border-l-4 border-red-700 border-error p-5 rounded-2xl flex items-center justify-between shadow-sm  gap-5'>
+                    {/* <div className='bg-slate-100 border-l-4 border-red-700 border-error p-5 rounded-2xl flex items-center justify-between shadow-sm  gap-5'>
                         <div className="flex items-center gap-4">
 
                             <ReportProblemIcon className='text-error text-red-700 text-3xl' />
@@ -216,9 +203,9 @@ const ExpiryMedicine = () => {
                                 className="px-4 py-2 bg-blue-600  text-white rounded-xl text-sm font-bold shadow-md hover:opacity-90 transition-opacity">Apply
                                 Discount (25%)</button>
                         </div>
-                    </div>
+                    </div> */}
                     {/* <!-- Dashboard Layout: Full Width Grid --> */}
-                    <div className="space-y-8">
+                    <div className="space-y-8">  
                         {/* <!-- Filters & Search --> */}
                         <div className=" flex p-6 rounded-2xl shadow-sm border border-white/40  flex-wrap gap-4 items-center">
                             <div className="flex-1 min-w-37.5">
@@ -243,12 +230,12 @@ const ExpiryMedicine = () => {
                             </div>
                             <div className="flex-1 min-w-37.5">
                                 <label className="text-[10px] uppercase tracking-wider font-bold text-slate-600 mb-1 block">Supplier</label>
-                                <select
+                                <select  
                                     className="w-full bg-surface-container-low border-none rounded-xl py-2 text-sm focus:ring-1 focus:ring-primary">
                                     <option>All Suppliers</option>
                                     <option>Cipla Ltd.</option>
                                     <option>Sun Pharma</option>
-                                </select>
+                                </select>  
                             </div>
                             <div className="flex-1 min-w-37.5">
                                 <label className="text-[10px] uppercase tracking-wider font-bold text-on-surface-variant mb-1 block">Status</label>
@@ -269,8 +256,8 @@ const ExpiryMedicine = () => {
                             <div className="px-6 py-4 flex justify-between items-center ">
                                 <h3 className="font-headline font-semibold text-lg">Inventory Expiry Logs</h3>
                                 <div className="flex gap-2">
-                                    <div className="bg-primary/5 text-blue-700 text-[10px] px-2 py-1 rounded font-bold uppercase">142
-                                        items in list</div>
+                                    <div className="bg-primary/5 text-blue-700 text-[10px] px-2 py-1 rounded font-bold uppercase">
+                                      {expiryData.length}   items in list</div>
                                     <button className='text-slate-700 hover:text-blue-600'>
                                         <MoreVertIcon className='' />
                                     </button>
@@ -290,9 +277,9 @@ const ExpiryMedicine = () => {
                                             <th className="px-4 py-4 text-xs font-bold uppercase">
                                                 Batch No.
                                             </th>
-                                            <th className="px-4 py-4 text-xs font-bold uppercase">
+                                            {/* <th className="px-4 py-4 text-xs font-bold uppercase">
                                                 Supplier
-                                            </th>
+                                            </th> */}
                                             <th className="px-4 py-4 text-xs font-bold uppercase">
                                                 EXP Date
                                             </th>
@@ -309,25 +296,25 @@ const ExpiryMedicine = () => {
                                         </tr>
                                     </thead>
                                     <tbody className='divide-y'>
-                                        {medicines.map((med, index) => ((
+                                        {expiryData.map((med, index) => ((
                                             <tr key={index} className="hover:bg-gray-50">
                                                 <td className="px-6 py-5">
                                                     <input type="checkbox" />
                                                 </td>
                                                 <td className="px-4 py-5">
-                                                    <div className="font-bold text-sm">{med.name}</div>
+                                                    <div className="font-bold text-sm">{med.ProductName}</div>
                                                     <div className="text-xs text-gray-500">
-                                                        SKU: {med.sku}
+                                                        SKU: {med.ProductSku}
                                                     </div>
                                                 </td>
-                                                <td className="px-4 py-5 text-sm">{med.batch}</td>
+                                                <td className="px-4 py-5 text-sm">{med.ProductBatchNo}</td>
 
-                                                <td className="px-4 py-5 text-sm text-gray-500">
+                                                {/* <td className="px-4 py-5 text-sm text-gray-500">
                                                     {med.supplier}
-                                                </td>
+                                                </td> */}
 
                                                 <td className="px-4 py-5 text-sm font-semibold">
-                                                    {med.exp}
+                                                   {new Date(med.ProductExpiryDate).toLocaleDateString()}
                                                 </td>
                                                 <td className="px-4 py-5">
                                                     {med.status === "Expired" ? (
@@ -350,7 +337,7 @@ const ExpiryMedicine = () => {
                                                     )}
                                                 </td>
                                                 <td className="px-4 py-5 font-bold text-sm">
-                                                    {med.stock}
+                                                   ₹ {med.stockValue}
                                                 </td>
 
                                                 <td className="px-4 py-5">
@@ -374,16 +361,17 @@ const ExpiryMedicine = () => {
                             </div>
                         </div>
                         {/* <!-- Analytics & Sidebar Components Grid --> */}
-                        <div className='grid grid-cols-12 gap-8'>
-                            {/* <!-- Analytics --> */}
+                        {/* <div className='grid grid-cols-12 gap-8'>
+                           
                             <div className="col-span-12  space-y-8">
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                                    
                                 </div>
                             </div>    
-                        </div>
-                    </div>  
+                        </div> */}
+                    </div>
                 </div>
             </main>
-        </div>)}
+        </div>)
+}
 export default ExpiryMedicine

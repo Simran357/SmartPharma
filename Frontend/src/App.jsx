@@ -51,7 +51,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-        {/* ✅ IMPORTANT: Stripe Success Route (OUTSIDE) */}
+        {/*  IMPORTANT: Stripe Success Route (OUTSIDE) */}
         <Route path="/OrderSuccess" element={<OrderSuccess />} />
 
         {/* PROTECTED ROUTES */}

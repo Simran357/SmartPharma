@@ -69,12 +69,12 @@ const Wholesalerlayout = () => {
   ];
                              
   return (
-    <>
+    <>                            
       <Layout className='min-h-screen'>
         <Sider trigger={null} collapsible collapsed={collapsed} >
           <div className="demo-logo-vertical" />
           <Menu
-            theme="dark"
+            theme="dark"                     
             mode="inline"
             defaultSelectedKeys={[location.pathname]}
             selectedKeys={[location.pathname]}
@@ -82,8 +82,8 @@ const Wholesalerlayout = () => {
             onClick={(e) => {
               navigate(e.key)
             }}
-          />
-        </Sider>
+          />                          
+        </Sider>                  
         <Layout>
           <Header
             style={{ background: colorBgContainer }}
@@ -98,9 +98,9 @@ const Wholesalerlayout = () => {
                 fontSize: "16px",
                 width: 64,
                 height: 64,
-              }}
-            />
-
+              }}                                
+            />              
+                                                  
             {/* RIGHT SIDE */}
       <div className="flex items-center gap-3">
      
