@@ -109,7 +109,7 @@ export default function InventoryTable({ inventoryStock }) {
               <button className="text-xl text-gray-400">⋮</button>
             </div>
 
-            {/* 🔥 OPTIONAL: BATCH DETAILS (like your UI) */}
+            {/*  OPTIONAL: BATCH DETAILS (like your UI) */}
             <div className="bg-gray-50 mt-3 p-3 rounded-lg text-sm text-gray-600">
               Supplier: <span className="font-medium">{item.supplier}</span> | Invoice:{" "}
               <span className="font-medium">{item.invoiceNumber}</span>

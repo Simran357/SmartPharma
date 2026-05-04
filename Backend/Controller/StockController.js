@@ -1,7 +1,7 @@
 const StockModel = require("../model/Stock.model");
 const StockValidation = require("../Validation/StockValidation");
 
-// ✅ ADD STOCK
+//  ADD STOCK
 const addStock = async (req, res, next) => {
   try {
     console.log("add stock controller")
@@ -31,7 +31,7 @@ const addStock = async (req, res, next) => {
       totals,
     } = value;
 
-    // ✅ Duplicate check
+    //  Duplicate check
     const existing = await StockModel.findOne({ invoiceNumber, userId });
     if (existing) {
      res.status(400).json({
@@ -40,7 +40,7 @@ const addStock = async (req, res, next) => {
       });
     }
 
-    // ✅ Create stock
+    //  Create stock
     const newStock = await StockModel.create({
       userId,
       supplierName,
