@@ -10,7 +10,7 @@ function OneMedicine() {
   const navigate = useNavigate();
   const { state } = useLocation();
 
-  // 🔥 EXPIRY STYLE
+  //  EXPIRY STYLE
   const getExpiryStyle = (expiry) => {
     if (!expiry) return "";
 
@@ -23,7 +23,7 @@ function OneMedicine() {
     return "text-green-600 bg-green-50";
   };
 
-  // 🔥 STATUS LOGIC
+  //  STATUS LOGIC
   const getStatus = (qty) => {
     if (qty === 0) return "DEPLETED";
     if (qty < 10) return "CRITICAL";
@@ -43,7 +43,7 @@ function OneMedicine() {
     }
   };
 
-  // 🔥 FETCH DATA
+  //  FETCH DATA
   useEffect(() => {
     const fetchBatches = async () => {
       try {
@@ -62,17 +62,17 @@ function OneMedicine() {
   }, [state?.name]);
 console.log("batches",batches)
 
-  // 🔥 STATS
+  //  STATS
   const totalStock = batches.reduce((sum, b) => sum + (b.qty || 0), 0);
 
   const nearExpiry = batches.filter((b) => {
     if (!b.expiry) return false;
-    const diff =
+    const diff =                                                           
       (new Date(b.expiry) - new Date()) / (1000 * 60 * 60 * 24);
     return diff < 30 && diff > 0;
   }).length;
 
-  // 🔥 ALT PRODUCTS (TEMP)
+  //  ALT PRODUCTS (TEMP)
   const alternatives = [
     {
       name: "Calpol 650mg",
@@ -90,7 +90,7 @@ console.log("batches",batches)
     <div className="min-h-screen bg-[#f8fafc] text-slate-800 flex flex-col">
       <main className="flex-1 p-6 flex flex-col gap-6">
 
-        {/* 🔥 HEADER */}
+        {/*  HEADER */}
         <div className="flex justify-between items-start">
           <div className="flex items-center gap-4">
             <button
@@ -118,14 +118,14 @@ console.log("batches",batches)
           </button>
         </div>
 
-        {/* 🔥 STATS */}
+        {/*  STATS */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <Card title="Total Stock" value={`${totalStock} Units`} />
           <Card title="Near Expiry" value={nearExpiry} />
           <Card title="Purchase Price" value={`₹${state?.rate}`} />
         </div>
 
-        {/* 🔥 MAIN GRID */}
+        {/*  MAIN GRID */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
           {/* SALES PLACEHOLDER */}
@@ -157,7 +157,7 @@ console.log("batches",batches)
           </div>
         </div>
 
-        {/* 🔥 TABLE */}
+        {/*  TABLE */}
         <div className="bg-white rounded-xl border overflow-hidden">
           <div className="p-4 border-b font-semibold">
             Batch History
@@ -229,7 +229,7 @@ console.log("batches",batches)
         </div>
       </main>
 
-      {/* 🔥 FOOTER */}
+      {/*  FOOTER */}
       <footer className="border-t p-3 flex justify-between text-xs text-slate-500">
         <div className="flex gap-4 items-center">
           <Headset size={14} /> Support
@@ -241,7 +241,7 @@ console.log("batches",batches)
   );
 }
 
-// 🔥 REUSABLE CARD
+//  REUSABLE CARD
 const Card = ({ title, value }) => (
   <div className="bg-white p-4 border rounded-xl">
     <p className="text-xs text-slate-500">{title}</p>
@@ -249,4 +249,4 @@ const Card = ({ title, value }) => (
   </div>
 );
 
-export default OneMedicine;
+export default OneMedicine;  
