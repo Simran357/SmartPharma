@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axiosInstance from "../Form/Utils/AxiosInstance";
+import { toast } from "react-toastify";
 
 const CreateUserForm = ({ setModel, getUser }) => {
   const [formData, setFormData] = useState({
@@ -25,12 +26,13 @@ const CreateUserForm = ({ setModel, getUser }) => {
     try {
       const res = await axiosInstance.post("/registerroute/createNewUser",formData);
       if (res?.data?.success) {
-        alert(res.data.message);
+       toast.success(res.data.message);
         getUser(); // refresh table
         setModel(false); // close modal
-      }
+      }  
     } catch (error) {
-      console.log("Error:", error);
+      toast.error(error?.response?.data?.message || "Server Error");
+    console.log("Error:", error);
     }
   }; 
 

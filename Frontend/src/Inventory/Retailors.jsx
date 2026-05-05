@@ -43,7 +43,7 @@ const Retailors = () => {
       {/* Main Content */}
       <div className="h-full flex-1 bg-gray-200 p-6 flex flex-col">
 
-        {/* 👉 Show ONLY Retailors UI */}
+        {/*  Show ONLY Retailors UI */}
         {activeMenu === "retailors" && (
           <>
             {/* Header */}

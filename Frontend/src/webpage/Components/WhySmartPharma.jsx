@@ -10,7 +10,7 @@ const features = [
 ];
 
 const WhySmartPharm = () => (
-    <section className="py-20 gradient-card-bg">
+    <section className="py-15 gradient-card-bg">
         <div className="container">
             <div className="text-center max-w-2xl mx-auto mb-14">
                 <h2 className="text-3xl md:text-4xl font-heading font-bold mb-4">
@@ -20,7 +20,7 @@ const WhySmartPharm = () => (
                     Not just a medicine store — a decision-support system for pharmacies.
                 </p>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 p-5 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  p-5 gap-6">
                 {features.map((f, i) => (
                     <motion.div
                         key={f.title}   

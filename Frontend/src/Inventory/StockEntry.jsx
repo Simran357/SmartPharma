@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axiosInstance from "../Components/Dashboard/Form/Utils/AxiosInstance";
+import { toast } from "react-toastify";
 
 const StockEntry = ({ onClose }) => {
   const [items, setItems] = useState([]);
@@ -91,7 +92,7 @@ console.log("items in firm",items)
         items,
         totals,
       }); 
-      alert("Stock Added ✅");
+     toast.success("Stock Added ✅");
    setFormData(initialFormState);
     setItems([]);
     setTotals(initialTotals);
@@ -100,7 +101,7 @@ console.log("items in firm",items)
 }, 0);
  onClose && onClose()
     } catch {
-      alert("Error saving stock");
+      toast.error("Error saving stock");
     } finally {
       setLoading(false);
     }

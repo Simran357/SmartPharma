@@ -13,9 +13,9 @@ export default function Inventory() {
   useEffect(() => {
     const fetchInventory = async () => {
       try {
-        const res = await axiosInstance.get("/registerroute/getInventoryStock");
+        const res = await axiosInstance.get("/registerroute/getInventoryStock");   
 
-        const formattedData =
+        const formattedData =  
           res?.data?.data?.flatMap((invoice) =>
             invoice.items.map((item) => ({
               name: item.name || item.ProductName,
@@ -35,7 +35,7 @@ export default function Inventory() {
 
     fetchInventory();
   }, []);
-
+                                  
   return (
     <div className="flex min-h-screen bg-gray-50">
       <div className="flex-1">

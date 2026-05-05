@@ -7,9 +7,9 @@ const [formData, setFormData] = useState({
   ProductCategory: "",
   ProductQuantity: "",
   ProductExpiryDate: "",
-  ProductBatchNo: "",      // ✅ NEW
-  ProductPrice: "",        // ✅ NEW
-  ProductMfgDate: ""       // ✅ OPTIONAL
+  ProductBatchNo: "",      //  NEW
+  ProductPrice: "",        //  NEW
+  ProductMfgDate: ""       //  OPTIONAL
 });
   console.log("auth id in add stock",)
   const handleSubmit = async () => {

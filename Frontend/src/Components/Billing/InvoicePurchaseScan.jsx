@@ -9,9 +9,9 @@ const InvoicePurchaseScan = () => {
   const [loading, setLoading] = useState(false);
 
   const [invoice, setInvoice] = useState(null);
-const [items, setItems] = useState([]);
-const addRow = () => {
-  setItems((prev) => [
+   const [items, setItems] = useState([]);
+   const addRow = () => {
+    setItems((prev) => [
     ...prev,
     {
       name: "",
@@ -131,7 +131,7 @@ totals: {
 
     await axiosInstance.post("/registerroute/addStock", payload);
 
-    alert("Stock Added ✅");
+    alert("Stock Added ");
 
     setItems([]);
     setInvoice(null);
@@ -415,4 +415,4 @@ totals: {
   );
 };
 
-export default InvoicePurchaseScan;
+export default InvoicePurchaseScan;  

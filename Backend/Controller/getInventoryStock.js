@@ -7,8 +7,7 @@ const getInventoryStock = async (req, res,next) => {
     const stocks = await StockModel.find({userId});
     console.log("api getting hit of stock", stocks)
     //  Flatten all items
-   
-
+  
     res.status(200).json({
       success: true,
       data: stocks,
@@ -22,5 +21,4 @@ const getInventoryStock = async (req, res,next) => {
     });
   }
 };
-  
 module.exports = getInventoryStock;  
